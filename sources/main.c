@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "ball.h"
+#include "player.h"
 
 #define SCREEN_WIDTH (1024)
 #define SCREEN_HEIGHT (1024)
@@ -13,6 +14,8 @@ int main(void)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
 
     Vector2 screenCenter = {GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f };
+
+    struct Player player;
 
     struct Ball balls[NBR_OF_BALLS];
 
@@ -63,6 +66,8 @@ int main(void)
         {
             drawBall(balls[i], shadowOffset, shadowRadius);
         }
+
+        drawPlayer(player);
         //DrawText("PRESS SPACE to PAUSE BALL MOVEMENT", 10, GetScreenHeight() - 25, 20, LIGHTGRAY);
 
         // On pause, we draw a blinking message

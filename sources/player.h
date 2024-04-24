@@ -13,6 +13,6 @@ struct Player
 
 void moveToPointPlayer(struct Player *player, float x, float y);
 void ballCollisionPlayer(struct Player *player, struct Ball balls[]);
-void drawPlayer(struct Player *player);
+void drawPlayer(struct Player player);
 
 #endif
