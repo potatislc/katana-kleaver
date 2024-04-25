@@ -12,7 +12,8 @@ struct Ball
     Rectangle collisionBox;
 };
 
-void setPosBall(struct Ball *ball, float x, float y);
+void initBall(struct Ball *ball, Vector2 initPos, float radius);
+void setPosBall(struct Ball *ball, Vector2 pos);
 void moveBall(struct Ball *ball);
 void screenCollisionBall(struct Ball *ball);
 void ballCollisionBall(struct Ball *ball, struct Ball balls[], int nbrOfBalls);

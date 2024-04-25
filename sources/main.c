@@ -16,22 +16,14 @@ int main(void)
     Vector2 screenCenter = {GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f };
 
     struct Player player;
-    Image playerSprite;
-    playerSprite = LoadImage("../assets/samurai.png");
-    Texture2D texture = LoadTextureFromImage(playerSprite);  // Image converted to texture, uploaded to GPU memory (VRAM)
-    UnloadImage(playerSprite);
-    player.texture = texture;
-    player.position = screenCenter;
+    initPlayer(&player, screenCenter);
 
     struct Ball balls[NBR_OF_BALLS];
 
     for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
     {
-        balls[i].speed = (Vector2){ 2.0f, 2.0f };
-        balls[i].radius = 64.0f;
-        balls[i].position = (Vector2){ balls[i].radius + balls[i].radius * (float)i * 2.0f, balls[i].radius + balls[i].radius * (float)i * 2.0f };
-        balls[i].colliding = false;
-        balls[i].collisionBox = (Rectangle){ 0, 0, balls[i].radius*2, balls[i].radius*2 };
+        float testRadius = 64.0f;
+        initBall(&balls[i],(Vector2){ testRadius + testRadius * (float)i * 2.0f, testRadius + testRadius * (float)i * 2.0f },testRadius);
     }
 
     Vector2 shadowOffset = { 4.0f, 4.0f};
@@ -40,7 +32,7 @@ int main(void)
     bool pause = 0;
     int framesCounter = 0;
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(60);
     //----------------------------------------------------------
 
     // Main game loop
@@ -58,6 +50,8 @@ int main(void)
                 moveBall(&balls[i]);
                 screenCollisionBall(&balls[i]);
             }
+
+            updatePlayer(&player);
         }
         else framesCounter++;
         //-----------------------------------------------------

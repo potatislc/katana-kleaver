@@ -1,19 +1,30 @@
-#include "ball.h"
+#include <ball.h>
 #include <math.h>
 
 // #define sign(a) ((a > 0) ? 1 : ((a < 0) ? -1 : 0))
 #define sign(a) ((a > 0) ? 1 : -1)
 
-void setPosBall(struct Ball *ball, float x, float y)
+void initBall(struct Ball *ball, Vector2 initPos, float radius)
 {
-    ball->position = (Vector2){x, y};
-    ball->collisionBox.x = x - ball->radius;
-    ball->collisionBox.y = y - ball->radius;
+    ball->speed = (Vector2){ 2.0f, 2.0f };
+    ball->radius = radius;
+
+    ball->colliding = false;
+    ball->collisionBox = (Rectangle){ 0, 0, ball->radius * 2, ball->radius * 2 };
+
+    setPosBall(ball, initPos);
+}
+
+void setPosBall(struct Ball *ball, Vector2 pos)
+{
+    ball->position = pos;
+    ball->collisionBox.x = pos.x - ball->radius;
+    ball->collisionBox.y = pos.y - ball->radius;
 }
 
 void moveBall(struct Ball *ball)
 {
-    setPosBall(ball, ball->position.x + ball->speed.x, ball->position.y + ball->speed.y);
+    setPosBall(ball, (Vector2){ ball->position.x + ball->speed.x, ball->position.y + ball->speed.y });
 }
 
 void screenCollisionBall(struct Ball *ball)
@@ -47,8 +58,8 @@ void ballCollisionBall(struct Ball *ball, struct Ball balls[], int nbrOfBalls)
 
         while (CheckCollisionRecs(ball->collisionBox, balls[i].collisionBox))
         {
-            setPosBall(ball, ball->position.x + signDist.x, ball->position.y + signDist.y);
-            setPosBall(&balls[i], balls[i].position.x - signDist.x, balls[i].position.y - signDist.y);
+            setPosBall(ball, (Vector2){ ball->position.x + signDist.x, ball->position.y + signDist.y });
+            setPosBall(&balls[i], (Vector2){ balls[i].position.x - signDist.x, balls[i].position.y - signDist.y });
 
             if (fabsf(dist.x) > fabsf(dist.y))
             {

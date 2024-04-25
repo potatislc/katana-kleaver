@@ -7,13 +7,15 @@
 struct Player
 {
     Vector2 position;
+    Vector2 velocity;
     float speed;
     float radius;
     Texture2D texture;
 };
 
-void initPlayer(struct Player *player);
-void moveToPointPlayer(struct Player *player, float x, float y);
+void initPlayer(struct Player *player, Vector2 initPos);
+void updatePlayer(struct Player *player);
+void moveToPointPlayer(struct Player *player, Vector2 point);
 void ballCollisionPlayer(struct Player *player, struct Ball balls[]);
 void drawPlayer(struct Player player);
 
