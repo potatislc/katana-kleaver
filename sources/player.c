@@ -2,5 +2,5 @@
 
 void drawPlayer(struct Player player)
 {
-    // ImageDraw()
+    DrawTextureV(player.texture, player.position, WHITE);
 }

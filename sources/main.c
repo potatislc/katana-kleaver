@@ -16,6 +16,12 @@ int main(void)
     Vector2 screenCenter = {GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f };
 
     struct Player player;
+    Image playerSprite;
+    playerSprite = LoadImage("../assets/samurai.png");
+    Texture2D texture = LoadTextureFromImage(playerSprite);  // Image converted to texture, uploaded to GPU memory (VRAM)
+    UnloadImage(playerSprite);
+    player.texture = texture;
+    player.position = screenCenter;
 
     struct Ball balls[NBR_OF_BALLS];
 
