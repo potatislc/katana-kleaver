@@ -3,13 +3,10 @@
 
 void initPlayer(struct Player *player, Vector2 initPos)
 {
-    Image playerSprite;
-    playerSprite = LoadImage("../assets/samurai.png");
-    Texture2D texture = LoadTextureFromImage(playerSprite);  // Image converted to texture, uploaded to GPU memory (VRAM)
-    UnloadImage(playerSprite);
-    player->texture = texture;
+    Texture2D playerTexture = LoadTexture("../assets/samurai.png");
+    player->texture = playerTexture;
     player->position = initPos;
-    player->speed = 1;
+    player->speed = 2;
 }
 
 void updatePlayer(struct Player *player)
