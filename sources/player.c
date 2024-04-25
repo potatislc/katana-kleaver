@@ -36,7 +36,7 @@ void drawPlayer(struct Player player)
                 0,
                 0,
                 sign(player.velocity.x) * player.texture.width,
-                (float)player.texture.width
+                (float)player.texture.height
             };
     DrawTextureRec(player.texture, playerRect, player.position, WHITE);
 }
