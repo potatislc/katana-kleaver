@@ -1,6 +1,8 @@
 #include <player.h>
 #include <math.h>
 
+#define sign(a) ((a > 0) ? 1 : -1)
+
 void initPlayer(struct Player *player, Vector2 initPos)
 {
     Texture2D playerTexture = LoadTexture("../assets/samurai.png");
@@ -29,5 +31,12 @@ void moveToPointPlayer(struct Player *player, Vector2 point)
 
 void drawPlayer(struct Player player)
 {
-    DrawTextureV(player.texture, player.position, WHITE);
+    Rectangle playerRect =
+            {
+                0,
+                0,
+                sign(player.velocity.x) * player.texture.width,
+                (float)player.texture.width
+            };
+    DrawTextureRec(player.texture, playerRect, player.position, WHITE);
 }
