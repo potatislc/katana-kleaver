@@ -31,6 +31,8 @@ void moveToPointPlayer(struct Player *player, Vector2 point)
 
 void drawPlayer(struct Player player)
 {
+    Vector2 textureOffset = { (float)player.texture.width / 2.0f, (float)player.texture.height / 2.0f };
+
     Rectangle playerRect =
             {
                 0,
@@ -38,5 +40,12 @@ void drawPlayer(struct Player player)
                 sign(player.velocity.x) * player.texture.width,
                 (float)player.texture.height
             };
-    DrawTextureRec(player.texture, playerRect, player.position, WHITE);
+
+    DrawTextureRec
+    (
+        player.texture,
+        playerRect,
+        (Vector2){ player.position.x - textureOffset.x,player.position.y - textureOffset.y },
+        WHITE
+    );
 }
