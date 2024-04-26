@@ -9,12 +9,15 @@ void initPlayer(struct Player *player, Vector2 initPos)
     player->texture = playerTexture;
     player->position = initPos;
     player->speed = 2;
+    player->radius = 6;
 }
 
 void updatePlayer(struct Player *player)
 {
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
         moveToPointPlayer(player, GetMousePosition());
+
+    screenCollisionPlayer(player);
 }
 
 void moveToPointPlayer(struct Player *player, Vector2 point)
@@ -33,6 +36,12 @@ void moveToPointPlayer(struct Player *player, Vector2 point)
 
     player->position.x += player->velocity.x;
     player->position.y += player->velocity.y;
+}
+
+void screenCollisionPlayer(struct Player *player)
+{
+    player->position.x = fmaxf(player->radius, fminf(player->position.x, (float)GetScreenWidth() - player->radius));
+    player->position.y = fmaxf(player->radius, fminf(player->position.y, (float)GetScreenHeight() - player->radius));
 }
 
 void drawPlayer(struct Player player)
