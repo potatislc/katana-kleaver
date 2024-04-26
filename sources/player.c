@@ -23,6 +23,12 @@ void moveToPointPlayer(struct Player *player, Vector2 point)
     float distLength = sqrtf(dist.x * dist.x + dist.y * dist.y);
     Vector2 distNormalized = {dist.x /distLength, dist.y / distLength};
 
+    if (distLength <= player->speed)
+    {
+        player->position = point;
+        return;
+    }
+
     player->velocity = (Vector2){ player->speed * distNormalized.x, player->speed * distNormalized.y };
 
     player->position.x += player->velocity.x;
