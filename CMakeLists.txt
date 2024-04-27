@@ -26,7 +26,9 @@ add_executable(${PROJECT_NAME}
         sources/ball.h
         sources/ball.c
         sources/player.h
-        sources/player.c)
+        sources/player.c
+        sources/global.h
+        sources/global.c)
 target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

@@ -1,5 +1,6 @@
-#include <player.h>
+#include "player.h"
 #include <math.h>
+#include "global.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
@@ -15,7 +16,9 @@ void initPlayer(struct Player *player, Vector2 initPos)
 void updatePlayer(struct Player *player)
 {
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
-        moveToPointPlayer(player, GetMousePosition());
+    {
+        moveToPointPlayer(player, ToVirtualCoords(GetMousePosition()));
+    }
 
     screenCollisionPlayer(player);
 }
@@ -40,8 +43,8 @@ void moveToPointPlayer(struct Player *player, Vector2 point)
 
 void screenCollisionPlayer(struct Player *player)
 {
-    player->position.x = fmaxf(player->radius, fminf(player->position.x, (float)GetScreenWidth() - player->radius));
-    player->position.y = fmaxf(player->radius, fminf(player->position.y, (float)GetScreenHeight() - player->radius));
+    player->position.x = fmaxf(player->radius, fminf(player->position.x, VIRTUAL_SCREEN_WIDTH - player->radius));
+    player->position.y = fmaxf(player->radius, fminf(player->position.y, VIRTUAL_SCREEN_HEIGHT - player->radius));
 }
 
 void drawPlayer(struct Player player)

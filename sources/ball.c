@@ -1,5 +1,6 @@
-#include <ball.h>
+#include "ball.h"
 #include <math.h>
+#include "global.h"
 
 // #define sign(a) ((a > 0) ? 1 : ((a < 0) ? -1 : 0))
 #define sign(a) ((a > 0) ? 1 : -1)
@@ -29,10 +30,10 @@ void moveBall(struct Ball *ball)
 
 void screenCollisionBall(struct Ball *ball)
 {
-    if ((ball->position.x >= ((float)GetScreenWidth() - ball->radius)) || (ball->position.x <= ball->radius)) ball->speed.x *= -1.0f;
-    if ((ball->position.y >= ((float)GetScreenHeight() - ball->radius)) || (ball->position.y <= ball->radius)) ball->speed.y *= -1.0f;
-    ball->position.x = fmaxf(ball->radius, fminf(ball->position.x, (float)GetScreenWidth() - ball->radius));
-    ball->position.y = fmaxf(ball->radius, fminf(ball->position.y, (float)GetScreenHeight() - ball->radius));
+    if ((ball->position.x >= (VIRTUAL_SCREEN_WIDTH - ball->radius)) || (ball->position.x <= ball->radius)) ball->speed.x *= -1.0f;
+    if ((ball->position.y >= (VIRTUAL_SCREEN_HEIGHT - ball->radius)) || (ball->position.y <= ball->radius)) ball->speed.y *= -1.0f;
+    ball->position.x = fmaxf(ball->radius, fminf(ball->position.x, VIRTUAL_SCREEN_WIDTH - ball->radius));
+    ball->position.y = fmaxf(ball->radius, fminf(ball->position.y, VIRTUAL_SCREEN_HEIGHT - ball->radius));
 }
 
 void ballCollisionBall(struct Ball *ball, struct Ball balls[], int nbrOfBalls)

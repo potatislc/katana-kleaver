@@ -1,11 +1,7 @@
 #include "raylib.h"
 #include "ball.h"
 #include "player.h"
-
-#define SCREEN_WIDTH (1280)
-#define SCREEN_HEIGHT (1280)
-#define VIRTUAL_SCREEN_WIDTH (256)
-#define VIRTUAL_SCREEN_HEIGHT (256)
+#include "global.h"
 
 #define WINDOW_TITLE "Ball Game"
 
@@ -17,15 +13,13 @@ int main(void)
 
     Vector2 vScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
-    const float virtualRatio = (float)SCREEN_WIDTH/(float)VIRTUAL_SCREEN_WIDTH;
-
     RenderTexture2D target = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT);
 
     Camera2D worldSpaceCamera = { 0 };
     worldSpaceCamera.zoom = 1.0f;
 
     Rectangle sourceRec = { 0.0f, 0.0f, (float)target.texture.width, -(float)target.texture.height };
-    Rectangle destRec = { -virtualRatio, -virtualRatio, SCREEN_WIDTH + (virtualRatio*2), SCREEN_HEIGHT + (virtualRatio*2) };
+    Rectangle destRec = {-screenRatio, -screenRatio, SCREEN_WIDTH + (screenRatio * 2), SCREEN_HEIGHT + (screenRatio * 2) };
 
     Vector2 origin = { 0.0f, 0.0f };
 
