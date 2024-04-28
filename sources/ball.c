@@ -7,7 +7,7 @@
 
 void initBall(struct Ball *ball, Vector2 initPos, float radius)
 {
-    ball->speed = (Vector2){ 1.0f, 1.0f };
+    ball->speed = (Vector2){ .5f, .5f };
     ball->radius = radius;
 
     ball->colliding = false;
