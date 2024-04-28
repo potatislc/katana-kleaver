@@ -13,7 +13,7 @@ void initPlayer(struct Player *player, Vector2 initPos)
     player->radius = 6;
 }
 
-void updatePlayer(struct Player *player)
+void updatePlayer(struct Player *player, struct Ball balls[], int nbrOfBalls)
 {
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
     {
@@ -21,6 +21,7 @@ void updatePlayer(struct Player *player)
     }
 
     screenCollisionPlayer(player);
+    ballCollisionPlayer(player, balls, nbrOfBalls);
 }
 
 void moveToPointPlayer(struct Player *player, Vector2 point)
@@ -45,6 +46,22 @@ void screenCollisionPlayer(struct Player *player)
 {
     player->position.x = fmaxf(player->radius, fminf(player->position.x, VIRTUAL_SCREEN_WIDTH - player->radius));
     player->position.y = fmaxf(player->radius, fminf(player->position.y, VIRTUAL_SCREEN_HEIGHT - player->radius));
+}
+
+void ballCollisionPlayer(struct Player *player, struct Ball balls[], int nbrOfBalls)
+{
+    for (int i = 0; i < nbrOfBalls; i++)
+    {
+        Vector2 ballDistVec = { balls[i].position.x - player->position.x, balls[i].position.y - player->position.y };
+        float ballDist = ballDistVec.x * ballDistVec.x + ballDistVec.y * ballDistVec.y;
+
+        if (ballDist <= player->radius * player->radius + balls[i].radius * balls[i].radius)
+        {
+            player->colliding = true;
+            return;
+        }
+        else player->colliding = false;
+    }
 }
 
 void drawPlayer(struct Player player)
@@ -73,5 +90,5 @@ void drawPlayer(struct Player player)
 void drawPlayerShadow(struct Player player)
 {
     //Vector2 shadowPos = {player.position, }
-    //DrawCircleV(player.position, (float)player.texture.width / 2, BLACK);
+    if (player.colliding) DrawCircleV(player.position, (float)player.texture.width / 2, BLACK);
 }

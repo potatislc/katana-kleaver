@@ -59,7 +59,7 @@ int main(void)
                 screenCollisionBall(&balls[i]);
             }
 
-            updatePlayer(&player);
+            updatePlayer(&player, balls, NBR_OF_BALLS);
         }
         else framesCounter++;
         //-----------------------------------------------------
