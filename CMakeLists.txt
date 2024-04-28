@@ -19,17 +19,11 @@ FetchContent_MakeAvailable(raylib)
 
 # Adding our source files
 file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/sources/*.c") # Define PROJECT_SOURCES as a list of all source files
-set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/sources/") # Define PROJECT_INCLUDE to be the path to the include directory of the project
+set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/include/") # Define PROJECT_INCLUDE to be the path to the include directory of the project
+# In CLion /CMake Settings/CMake Options, add: -DCMAKE_INCLUDE_DIRECTORIES_PROJECT_BEFORE=TRUE, then rebuild
 
 # Declaring our executable
-add_executable(${PROJECT_NAME}
-        sources/ball.h
-        sources/ball.c
-        sources/player.h
-        sources/player.c
-        sources/global.h
-        sources/global.c)
-target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCES})
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
