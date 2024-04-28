@@ -14,6 +14,11 @@ void initBall(struct Ball *ball, Vector2 initPos, float radius)
     ball->collisionBox = (Rectangle){ 0, 0, ball->radius * 2, ball->radius * 2 };
 
     setPosBall(ball, initPos);
+
+    ball->texture = LoadTexture("../assets/melon_big.png");
+    ball->textureScale = (ball->radius * 2) / (float)ball->texture.width;
+    ball->textureOffset = (Vector2){ ((float)ball->texture.width / 2.0f) * ball->textureScale,
+                                     ((float)ball->texture.height / 2.0f) * ball->textureScale };
 }
 
 void setPosBall(struct Ball *ball, Vector2 pos)
@@ -85,5 +90,7 @@ void drawBall(struct Ball ball, Vector2 shadowOffset, float shadowRadius)
 {
     Vector2 ballShadowPos = {ball.position.x + shadowOffset.x, ball.position.y + shadowOffset.y };
     DrawCircleV(ballShadowPos, ball.radius - shadowRadius, BLACK);
-    DrawCircleV(ball.position, ball.radius, (ball.colliding) ? MAROON : GREEN);
+    // DrawCircleV(ball.position, ball.radius, (ball.colliding) ? MAROON : GREEN);
+    Vector2 drawPos = {ball.position.x - ball.textureOffset.x, ball.position.y - ball.textureOffset.y};
+    DrawTextureEx(ball.texture, drawPos, 0, ball.textureScale, WHITE);
 }

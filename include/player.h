@@ -19,5 +19,6 @@ void moveToPointPlayer(struct Player *player, Vector2 point);
 void screenCollisionPlayer(struct Player *player);
 void ballCollisionPlayer(struct Player *player, struct Ball balls[]);
 void drawPlayer(struct Player player);
+void drawPlayerShadow(struct Player player);
 
 #endif

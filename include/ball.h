@@ -10,6 +10,9 @@ struct Ball
     float radius;
     bool colliding;
     Rectangle collisionBox;
+    Texture2D texture;
+    float textureScale;
+    Vector2 textureOffset;
 };
 
 void initBall(struct Ball *ball, Vector2 initPos, float radius);

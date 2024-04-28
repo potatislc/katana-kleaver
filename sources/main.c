@@ -5,7 +5,7 @@
 
 #define WINDOW_TITLE "Ball Game"
 
-#define NBR_OF_BALLS (6)
+#define NBR_OF_BALLS (2)
 
 int main(void)
 {
@@ -67,7 +67,7 @@ int main(void)
         // Draw
         //-----------------------------------------------------
         BeginTextureMode(target);
-            ClearBackground(DARKGRAY);
+            ClearBackground((Color){ 121, 121, 121, 255});
 
             // Draw Game World
             BeginMode2D(worldSpaceCamera);
