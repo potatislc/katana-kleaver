@@ -17,7 +17,7 @@ void updatePlayer(struct Player *player, struct Ball balls[], int nbrOfBalls)
 {
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
     {
-        moveToPointPlayer(player, ToVirtualCoords(GetMousePosition()));
+        moveToPointPlayer(player, toVirtualCoords(GetMousePosition()));
     }
 
     screenCollisionPlayer(player);
@@ -90,5 +90,5 @@ void drawPlayer(struct Player player)
 void drawPlayerShadow(struct Player player)
 {
     //Vector2 shadowPos = {player.position, }
-    if (player.colliding) DrawCircleV(player.position, (float)player.texture.width / 2, BLACK);
+    if (player.colliding) DrawCircleV(roundVector2(player.position), (float)player.texture.width / 2, BLACK);
 }

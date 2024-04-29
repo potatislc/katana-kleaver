@@ -89,8 +89,8 @@ void ballCollisionBall(struct Ball *ball, struct Ball balls[], int nbrOfBalls)
 void drawBall(struct Ball ball, Vector2 shadowOffset, float shadowRadius)
 {
     Vector2 ballShadowPos = {ball.position.x + shadowOffset.x, ball.position.y + shadowOffset.y };
-    DrawCircleV(ballShadowPos, ball.radius - shadowRadius, BLACK);
+    DrawCircleV(roundVector2(ballShadowPos), ball.radius - shadowRadius, BLACK);
     // DrawCircleV(ball.position, ball.radius, (ball.colliding) ? MAROON : GREEN);
     Vector2 drawPos = {ball.position.x - ball.textureOffset.x, ball.position.y - ball.textureOffset.y};
-    DrawTextureEx(ball.texture, drawPos, 0, ball.textureScale, WHITE);
+    DrawTextureEx(ball.texture, roundVector2(drawPos), 0, ball.textureScale, WHITE);
 }
