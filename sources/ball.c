@@ -11,7 +11,7 @@ void initBall(struct Ball *ball, Vector2 initPos, float radius)
     ball->radius = radius;
 
     ball->colliding = false;
-    float colliderScale = .7f;
+    float colliderScale = .8f;
     ball->collisionBox = (Rectangle){ 0, 0, ball->radius * 2 * colliderScale, ball->radius * 2 * colliderScale};
 
     setPosBall(ball, initPos);
