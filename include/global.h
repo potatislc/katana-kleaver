@@ -12,7 +12,7 @@
 
 extern const float screenRatio;
 
-Vector2 toVirtualCoords(Vector2 coords);
+Vector2 toVirtualCoordsVector2(Vector2 coords);
 Vector2 roundVector2(Vector2 vector);
 
 #endif //MY_RAYLIB_GAME_GLOBAL_H

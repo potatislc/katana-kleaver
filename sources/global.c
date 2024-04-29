@@ -3,7 +3,7 @@
 
 const float screenRatio = (float)SCREEN_WIDTH / (float)VIRTUAL_SCREEN_WIDTH;
 
-Vector2 toVirtualCoords(Vector2 coords)
+Vector2 toVirtualCoordsVector2(Vector2 coords)
 {
     return (Vector2){coords.x / screenRatio, coords.y / screenRatio };
 }

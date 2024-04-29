@@ -17,7 +17,12 @@ void updatePlayer(struct Player *player, struct Ball balls[], int nbrOfBalls)
 {
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
     {
-        moveToPointPlayer(player, toVirtualCoords(GetMousePosition()));
+        moveToPointPlayer(player, toVirtualCoordsVector2(GetMousePosition()));
+    }
+
+    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+    {
+
     }
 
     screenCollisionPlayer(player);
