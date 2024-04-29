@@ -12,6 +12,13 @@ struct Player
     float radius;
     Texture2D texture;
     bool colliding;
+    struct Dash *dash;
+};
+
+struct Dash
+{
+    float speed;
+    float distance;
 };
 
 void initPlayer(struct Player *player, Vector2 initPos);
