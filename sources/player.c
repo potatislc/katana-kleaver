@@ -18,7 +18,7 @@ void initPlayer(struct Player *player, Vector2 initPos)
     player->dash = (struct Dash *)malloc(sizeof(struct Dash));
     if (player->dash != NULL) {
         // Initialize the allocated memory
-        *player->dash = (struct Dash){0.0f, 0.0f, 0.3f, 32.0f, 0.0f, 0.0f, 0.0f};
+        *player->dash = (struct Dash){0.0f, 0.0f, 0.3f, 32.0f, 10, 30, 30, 0};
     } else {
         // Handle failure to allocate memory
     }
@@ -37,7 +37,7 @@ void updatePlayer(struct Player *player, struct Ball balls[], int nbrOfBalls)
                 moveToPointPlayer(player, toVirtualCoordsVector2(GetMousePosition()));
             }
 
-            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && player->dash->reloadTime == 0)
             {
                 beginDashPlayer(player, toVirtualCoordsVector2(GetMousePosition()));
             }
@@ -49,6 +49,7 @@ void updatePlayer(struct Player *player, struct Ball balls[], int nbrOfBalls)
 
     screenCollisionPlayer(player);
     ballCollisionPlayer(player, balls, nbrOfBalls);
+    if (player->dash->reloadTime > 0) player->dash->reloadTime--;
 }
 
 void moveToPointPlayer(struct Player *player, Vector2 point)
@@ -71,12 +72,14 @@ void moveToPointPlayer(struct Player *player, Vector2 point)
 
 void beginDashPlayer(struct Player *player, Vector2 point)
 {
+    player->state = PLAYER_DASHING;
+    player->dash->reloadTime = player->dash->initReloadTime;
+
     Vector2 direction = Vector2Normalize((Vector2){ player->position.x - point.x, player->position.y - point.y});
     player->dash->targetPos = direction;
     player->dash->targetPos = (Vector2){
             player->position.x - player->dash->targetPos.x * player->dash->distance,
             player->position.y - player->dash->targetPos.y * player->dash->distance };
-    player->state = PLAYER_DASHING;
 
     player->velocity.x = -(float)sign(direction.x);
 }

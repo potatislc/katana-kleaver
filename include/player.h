@@ -30,9 +30,10 @@ struct Dash
     Vector2 targetPos;
     float speed;
     float distance;
-    float startLag;
-    float endLag;
-    float reloadTime;
+    int startLag;
+    int endLag;
+    int initReloadTime;
+    int reloadTime;
 };
 
 void initPlayer(struct Player *player, Vector2 initPos);
