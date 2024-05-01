@@ -17,7 +17,7 @@ void initPlayer(struct Player *player, Vector2 initPos)
     player->dash = (struct Dash *)malloc(sizeof(struct Dash));
     if (player->dash != NULL) {
         // Initialize the allocated memory
-        *player->dash = (struct Dash){0.0f, 0.0f, 0.3f, 64.0f, 0.0f, 0.0f, 0.0f};
+        *player->dash = (struct Dash){0.0f, 0.0f, 0.3f, 32.0f, 0.0f, 0.0f, 0.0f};
     } else {
         // Handle failure to allocate memory
     }
@@ -76,6 +76,8 @@ void beginDashPlayer(struct Player *player, Vector2 point)
             player->position.x - player->dash->targetPos.x * player->dash->distance,
             player->position.y - player->dash->targetPos.y * player->dash->distance };
     player->state = PLAYER_DASHING;
+
+    player->velocity.x = -(float)sign(direction.x);
 }
 
 void dashPlayer(struct Player *player)
@@ -84,10 +86,18 @@ void dashPlayer(struct Player *player)
         Lerp(player->position.x, player->dash->targetPos.x, player->dash->speed),
         Lerp(player->position.y, player->dash->targetPos.y, player->dash->speed) };
 
-    if (Vector2Distance(player->position, player->dash->targetPos) <= 2)
+    if (Vector2Distance(player->position, player->dash->targetPos) <= 2 || !isInsideScreen(*player))
     {
         player->state = PLAYER_MOVING;
     }
+}
+
+bool isInsideScreen(struct Player player)
+{
+    Vector2 clampedPos = {
+            Clamp(player.position.x, player.radius, VIRTUAL_SCREEN_WIDTH - player.radius),
+            Clamp(player.position.y, player.radius, VIRTUAL_SCREEN_HEIGHT - player.radius)};
+    return player.position.x == clampedPos.x && player.position.y == clampedPos.y;
 }
 
 void screenCollisionPlayer(struct Player *player)
