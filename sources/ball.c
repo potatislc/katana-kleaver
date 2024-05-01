@@ -9,6 +9,8 @@ void initBall(struct Ball *ball, Vector2 initPos, float radius)
 {
     ball->speed = (Vector2){ .5f, .5f };
     ball->radius = radius;
+    ball->shadowRadius = radius;
+    ball->shadowOffset = (Vector2){ 4.0f, 4.0f };
 
     ball->colliding = false;
     float colliderScale = .8f;
@@ -87,11 +89,14 @@ void ballCollisionBall(struct Ball *ball, struct Ball balls[], int nbrOfBalls)
     ball->colliding = false;
 }
 
-void drawBall(struct Ball ball, Vector2 shadowOffset, float shadowRadius)
+void drawBall(struct Ball ball)
 {
-    Vector2 ballShadowPos = {ball.position.x + shadowOffset.x, ball.position.y + shadowOffset.y };
-    DrawCircleV(roundVector2(ballShadowPos), ball.radius - shadowRadius, BLACK);
-    // DrawCircleV(ball.position, ball.radius, (ball.colliding) ? MAROON : GREEN);
     Vector2 drawPos = {ball.position.x - ball.textureOffset.x, ball.position.y - ball.textureOffset.y};
     DrawTextureEx(ball.texture, roundVector2(drawPos), 0, ball.textureScale, WHITE);
+}
+
+void drawShadowBall(struct Ball ball)
+{
+    Vector2 ballShadowPos = {ball.position.x + ball.shadowOffset.x, ball.position.y + ball.shadowOffset.y };
+    DrawCircleV(roundVector2(ballShadowPos), ball.shadowRadius, shadowColor);
 }

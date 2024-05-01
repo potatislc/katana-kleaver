@@ -2,6 +2,7 @@
 #include <math.h>
 
 const float screenRatio = (float)SCREEN_WIDTH / (float)VIRTUAL_SCREEN_WIDTH;
+const Color shadowColor = {121, 65, 0, 255};
 
 Vector2 toVirtualCoordsVector2(Vector2 coords)
 {

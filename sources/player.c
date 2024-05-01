@@ -10,6 +10,7 @@ void initPlayer(struct Player *player, Vector2 initPos)
 {
     player->state = PLAYER_MOVING;
     player->texture = LoadTexture("../assets/samurai.png");
+    player->shadowTexture = LoadTexture("../assets/samurai_shadow.png");
     player->position = initPos;
     player->speed = 2;
     player->radius = 6;
@@ -124,8 +125,6 @@ void ballCollisionPlayer(struct Player *player, struct Ball balls[], int nbrOfBa
 
 void drawPlayer(struct Player player)
 {
-    drawPlayerShadow(player);
-
     Vector2 textureOffset = { (float)player.texture.width / 2.0f, (float)player.texture.height / 2.0f };
 
     Rectangle playerRect =
@@ -147,6 +146,6 @@ void drawPlayer(struct Player player)
 
 void drawPlayerShadow(struct Player player)
 {
-    //Vector2 shadowPos = {player.position, }
+    DrawTexture(player.shadowTexture, (int)roundf(player.position.x) - player.texture.width / 2, (int)roundf(player.position.y) - player.texture.height / 2, shadowColor);
     if (player.colliding) DrawCircleV(roundVector2(player.position), (float)player.texture.width / 2, BLACK);
 }

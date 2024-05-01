@@ -13,6 +13,8 @@ struct Ball
     Texture2D texture;
     float textureScale;
     Vector2 textureOffset;
+    Vector2 shadowOffset;
+    float shadowRadius;
 };
 
 void initBall(struct Ball *ball, Vector2 initPos, float radius);
@@ -20,6 +22,7 @@ void setPosBall(struct Ball *ball, Vector2 pos);
 void moveBall(struct Ball *ball);
 void screenCollisionBall(struct Ball *ball);
 void ballCollisionBall(struct Ball *ball, struct Ball balls[], int nbrOfBalls);
-void drawBall(struct Ball ball, Vector2 shadowOffset, float shadowRadius);
+void drawBall(struct Ball ball);
+void drawShadowBall(struct Ball ball);
 
 #endif //MY_RAYLIB_GAME_BALL_H

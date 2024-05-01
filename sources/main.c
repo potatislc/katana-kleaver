@@ -38,9 +38,6 @@ int main(void)
         initBall(&balls[i],(Vector2){ testRadius + testRadius * (float)i * 2.0f, testRadius + testRadius * (float)i * 2.0f },testRadius);
     }
 
-    Vector2 shadowOffset = { 4.0f, 4.0f};
-    float shadowRadius = 1;
-
     bool pause = 0;
     int framesCounter = 0;
 
@@ -75,11 +72,20 @@ int main(void)
 
             // Draw Game World
             BeginMode2D(worldSpaceCamera);
+                // Draw floor
                 DrawTexture(floorTexture, 0, 0, WHITE);
 
+                // Draw Shadows
+                drawPlayerShadow(player);
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
                 {
-                    drawBall(balls[i], shadowOffset, shadowRadius);
+                    drawShadowBall(balls[i]);
+                }
+
+                // Draw characters
+                for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
+                {
+                    drawBall(balls[i]);
                 }
 
                 drawPlayer(player);

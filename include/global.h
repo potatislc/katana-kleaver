@@ -7,10 +7,9 @@
 #define SCREEN_HEIGHT (1280)
 #define VIRTUAL_SCREEN_WIDTH (160)
 #define VIRTUAL_SCREEN_HEIGHT (160)
-#define VIRTUAL_SCREEN_WIDTH_CENTER (128)
-#define VIRTUAL_SCREEN_HEIGHT_CENTER (128)
 
 extern const float screenRatio;
+extern const Color shadowColor;
 
 Vector2 toVirtualCoordsVector2(Vector2 coords);
 Vector2 roundVector2(Vector2 vector);

@@ -20,6 +20,7 @@ struct Player
     float radius;
     int state;
     Texture2D texture;
+    Texture2D shadowTexture;
     bool colliding;
     struct Dash *dash;
 };
