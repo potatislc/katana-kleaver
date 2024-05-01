@@ -23,6 +23,8 @@ int main(void)
 
     Vector2 origin = { 0.0f, 0.0f };
 
+    Texture2D floorTexture = LoadTexture("../assets/floor.png");
+
     struct Player player;
     initPlayer(&player, vScreenCenter);
 
@@ -73,6 +75,8 @@ int main(void)
 
             // Draw Game World
             BeginMode2D(worldSpaceCamera);
+                DrawTexture(floorTexture, 0, 0, WHITE);
+
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
                 {
                     drawBall(balls[i], shadowOffset, shadowRadius);
