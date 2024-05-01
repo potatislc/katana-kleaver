@@ -1,28 +1,49 @@
 #include "player.h"
+#include "raymath.h"
 #include <math.h>
+#include <stdlib.h>
 #include "global.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
 void initPlayer(struct Player *player, Vector2 initPos)
 {
-    Texture2D playerTexture = LoadTexture("../assets/samurai.png");
-    player->texture = playerTexture;
+    player->state = PLAYER_MOVING;
+    player->texture = LoadTexture("../assets/samurai.png");
     player->position = initPos;
     player->speed = 2;
     player->radius = 6;
+
+    player->dash = (struct Dash *)malloc(sizeof(struct Dash));
+    if (player->dash != NULL) {
+        // Initialize the allocated memory
+        *player->dash = (struct Dash){0.0f, 0.0f, 0.3f, 64.0f, 0.0f, 0.0f, 0.0f};
+    } else {
+        // Handle failure to allocate memory
+    }
+
 }
 
 void updatePlayer(struct Player *player, struct Ball balls[], int nbrOfBalls)
 {
-    if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+    switch(player->state)
     {
-        moveToPointPlayer(player, toVirtualCoordsVector2(GetMousePosition()));
-    }
+        case PLAYER_IDLE:
+            break;
+        case PLAYER_MOVING:
+            if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+            {
+                moveToPointPlayer(player, toVirtualCoordsVector2(GetMousePosition()));
+            }
 
-    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-    {
-
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+                beginDashPlayer(player, toVirtualCoordsVector2(GetMousePosition()));
+            }
+            break;
+        case PLAYER_DASHING:
+            dashPlayer(player);
+            break;
     }
 
     screenCollisionPlayer(player);
@@ -45,6 +66,28 @@ void moveToPointPlayer(struct Player *player, Vector2 point)
 
     player->position.x += player->velocity.x;
     player->position.y += player->velocity.y;
+}
+
+void beginDashPlayer(struct Player *player, Vector2 point)
+{
+    Vector2 direction = Vector2Normalize((Vector2){ player->position.x - point.x, player->position.y - point.y});
+    player->dash->targetPos = direction;
+    player->dash->targetPos = (Vector2){
+            player->position.x - player->dash->targetPos.x * player->dash->distance,
+            player->position.y - player->dash->targetPos.y * player->dash->distance };
+    player->state = PLAYER_DASHING;
+}
+
+void dashPlayer(struct Player *player)
+{
+    player->position = (Vector2){
+        Lerp(player->position.x, player->dash->targetPos.x, player->dash->speed),
+        Lerp(player->position.y, player->dash->targetPos.y, player->dash->speed) };
+
+    if (Vector2Distance(player->position, player->dash->targetPos) <= 2)
+    {
+        player->state = PLAYER_MOVING;
+    }
 }
 
 void screenCollisionPlayer(struct Player *player)
