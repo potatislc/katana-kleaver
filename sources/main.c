@@ -77,6 +77,7 @@ int main(void)
 
                 // Draw Shadows
                 drawPlayerShadow(player);
+
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
                 {
                     drawShadowBall(balls[i]);
