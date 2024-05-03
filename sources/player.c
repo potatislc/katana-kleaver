@@ -92,10 +92,20 @@ void dashPlayer(struct Player *player)
         Lerp(player->position.x, player->dash->targetPos.x, player->dash->speed),
         Lerp(player->position.y, player->dash->targetPos.y, player->dash->speed) };
 
+    if (player->colliding)
+    {
+        beginSlicePlayer(player);
+    }
+
     if (Vector2Distance(player->position, player->dash->targetPos) <= 2 || !isInsideScreen(*player))
     {
         player->state = PLAYER_MOVING;
     }
+}
+
+void beginSlicePlayer(struct Player *player)
+{
+    player->state = PLAYER_SLICING;
 }
 
 bool isInsideScreen(struct Player player)
