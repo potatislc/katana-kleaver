@@ -42,6 +42,7 @@ void initPlayer(struct Player *player, Vector2 initPos);
 void updatePlayer(struct Player *player, struct Ball balls[], int nbrOfBalls);
 void moveToPointPlayer(struct Player *player, Vector2 point);
 void beginDashPlayer(struct Player *player, Vector2 direction);
+void lerpToPointPlayer(struct Player *player);
 void dashPlayer(struct Player *player);
 void beginSlicePlayer(struct Player *player);
 void slicePlayer(struct Player *player);

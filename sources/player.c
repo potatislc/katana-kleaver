@@ -47,6 +47,9 @@ void updatePlayer(struct Player *player, struct Ball balls[], int nbrOfBalls)
         case PLAYER_DASHING:
             dashPlayer(player);
             break;
+        case PLAYER_SLICING:
+            slicePlayer(player);
+            break;
     }
 
     screenCollisionPlayer(player);
@@ -86,11 +89,16 @@ void beginDashPlayer(struct Player *player, Vector2 point)
     player->velocity.x = -(float)sign(direction.x);
 }
 
-void dashPlayer(struct Player *player)
+void lerpToPointPlayer(struct Player *player)
 {
     player->position = (Vector2){
-        Lerp(player->position.x, player->dash->targetPos.x, player->dash->speed),
-        Lerp(player->position.y, player->dash->targetPos.y, player->dash->speed) };
+            Lerp(player->position.x, player->dash->targetPos.x, player->dash->speed),
+            Lerp(player->position.y, player->dash->targetPos.y, player->dash->speed) };
+}
+
+void dashPlayer(struct Player *player)
+{
+    lerpToPointPlayer(player);
 
     if (player->colliding)
     {
@@ -105,7 +113,17 @@ void dashPlayer(struct Player *player)
 
 void beginSlicePlayer(struct Player *player)
 {
+    if (player->collidingBall == NULL) return; // Error Handling
+
     player->state = PLAYER_SLICING;
+
+    Vector2 ballPos = player->collidingBall->position;
+    // Player should slice to distance between player and ball * 2
+}
+
+void slicePlayer(struct Player *player)
+{
+
 }
 
 bool isInsideScreen(struct Player player)
