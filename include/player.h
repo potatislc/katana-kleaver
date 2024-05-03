@@ -22,6 +22,7 @@ struct Player
     Texture2D texture;
     Texture2D shadowTexture;
     bool colliding;
+    struct Ball *collidingBall; // Pointer to the ball that you want to slice
     struct Dash *dash;
 };
 

@@ -23,6 +23,8 @@ void initPlayer(struct Player *player, Vector2 initPos)
         // Handle failure to allocate memory
     }
 
+    // Allocate memory for whatever ball that goes here
+    player->collidingBall = (struct Ball *)malloc(sizeof(struct Ball));
 }
 
 void updatePlayer(struct Player *player, struct Ball balls[], int nbrOfBalls)
@@ -120,9 +122,14 @@ void ballCollisionPlayer(struct Player *player, struct Ball balls[], int nbrOfBa
         if (ballDist <= player->radius * player->radius + balls[i].radius * balls[i].radius)
         {
             player->colliding = true;
+            player->collidingBall = &balls[i];
             return;
         }
-        else player->colliding = false;
+        else
+        {
+            player->colliding = false;
+            player->collidingBall = NULL;
+        }
     }
 }
 
@@ -145,10 +152,17 @@ void drawPlayer(struct Player player)
         (Vector2){ player.position.x - textureOffset.x,player.position.y - textureOffset.y },
         WHITE
     );
+
+    if (player.colliding)
+    {
+        if (player.state == PLAYER_DASHING)
+            DrawCircleLinesV(roundVector2(player.position), (float)player.texture.width, BLUE);
+        else
+            DrawCircleLinesV(roundVector2(player.position), (float)player.texture.width / 2, RED);
+    }
 }
 
 void drawPlayerShadow(struct Player player)
 {
     DrawTexture(player.shadowTexture, (int)roundf(player.position.x) - player.texture.width / 2, (int)roundf(player.position.y) - player.texture.height / 2, shadowColor);
-    if (player.colliding) DrawCircleV(roundVector2(player.position), (float)player.texture.width / 2, BLACK);
 }
