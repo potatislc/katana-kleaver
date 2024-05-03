@@ -125,12 +125,10 @@ void ballCollisionPlayer(struct Player *player, struct Ball balls[], int nbrOfBa
             player->collidingBall = &balls[i];
             return;
         }
-        else
-        {
-            player->colliding = false;
-            player->collidingBall = NULL;
-        }
     }
+
+    player->colliding = false;
+    player->collidingBall = NULL;
 }
 
 void drawPlayer(struct Player player)
