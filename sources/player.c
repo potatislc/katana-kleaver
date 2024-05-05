@@ -122,7 +122,7 @@ void beginSlicePlayer(struct Player *player)
 
     Vector2 ballPos = player->collidingBall->position;
     float ballRadius = player->collidingBall->radius;
-    // Player should slice to distance between player and ball * 2
+
     Vector2 distance = {ballPos.x - player->position.x, ballPos.y - player->position.y};
     Vector2 sliceTargetPoint = Vector2Normalize(distance);
     sliceTargetPoint = (Vector2){sliceTargetPoint.x * ballRadius, sliceTargetPoint.y * ballRadius};
