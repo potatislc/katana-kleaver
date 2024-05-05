@@ -39,7 +39,6 @@ int main(void)
     }
 
     bool pause = 0;
-    int framesCounter = 0;
 
     SetTargetFPS(60);
     //----------------------------------------------------------
@@ -51,7 +50,9 @@ int main(void)
         //-----------------------------------------------------
         if (IsKeyPressed(KEY_SPACE)) pause = !pause;
 
-        if (!pause)
+        //if (!pause)
+        // {
+        if (!freezeBalls)
         {
             for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
             {
@@ -59,10 +60,10 @@ int main(void)
                 moveBall(&balls[i]);
                 screenCollisionBall(&balls[i]);
             }
-
-            updatePlayer(&player, balls, NBR_OF_BALLS);
         }
-        else framesCounter++;
+
+        updatePlayer(&player, balls, NBR_OF_BALLS);
+        // {
         //-----------------------------------------------------
 
         // Draw
@@ -99,11 +100,6 @@ int main(void)
 
             // Draw world camera to screen
             DrawTexturePro(target.texture, sourceRec, destRec, origin, 0.0f, WHITE);
-
-            //DrawText("PRESS SPACE to PAUSE BALL MOVEMENT", 10, GetScreenHeight() - 25, 20, LIGHTGRAY);
-
-            // On pause, we draw a blinking message
-            if (pause && ((framesCounter/30)%2)) DrawText("PAUSED", 350, 200, 30, GRAY);
 
             DrawFPS(10, 10);
 

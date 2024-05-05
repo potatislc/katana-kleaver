@@ -10,6 +10,7 @@
 
 extern const float screenRatio;
 extern const Color shadowColor;
+extern bool freezeBalls;
 
 Vector2 toVirtualCoordsVector2(Vector2 coords);
 Vector2 roundVector2(Vector2 vector);

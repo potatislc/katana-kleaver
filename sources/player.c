@@ -119,6 +119,7 @@ void beginSlicePlayer(struct Player *player)
     if (player->collidingBall == NULL) return; // Error Handling
 
     player->state = PLAYER_SLICING;
+    freezeBalls = true;
 
     Vector2 ballPos = player->collidingBall->position;
     float ballRadius = player->collidingBall->radius;
@@ -132,7 +133,10 @@ void beginSlicePlayer(struct Player *player)
 void slicePlayer(struct Player *player)
 {
     if (lerpUntilPointPlayer(player, player->dash->targetPos))
+    {
         player->state = PLAYER_MOVING;
+        freezeBalls = false;
+    }
 }
 
 bool isInsideScreen(struct Player player)
