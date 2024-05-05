@@ -195,6 +195,7 @@ void drawPlayer(struct Player player)
         WHITE
     );
 
+    /*
     if (player.colliding)
     {
         if (player.state == PLAYER_DASHING)
@@ -202,6 +203,7 @@ void drawPlayer(struct Player player)
         else
             DrawCircleLinesV(roundVector2(player.position), (float)player.texture.width / 2, RED);
     }
+    */
 }
 
 void drawSlicePlayer(struct Player player)
@@ -211,9 +213,11 @@ void drawSlicePlayer(struct Player player)
     float distanceLeft = Vector2Distance(player.dash->targetPos, player.position);
     float sliceRatio = distanceLeft / distanceTotal;
 
-    Vector2 dashDirection = {player.dash->targetPos.x - player.dash->startPos.x, player.dash->targetPos.y - player.dash->startPos.y};
-    dashDirection = Vector2Normalize(dashDirection);
-    Vector2 orthogonalDir = {dashDirection.y, dashDirection.x};
+    Vector2 dashDir = {player.dash->targetPos.x - player.dash->startPos.x, player.dash->targetPos.y - player.dash->startPos.y};
+    dashDir = Vector2Normalize(dashDir);
+    float dashDirDegrees = atan2f(dashDir.y, dashDir.x);
+    float tipAngle = PI * .3f;
+    Vector2 orthogonalDir = {cosf(dashDirDegrees + tipAngle), sinf(dashDirDegrees + tipAngle)};
 
     float triangleWidth = sliceRatio * 16;
     Vector2 point1 = player.dash->startPos;
