@@ -30,6 +30,7 @@ struct Player
 struct Dash
 {
     Vector2 targetPos;
+    Vector2 startPos;
     float speed;
     float distance;
     int startLag;
@@ -50,6 +51,7 @@ bool isInsideScreen(struct Player player);
 void screenCollisionPlayer(struct Player *player);
 void ballCollisionPlayer(struct Player *player, struct Ball balls[], int nbrOfBalls);
 void drawPlayer(struct Player player);
+void drawSlicePlayer(struct Player player);
 void drawPlayerShadow(struct Player player);
 
 #endif

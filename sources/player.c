@@ -18,7 +18,7 @@ void initPlayer(struct Player *player, Vector2 initPos)
     player->dash = (struct Dash *)malloc(sizeof(struct Dash));
     if (player->dash != NULL) {
         // Initialize the allocated memory
-        *player->dash = (struct Dash){0.0f, 0.0f, 0.3f, 32.0f, 10, 30, 30, 0};
+        *player->dash = (struct Dash){0.0f, 0.0f, 0.0f, 0.0f, 0.3f, 32.0f, 10, 30, 30, 0};
     } else {
         // Handle failure to allocate memory
     }
@@ -120,6 +120,7 @@ void beginSlicePlayer(struct Player *player)
 
     player->state = PLAYER_SLICING;
     freezeBalls = true;
+    player->dash->startPos = player->position;
 
     Vector2 ballPos = player->collidingBall->position;
     float ballRadius = player->collidingBall->radius;
@@ -174,6 +175,8 @@ void ballCollisionPlayer(struct Player *player, struct Ball balls[], int nbrOfBa
 
 void drawPlayer(struct Player player)
 {
+    if (player.state == PLAYER_SLICING) drawSlicePlayer(player);
+
     Vector2 textureOffset = { (float)player.texture.width / 2.0f, (float)player.texture.height / 2.0f };
 
     Rectangle playerRect =
@@ -199,6 +202,16 @@ void drawPlayer(struct Player player)
         else
             DrawCircleLinesV(roundVector2(player.position), (float)player.texture.width / 2, RED);
     }
+}
+
+void drawSlicePlayer(struct Player player)
+{
+    // Draw a shape from start pos to target pos, width is dependent on distance until slice is finished
+    float distanceTotal = Vector2Distance(player.dash->targetPos, player.dash->startPos);
+    float distanceLeft = Vector2Distance(player.dash->targetPos, player.position);
+    float sliceRatio = distanceLeft / distanceTotal;
+
+    DrawTriangle(player.dash->startPos, player.dash->targetPos, Vector2Zero(), WHITE);
 }
 
 void drawPlayerShadow(struct Player player)
