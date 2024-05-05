@@ -126,7 +126,7 @@ void beginSlicePlayer(struct Player *player)
 
     Vector2 distance = {ballPos.x - player->position.x, ballPos.y - player->position.y};
     Vector2 sliceTargetPoint = Vector2Normalize(distance);
-    sliceTargetPoint = (Vector2){sliceTargetPoint.x * ballRadius, sliceTargetPoint.y * ballRadius};
+    sliceTargetPoint = (Vector2){sliceTargetPoint.x * ballRadius + sliceTargetPoint.x * player->radius, sliceTargetPoint.y * ballRadius + sliceTargetPoint.y * player->radius};
     player->dash->targetPos = (Vector2){ballPos.x + sliceTargetPoint.x, ballPos.y + sliceTargetPoint.y};
 }
 
