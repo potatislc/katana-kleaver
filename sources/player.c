@@ -89,26 +89,29 @@ void beginDashPlayer(struct Player *player, Vector2 point)
     player->velocity.x = -(float)sign(direction.x);
 }
 
-void lerpToPointPlayer(struct Player *player)
+bool lerpUntilPointPlayer(struct Player *player, Vector2 point)
 {
     player->position = (Vector2){
-            Lerp(player->position.x, player->dash->targetPos.x, player->dash->speed),
-            Lerp(player->position.y, player->dash->targetPos.y, player->dash->speed) };
+            Lerp(player->position.x, point.x, player->dash->speed),
+            Lerp(player->position.y, point.y, player->dash->speed) };
+
+    if (Vector2Distance(player->position, point) <= 2 || !isInsideScreen(*player))
+    {
+        return true;
+    }
+
+    return false;
 }
 
 void dashPlayer(struct Player *player)
 {
-    lerpToPointPlayer(player);
-
     if (player->colliding)
     {
         beginSlicePlayer(player);
     }
 
-    if (Vector2Distance(player->position, player->dash->targetPos) <= 2 || !isInsideScreen(*player))
-    {
+    if (lerpUntilPointPlayer(player, player->dash->targetPos))
         player->state = PLAYER_MOVING;
-    }
 }
 
 void beginSlicePlayer(struct Player *player)
@@ -118,12 +121,18 @@ void beginSlicePlayer(struct Player *player)
     player->state = PLAYER_SLICING;
 
     Vector2 ballPos = player->collidingBall->position;
+    float ballRadius = player->collidingBall->radius;
     // Player should slice to distance between player and ball * 2
+    Vector2 distance = {ballPos.x - player->position.x, ballPos.y - player->position.y};
+    Vector2 sliceTargetPoint = Vector2Normalize(distance);
+    sliceTargetPoint = (Vector2){sliceTargetPoint.x * ballRadius, sliceTargetPoint.y * ballRadius};
+    player->dash->targetPos = (Vector2){ballPos.x + sliceTargetPoint.x, ballPos.y + sliceTargetPoint.y};
 }
 
 void slicePlayer(struct Player *player)
 {
-
+    if (lerpUntilPointPlayer(player, player->dash->targetPos))
+        player->state = PLAYER_MOVING;
 }
 
 bool isInsideScreen(struct Player player)
