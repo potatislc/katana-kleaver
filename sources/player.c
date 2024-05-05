@@ -211,7 +211,16 @@ void drawSlicePlayer(struct Player player)
     float distanceLeft = Vector2Distance(player.dash->targetPos, player.position);
     float sliceRatio = distanceLeft / distanceTotal;
 
-    DrawTriangle(player.dash->startPos, player.dash->targetPos, Vector2Zero(), WHITE);
+    Vector2 dashDirection = {player.dash->targetPos.x - player.dash->startPos.x, player.dash->targetPos.y - player.dash->startPos.y};
+    dashDirection = Vector2Normalize(dashDirection);
+    Vector2 orthogonalDir = {dashDirection.y, dashDirection.x};
+
+    float triangleWidth = sliceRatio * 16;
+    Vector2 point1 = player.dash->startPos;
+    Vector2 point2 = Vector2Add(player.dash->targetPos, (Vector2){orthogonalDir.x * triangleWidth, orthogonalDir.y * triangleWidth});
+    Vector2 point3 = Vector2Add(player.dash->targetPos, (Vector2){-orthogonalDir.x * triangleWidth, -orthogonalDir.y * triangleWidth});
+
+    DrawTriangle(point1, point2, point3, WHITE);
 }
 
 void drawPlayerShadow(struct Player player)
