@@ -137,6 +137,7 @@ void slice_player(struct Player *player)
     {
         player->state = PLAYER_MOVING;
         freezeBalls = false;
+        player->dash->reloadTime = 0;
     }
 }
 
