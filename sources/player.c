@@ -25,6 +25,7 @@ void init_player(struct Player *player, Vector2 initPos)
 
     // Allocate memory for whatever ball that goes here
     player->collidingBall = (struct Ball *)malloc(sizeof(struct Ball));
+    player->collidingBallCopy = (struct Ball *)malloc(sizeof(struct Ball));
 }
 
 void update_player(struct Player *player, struct Ball balls[], int nbrOfBalls)
@@ -166,6 +167,7 @@ void ball_collision_player(struct Player *player, struct Ball balls[], int nbrOf
         {
             player->colliding = true;
             player->collidingBall = &balls[i];
+            *player->collidingBallCopy = balls[i];
             return;
         }
     }
@@ -225,7 +227,12 @@ void draw_slice_player(struct Player player)
     Vector2 point2 = Vector2Add(player.dash->targetPos, (Vector2){orthogonalDir.x * triangleWidth, orthogonalDir.y * triangleWidth});
     Vector2 point3 = Vector2Add(player.dash->targetPos, (Vector2){-orthogonalDir.x * triangleWidth, -orthogonalDir.y * triangleWidth});
 
+    // Sword slice triangle
     DrawTriangle(point1, point2, point3, WHITE);
+
+    // Melon exploding
+    Color circleColor = {255, 255, 255, sliceRatio * 255};
+    DrawCircleV(player.collidingBallCopy->position, 32, circleColor);
 }
 
 void draw_player_shadow(struct Player player)

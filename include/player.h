@@ -24,6 +24,7 @@ struct Player
     Texture2D shadowTexture;
     bool colliding;
     struct Ball *collidingBall; // Pointer to the ball that you want to slice
+    struct Ball *collidingBallCopy;
     struct Dash *dash;
 };
 
