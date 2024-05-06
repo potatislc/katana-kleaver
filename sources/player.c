@@ -178,7 +178,6 @@ void ball_collision_player(struct Player *player, struct Ball balls[], int nbrOf
 
 void draw_player(struct Player player)
 {
-    if (player.state == PLAYER_SLICING) draw_slice_player(player);
 
     Vector2 textureOffset = { (float)player.texture.width / 2.0f, (float)player.texture.height / 2.0f };
 
@@ -197,6 +196,8 @@ void draw_player(struct Player player)
         (Vector2){ player.position.x - textureOffset.x,player.position.y - textureOffset.y },
         WHITE
     );
+
+    if (player.state == PLAYER_SLICING) draw_slice_player(player);
 
     /*
     if (player.colliding)
