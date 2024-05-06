@@ -233,7 +233,7 @@ void draw_slice_player(struct Player player)
 
     // Melon exploding
     Color circleColor = {255, 255, 255, sliceRatio * 255};
-    DrawCircleV(player.collidingBallCopy->position, 32, circleColor);
+    DrawCircleV(player.collidingBallCopy->position, player.collidingBallCopy->radius, circleColor);
 }
 
 void draw_player_shadow(struct Player player)
