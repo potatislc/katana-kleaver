@@ -39,19 +39,19 @@ struct Dash
     int reloadTime;
 };
 
-void initPlayer(struct Player *player, Vector2 initPos);
-void updatePlayer(struct Player *player, struct Ball balls[], int nbrOfBalls);
-void moveToPointPlayer(struct Player *player, Vector2 point);
-void beginDashPlayer(struct Player *player, Vector2 direction);
-bool lerpUntilPointPlayer(struct Player *player, Vector2 point);
-void dashPlayer(struct Player *player);
-void beginSlicePlayer(struct Player *player);
-void slicePlayer(struct Player *player);
-bool isInsideScreen(struct Player player);
-void screenCollisionPlayer(struct Player *player);
-void ballCollisionPlayer(struct Player *player, struct Ball balls[], int nbrOfBalls);
-void drawPlayer(struct Player player);
-void drawSlicePlayer(struct Player player);
-void drawPlayerShadow(struct Player player);
+void init_player(struct Player *player, Vector2 initPos);
+void update_player(struct Player *player, struct Ball balls[], int nbrOfBalls);
+void move_to_point_player(struct Player *player, Vector2 point);
+void begin_dash_player(struct Player *player, Vector2 point);
+bool lerp_until_point_player(struct Player *player, Vector2 point);
+void dash_player(struct Player *player);
+void begin_slice_player(struct Player *player);
+void slice_player(struct Player *player);
+bool is_inside_screen(struct Player player);
+void screen_collision_player(struct Player *player);
+void ball_collision_player(struct Player *player, struct Ball balls[], int nbrOfBalls);
+void draw_player(struct Player player);
+void draw_slice_player(struct Player player);
+void draw_player_shadow(struct Player player);
 
 #endif

@@ -12,7 +12,7 @@ extern const float screenRatio;
 extern const Color shadowColor;
 extern bool freezeBalls;
 
-Vector2 toVirtualCoordsVector2(Vector2 coords);
-Vector2 roundVector2(Vector2 vector);
+Vector2 to_virtual_coords_vector2(Vector2 coords);
+Vector2 round_vector2(Vector2 vector);
 
 #endif //MY_RAYLIB_GAME_GLOBAL_H

@@ -26,7 +26,7 @@ int main(void)
     Texture2D floorTexture = LoadTexture("../assets/floor.png");
 
     struct Player player;
-    initPlayer(&player, vScreenCenter);
+    init_player(&player, vScreenCenter);
 
     struct Ball balls[NBR_OF_BALLS];
 
@@ -35,7 +35,9 @@ int main(void)
     for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
     {
         float testRadius = 32.0f;
-        initBall(&balls[i],(Vector2){ testRadius + testRadius * (float)i * 2.0f, testRadius + testRadius * (float)i * 2.0f },testRadius);
+        init_ball(&balls[i],
+                  (Vector2) {testRadius + testRadius * (float) i * 2.0f, testRadius + testRadius * (float) i * 2.0f},
+                  testRadius);
     }
 
     bool pause = 0;
@@ -56,13 +58,13 @@ int main(void)
         {
             for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
             {
-                ballCollisionBall(&balls[i], balls, NBR_OF_BALLS);
-                moveBall(&balls[i]);
-                screenCollisionBall(&balls[i]);
+                ball_collision_ball(&balls[i], balls, NBR_OF_BALLS);
+                move_ball(&balls[i]);
+                screen_collision_ball(&balls[i]);
             }
         }
 
-        updatePlayer(&player, balls, NBR_OF_BALLS);
+        update_player(&player, balls, NBR_OF_BALLS);
         // {
         //-----------------------------------------------------
 
@@ -77,20 +79,20 @@ int main(void)
                 DrawTexture(floorTexture, 0, 0, WHITE);
 
                 // Draw Shadows
-                drawPlayerShadow(player);
+        draw_player_shadow(player);
 
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
                 {
-                    drawShadowBall(balls[i]);
+                    draw_shadow_ball(balls[i]);
                 }
 
                 // Draw characters
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
                 {
-                    drawBall(balls[i]);
+                    draw_ball(balls[i]);
                 }
 
-                drawPlayer(player);
+        draw_player(player);
             EndMode2D();
         EndTextureMode();
 

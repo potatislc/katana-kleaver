@@ -6,7 +6,7 @@
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
-void initPlayer(struct Player *player, Vector2 initPos)
+void init_player(struct Player *player, Vector2 initPos)
 {
     player->state = PLAYER_MOVING;
     player->texture = LoadTexture("../assets/samurai.png");
@@ -27,7 +27,7 @@ void initPlayer(struct Player *player, Vector2 initPos)
     player->collidingBall = (struct Ball *)malloc(sizeof(struct Ball));
 }
 
-void updatePlayer(struct Player *player, struct Ball balls[], int nbrOfBalls)
+void update_player(struct Player *player, struct Ball balls[], int nbrOfBalls)
 {
     switch(player->state)
     {
@@ -36,28 +36,28 @@ void updatePlayer(struct Player *player, struct Ball balls[], int nbrOfBalls)
         case PLAYER_MOVING:
             if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
             {
-                moveToPointPlayer(player, toVirtualCoordsVector2(GetMousePosition()));
+                move_to_point_player(player, to_virtual_coords_vector2(GetMousePosition()));
             }
 
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && player->dash->reloadTime == 0)
             {
-                beginDashPlayer(player, toVirtualCoordsVector2(GetMousePosition()));
+                begin_dash_player(player, to_virtual_coords_vector2(GetMousePosition()));
             }
             break;
         case PLAYER_DASHING:
-            dashPlayer(player);
+            dash_player(player);
             break;
         case PLAYER_SLICING:
-            slicePlayer(player);
+            slice_player(player);
             break;
     }
 
-    screenCollisionPlayer(player);
-    ballCollisionPlayer(player, balls, nbrOfBalls);
+    screen_collision_player(player);
+    ball_collision_player(player, balls, nbrOfBalls);
     if (player->dash->reloadTime > 0) player->dash->reloadTime--;
 }
 
-void moveToPointPlayer(struct Player *player, Vector2 point)
+void move_to_point_player(struct Player *player, Vector2 point)
 {
     Vector2 dist = {point.x - player->position.x, point.y - player->position.y};
     float distLength = sqrtf(dist.x * dist.x + dist.y * dist.y);
@@ -75,12 +75,12 @@ void moveToPointPlayer(struct Player *player, Vector2 point)
     player->position.y += player->velocity.y;
 }
 
-void beginDashPlayer(struct Player *player, Vector2 point)
+void begin_dash_player(struct Player *player, Vector2 point)
 {
     player->state = PLAYER_DASHING;
     player->dash->reloadTime = player->dash->initReloadTime;
 
-    Vector2 direction = Vector2Normalize((Vector2){ player->position.x - point.x, player->position.y - point.y});
+    Vector2 direction = Vector2Normalize((Vector2){player->position.x - point.x, player->position.y - point.y});
     player->dash->targetPos = direction;
     player->dash->targetPos = (Vector2){
             player->position.x - player->dash->targetPos.x * player->dash->distance,
@@ -89,13 +89,13 @@ void beginDashPlayer(struct Player *player, Vector2 point)
     player->velocity.x = -(float)sign(direction.x);
 }
 
-bool lerpUntilPointPlayer(struct Player *player, Vector2 point)
+bool lerp_until_point_player(struct Player *player, Vector2 point)
 {
     player->position = (Vector2){
             Lerp(player->position.x, point.x, player->dash->speed),
             Lerp(player->position.y, point.y, player->dash->speed) };
 
-    if (Vector2Distance(player->position, point) <= 2 || !isInsideScreen(*player))
+    if (Vector2Distance(player->position, point) <= 2 || !is_inside_screen(*player))
     {
         return true;
     }
@@ -103,18 +103,18 @@ bool lerpUntilPointPlayer(struct Player *player, Vector2 point)
     return false;
 }
 
-void dashPlayer(struct Player *player)
+void dash_player(struct Player *player)
 {
     if (player->colliding)
     {
-        beginSlicePlayer(player);
+        begin_slice_player(player);
     }
 
-    if (lerpUntilPointPlayer(player, player->dash->targetPos))
+    if (lerp_until_point_player(player, player->dash->targetPos))
         player->state = PLAYER_MOVING;
 }
 
-void beginSlicePlayer(struct Player *player)
+void begin_slice_player(struct Player *player)
 {
     if (player->collidingBall == NULL) return; // Error Handling
 
@@ -131,16 +131,16 @@ void beginSlicePlayer(struct Player *player)
     player->dash->targetPos = (Vector2){ballPos.x + sliceTargetPoint.x, ballPos.y + sliceTargetPoint.y};
 }
 
-void slicePlayer(struct Player *player)
+void slice_player(struct Player *player)
 {
-    if (lerpUntilPointPlayer(player, player->dash->targetPos))
+    if (lerp_until_point_player(player, player->dash->targetPos))
     {
         player->state = PLAYER_MOVING;
         freezeBalls = false;
     }
 }
 
-bool isInsideScreen(struct Player player)
+bool is_inside_screen(struct Player player)
 {
     Vector2 clampedPos = {
             Clamp(player.position.x, player.radius, VIRTUAL_SCREEN_WIDTH - player.radius),
@@ -148,13 +148,13 @@ bool isInsideScreen(struct Player player)
     return player.position.x == clampedPos.x && player.position.y == clampedPos.y;
 }
 
-void screenCollisionPlayer(struct Player *player)
+void screen_collision_player(struct Player *player)
 {
     player->position.x = fmaxf(player->radius, fminf(player->position.x, VIRTUAL_SCREEN_WIDTH - player->radius));
     player->position.y = fmaxf(player->radius, fminf(player->position.y, VIRTUAL_SCREEN_HEIGHT - player->radius));
 }
 
-void ballCollisionPlayer(struct Player *player, struct Ball balls[], int nbrOfBalls)
+void ball_collision_player(struct Player *player, struct Ball balls[], int nbrOfBalls)
 {
     for (int i = 0; i < nbrOfBalls; i++)
     {
@@ -173,9 +173,9 @@ void ballCollisionPlayer(struct Player *player, struct Ball balls[], int nbrOfBa
     player->collidingBall = NULL;
 }
 
-void drawPlayer(struct Player player)
+void draw_player(struct Player player)
 {
-    if (player.state == PLAYER_SLICING) drawSlicePlayer(player);
+    if (player.state == PLAYER_SLICING) draw_slice_player(player);
 
     Vector2 textureOffset = { (float)player.texture.width / 2.0f, (float)player.texture.height / 2.0f };
 
@@ -201,12 +201,12 @@ void drawPlayer(struct Player player)
         if (player.state == PLAYER_DASHING)
             DrawCircleLinesV(roundVector2(player.position), (float)player.texture.width, BLUE);
         else
-            DrawCircleLinesV(roundVector2(player.position), (float)player.texture.width / 2, RED);
+            DrawCircleLinesV(round_vector2(player.position), (float)player.texture.width / 2, RED);
     }
     */
 }
 
-void drawSlicePlayer(struct Player player)
+void draw_slice_player(struct Player player)
 {
     // Draw a shape from start pos to target pos, width is dependent on distance until slice is finished
     float distanceTotal = Vector2Distance(player.dash->targetPos, player.dash->startPos);
@@ -227,7 +227,7 @@ void drawSlicePlayer(struct Player player)
     DrawTriangle(point1, point2, point3, WHITE);
 }
 
-void drawPlayerShadow(struct Player player)
+void draw_player_shadow(struct Player player)
 {
     DrawTexture(player.shadowTexture, (int)roundf(player.position.x) - player.texture.width / 2, (int)roundf(player.position.y) - player.texture.height / 2, shadowColor);
 }
