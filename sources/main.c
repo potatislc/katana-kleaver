@@ -50,10 +50,8 @@ int main(void)
     {
         // Update
         //-----------------------------------------------------
-        if (IsKeyPressed(KEY_SPACE)) pause = !pause;
+        // if (IsKeyPressed(KEY_SPACE)); // Spawn Ball
 
-        //if (!pause)
-        // {
         if (!freezeBalls)
         {
             for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
@@ -65,7 +63,6 @@ int main(void)
         }
 
         update_player(&player, balls, NBR_OF_BALLS);
-        // {
         //-----------------------------------------------------
 
         // Draw
@@ -79,12 +76,15 @@ int main(void)
                 DrawTexture(floorTexture, 0, 0, WHITE);
 
                 // Draw Shadows
-        draw_player_shadow(player);
+                draw_player_shadow(player);
 
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
                 {
                     draw_shadow_ball(balls[i]);
                 }
+
+                // Draw black header
+                DrawRectangle(0, 0, VIRTUAL_SCREEN_WIDTH, 16, BLACK);
 
                 // Draw characters
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
@@ -92,7 +92,7 @@ int main(void)
                     draw_ball(balls[i]);
                 }
 
-        draw_player(player);
+                draw_player(player);
             EndMode2D();
         EndTextureMode();
 
