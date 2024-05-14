@@ -9,8 +9,8 @@
 void init_player(Player *player, Vector2 initPos)
 {
     player->state = PLAYER_MOVING;
-    player->texture = LoadTexture("../assets/samurai.png");
-    player->shadowTexture = LoadTexture("../assets/samurai_shadow.png");
+    player->texture = LoadTexture("../assets/samurai/samurai.png");
+    player->shadowTexture = LoadTexture("../assets/samurai/samurai_shadow.png");
     player->position = initPos;
     player->speed = 2;
     player->radius = 6;
