@@ -130,6 +130,8 @@ void begin_slice_player(Player *player)
     Vector2 sliceTargetPoint = Vector2Normalize(distance);
     sliceTargetPoint = (Vector2){sliceTargetPoint.x * ballRadius + sliceTargetPoint.x * player->radius, sliceTargetPoint.y * ballRadius + sliceTargetPoint.y * player->radius};
     player->dash->targetPos = (Vector2){ballPos.x + sliceTargetPoint.x, ballPos.y + sliceTargetPoint.y};
+
+    player->velocity.x = (float)sign(sliceTargetPoint.x); // So player faces in the correct direction
 }
 
 void slice_player(Player *player)
