@@ -13,7 +13,7 @@ enum PlayerStates
     PLAYER_DEAD = 4
 };
 
-struct Player
+typedef struct Player
 {
     Vector2 position;
     Vector2 velocity;
@@ -23,12 +23,13 @@ struct Player
     Texture2D texture;
     Texture2D shadowTexture;
     bool colliding;
-    struct Ball *collidingBall; // Pointer to the ball that you want to slice
-    struct Ball *collidingBallCopy;
+    Ball *collidingBall; // Pointer to the ball that you want to slice
+    Ball *collidingBallCopy;
     struct Dash *dash;
-};
+} Player;
+// typedef renames 'struct Player' to simply 'Player'.
 
-struct Dash
+typedef struct Dash
 {
     Vector2 targetPos;
     Vector2 startPos;
@@ -38,21 +39,21 @@ struct Dash
     int endLag;
     int initReloadTime;
     int reloadTime;
-};
+} Dash;
 
-void init_player(struct Player *player, Vector2 initPos);
-void update_player(struct Player *player, struct Ball balls[], int nbrOfBalls);
-void move_to_point_player(struct Player *player, Vector2 point);
-void begin_dash_player(struct Player *player, Vector2 point);
-bool lerp_until_point_player(struct Player *player, Vector2 point);
-void dash_player(struct Player *player);
-void begin_slice_player(struct Player *player);
-void slice_player(struct Player *player);
-bool is_inside_screen(struct Player player);
-void screen_collision_player(struct Player *player);
-void ball_collision_player(struct Player *player, struct Ball balls[], int nbrOfBalls);
-void draw_player(struct Player player);
-void draw_slice_player(struct Player player);
-void draw_player_shadow(struct Player player);
+void init_player(Player *player, Vector2 initPos);
+void update_player(Player *player, Ball balls[], int nbrOfBalls);
+void move_to_point_player(Player *player, Vector2 point);
+void begin_dash_player(Player *player, Vector2 point);
+bool lerp_until_point_player(Player *player, Vector2 point);
+void dash_player(Player *player);
+void begin_slice_player(Player *player);
+void slice_player(Player *player);
+bool is_inside_screen(Player player);
+void screen_collision_player(Player *player);
+void ball_collision_player(Player *player, Ball balls[], int nbrOfBalls);
+void draw_player(Player player);
+void draw_slice_player(Player player);
+void draw_player_shadow(Player player);
 
 #endif

@@ -25,10 +25,10 @@ int main(void)
 
     Texture2D floorTexture = LoadTexture("../assets/floor.png");
 
-    struct Player player;
+    Player player;
     init_player(&player, vScreenCenter);
 
-    struct Ball balls[NBR_OF_BALLS];
+    Ball balls[NBR_OF_BALLS];
 
     // ToggleFullscreen(); -- Wtfff
 
@@ -84,7 +84,7 @@ int main(void)
                 }
 
                 // Draw black header
-                DrawRectangle(0, 0, VIRTUAL_SCREEN_WIDTH, 16, BLACK);
+                //DrawRectangle(0, 0, VIRTUAL_SCREEN_WIDTH, 16, BLACK);
 
                 // Draw characters
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)

@@ -5,7 +5,7 @@
 // #define sign(a) ((a > 0) ? 1 : ((a < 0) ? -1 : 0))
 #define sign(a) ((a > 0) ? 1 : -1)
 
-void init_ball(struct Ball *ball, Vector2 initPos, float radius)
+void init_ball(Ball *ball, Vector2 initPos, float radius)
 {
     ball->speed = (Vector2){ .5f, .5f };
     ball->radius = radius;
@@ -24,19 +24,19 @@ void init_ball(struct Ball *ball, Vector2 initPos, float radius)
                                      ((float)ball->texture.height / 2.0f) * ball->textureScale };
 }
 
-void set_pos_ball(struct Ball *ball, Vector2 pos)
+void set_pos_ball(Ball *ball, Vector2 pos)
 {
     ball->position = pos;
     ball->collisionBox.x = pos.x - ball->radius;
     ball->collisionBox.y = pos.y - ball->radius;
 }
 
-void move_ball(struct Ball *ball)
+void move_ball(Ball *ball)
 {
     set_pos_ball(ball, (Vector2) {ball->position.x + ball->speed.x, ball->position.y + ball->speed.y});
 }
 
-void screen_collision_ball(struct Ball *ball)
+void screen_collision_ball(Ball *ball)
 {
     if ((ball->position.x >= (VIRTUAL_SCREEN_WIDTH - ball->radius)) || (ball->position.x <= ball->radius)) ball->speed.x *= -1.0f;
     if ((ball->position.y >= (VIRTUAL_SCREEN_HEIGHT - ball->radius)) || (ball->position.y <= ball->radius)) ball->speed.y *= -1.0f;
@@ -44,7 +44,7 @@ void screen_collision_ball(struct Ball *ball)
     ball->position.y = fmaxf(ball->radius, fminf(ball->position.y, VIRTUAL_SCREEN_HEIGHT - ball->radius));
 }
 
-void ball_collision_ball(struct Ball *ball, struct Ball balls[], int nbrOfBalls)
+void ball_collision_ball(Ball *ball, Ball balls[], int nbrOfBalls)
 {
     for (int i = 0; i < nbrOfBalls; i++)
     {
@@ -89,13 +89,13 @@ void ball_collision_ball(struct Ball *ball, struct Ball balls[], int nbrOfBalls)
     ball->colliding = false;
 }
 
-void draw_ball(struct Ball ball)
+void draw_ball(Ball ball)
 {
     Vector2 drawPos = {ball.position.x - ball.textureOffset.x, ball.position.y - ball.textureOffset.y};
     DrawTextureEx(ball.texture, round_vector2(drawPos), 0, ball.textureScale, WHITE);
 }
 
-void draw_shadow_ball(struct Ball ball)
+void draw_shadow_ball(Ball ball)
 {
     Vector2 ballShadowPos = {ball.position.x + ball.shadowOffset.x, ball.position.y + ball.shadowOffset.y };
     DrawCircleV(round_vector2(ballShadowPos), ball.shadowRadius, shadowColor);

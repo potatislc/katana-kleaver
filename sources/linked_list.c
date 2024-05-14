@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include "linked_list.h"
 
-struct ListNode* create_list_node(void* data)
+ListNode* create_list_node(void* data)
 {
-    struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
+    ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
     if (newNode == NULL)
     {
         fprintf(stderr, "Memory allocation failed\n");
@@ -16,16 +16,16 @@ struct ListNode* create_list_node(void* data)
     return newNode;
 }
 
-void push_list_node(struct ListNode** headRef, void* newData)
+void push_list_node(ListNode** headRef, void* newData)
 {
-    struct ListNode* newNode = create_list_node(newData);
+    ListNode* newNode = create_list_node(newData);
     newNode->next = *headRef;
     *headRef = newNode;
 }
 
-void delete_list_node(struct ListNode** headRef, void* key)
+void delete_list_node(ListNode** headRef, void* key)
 {
-    struct ListNode *temp = *headRef, *prev;
+    ListNode *temp = *headRef, *prev;
 
     if (temp != NULL && temp->data == key)
     {
