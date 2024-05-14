@@ -6,7 +6,7 @@
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
-void init_player( Player *player, Vector2 initPos)
+void init_player(Player *player, Vector2 initPos)
 {
     player->state = PLAYER_MOVING;
     player->texture = LoadTexture("../assets/samurai.png");
