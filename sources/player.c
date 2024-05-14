@@ -20,7 +20,7 @@ void init_player( Player *player, Vector2 initPos)
         // Initialize the allocated memory
         *player->dash = ( Dash){0.0f, 0.0f, 0.0f, 0.0f, 0.3f, 32.0f, 10, 30, 30, 0};
     } else {
-        // Handle failure to allocate memory
+        // Handle failure to allocate memory IDK :/
     }
 
     // Allocate memory for whatever ball that goes here
