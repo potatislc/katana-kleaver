@@ -52,6 +52,11 @@ void slice_player(Player *player);
 bool is_inside_screen(Player player);
 void screen_collision_player(Player *player);
 void ball_collision_player(Player *player, Ball balls[], int nbrOfBalls);
+
+// I'm calling player by value instead of by reference in the draw functions
+// Because they are not meant to modify any of the data in the actual player struct, only read
+// Might be slower than calling them by reference because I copy the values into the function?
+
 void draw_player(Player player);
 void draw_slice_player(Player player);
 void draw_player_shadow(Player player);
