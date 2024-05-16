@@ -6,7 +6,7 @@
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
-void init_player(Player *player, Vector2 initPos)
+void PlayerInit(Player *player, Vector2 initPos)
 {
     player->state = PLAYER_MOVING;
     player->texture = LoadTexture("../assets/samurai/samurai.png");
@@ -28,7 +28,7 @@ void init_player(Player *player, Vector2 initPos)
     player->collidingBallCopy = (Ball *)malloc(sizeof(Ball));
 }
 
-void update_player(Player *player, Ball balls[], int nbrOfBalls)
+void PlayerUpdate(Player *player, Ball balls[], int nbrOfBalls)
 {
     switch(player->state)
     {
@@ -37,28 +37,28 @@ void update_player(Player *player, Ball balls[], int nbrOfBalls)
         case PLAYER_MOVING:
             if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
             {
-                move_to_point_player(player, to_virtual_coords_vector2(GetMousePosition()));
+                PlayerMoveToPoint(player, to_virtual_coords_vector2(GetMousePosition()));
             }
 
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && player->dash->reloadTime == 0)
             {
-                begin_dash_player(player, to_virtual_coords_vector2(GetMousePosition()));
+                PlayerBeginDash(player, to_virtual_coords_vector2(GetMousePosition()));
             }
             break;
         case PLAYER_DASHING:
-            dash_player(player);
+            PlayerDash(player);
             break;
         case PLAYER_SLICING:
-            slice_player(player);
+            PlayerSlice(player);
             break;
     }
 
-    screen_collision_player(player);
-    ball_collision_player(player, balls, nbrOfBalls);
+    PlayerCollisionScreen(player);
+    PlayerCollisionBall(player, balls, nbrOfBalls);
     if (player->dash->reloadTime > 0) player->dash->reloadTime--;
 }
 
-void move_to_point_player(Player *player, Vector2 point)
+void PlayerMoveToPoint(Player *player, Vector2 point)
 {
     Vector2 dist = {point.x - player->position.x, point.y - player->position.y};
     float distLength = sqrtf(dist.x * dist.x + dist.y * dist.y);
@@ -76,7 +76,7 @@ void move_to_point_player(Player *player, Vector2 point)
     player->position.y += player->velocity.y;
 }
 
-void begin_dash_player(Player *player, Vector2 point)
+void PlayerBeginDash(Player *player, Vector2 point)
 {
     player->state = PLAYER_DASHING;
     player->dash->reloadTime = player->dash->initReloadTime;
@@ -90,13 +90,13 @@ void begin_dash_player(Player *player, Vector2 point)
     player->velocity.x = -(float)sign(direction.x);
 }
 
-bool lerp_until_point_player(Player *player, Vector2 point)
+bool PlayerLerpUntilPoint(Player *player, Vector2 point)
 {
     player->position = (Vector2){
             Lerp(player->position.x, point.x, player->dash->speed),
             Lerp(player->position.y, point.y, player->dash->speed) };
 
-    if (Vector2Distance(player->position, point) <= 2 || !is_inside_screen(*player))
+    if (Vector2Distance(player->position, point) <= 2 || !IsInsideScreen(*player))
     {
         return true;
     }
@@ -104,18 +104,18 @@ bool lerp_until_point_player(Player *player, Vector2 point)
     return false;
 }
 
-void dash_player(Player *player)
+void PlayerDash(Player *player)
 {
     if (player->colliding)
     {
-        begin_slice_player(player);
+        PlayerBeginSlice(player);
     }
 
-    if (lerp_until_point_player(player, player->dash->targetPos))
+    if (PlayerLerpUntilPoint(player, player->dash->targetPos))
         player->state = PLAYER_MOVING;
 }
 
-void begin_slice_player(Player *player)
+void PlayerBeginSlice(Player *player)
 {
     if (player->collidingBall == NULL) return; // Error Handling
 
@@ -134,9 +134,9 @@ void begin_slice_player(Player *player)
     player->velocity.x = (float)sign(sliceTargetPoint.x); // So player faces in the correct direction
 }
 
-void slice_player(Player *player)
+void PlayerSlice(Player *player)
 {
-    if (lerp_until_point_player(player, player->dash->targetPos))
+    if (PlayerLerpUntilPoint(player, player->dash->targetPos))
     {
         player->state = PLAYER_MOVING;
         freezeBalls = false;
@@ -144,7 +144,7 @@ void slice_player(Player *player)
     }
 }
 
-bool is_inside_screen(Player player)
+bool IsInsideScreen(Player player)
 {
     Vector2 clampedPos = {
             Clamp(player.position.x, player.radius, VIRTUAL_SCREEN_WIDTH - player.radius),
@@ -152,13 +152,13 @@ bool is_inside_screen(Player player)
     return player.position.x == clampedPos.x && player.position.y == clampedPos.y;
 }
 
-void screen_collision_player(Player *player)
+void PlayerCollisionScreen(Player *player)
 {
     player->position.x = fmaxf(player->radius, fminf(player->position.x, VIRTUAL_SCREEN_WIDTH - player->radius));
     player->position.y = fmaxf(player->radius, fminf(player->position.y, VIRTUAL_SCREEN_HEIGHT - player->radius));
 }
 
-void ball_collision_player(Player *player, Ball balls[], int nbrOfBalls)
+void PlayerCollisionBall(Player *player, Ball balls[], int nbrOfBalls)
 {
     for (int i = 0; i < nbrOfBalls; i++)
     {
@@ -178,7 +178,7 @@ void ball_collision_player(Player *player, Ball balls[], int nbrOfBalls)
     player->collidingBall = NULL;
 }
 
-void draw_player(Player player)
+void PlayerDraw(Player player)
 {
     Vector2 textureOffset = { (float)player.texture.width / 2.0f, (float)player.texture.height / 2.0f };
 
@@ -198,7 +198,7 @@ void draw_player(Player player)
         WHITE
     );
 
-    if (player.state == PLAYER_SLICING) draw_slice_player(player);
+    if (player.state == PLAYER_SLICING) PlayerDrawSlice(player);
 
     /*
     if (player.colliding)
@@ -211,7 +211,7 @@ void draw_player(Player player)
     */
 }
 
-void draw_slice_player(Player player)
+void PlayerDrawSlice(Player player)
 {
     // Draw a shape from start pos to target pos, width is dependent on distance until slice is finished
     float distanceTotal = Vector2Distance(player.dash->targetPos, player.dash->startPos);
@@ -237,7 +237,7 @@ void draw_slice_player(Player player)
     DrawCircleV(player.collidingBallCopy->position, player.collidingBallCopy->radius, circleColor);
 }
 
-void draw_player_shadow(Player player)
+void PlayerDrawShadow(Player player)
 {
     DrawTexture(player.shadowTexture, (int)roundf(player.position.x) - player.texture.width / 2, (int)roundf(player.position.y) - player.texture.height / 2, shadowColor);
 }

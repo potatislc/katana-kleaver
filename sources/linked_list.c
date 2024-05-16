@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "linked_list.h"
 
-ListNode* create_list_node(void* data)
+ListNode* ListNodeCreate(void* data)
 {
     ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
     if (newNode == NULL)
@@ -16,9 +16,9 @@ ListNode* create_list_node(void* data)
     return newNode;
 }
 
-void push_list_node(ListNode** headRef, void* newData)
+void ListNodePush(ListNode** headRef, void* newData)
 {
-    ListNode* newNode = create_list_node(newData);
+    ListNode* newNode = ListNodeCreate(newData);
     newNode->next = *headRef;
     *headRef = newNode;
 }

@@ -5,7 +5,7 @@
 // #define sign(a) ((a > 0) ? 1 : ((a < 0) ? -1 : 0))
 #define sign(a) ((a > 0) ? 1 : -1)
 
-void init_ball(Ball *ball, Vector2 initPos, float radius)
+void BallInit(Ball *ball, Vector2 initPos, float radius)
 {
     ball->speed = (Vector2){ .5f, .5f };
     ball->radius = radius;
@@ -16,7 +16,7 @@ void init_ball(Ball *ball, Vector2 initPos, float radius)
     float colliderScale = .8f;
     ball->collisionBox = (Rectangle){ 0, 0, ball->radius * 2 * colliderScale, ball->radius * 2 * colliderScale};
 
-    set_pos_ball(ball, initPos);
+    BallSetPosition(ball, initPos);
 
     ball->texture = LoadTexture("../assets/melon_big.png");
     ball->textureScale = (ball->radius * 2) / (float)ball->texture.width;
@@ -24,19 +24,19 @@ void init_ball(Ball *ball, Vector2 initPos, float radius)
                                      ((float)ball->texture.height / 2.0f) * ball->textureScale };
 }
 
-void set_pos_ball(Ball *ball, Vector2 pos)
+void BallSetPosition(Ball *ball, Vector2 pos)
 {
     ball->position = pos;
     ball->collisionBox.x = pos.x - ball->radius;
     ball->collisionBox.y = pos.y - ball->radius;
 }
 
-void move_ball(Ball *ball)
+void BallMove(Ball *ball)
 {
-    set_pos_ball(ball, (Vector2) {ball->position.x + ball->speed.x, ball->position.y + ball->speed.y});
+    BallSetPosition(ball, (Vector2) {ball->position.x + ball->speed.x, ball->position.y + ball->speed.y});
 }
 
-void screen_collision_ball(Ball *ball)
+void BallCollisionScreen(Ball *ball)
 {
     if ((ball->position.x >= (VIRTUAL_SCREEN_WIDTH - ball->radius)) || (ball->position.x <= ball->radius)) ball->speed.x *= -1.0f;
     if ((ball->position.y >= (VIRTUAL_SCREEN_HEIGHT - ball->radius)) || (ball->position.y <= ball->radius)) ball->speed.y *= -1.0f;
@@ -44,7 +44,7 @@ void screen_collision_ball(Ball *ball)
     ball->position.y = fmaxf(ball->radius, fminf(ball->position.y, VIRTUAL_SCREEN_HEIGHT - ball->radius));
 }
 
-void ball_collision_ball(Ball *ball, Ball balls[], int nbrOfBalls)
+void BallCollisionBall(Ball *ball, Ball balls[], int nbrOfBalls)
 {
     for (int i = 0; i < nbrOfBalls; i++)
     {
@@ -67,8 +67,8 @@ void ball_collision_ball(Ball *ball, Ball balls[], int nbrOfBalls)
 
         while (CheckCollisionRecs(ball->collisionBox, balls[i].collisionBox))
         {
-            set_pos_ball(ball, (Vector2) {ball->position.x + signDist.x, ball->position.y + signDist.y});
-            set_pos_ball(&balls[i], (Vector2) {balls[i].position.x - signDist.x, balls[i].position.y - signDist.y});
+            BallSetPosition(ball, (Vector2) {ball->position.x + signDist.x, ball->position.y + signDist.y});
+            BallSetPosition(&balls[i], (Vector2) {balls[i].position.x - signDist.x, balls[i].position.y - signDist.y});
 
             if (fabsf(dist.x) > fabsf(dist.y))
             {
@@ -89,13 +89,13 @@ void ball_collision_ball(Ball *ball, Ball balls[], int nbrOfBalls)
     ball->colliding = false;
 }
 
-void draw_ball(Ball ball)
+void BallDraw(Ball ball)
 {
     Vector2 drawPos = {ball.position.x - ball.textureOffset.x, ball.position.y - ball.textureOffset.y};
     DrawTextureEx(ball.texture, round_vector2(drawPos), 0, ball.textureScale, WHITE);
 }
 
-void draw_shadow_ball(Ball ball)
+void BallDrawShadow(Ball ball)
 {
     Vector2 ballShadowPos = {ball.position.x + ball.shadowOffset.x, ball.position.y + ball.shadowOffset.y };
     DrawCircleV(round_vector2(ballShadowPos), ball.shadowRadius, shadowColor);

@@ -17,12 +17,12 @@ typedef struct Ball
     float shadowRadius;
 } Ball;
 
-void init_ball(Ball *ball, Vector2 initPos, float radius);
-void set_pos_ball(Ball *ball, Vector2 pos);
-void move_ball(Ball *ball);
-void screen_collision_ball(Ball *ball);
-void ball_collision_ball(Ball *ball, Ball balls[], int nbrOfBalls);
-void draw_ball(Ball ball);
-void draw_shadow_ball(Ball ball);
+void BallInit(Ball *ball, Vector2 initPos, float radius);
+void BallSetPosition(Ball *ball, Vector2 pos);
+void BallMove(Ball *ball);
+void BallCollisionScreen(Ball *ball);
+void BallCollisionBall(Ball *ball, Ball balls[], int nbrOfBalls);
+void BallDraw(Ball ball);
+void BallDrawShadow(Ball ball);
 
 #endif //MY_RAYLIB_GAME_BALL_H

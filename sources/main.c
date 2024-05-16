@@ -26,7 +26,7 @@ int main(void)
     Texture2D floorTexture = LoadTexture("../assets/floor.png");
 
     Player player;
-    init_player(&player, vScreenCenter);
+    PlayerInit(&player, vScreenCenter);
 
     Ball balls[NBR_OF_BALLS];
 
@@ -35,9 +35,9 @@ int main(void)
     for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
     {
         float testRadius = 32.0f;
-        init_ball(&balls[i],
-                  (Vector2) {testRadius + testRadius * (float) i * 2.0f, testRadius + testRadius * (float) i * 2.0f},
-                  testRadius);
+        BallInit(&balls[i],
+                 (Vector2) {testRadius + testRadius * (float) i * 2.0f, testRadius + testRadius * (float) i * 2.0f},
+                 testRadius);
     }
 
     bool pause = 0;
@@ -56,13 +56,13 @@ int main(void)
         {
             for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
             {
-                ball_collision_ball(&balls[i], balls, NBR_OF_BALLS);
-                move_ball(&balls[i]);
-                screen_collision_ball(&balls[i]);
+                BallCollisionBall(&balls[i], balls, NBR_OF_BALLS);
+                BallMove(&balls[i]);
+                BallCollisionScreen(&balls[i]);
             }
         }
 
-        update_player(&player, balls, NBR_OF_BALLS);
+        PlayerUpdate(&player, balls, NBR_OF_BALLS);
         //-----------------------------------------------------
 
         // Draw
@@ -76,11 +76,11 @@ int main(void)
                 DrawTexture(floorTexture, 0, 0, WHITE);
 
                 // Draw Shadows
-                draw_player_shadow(player);
+        PlayerDrawShadow(player);
 
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
                 {
-                    draw_shadow_ball(balls[i]);
+                    BallDrawShadow(balls[i]);
                 }
 
                 // Draw black header
@@ -89,10 +89,10 @@ int main(void)
                 // Draw characters
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
                 {
-                    draw_ball(balls[i]);
+                    BallDraw(balls[i]);
                 }
 
-                draw_player(player);
+        PlayerDraw(player);
             EndMode2D();
         EndTextureMode();
 

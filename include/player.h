@@ -41,19 +41,20 @@ typedef struct Dash
     int reloadTime;
 } Dash;
 
-void init_player(Player *player, Vector2 initPos);
-void update_player(Player *player, Ball balls[], int nbrOfBalls);
-void move_to_point_player(Player *player, Vector2 point);
-void begin_dash_player(Player *player, Vector2 point);
-bool lerp_until_point_player(Player *player, Vector2 point);
-void dash_player(Player *player);
-void begin_slice_player(Player *player);
-void slice_player(Player *player);
-bool is_inside_screen(Player player);
-void screen_collision_player(Player *player);
-void ball_collision_player(Player *player, Ball balls[], int nbrOfBalls);
-void draw_player(Player player);
-void draw_slice_player(Player player);
-void draw_player_shadow(Player player);
+void PlayerInit(Player *player, Vector2 initPos);
+void PlayerUpdate(Player *player, Ball balls[], int nbrOfBalls);
+void PlayerMoveToPoint(Player *player, Vector2 point);
+void PlayerBeginDash(Player *player, Vector2 point);
+bool PlayerLerpUntilPoint(Player *player, Vector2 point);
+void PlayerDash(Player *player);
+void PlayerBeginSlice(Player *player);
+void PlayerSlice(Player *player);
+bool IsInsideScreen(Player player);
+void PlayerCollisionScreen(Player *player);
+void PlayerCollisionBall(Player *player, Ball balls[], int nbrOfBalls);
+
+void PlayerDraw(Player player);
+void PlayerDrawSlice(Player player);
+void PlayerDrawShadow(Player player);
 
 #endif
