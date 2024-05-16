@@ -1,5 +1,5 @@
-#ifndef MY_RAYLIB_GAME_LINKED_LIST_H
-#define MY_RAYLIB_GAME_LINKED_LIST_H
+#ifndef BALL_GAME_LINKED_LIST_H
+#define BALL_GAME_LINKED_LIST_H
 
 #include <stdlib.h>
 #include "ball.h"
@@ -17,4 +17,4 @@ void ListNodePush(ListNode** headRef, void* newData); // Pushes that node to the
 void ListNodeRemove(ListNode** headRef, void* key);
 void ListNodePrint(ListNode* node);
 
-#endif //MY_RAYLIB_GAME_LINKED_LIST_H
+#endif //BALL_GAME_LINKED_LIST_H

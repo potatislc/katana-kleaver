@@ -1,5 +1,5 @@
-#ifndef MY_RAYLIB_GAME_GLOBAL_H
-#define MY_RAYLIB_GAME_GLOBAL_H
+#ifndef BALL_GAME_GLOBAL_H
+#define BALL_GAME_GLOBAL_H
 
 #include "raylib.h"
 
@@ -15,4 +15,4 @@ extern bool freezeBalls;
 Vector2 to_virtual_coords_vector2(Vector2 coords);
 Vector2 round_vector2(Vector2 vector);
 
-#endif //MY_RAYLIB_GAME_GLOBAL_H
+#endif //BALL_GAME_GLOBAL_H

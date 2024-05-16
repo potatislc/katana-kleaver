@@ -76,7 +76,7 @@ int main(void)
                 DrawTexture(floorTexture, 0, 0, WHITE);
 
                 // Draw Shadows
-        PlayerDrawShadow(player);
+                PlayerDrawShadow(player);
 
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
                 {

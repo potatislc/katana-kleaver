@@ -1,5 +1,5 @@
-#ifndef MY_RAYLIB_GAME_PLAYER_H
-#define MY_RAYLIB_GAME_PLAYER_H
+#ifndef BALL_GAME_PLAYER_H
+#define BALL_GAME_PLAYER_H
 
 #include "raylib.h"
 #include "ball.h"

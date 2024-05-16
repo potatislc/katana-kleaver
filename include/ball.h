@@ -1,5 +1,5 @@
-#ifndef MY_RAYLIB_GAME_BALL_H
-#define MY_RAYLIB_GAME_BALL_H
+#ifndef BALL_GAME_BALL_H
+#define BALL_GAME_BALL_H
 
 #include "raylib.h"
 
@@ -25,4 +25,4 @@ void BallCollisionBall(Ball *ball, Ball balls[], int nbrOfBalls);
 void BallDraw(Ball ball);
 void BallDrawShadow(Ball ball);
 
-#endif //MY_RAYLIB_GAME_BALL_H
+#endif //BALL_GAME_BALL_H
