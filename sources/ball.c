@@ -89,6 +89,21 @@ void BallCollisionBall(Ball *ball, Ball balls[], int nbrOfBalls)
     ball->colliding = false;
 }
 
+/*
+void BallCollisionBall(Ball *ball, ListNode* ballHead)
+{
+    ListNode* currentBall = ballHead;
+
+    while(currentBall->next != NULL)
+    {
+        if (ball != (Ball*)currentBall->data)
+        {
+            continue;
+        }
+    }
+}
+*/
+
 void BallDraw(Ball ball)
 {
     Vector2 drawPos = {ball.position.x - ball.textureOffset.x, ball.position.y - ball.textureOffset.y};

@@ -7,7 +7,7 @@
 
 #define WINDOW_TITLE "Ball Game"
 
-#define NBR_OF_BALLS (2)
+#define NBR_OF_BALLS (0)
 
 int main(void)
 {
@@ -33,7 +33,7 @@ int main(void)
     Ball balls[NBR_OF_BALLS];
 
     // Linked list of balls
-    ListNode *ballsHead = NULL;
+    ListNode *ballHead = NULL;
 
     // ToggleFullscreen(); -- Wtfff
 
@@ -61,10 +61,10 @@ int main(void)
                      (Vector2) {VIRTUAL_SCREEN_WIDTH/2 - testRadius/2, VIRTUAL_SCREEN_HEIGHT/2 - testRadius/2},
                      testRadius);
 
-            ListNodePush(&ballsHead, newBall);
+            ListNodePush(&ballHead, newBall);
 
             int ballAmount = 0;
-            ListNode* currentBall = ballsHead;
+            ListNode* currentBall = ballHead;
             while (currentBall != NULL)
             {
                 ballAmount++;
@@ -87,7 +87,7 @@ int main(void)
             }
 
             // Updating linked list of balls
-            ListNode* currentBall = ballsHead;
+            ListNode* currentBall = ballHead;
             while (currentBall != NULL)
             {
                 // BallCollisionBall(&balls[i], balls, NBR_OF_BALLS);
@@ -97,7 +97,7 @@ int main(void)
             }
         }
 
-        PlayerUpdate(player, balls, NBR_OF_BALLS);
+        PlayerUpdate(player, ballHead);
         //-----------------------------------------------------
 
         // Draw
@@ -128,7 +128,7 @@ int main(void)
                     BallDraw(balls[i]);
                 }
 
-                ListNode* currentBall = ballsHead;
+                ListNode* currentBall = ballHead;
                 while (currentBall != NULL)
                 {
                     BallDraw(*(Ball*)currentBall->data);

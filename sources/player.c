@@ -28,7 +28,7 @@ void PlayerInit(Player *player, Vector2 initPos)
     player->collidingBallCopy = (Ball *)malloc(sizeof(Ball));
 }
 
-void PlayerUpdate(Player *player, Ball balls[], int nbrOfBalls)
+void PlayerUpdate(Player *player, ListNode *ballHead)
 {
     switch(player->state)
     {
@@ -54,7 +54,7 @@ void PlayerUpdate(Player *player, Ball balls[], int nbrOfBalls)
     }
 
     PlayerCollisionScreen(player);
-    PlayerCollisionBall(player, balls, nbrOfBalls);
+    PlayerCollisionBall(player, ballHead);
     if (player->dash->reloadTime > 0) player->dash->reloadTime--;
 }
 
@@ -158,6 +158,7 @@ void PlayerCollisionScreen(Player *player)
     player->position.y = fmaxf(player->radius, fminf(player->position.y, VIRTUAL_SCREEN_HEIGHT - player->radius));
 }
 
+/*
 void PlayerCollisionBall(Player *player, Ball balls[], int nbrOfBalls)
 {
     for (int i = 0; i < nbrOfBalls; i++)
@@ -172,6 +173,31 @@ void PlayerCollisionBall(Player *player, Ball balls[], int nbrOfBalls)
             *player->collidingBallCopy = balls[i];
             return;
         }
+    }
+
+    player->colliding = false;
+    player->collidingBall = NULL;
+}
+*/
+
+void PlayerCollisionBall(Player *player, ListNode *ballHead)
+{
+    ListNode *currentBallNode = ballHead;
+    while (currentBallNode != NULL)
+    {
+        Ball *currentBall = (Ball*)currentBallNode->data;
+        Vector2 ballDistVec = { currentBall->position.x - player->position.x, currentBall->position.y - player->position.y };
+        float ballDist = ballDistVec.x * ballDistVec.x + ballDistVec.y * ballDistVec.y;
+
+        if (ballDist <= player->radius * player->radius + currentBall->radius * currentBall->radius)
+        {
+            player->colliding = true;
+            player->collidingBall = currentBall;
+            *player->collidingBallCopy = *currentBall;
+            return;
+        }
+
+        currentBallNode = currentBallNode->next;
     }
 
     player->colliding = false;

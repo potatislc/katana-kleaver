@@ -42,7 +42,7 @@ typedef struct Dash
 } Dash;
 
 void PlayerInit(Player *player, Vector2 initPos);
-void PlayerUpdate(Player *player, Ball balls[], int nbrOfBalls);
+void PlayerUpdate(Player *player, ListNode *ballHead);
 void PlayerMoveToPoint(Player *player, Vector2 point);
 void PlayerBeginDash(Player *player, Vector2 point);
 bool PlayerLerpUntilPoint(Player *player, Vector2 point);
@@ -51,7 +51,8 @@ void PlayerBeginSlice(Player *player);
 void PlayerSlice(Player *player);
 bool IsInsideScreen(Player player);
 void PlayerCollisionScreen(Player *player);
-void PlayerCollisionBall(Player *player, Ball balls[], int nbrOfBalls);
+//void PlayerCollisionBall(Player *player, Ball balls[], int nbrOfBalls);
+void PlayerCollisionBall(Player *player, ListNode *ballHead);
 
 void PlayerDraw(Player player);
 void PlayerDrawSlice(Player player);

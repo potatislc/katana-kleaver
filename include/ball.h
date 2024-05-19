@@ -2,6 +2,7 @@
 #define BALL_GAME_BALL_H
 
 #include "raylib.h"
+#include "linked_list.h"
 
 typedef struct Ball
 {
@@ -22,6 +23,7 @@ void BallSetPosition(Ball *ball, Vector2 pos);
 void BallMove(Ball *ball);
 void BallCollisionScreen(Ball *ball);
 void BallCollisionBall(Ball *ball, Ball balls[], int nbrOfBalls);
+// void BallCollisionBall(Ball *ball, ListNode* ballHead);
 void BallDraw(Ball ball);
 void BallDrawShadow(Ball ball);
 
