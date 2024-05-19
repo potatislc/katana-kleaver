@@ -113,6 +113,7 @@ void BallSplit(Ball *ball, ListNode **ballHeadRef, Vector2 splitDir)
         ListNodePush(ballHeadRef, ballLeft);
     }
 
+    AddToScore(1); // Temp
     ListNodeRemove(ballHeadRef, ball);
 }
 

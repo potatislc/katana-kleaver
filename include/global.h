@@ -13,6 +13,12 @@ extern const float screenRatio;
 extern const Color shadowColor;
 extern bool freezeBalls;
 
+extern int score;
+extern int hiScore;
+extern int comboScore;
+
+void AddToScore(int val);
+
 Vector2 to_virtual_coords_vector2(Vector2 coords);
 Vector2 round_vector2(Vector2 vector);
 
