@@ -1,7 +1,9 @@
+#include <stdio.h>
 #include "raylib.h"
 #include "ball.h"
 #include "player.h"
 #include "global.h"
+#include "linked_list.h"
 
 #define WINDOW_TITLE "Ball Game"
 
@@ -30,6 +32,9 @@ int main(void)
 
     Ball balls[NBR_OF_BALLS];
 
+    // Linked list of balls
+    ListNode *ballsHead = NULL;
+
     // ToggleFullscreen(); -- Wtfff
 
     for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
@@ -40,8 +45,6 @@ int main(void)
                  testRadius);
     }
 
-    bool pause = 0;
-
     SetTargetFPS(60);
     //----------------------------------------------------------
 
@@ -50,15 +53,47 @@ int main(void)
     {
         // Update
         //-----------------------------------------------------
-        // if (IsKeyPressed(KEY_SPACE)); // Spawn Ball
+        if (IsKeyPressed(KEY_SPACE))
+        {
+            float testRadius = 32.0f;
+            Ball newBall;
+            BallInit(&newBall,
+                     (Vector2) {VIRTUAL_SCREEN_WIDTH/2 - testRadius/2, VIRTUAL_SCREEN_HEIGHT/2 - testRadius/2},
+                     testRadius);
+
+            ListNodePush(&ballsHead, &newBall);
+
+            int ballAmount = 0;
+            ListNode* currentBall = ballsHead;
+            while (currentBall != NULL)
+            {
+                ballAmount++;
+                printf("Ball data: %p", currentBall->data);
+                printf("\n");
+                currentBall = currentBall->next;
+            }
+
+            printf("Ball Spawned: %d\n", ballAmount);
+        }
 
         if (!freezeBalls)
         {
+            // Updating static array of balls
             for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
             {
                 BallCollisionBall(&balls[i], balls, NBR_OF_BALLS);
                 BallMove(&balls[i]);
                 BallCollisionScreen(&balls[i]);
+            }
+
+            // Updating linked list of balls
+            ListNode* currentBall = ballsHead;
+            while (currentBall != NULL)
+            {
+                // BallCollisionBall(&balls[i], balls, NBR_OF_BALLS);
+                BallMove(currentBall->data);
+                BallCollisionScreen(currentBall->data);
+                currentBall = currentBall->next;
             }
         }
 
@@ -87,12 +122,20 @@ int main(void)
                 //DrawRectangle(0, 0, VIRTUAL_SCREEN_WIDTH, 16, BLACK);
 
                 // Draw characters
+                // Drawing static array of balls
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
                 {
                     BallDraw(balls[i]);
                 }
 
-        PlayerDraw(player);
+                ListNode* currentBall = ballsHead;
+                while (currentBall != NULL)
+                {
+                    BallDraw(*(Ball*)currentBall->data);
+                    currentBall = currentBall->next;
+                }
+
+                PlayerDraw(player);
             EndMode2D();
         EndTextureMode();
 
@@ -104,7 +147,6 @@ int main(void)
             DrawTexturePro(target.texture, sourceRec, destRec, origin, 0.0f, WHITE);
 
             DrawFPS(10, 10);
-
         EndDrawing();
         //-----------------------------------------------------
 

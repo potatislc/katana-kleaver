@@ -7,13 +7,13 @@
 typedef struct ListNode
 {
     void *next;
-    void* data;
+    void *data;
 } ListNode;
 
 extern ListNode *head;
 
 ListNode* ListNodeCreate(void* data);
-void ListNodePush(ListNode** headRef, void* newData); // Pushes that node to the top of the list
+void ListNodePush(ListNode** headRef, void* newData); // Pushes that node to the head of the list
 void ListNodeRemove(ListNode** headRef, void* key);
 void ListNodePrint(ListNode* node);
 
