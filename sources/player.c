@@ -39,12 +39,12 @@ void PlayerUpdate(Player *player, ListNode *ballHead)
         case PLAYER_MOVING:
             if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
             {
-                PlayerMoveToPoint(player, to_virtual_coords_vector2(GetMousePosition()));
+                PlayerMoveToPoint(player, Vector2ToVirtualCoords(GetMousePosition()));
             }
 
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && player->dash->reloadTime == 0)
             {
-                PlayerBeginDash(player, to_virtual_coords_vector2(GetMousePosition()));
+                PlayerBeginDash(player, Vector2ToVirtualCoords(GetMousePosition()));
             }
             break;
         case PLAYER_DASHING:
@@ -218,7 +218,7 @@ void PlayerDraw(Player player)
         if (player.state == PLAYER_DASHING)
             DrawCircleLinesV(roundVector2(player.position), (float)player.texture.width, BLUE);
         else
-            DrawCircleLinesV(round_vector2(player.position), (float)player.texture.width / 2, RED);
+            DrawCircleLinesV(Vector2Round(player.position), (float)player.texture.width / 2, RED);
     }
     */
 }

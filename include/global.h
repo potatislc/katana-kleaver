@@ -19,7 +19,7 @@ extern int comboScore;
 
 void AddToScore(int val);
 
-Vector2 to_virtual_coords_vector2(Vector2 coords);
-Vector2 round_vector2(Vector2 vector);
+Vector2 Vector2ToVirtualCoords(Vector2 coords);
+Vector2 Vector2Round(Vector2 vector);
 
 #endif //BALL_GAME_GLOBAL_H

@@ -120,11 +120,11 @@ void BallSplit(Ball *ball, ListNode **ballHeadRef, Vector2 splitDir)
 void BallDraw(Ball ball)
 {
     Vector2 drawPos = {ball.position.x - ball.textureOffset.x, ball.position.y - ball.textureOffset.y};
-    DrawTextureEx(ball.texture, round_vector2(drawPos), 0, ball.textureScale, WHITE);
+    DrawTextureEx(ball.texture, Vector2Round(drawPos), 0, ball.textureScale, WHITE);
 }
 
 void BallDrawShadow(Ball ball)
 {
     Vector2 ballShadowPos = {ball.position.x + ball.shadowOffset.x, ball.position.y + ball.shadowOffset.y };
-    DrawCircleV(round_vector2(ballShadowPos), ball.shadowRadius, shadowColor);
+    DrawCircleV(Vector2Round(ballShadowPos), ball.shadowRadius, shadowColor);
 }

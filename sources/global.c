@@ -16,12 +16,12 @@ void AddToScore(int val)
     hiScore = (int)fmax(score, hiScore);
 }
 
-Vector2 to_virtual_coords_vector2(Vector2 coords)
+Vector2 Vector2ToVirtualCoords(Vector2 coords)
 {
     return (Vector2){coords.x / screenRatio, coords.y / screenRatio };
 }
 
-Vector2 round_vector2(Vector2 vector)
+Vector2 Vector2Round(Vector2 vector)
 {
     return (Vector2){ roundf(vector.x), roundf(vector.y) };
 }
