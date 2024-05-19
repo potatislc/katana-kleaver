@@ -158,42 +158,21 @@ void PlayerCollisionScreen(Player *player)
     player->position.y = fmaxf(player->radius, fminf(player->position.y, VIRTUAL_SCREEN_HEIGHT - player->radius));
 }
 
-/*
-void PlayerCollisionBall(Player *player, Ball balls[], int nbrOfBalls)
-{
-    for (int i = 0; i < nbrOfBalls; i++)
-    {
-        Vector2 ballDistVec = { balls[i].position.x - player->position.x, balls[i].position.y - player->position.y };
-        float ballDist = ballDistVec.x * ballDistVec.x + ballDistVec.y * ballDistVec.y;
-
-        if (ballDist <= player->radius * player->radius + balls[i].radius * balls[i].radius)
-        {
-            player->colliding = true;
-            player->collidingBall = &balls[i];
-            *player->collidingBallCopy = balls[i];
-            return;
-        }
-    }
-
-    player->colliding = false;
-    player->collidingBall = NULL;
-}
-*/
-
 void PlayerCollisionBall(Player *player, ListNode *ballHead)
 {
     ListNode *currentBallNode = ballHead;
     while (currentBallNode != NULL)
     {
-        Ball *currentBall = (Ball*)currentBallNode->data;
-        Vector2 ballDistVec = { currentBall->position.x - player->position.x, currentBall->position.y - player->position.y };
+        Ball currentBall = *(Ball*)currentBallNode->data;
+
+        Vector2 ballDistVec = { currentBall.position.x - player->position.x, currentBall.position.y - player->position.y };
         float ballDist = ballDistVec.x * ballDistVec.x + ballDistVec.y * ballDistVec.y;
 
-        if (ballDist <= player->radius * player->radius + currentBall->radius * currentBall->radius)
+        if (ballDist <= player->radius * player->radius + currentBall.radius * currentBall.radius)
         {
             player->colliding = true;
-            player->collidingBall = currentBall;
-            *player->collidingBallCopy = *currentBall;
+            player->collidingBall = currentBallNode->data;
+            *player->collidingBallCopy = currentBall;
             return;
         }
 

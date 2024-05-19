@@ -1,5 +1,6 @@
 #include "ball.h"
 #include <math.h>
+#include <stdio.h>
 #include "global.h"
 
 // #define sign(a) ((a > 0) ? 1 : ((a < 0) ? -1 : 0))
@@ -44,41 +45,45 @@ void BallCollisionScreen(Ball *ball)
     ball->position.y = fmaxf(ball->radius, fminf(ball->position.y, VIRTUAL_SCREEN_HEIGHT - ball->radius));
 }
 
-void BallCollisionBall(Ball *ball, Ball balls[], int nbrOfBalls)
+void BallCollisionBall(Ball *ball, ListNode *ballHead)
 {
-    for (int i = 0; i < nbrOfBalls; i++)
+    ListNode *currentBallNode = ballHead;
+
+    while(currentBallNode->next != NULL)
     {
-        if (&balls[i] == ball)
+        Ball *currentBall = (Ball*)currentBallNode->data;
+        currentBallNode = currentBallNode->next;
+
+        if (ball == (Ball*)currentBall)
         {
             continue;
         }
 
         Vector2 dist =
                 {
-                    ball->position.x - balls[i].position.x,
-                    ball->position.y - balls[i].position.y
+                        ball->position.x - currentBall->position.x,
+                        ball->position.y - currentBall->position.y
                 };
-
         Vector2 signDist =
                 {
                         sign(dist.x),
                         sign(dist.y)
                 };
 
-        while (CheckCollisionRecs(ball->collisionBox, balls[i].collisionBox))
+        while (CheckCollisionRecs(ball->collisionBox, currentBall->collisionBox))
         {
             BallSetPosition(ball, (Vector2) {ball->position.x + signDist.x, ball->position.y + signDist.y});
-            BallSetPosition(&balls[i], (Vector2) {balls[i].position.x - signDist.x, balls[i].position.y - signDist.y});
+            BallSetPosition(currentBall, (Vector2) {currentBall->position.x - signDist.x, currentBall->position.y - signDist.y});
 
             if (fabsf(dist.x) > fabsf(dist.y))
             {
                 ball->speed.x = signDist.x * fabsf(ball->speed.x);
-                balls[i].speed.x = -signDist.x * fabsf(ball->speed.x);
+                currentBall->speed.x = -signDist.x * fabsf(ball->speed.x);
             }
             else
             {
                 ball->speed.y = signDist.y * fabsf(ball->speed.y);
-                balls[i].speed.y = -signDist.y * fabsf(ball->speed.y);
+                currentBall->speed.y = -signDist.y * fabsf(ball->speed.y);
             }
 
             ball->colliding = true;
@@ -88,21 +93,6 @@ void BallCollisionBall(Ball *ball, Ball balls[], int nbrOfBalls)
 
     ball->colliding = false;
 }
-
-/*
-void BallCollisionBall(Ball *ball, ListNode* ballHead)
-{
-    ListNode* currentBall = ballHead;
-
-    while(currentBall->next != NULL)
-    {
-        if (ball != (Ball*)currentBall->data)
-        {
-            continue;
-        }
-    }
-}
-*/
 
 void BallDraw(Ball ball)
 {

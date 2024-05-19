@@ -7,8 +7,6 @@
 
 #define WINDOW_TITLE "Ball Game"
 
-#define NBR_OF_BALLS (0)
-
 int main(void)
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
@@ -30,20 +28,10 @@ int main(void)
     Player *player = (Player*) malloc(sizeof(Player));
     PlayerInit(player, vScreenCenter);
 
-    Ball balls[NBR_OF_BALLS];
-
     // Linked list of balls
     ListNode *ballHead = NULL;
 
     // ToggleFullscreen(); -- Wtfff
-
-    for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
-    {
-        float testRadius = 32.0f;
-        BallInit(&balls[i],
-                 (Vector2) {testRadius + testRadius * (float) i * 2.0f, testRadius + testRadius * (float) i * 2.0f},
-                 testRadius);
-    }
 
     SetTargetFPS(60);
     //----------------------------------------------------------
@@ -78,22 +66,14 @@ int main(void)
 
         if (!freezeBalls)
         {
-            // Updating static array of balls
-            for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
-            {
-                BallCollisionBall(&balls[i], balls, NBR_OF_BALLS);
-                BallMove(&balls[i]);
-                BallCollisionScreen(&balls[i]);
-            }
-
             // Updating linked list of balls
-            ListNode* currentBall = ballHead;
-            while (currentBall != NULL)
+            ListNode* currentBallNode = ballHead;
+            while (currentBallNode != NULL)
             {
-                // BallCollisionBall(&balls[i], balls, NBR_OF_BALLS);
-                BallMove(currentBall->data);
-                BallCollisionScreen(currentBall->data);
-                currentBall = currentBall->next;
+                BallCollisionBall(currentBallNode->data, ballHead);
+                BallMove(currentBallNode->data);
+                BallCollisionScreen(currentBallNode->data);
+                currentBallNode = currentBallNode->next;
             }
         }
 
@@ -113,26 +93,22 @@ int main(void)
                 // Draw Shadows
                 PlayerDrawShadow(*player);
 
-                for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
+                ListNode* currentBallNode = ballHead;
+                while (currentBallNode != NULL)
                 {
-                    BallDrawShadow(balls[i]);
+                    BallDrawShadow(*(Ball*)currentBallNode->data);
+                    currentBallNode = currentBallNode->next;
                 }
 
                 // Draw black header
                 //DrawRectangle(0, 0, VIRTUAL_SCREEN_WIDTH, 16, BLACK);
 
                 // Draw characters
-                // Drawing static array of balls
-                for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
+                currentBallNode = ballHead;
+                while (currentBallNode != NULL)
                 {
-                    BallDraw(balls[i]);
-                }
-
-                ListNode* currentBall = ballHead;
-                while (currentBall != NULL)
-                {
-                    BallDraw(*(Ball*)currentBall->data);
-                    currentBall = currentBall->next;
+                    BallDraw(*(Ball*)currentBallNode->data);
+                    currentBallNode = currentBallNode->next;
                 }
 
                 PlayerDraw(*player);

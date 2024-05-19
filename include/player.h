@@ -3,6 +3,7 @@
 
 #include "raylib.h"
 #include "ball.h"
+#include "linked_list.h"
 
 enum PlayerStates
 {
@@ -51,7 +52,6 @@ void PlayerBeginSlice(Player *player);
 void PlayerSlice(Player *player);
 bool IsInsideScreen(Player player);
 void PlayerCollisionScreen(Player *player);
-//void PlayerCollisionBall(Player *player, Ball balls[], int nbrOfBalls);
 void PlayerCollisionBall(Player *player, ListNode *ballHead);
 
 void PlayerDraw(Player player);

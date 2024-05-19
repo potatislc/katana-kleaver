@@ -22,8 +22,7 @@ void BallInit(Ball *ball, Vector2 initPos, float radius);
 void BallSetPosition(Ball *ball, Vector2 pos);
 void BallMove(Ball *ball);
 void BallCollisionScreen(Ball *ball);
-void BallCollisionBall(Ball *ball, Ball balls[], int nbrOfBalls);
-// void BallCollisionBall(Ball *ball, ListNode* ballHead);
+void BallCollisionBall(Ball *ball, ListNode *ballHead);
 void BallDraw(Ball ball);
 void BallDrawShadow(Ball ball);
 

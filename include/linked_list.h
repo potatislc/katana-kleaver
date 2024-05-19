@@ -2,7 +2,6 @@
 #define BALL_GAME_LINKED_LIST_H
 
 #include <stdlib.h>
-#include "ball.h"
 
 typedef struct ListNode
 {
