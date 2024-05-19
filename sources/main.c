@@ -27,8 +27,8 @@ int main(void)
 
     Texture2D floorTexture = LoadTexture("../assets/floor.png");
 
-    Player player;
-    PlayerInit(&player, vScreenCenter);
+    Player *player = (Player*) malloc(sizeof(Player));
+    PlayerInit(player, vScreenCenter);
 
     Ball balls[NBR_OF_BALLS];
 
@@ -97,7 +97,7 @@ int main(void)
             }
         }
 
-        PlayerUpdate(&player, balls, NBR_OF_BALLS);
+        PlayerUpdate(player, balls, NBR_OF_BALLS);
         //-----------------------------------------------------
 
         // Draw
@@ -111,7 +111,7 @@ int main(void)
                 DrawTexture(floorTexture, 0, 0, WHITE);
 
                 // Draw Shadows
-                PlayerDrawShadow(player);
+                PlayerDrawShadow(*player);
 
                 for (int i = 0; i < sizeof(balls) / sizeof(balls[0]); i++)
                 {
@@ -135,7 +135,7 @@ int main(void)
                     currentBall = currentBall->next;
                 }
 
-                PlayerDraw(player);
+                PlayerDraw(*player);
             EndMode2D();
         EndTextureMode();
 
