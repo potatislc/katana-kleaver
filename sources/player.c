@@ -3,10 +3,11 @@
 #include <math.h>
 #include <stdlib.h>
 #include "global.h"
+#include "ball.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
-void PlayerInit(Player *player, Vector2 initPos)
+void PlayerInit(Player *player, Vector2 initPos, ListNode **ballHeadRef)
 {
     player->state = PLAYER_MOVING;
     player->texture = LoadTexture("../assets/samurai/samurai.png");
@@ -14,6 +15,7 @@ void PlayerInit(Player *player, Vector2 initPos)
     player->position = initPos;
     player->speed = 2;
     player->radius = 6;
+    player->ballHeadRef = ballHeadRef;
 
     player->dash = (Dash *)malloc(sizeof(Dash));
     if (player->dash != NULL) {
@@ -54,7 +56,7 @@ void PlayerUpdate(Player *player, ListNode *ballHead)
     }
 
     PlayerCollisionScreen(player);
-    PlayerCollisionBall(player, ballHead);
+    if (player->state != PLAYER_SLICING) PlayerCollisionBall(player, ballHead);
     if (player->dash->reloadTime > 0) player->dash->reloadTime--;
 }
 
@@ -132,6 +134,8 @@ void PlayerBeginSlice(Player *player)
     player->dash->targetPos = (Vector2){ballPos.x + sliceTargetPoint.x, ballPos.y + sliceTargetPoint.y};
 
     player->velocity.x = (float)sign(sliceTargetPoint.x); // So player faces in the correct direction
+
+    BallSplit(player->collidingBall, player->ballHeadRef, Vector2Normalize(distance));
 }
 
 void PlayerSlice(Player *player)

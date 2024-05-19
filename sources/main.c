@@ -25,11 +25,10 @@ int main(void)
 
     Texture2D floorTexture = LoadTexture("../assets/floor.png");
 
-    Player *player = (Player*) malloc(sizeof(Player));
-    PlayerInit(player, vScreenCenter);
-
-    // Linked list of balls
     ListNode *ballHead = NULL;
+
+    Player *player = (Player*) malloc(sizeof(Player));
+    PlayerInit(player, vScreenCenter, &ballHead);
 
     // ToggleFullscreen(); -- Wtfff
 
@@ -62,6 +61,8 @@ int main(void)
             }
 
             printf("Ball Spawned: %d\n", ballAmount);
+            printf("Ball Head ptr: %p\n", &ballHead);
+            printf("Ball Head from Player ptr: %p\n", player->ballHeadRef);
         }
 
         if (!freezeBalls)

@@ -1,7 +1,7 @@
 #include "ball.h"
 #include <math.h>
-#include <stdio.h>
 #include "global.h"
+#include "raymath.h"
 
 // #define sign(a) ((a > 0) ? 1 : ((a < 0) ? -1 : 0))
 #define sign(a) ((a > 0) ? 1 : -1)
@@ -92,6 +92,28 @@ void BallCollisionBall(Ball *ball, ListNode *ballHead)
     }
 
     ball->colliding = false;
+}
+
+void BallSplit(Ball *ball, ListNode **ballHeadRef, Vector2 splitDir)
+{
+    float newRadius = ball->radius/2;
+    if (newRadius > MIN_BALL_RADIUS)
+    {
+        float spawnDirRad = atan2f(splitDir.y, splitDir.x) + PI / 2;
+        if (spawnDirRad > PI * 2) spawnDirRad -= PI * 2;
+
+        Vector2 spawnPos = {cosf(spawnDirRad) * newRadius / 2, sinf(spawnDirRad) * newRadius / 2};
+
+        Ball *ballRight = (Ball *) malloc(sizeof(Ball));
+        BallInit(ballRight, Vector2Add(ball->position, spawnPos), newRadius);
+        ListNodePush(ballHeadRef, ballRight);
+
+        Ball *ballLeft = (Ball *) malloc(sizeof(Ball));
+        BallInit(ballLeft, Vector2Subtract(ball->position, spawnPos), newRadius);
+        ListNodePush(ballHeadRef, ballLeft);
+    }
+
+    ListNodeRemove(ballHeadRef, ball);
 }
 
 void BallDraw(Ball ball)

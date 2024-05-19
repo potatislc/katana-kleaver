@@ -23,7 +23,7 @@ void ListNodePush(ListNode** headRef, void* newData)
     *headRef = newNode;
 }
 
-void delete_list_node(ListNode** headRef, void* key)
+void ListNodeRemove(ListNode** headRef, void* key)
 {
     ListNode *temp = *headRef, *prev;
 

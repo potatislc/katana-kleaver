@@ -7,6 +7,7 @@
 #define SCREEN_HEIGHT (1280)
 #define VIRTUAL_SCREEN_WIDTH (160)
 #define VIRTUAL_SCREEN_HEIGHT (160)
+#define MIN_BALL_RADIUS (4)
 
 extern const float screenRatio;
 extern const Color shadowColor;
