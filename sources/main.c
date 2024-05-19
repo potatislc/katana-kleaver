@@ -56,12 +56,12 @@ int main(void)
         if (IsKeyPressed(KEY_SPACE))
         {
             float testRadius = 32.0f;
-            Ball newBall;
-            BallInit(&newBall,
+            Ball *newBall = (Ball *)malloc(sizeof(Ball));
+            BallInit(newBall,
                      (Vector2) {VIRTUAL_SCREEN_WIDTH/2 - testRadius/2, VIRTUAL_SCREEN_HEIGHT/2 - testRadius/2},
                      testRadius);
 
-            ListNodePush(&ballsHead, &newBall);
+            ListNodePush(&ballsHead, newBall);
 
             int ballAmount = 0;
             ListNode* currentBall = ballsHead;
