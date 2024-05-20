@@ -4,15 +4,19 @@
 #include "raylib.h"
 
 #define SCREEN_WIDTH (1280)
-#define SCREEN_HEIGHT (1280)
+#define SCREEN_HEIGHT (1408)
 #define VIRTUAL_SCREEN_WIDTH (160)
 #define VIRTUAL_SCREEN_HEIGHT (160)
+#define VIRTUAL_SCREEN_OFFSET_X (0)
+#define VIRTUAL_SCREEN_OFFSET_Y (16)
 #define MIN_BALL_RADIUS (4)
 #define BALL_TOO_SMALL_FOR_CLEAN_SPLIT (8)
 #define ENOUGH ((CHAR_BIT * sizeof(int) - 1) / 3 + 2)
 
 extern const float screenRatio;
 extern const Color shadowColor;
+extern const Color uiColorYellow;
+extern const Color uiColorRed;
 extern bool freezeBalls;
 
 extern int score;

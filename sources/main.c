@@ -5,6 +5,8 @@
 #include "global.h"
 #include "linked_list.h"
 #include "asset_loader.h"
+#include <string.h>
+
 
 #define WINDOW_TITLE "Ball Game"
 
@@ -14,7 +16,7 @@ int main(void)
 
     Vector2 vScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
-    RenderTexture2D target = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT);
+    RenderTexture2D target = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y);
 
     Camera2D worldSpaceCamera = { 0 };
     worldSpaceCamera.zoom = 1.0f;
@@ -102,9 +104,6 @@ int main(void)
                     currentBallNode = currentBallNode->next;
                 }
 
-                // Draw black header
-                //DrawRectangle(0, 0, VIRTUAL_SCREEN_WIDTH, 16, BLACK);
-
                 // Draw characters
                 currentBallNode = ballHead;
                 while (currentBallNode != NULL)
@@ -115,9 +114,18 @@ int main(void)
 
                 PlayerDraw(*player);
 
-                char str[ENOUGH];
-                sprintf(str, "%d", score);
-                DrawText(str, 8, 8, 8, WHITE);
+                // Draw UI
+                DrawRectangle(0, VIRTUAL_SCREEN_HEIGHT, VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_OFFSET_Y, BLACK);
+                char scoreText[32];
+                sprintf(scoreText, "Score: %d", score);
+                DrawText(scoreText, 5, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorYellow);
+
+                if (comboScore > 1)
+                {
+                    char comboText[16];
+                    sprintf(comboText, "x%d", comboScore);
+                    DrawText(comboText, 64+5, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
+                }
             EndMode2D();
         EndTextureMode();
 
