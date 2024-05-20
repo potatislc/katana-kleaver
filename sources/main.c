@@ -5,7 +5,6 @@
 #include "global.h"
 #include "linked_list.h"
 #include "asset_loader.h"
-#include <string.h>
 
 
 #define WINDOW_TITLE "Ball Game"

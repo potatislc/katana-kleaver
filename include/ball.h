@@ -4,8 +4,6 @@
 #include "raylib.h"
 #include "linked_list.h"
 
-extern Texture2D texBallBig; // Only load the texture once
-
 typedef struct Ball
 {
     Vector2 position;
