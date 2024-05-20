@@ -21,8 +21,8 @@ typedef struct Player
     float speed;
     float radius;
     int state;
-    Texture2D texture;
-    Texture2D shadowTexture;
+    Texture2D *texture;
+    Texture2D *shadowTexture;
     bool colliding;
     ListNode **ballHeadRef;
     Ball *collidingBall; // Pointer to the ball that you want to slice

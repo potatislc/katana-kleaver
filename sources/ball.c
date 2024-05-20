@@ -2,6 +2,7 @@
 #include <math.h>
 #include "global.h"
 #include "raymath.h"
+#include "asset_loader.h"
 
 // #define sign(a) ((a > 0) ? 1 : ((a < 0) ? -1 : 0))
 #define sign(a) ((a > 0) ? 1 : -1)
@@ -19,10 +20,10 @@ void BallInit(Ball *ball, Vector2 initPos, float radius)
 
     BallSetPosition(ball, initPos);
 
-    ball->texture = LoadTexture("../assets/melon_big.png");
-    ball->textureScale = (ball->radius * 2) / (float)ball->texture.width;
-    ball->textureOffset = (Vector2){ ((float)ball->texture.width / 2.0f) * ball->textureScale,
-                                     ((float)ball->texture.height / 2.0f) * ball->textureScale };
+    ball->texture = &melonBig;
+    ball->textureScale = (ball->radius * 2) / (float)ball->texture->width;
+    ball->textureOffset = (Vector2){ ((float)ball->texture->width / 2.0f) * ball->textureScale,
+                                     ((float)ball->texture->height / 2.0f) * ball->textureScale };
 }
 
 void BallSetPosition(Ball *ball, Vector2 pos)
@@ -120,7 +121,7 @@ void BallSplit(Ball *ball, ListNode **ballHeadRef, Vector2 splitDir)
 void BallDraw(Ball ball)
 {
     Vector2 drawPos = {ball.position.x - ball.textureOffset.x, ball.position.y - ball.textureOffset.y};
-    DrawTextureEx(ball.texture, Vector2Round(drawPos), 0, ball.textureScale, WHITE);
+    DrawTextureEx(*ball.texture, Vector2Round(drawPos), 0, ball.textureScale, WHITE);
 }
 
 void BallDrawShadow(Ball ball)

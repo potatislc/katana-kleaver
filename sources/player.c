@@ -4,14 +4,15 @@
 #include <stdlib.h>
 #include "global.h"
 #include "ball.h"
+#include "asset_loader.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
 void PlayerInit(Player *player, Vector2 initPos, ListNode **ballHeadRef)
 {
     player->state = PLAYER_MOVING;
-    player->texture = LoadTexture("../assets/samurai/samurai.png");
-    player->shadowTexture = LoadTexture("../assets/samurai/samurai_shadow.png");
+    player->texture = &samurai;
+    player->shadowTexture = &samuraiShadow;
     player->position = initPos;
     player->speed = 2;
     player->radius = 6;
@@ -192,19 +193,19 @@ void PlayerCollisionBall(Player *player, ListNode *ballHead)
 
 void PlayerDraw(Player player)
 {
-    Vector2 textureOffset = { (float)player.texture.width / 2.0f, (float)player.texture.height / 2.0f };
+    Vector2 textureOffset = { (float)player.texture->width / 2.0f, (float)player.texture->height / 2.0f };
 
     Rectangle playerRect =
             {
                 0,
                 0,
-                sign(player.velocity.x) * player.texture.width,
-                (float)player.texture.height
+                sign(player.velocity.x) * player.texture->width,
+                (float)player.texture->height
             };
 
     DrawTextureRec
     (
-        player.texture,
+        *player.texture,
         playerRect,
         (Vector2){ player.position.x - textureOffset.x,player.position.y - textureOffset.y },
         WHITE
@@ -251,5 +252,5 @@ void PlayerDrawSlice(Player player)
 
 void PlayerDrawShadow(Player player)
 {
-    DrawTexture(player.shadowTexture, (int)roundf(player.position.x) - player.texture.width / 2, (int)roundf(player.position.y) - player.texture.height / 2, shadowColor);
+    DrawTexture(*player.shadowTexture, (int)roundf(player.position.x) - player.texture->width / 2, (int)roundf(player.position.y) - player.texture->height / 2, shadowColor);
 }

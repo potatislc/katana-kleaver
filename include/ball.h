@@ -4,6 +4,8 @@
 #include "raylib.h"
 #include "linked_list.h"
 
+extern Texture2D texBallBig; // Only load the texture once
+
 typedef struct Ball
 {
     Vector2 position;
@@ -11,7 +13,7 @@ typedef struct Ball
     float radius;
     bool colliding;
     Rectangle collisionBox;
-    Texture2D texture;
+    Texture2D *texture;
     float textureScale;
     Vector2 textureOffset;
     Vector2 shadowOffset;

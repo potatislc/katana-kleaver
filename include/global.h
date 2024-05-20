@@ -8,6 +8,7 @@
 #define VIRTUAL_SCREEN_WIDTH (160)
 #define VIRTUAL_SCREEN_HEIGHT (160)
 #define MIN_BALL_RADIUS (4)
+#define ENOUGH ((CHAR_BIT * sizeof(int) - 1) / 3 + 2)
 
 extern const float screenRatio;
 extern const Color shadowColor;

@@ -4,6 +4,7 @@
 #include "player.h"
 #include "global.h"
 #include "linked_list.h"
+#include "asset_loader.h"
 
 #define WINDOW_TITLE "Ball Game"
 
@@ -23,7 +24,7 @@ int main(void)
 
     Vector2 origin = { 0.0f, 0.0f };
 
-    Texture2D floorTexture = LoadTexture("../assets/floor.png");
+    LoadGameTextures();
 
     ListNode *ballHead = NULL;
 
@@ -89,7 +90,7 @@ int main(void)
             // Draw Game World
             BeginMode2D(worldSpaceCamera);
                 // Draw floor
-                DrawTexture(floorTexture, 0, 0, WHITE);
+                DrawTexture(floorStandard, 0, 0, WHITE);
 
                 // Draw Shadows
                 PlayerDrawShadow(*player);
@@ -113,6 +114,10 @@ int main(void)
                 }
 
                 PlayerDraw(*player);
+
+                char str[ENOUGH];
+                sprintf(str, "%d", score);
+                DrawText(str, 8, 8, 8, WHITE);
             EndMode2D();
         EndTextureMode();
 
