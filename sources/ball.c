@@ -20,7 +20,7 @@ void BallInit(Ball *ball, Vector2 initPos, float radius)
 
     BallSetPosition(ball, initPos);
 
-    ball->texture = &melonBig;
+    ball->texture = (radius > BALL_TOO_SMALL_FOR_CLEAN_SPLIT) ? &melonBig : &melonSmall;
     ball->textureScale = (ball->radius * 2) / (float)ball->texture->width;
     ball->textureOffset = (Vector2){ ((float)ball->texture->width / 2.0f) * ball->textureScale,
                                      ((float)ball->texture->height / 2.0f) * ball->textureScale };

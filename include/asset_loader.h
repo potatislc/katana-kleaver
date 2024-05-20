@@ -5,6 +5,7 @@
 
 extern Texture2D floorStandard;
 extern Texture2D melonBig;
+extern Texture2D melonSmall;
 
 extern Texture2D samurai;
 extern Texture2D samuraiShadow;
