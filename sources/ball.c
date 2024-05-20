@@ -71,7 +71,7 @@ void BallCollisionBall(Ball *ball, ListNode *ballHead)
                         sign(dist.y)
                 };
 
-        while (CheckCollisionRecs(ball->collisionBox, currentBall->collisionBox))
+        if (CheckCollisionRecs(ball->collisionBox, currentBall->collisionBox))
         {
             BallSetPosition(ball, (Vector2) {ball->position.x + signDist.x, ball->position.y + signDist.y});
             BallSetPosition(currentBall, (Vector2) {currentBall->position.x - signDist.x, currentBall->position.y - signDist.y});
