@@ -8,6 +8,7 @@
 #define VIRTUAL_SCREEN_WIDTH (160)
 #define VIRTUAL_SCREEN_HEIGHT (160)
 #define MIN_BALL_RADIUS (4)
+#define BALL_TOO_SMALL_FOR_CLEAN_SPLIT (8)
 #define ENOUGH ((CHAR_BIT * sizeof(int) - 1) / 3 + 2)
 
 extern const float screenRatio;

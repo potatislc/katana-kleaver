@@ -90,7 +90,7 @@ void PlayerBeginDash(Player *player, Vector2 point)
             player->position.x - player->dash->targetPos.x * player->dash->distance,
             player->position.y - player->dash->targetPos.y * player->dash->distance };
 
-    player->velocity.x = -(float)sign(direction.x);
+    player->velocity = (Vector2){-direction.x, -direction.y};
 }
 
 bool PlayerLerpUntilPoint(Player *player, Vector2 point)
@@ -132,14 +132,25 @@ void PlayerBeginSlice(Player *player)
     Vector2 ballPos = player->collidingBall->position;
     float ballRadius = player->collidingBall->radius;
 
-    Vector2 distance = {ballPos.x - player->position.x, ballPos.y - player->position.y};
-    Vector2 sliceTargetPoint = Vector2Normalize(distance);
-    sliceTargetPoint = (Vector2){sliceTargetPoint.x * ballRadius + sliceTargetPoint.x * player->radius, sliceTargetPoint.y * ballRadius + sliceTargetPoint.y * player->radius};
+    Vector2 sliceTargetPoint;
+
+    if (ballRadius > BALL_TOO_SMALL_FOR_CLEAN_SPLIT)
+    {
+        Vector2 distance = (Vector2){ballPos.x - player->position.x, ballPos.y - player->position.y};
+        sliceTargetPoint = Vector2Normalize(distance);
+        sliceTargetPoint = (Vector2){sliceTargetPoint.x * ballRadius + sliceTargetPoint.x * player->radius, sliceTargetPoint.y * ballRadius + sliceTargetPoint.y * player->radius};
+    }
+    else
+    {
+        float length = ballRadius*2 + player->radius;
+        sliceTargetPoint = (Vector2){player->velocity.x*length, player->velocity.y*length};
+    }
+
+    player->velocity = sliceTargetPoint;
+
     player->dash->targetPos = (Vector2){ballPos.x + sliceTargetPoint.x, ballPos.y + sliceTargetPoint.y};
 
-    player->velocity.x = (float)sign(sliceTargetPoint.x); // So player faces in the correct direction
-
-    BallSplit(player->collidingBall, player->ballHeadRef, Vector2Normalize(distance));
+    BallSplit(player->collidingBall, player->ballHeadRef, Vector2Normalize(sliceTargetPoint));
 }
 
 void PlayerSlice(Player *player)
