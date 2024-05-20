@@ -136,7 +136,7 @@ int main(void)
             // Draw world camera to screen
             DrawTexturePro(target.texture, sourceRec, destRec, origin, 0.0f, WHITE);
 
-            DrawFPS(10, 10);
+            // DrawFPS(10, 10);
         EndDrawing();
         //-----------------------------------------------------
 
