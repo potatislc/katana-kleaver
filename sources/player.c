@@ -148,13 +148,15 @@ void PlayerBeginSlice(Player *player)
     if (ballRadius <= BALL_TOO_SMALL_FOR_CLEAN_SPLIT)
     {
         float length = ballRadius*2 + player->radius;
-        sliceTargetPoint = (Vector2){player->velocity.x*length, player->velocity.y*length};
+        Vector2 direction = Vector2Normalize(player->velocity);
+        sliceTargetPoint = (Vector2){direction.x*length, direction.y*length};
     }
     else
     {
         Vector2 distance = (Vector2){ballPos.x - player->position.x, ballPos.y - player->position.y};
         sliceTargetPoint = Vector2Normalize(distance);
-        sliceTargetPoint = (Vector2){sliceTargetPoint.x * ballRadius + sliceTargetPoint.x * player->radius, sliceTargetPoint.y * ballRadius + sliceTargetPoint.y * player->radius};
+        sliceTargetPoint = (Vector2){sliceTargetPoint.x * ballRadius + sliceTargetPoint.x * player->radius,
+                                     sliceTargetPoint.y * ballRadius + sliceTargetPoint.y * player->radius};
     }
 
     player->velocity = sliceTargetPoint;
@@ -168,6 +170,15 @@ void PlayerSlice(Player *player)
 {
     if (PlayerLerpUntilPoint(player, player->dash->targetPos))
     {
+        // Perform another slice if it ends inside a ball
+        PlayerCollisionBall(player, *player->ballHeadRef);
+        if (player->colliding)
+        {
+            PlayerBeginSlice(player);
+            return;
+        }
+
+        // End Dash
         player->state = PLAYER_MOVING;
         freezeBalls = false;
         player->dash->reloadTime = 0;
