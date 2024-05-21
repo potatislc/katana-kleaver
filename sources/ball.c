@@ -7,9 +7,41 @@
 // #define sign(a) ((a > 0) ? 1 : ((a < 0) ? -1 : 0))
 #define sign(a) ((a > 0) ? 1 : -1)
 
+float ballSpeed = .5f;
+
+static Vector2 RandomDirection()
+{
+    // num = (rand() % (upper – lower + 1)) + lower
+    // srand(time(0));
+
+    int randDir = rand() % 4;
+
+    Vector2 directionVector = Vector2Zero();
+    switch (randDir)
+    {
+        case 0:
+            directionVector = (Vector2){1.0f, 1.0f};
+            break;
+        case 1:
+            directionVector = (Vector2){-1.0f, 1.0f};
+            break;
+        case 2:
+            directionVector = (Vector2){-1.0f, -1.0f};
+            break;
+        case 3:
+            directionVector = (Vector2){1.0f, -1.0f};
+            break;
+    }
+
+    return directionVector;
+}
+
 void BallInit(Ball *ball, Vector2 initPos, float radius)
 {
-    ball->speed = (Vector2){ .5f, .5f };
+    ball->speed = ballSpeed;
+    ball->velocity = RandomDirection();
+    ball->velocity = (Vector2){ball->velocity.x * ball->speed, ball->velocity.y * ball->speed};
+
     ball->radius = radius;
     ball->shadowRadius = radius;
     ball->shadowOffset = (Vector2){ 4.0f, 4.0f };
@@ -35,13 +67,13 @@ void BallSetPosition(Ball *ball, Vector2 pos)
 
 void BallMove(Ball *ball)
 {
-    BallSetPosition(ball, (Vector2) {ball->position.x + ball->speed.x, ball->position.y + ball->speed.y});
+    BallSetPosition(ball, (Vector2) {ball->position.x + ball->velocity.x, ball->position.y + ball->velocity.y});
 }
 
 void BallCollisionScreen(Ball *ball)
 {
-    if ((ball->position.x >= (VIRTUAL_SCREEN_WIDTH - ball->radius)) || (ball->position.x <= ball->radius)) ball->speed.x *= -1.0f;
-    if ((ball->position.y >= (VIRTUAL_SCREEN_HEIGHT - ball->radius)) || (ball->position.y <= ball->radius)) ball->speed.y *= -1.0f;
+    if ((ball->position.x >= (VIRTUAL_SCREEN_WIDTH - ball->radius)) || (ball->position.x <= ball->radius)) ball->velocity.x *= -1.0f;
+    if ((ball->position.y >= (VIRTUAL_SCREEN_HEIGHT - ball->radius)) || (ball->position.y <= ball->radius)) ball->velocity.y *= -1.0f;
     ball->position.x = fmaxf(ball->radius, fminf(ball->position.x, VIRTUAL_SCREEN_WIDTH - ball->radius));
     ball->position.y = fmaxf(ball->radius, fminf(ball->position.y, VIRTUAL_SCREEN_HEIGHT - ball->radius));
 }
@@ -78,13 +110,13 @@ void BallCollisionBall(Ball *ball, ListNode *ballHead)
 
             if (fabsf(dist.x) > fabsf(dist.y))
             {
-                ball->speed.x = signDist.x * fabsf(ball->speed.x);
-                currentBall->speed.x = -signDist.x * fabsf(ball->speed.x);
+                ball->velocity.x = signDist.x * fabsf(ball->velocity.x);
+                currentBall->velocity.x = -signDist.x * fabsf(ball->velocity.x);
             }
             else
             {
-                ball->speed.y = signDist.y * fabsf(ball->speed.y);
-                currentBall->speed.y = -signDist.y * fabsf(ball->speed.y);
+                ball->velocity.y = signDist.y * fabsf(ball->velocity.y);
+                currentBall->velocity.y = -signDist.y * fabsf(ball->velocity.y);
             }
 
             ball->colliding = true;

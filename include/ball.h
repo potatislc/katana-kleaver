@@ -4,10 +4,13 @@
 #include "raylib.h"
 #include "linked_list.h"
 
+extern float ballSpeed;
+
 typedef struct Ball
 {
     Vector2 position;
-    Vector2 speed;
+    Vector2 velocity;
+    float speed;
     float radius;
     bool colliding;
     Rectangle collisionBox;

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include "raylib.h"
 #include "ball.h"
 #include "player.h"
@@ -34,6 +35,9 @@ int main(void)
 
     // ToggleFullscreen(); -- Wtfff
 
+    // Set Seed
+    srand(time(0));
+
     SetTargetFPS(60);
     //----------------------------------------------------------
 
@@ -47,7 +51,7 @@ int main(void)
             float testRadius = 32.0f;
             Ball *newBall = (Ball *)malloc(sizeof(Ball));
             BallInit(newBall,
-                     (Vector2) {VIRTUAL_SCREEN_WIDTH/2 - testRadius/2, VIRTUAL_SCREEN_HEIGHT/2 - testRadius/2},
+                     (Vector2) {VIRTUAL_SCREEN_WIDTH/2, VIRTUAL_SCREEN_HEIGHT/2},
                      testRadius);
 
             ListNodePush(&ballHead, newBall);
