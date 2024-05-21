@@ -68,7 +68,7 @@ void PlayerMove(Player *player)
 
     if (player->colliding)
     {
-        player->state = PLAYER_DEAD;
+        // player->state = PLAYER_DEAD; Dying got very annoying
     }
 }
 
