@@ -17,6 +17,7 @@ void PlayerInit(Player *player, Vector2 initPos, ListNode **ballHeadRef)
     player->speed = 2;
     player->radius = 6;
     player->ballHeadRef = ballHeadRef;
+    player->colliding = false;
 
     player->dash = (Dash *)malloc(sizeof(Dash));
     if (player->dash != NULL) {
@@ -38,15 +39,7 @@ void PlayerUpdate(Player *player, ListNode *ballHead)
         case PLAYER_IDLE:
             break;
         case PLAYER_MOVING:
-            if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
-            {
-                PlayerMoveToPoint(player, Vector2ToVirtualCoords(GetMousePosition()));
-            }
-
-            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && player->dash->reloadTime == 0)
-            {
-                PlayerBeginDash(player, Vector2ToVirtualCoords(GetMousePosition()));
-            }
+            PlayerMove(player);
             break;
         case PLAYER_DASHING:
             PlayerDash(player);
@@ -57,8 +50,26 @@ void PlayerUpdate(Player *player, ListNode *ballHead)
     }
 
     PlayerCollisionScreen(player);
-    if (player->state != PLAYER_SLICING) PlayerCollisionBall(player, ballHead);
     if (player->dash->reloadTime > 0) player->dash->reloadTime--;
+    if (player->state != PLAYER_SLICING) PlayerCollisionBall(player, ballHead);
+}
+
+void PlayerMove(Player *player)
+{
+    if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+    {
+        PlayerMoveToPoint(player, Vector2ToVirtualCoords(GetMousePosition()));
+    }
+
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && player->dash->reloadTime == 0)
+    {
+        PlayerBeginDash(player, Vector2ToVirtualCoords(GetMousePosition()));
+    }
+
+    if (player->colliding)
+    {
+        player->state = PLAYER_DEAD;
+    }
 }
 
 void PlayerMoveToPoint(Player *player, Vector2 point)
@@ -134,16 +145,16 @@ void PlayerBeginSlice(Player *player)
 
     Vector2 sliceTargetPoint;
 
-    if (ballRadius > BALL_TOO_SMALL_FOR_CLEAN_SPLIT)
+    if (ballRadius <= BALL_TOO_SMALL_FOR_CLEAN_SPLIT)
+    {
+        float length = ballRadius*2 + player->radius;
+        sliceTargetPoint = (Vector2){player->velocity.x*length, player->velocity.y*length};
+    }
+    else
     {
         Vector2 distance = (Vector2){ballPos.x - player->position.x, ballPos.y - player->position.y};
         sliceTargetPoint = Vector2Normalize(distance);
         sliceTargetPoint = (Vector2){sliceTargetPoint.x * ballRadius + sliceTargetPoint.x * player->radius, sliceTargetPoint.y * ballRadius + sliceTargetPoint.y * player->radius};
-    }
-    else
-    {
-        float length = ballRadius*2 + player->radius;
-        sliceTargetPoint = (Vector2){player->velocity.x*length, player->velocity.y*length};
     }
 
     player->velocity = sliceTargetPoint;
@@ -204,6 +215,8 @@ void PlayerCollisionBall(Player *player, ListNode *ballHead)
 
 void PlayerDraw(Player player)
 {
+    if (player.state == PLAYER_DEAD) return;
+
     Vector2 textureOffset = { (float)player.texture->width / 2.0f, (float)player.texture->height / 2.0f };
 
     Rectangle playerRect =
@@ -223,16 +236,6 @@ void PlayerDraw(Player player)
     );
 
     if (player.state == PLAYER_SLICING) PlayerDrawSlice(player);
-
-    /*
-    if (player.colliding)
-    {
-        if (player.state == PLAYER_DASHING)
-            DrawCircleLinesV(roundVector2(player.position), (float)player.texture.width, BLUE);
-        else
-            DrawCircleLinesV(Vector2Round(player.position), (float)player.texture.width / 2, RED);
-    }
-    */
 }
 
 void PlayerDrawSlice(Player player)

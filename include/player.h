@@ -45,6 +45,7 @@ typedef struct Dash
 
 void PlayerInit(Player *player, Vector2 initPos, ListNode **ballHeadRef);
 void PlayerUpdate(Player *player, ListNode *ballHead);
+void PlayerMove(Player *player);
 void PlayerMoveToPoint(Player *player, Vector2 point);
 void PlayerBeginDash(Player *player, Vector2 point);
 bool PlayerLerpUntilPoint(Player *player, Vector2 point);
