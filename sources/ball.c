@@ -9,6 +9,15 @@
 
 float ballSpeed = .5f;
 
+static Vector2 RandomPosition(Vector2 minPos, Vector2 maxPos)
+{
+    if (minPos.x == maxPos.x && minPos.y == maxPos.y) return minPos;
+
+    Vector2 spawnAreaSize = Vector2Subtract(maxPos, minPos);
+    return (Vector2){minPos.x + ((float)rand()/(float)(RAND_MAX)) * spawnAreaSize.x,
+                     minPos.y + ((float)rand()/(float)(RAND_MAX)) * spawnAreaSize.y};
+}
+
 static Vector2 RandomDirection()
 {
     // num = (rand() % (upper – lower + 1)) + lower
@@ -36,7 +45,7 @@ static Vector2 RandomDirection()
     return directionVector;
 }
 
-void BallInit(Ball *ball, Vector2 initPos, float radius)
+void BallInit(Ball *ball, Vector2 minInitPos, Vector2 maxInitPos, float radius)
 {
     ball->speed = ballSpeed;
     ball->velocity = RandomDirection();
@@ -50,7 +59,7 @@ void BallInit(Ball *ball, Vector2 initPos, float radius)
     float colliderScale = .8f;
     ball->collisionBox = (Rectangle){ 0, 0, ball->radius * 2 * colliderScale, ball->radius * 2 * colliderScale};
 
-    BallSetPosition(ball, initPos);
+    BallSetPosition(ball, RandomPosition(minInitPos, maxInitPos));
 
     ball->texture = (radius > BALL_TOO_SMALL_FOR_CLEAN_SPLIT) ? &melonBig : &melonSmall;
     ball->textureScale = (ball->radius * 2) / (float)ball->texture->width;
@@ -138,11 +147,13 @@ void BallSplit(Ball *ball, ListNode **ballHeadRef, Vector2 splitDir)
         Vector2 spawnPos = {cosf(spawnDirRad) * newRadius / 2, sinf(spawnDirRad) * newRadius / 2};
 
         Ball *ballRight = (Ball *) malloc(sizeof(Ball));
-        BallInit(ballRight, Vector2Add(ball->position, spawnPos), newRadius);
+        Vector2 spawnPosRight = Vector2Add(ball->position, spawnPos);
+        BallInit(ballRight, spawnPosRight, spawnPosRight, newRadius);
         ListNodePush(ballHeadRef, ballRight);
 
         Ball *ballLeft = (Ball *) malloc(sizeof(Ball));
-        BallInit(ballLeft, Vector2Subtract(ball->position, spawnPos), newRadius);
+        Vector2 spawnPosLeft = Vector2Subtract(ball->position, spawnPos);
+        BallInit(ballLeft, spawnPosLeft, spawnPosLeft, newRadius);
         ListNodePush(ballHeadRef, ballLeft);
     }
 

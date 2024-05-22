@@ -21,7 +21,7 @@ typedef struct Ball
     float shadowRadius;
 } Ball;
 
-void BallInit(Ball *ball, Vector2 initPos, float radius);
+void BallInit(Ball *ball, Vector2 minInitPos,Vector2 maxInitPos, float radius);
 void BallSetPosition(Ball *ball, Vector2 pos);
 void BallMove(Ball *ball);
 void BallCollisionScreen(Ball *ball);

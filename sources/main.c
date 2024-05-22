@@ -7,7 +7,6 @@
 #include "linked_list.h"
 #include "asset_loader.h"
 
-
 #define WINDOW_TITLE "Ball Game"
 
 int main(void)
@@ -51,7 +50,8 @@ int main(void)
             float testRadius = 32.0f;
             Ball *newBall = (Ball *)malloc(sizeof(Ball));
             BallInit(newBall,
-                     (Vector2) {VIRTUAL_SCREEN_WIDTH/2, VIRTUAL_SCREEN_HEIGHT/2},
+                     (Vector2) {testRadius, testRadius},
+                     (Vector2) {VIRTUAL_SCREEN_WIDTH - testRadius, VIRTUAL_SCREEN_HEIGHT - testRadius},
                      testRadius);
 
             ListNodePush(&ballHead, newBall);
