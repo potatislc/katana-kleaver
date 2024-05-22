@@ -45,8 +45,10 @@ static Vector2 RandomDirection()
     return directionVector;
 }
 
-void BallInit(Ball *ball, Vector2 minInitPos, Vector2 maxInitPos, float radius)
+Ball *BallInit( Vector2 minInitPos, Vector2 maxInitPos, float radius)
 {
+    Ball *ball = (Ball *)malloc(sizeof(Ball));
+
     ball->speed = ballSpeed;
     ball->velocity = RandomDirection();
     ball->velocity = (Vector2){ball->velocity.x * ball->speed, ball->velocity.y * ball->speed};
@@ -65,6 +67,8 @@ void BallInit(Ball *ball, Vector2 minInitPos, Vector2 maxInitPos, float radius)
     ball->textureScale = (ball->radius * 2) / (float)ball->texture->width;
     ball->textureOffset = (Vector2){ ((float)ball->texture->width / 2.0f) * ball->textureScale,
                                      ((float)ball->texture->height / 2.0f) * ball->textureScale };
+
+    return ball;
 }
 
 void BallSetPosition(Ball *ball, Vector2 pos)
@@ -146,14 +150,12 @@ void BallSplit(Ball *ball, ListNode **ballHeadRef, Vector2 splitDir)
 
         Vector2 spawnPos = {cosf(spawnDirRad) * newRadius / 2, sinf(spawnDirRad) * newRadius / 2};
 
-        Ball *ballRight = (Ball *) malloc(sizeof(Ball));
         Vector2 spawnPosRight = Vector2Add(ball->position, spawnPos);
-        BallInit(ballRight, spawnPosRight, spawnPosRight, newRadius);
+        Ball *ballRight = BallInit(spawnPosRight, spawnPosRight, newRadius);
         ListNodePush(ballHeadRef, ballRight);
 
-        Ball *ballLeft = (Ball *) malloc(sizeof(Ball));
         Vector2 spawnPosLeft = Vector2Subtract(ball->position, spawnPos);
-        BallInit(ballLeft, spawnPosLeft, spawnPosLeft, newRadius);
+        Ball *ballLeft = BallInit(spawnPosLeft, spawnPosLeft, newRadius);
         ListNodePush(ballHeadRef, ballLeft);
     }
 

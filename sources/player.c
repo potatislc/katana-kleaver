@@ -8,8 +8,10 @@
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
-void PlayerInit(Player *player, Vector2 initPos, ListNode **ballHeadRef)
+Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
 {
+    Player *player = (Player*) malloc(sizeof(Player));
+
     player->stateExecute = PlayerStateMove;
     player->texture = &samurai;
     player->shadowTexture = &samuraiShadow;
@@ -30,6 +32,8 @@ void PlayerInit(Player *player, Vector2 initPos, ListNode **ballHeadRef)
     // Allocate memory for whatever ball that goes here
     player->collidingBall = (Ball *)malloc(sizeof(Ball));
     player->collidingBallCopy = (Ball *)malloc(sizeof(Ball));
+
+    return player;
 }
 
 void PlayerUpdate(Player *player)

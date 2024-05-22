@@ -35,7 +35,7 @@ typedef struct Dash
     int reloadTime;
 } Dash;
 
-void PlayerInit(Player *player, Vector2 initPos, ListNode **ballHeadRef);
+Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef);
 void PlayerUpdate(Player *player);
 void PlayerMoveToPoint(Player *player, Vector2 point);
 void PlayerBeginDash(Player *player, Vector2 point);

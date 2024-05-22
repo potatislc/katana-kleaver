@@ -29,8 +29,7 @@ int main(void)
 
     ListNode *ballHead = NULL;
 
-    Player *player = (Player*) malloc(sizeof(Player));
-    PlayerInit(player, vScreenCenter, &ballHead);
+    Player *player = PlayerInit(vScreenCenter, &ballHead);
 
     // ToggleFullscreen(); -- Wtfff
 
@@ -48,8 +47,7 @@ int main(void)
         if (IsKeyPressed(KEY_SPACE))
         {
             float testRadius = 32.0f;
-            Ball *newBall = (Ball *)malloc(sizeof(Ball));
-            BallInit(newBall,
+            Ball *newBall = BallInit(
                      (Vector2) {testRadius, testRadius},
                      (Vector2) {VIRTUAL_SCREEN_WIDTH - testRadius, VIRTUAL_SCREEN_HEIGHT - testRadius},
                      testRadius);
