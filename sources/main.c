@@ -84,7 +84,7 @@ int main(void)
             }
         }
 
-        PlayerUpdate(player, ballHead);
+        PlayerUpdate(player);
         //-----------------------------------------------------
 
         // Draw

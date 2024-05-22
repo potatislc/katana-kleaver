@@ -32,7 +32,7 @@ void PlayerInit(Player *player, Vector2 initPos, ListNode **ballHeadRef)
     player->collidingBallCopy = (Ball *)malloc(sizeof(Ball));
 }
 
-void PlayerUpdate(Player *player, ListNode *ballHead)
+void PlayerUpdate(Player *player)
 {
     switch(player->state)
     {
@@ -51,7 +51,7 @@ void PlayerUpdate(Player *player, ListNode *ballHead)
 
     PlayerCollisionScreen(player);
     if (player->dash->reloadTime > 0) player->dash->reloadTime--;
-    if (player->state != PLAYER_SLICING) PlayerCollisionBall(player, ballHead);
+    if (player->state != PLAYER_SLICING) PlayerCollisionBall(player);
 }
 
 void PlayerMove(Player *player)
@@ -171,7 +171,7 @@ void PlayerSlice(Player *player)
     if (PlayerLerpUntilPoint(player, player->dash->targetPos))
     {
         // Perform another slice if it ends inside a ball
-        PlayerCollisionBall(player, *player->ballHeadRef);
+        PlayerCollisionBall(player);
         if (player->colliding)
         {
             PlayerBeginSlice(player);
@@ -199,9 +199,9 @@ void PlayerCollisionScreen(Player *player)
     player->position.y = fmaxf(player->radius, fminf(player->position.y, VIRTUAL_SCREEN_HEIGHT - player->radius));
 }
 
-void PlayerCollisionBall(Player *player, ListNode *ballHead)
+void PlayerCollisionBall(Player *player)
 {
-    ListNode *currentBallNode = ballHead;
+    ListNode *currentBallNode = *player->ballHeadRef;
     while (currentBallNode != NULL)
     {
         Ball currentBall = *(Ball*)currentBallNode->data;
