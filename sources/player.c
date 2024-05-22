@@ -10,7 +10,7 @@
 
 void PlayerInit(Player *player, Vector2 initPos, ListNode **ballHeadRef)
 {
-    player->state = PLAYER_MOVING;
+    player->stateExecute = PlayerStateMove;
     player->texture = &samurai;
     player->shadowTexture = &samuraiShadow;
     player->position = initPos;
@@ -34,27 +34,14 @@ void PlayerInit(Player *player, Vector2 initPos, ListNode **ballHeadRef)
 
 void PlayerUpdate(Player *player)
 {
-    switch(player->state)
-    {
-        case PLAYER_IDLE:
-            break;
-        case PLAYER_MOVING:
-            PlayerMove(player);
-            break;
-        case PLAYER_DASHING:
-            PlayerDash(player);
-            break;
-        case PLAYER_SLICING:
-            PlayerSlice(player);
-            break;
-    }
+    player->stateExecute(player);
 
     PlayerCollisionScreen(player);
     if (player->dash->reloadTime > 0) player->dash->reloadTime--;
-    if (player->state != PLAYER_SLICING) PlayerCollisionBall(player);
+    if (player->stateExecute != PlayerStateMove) PlayerCollisionBall(player);
 }
 
-void PlayerMove(Player *player)
+void PlayerStateMove(Player *player)
 {
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
     {
@@ -68,7 +55,7 @@ void PlayerMove(Player *player)
 
     if (player->colliding)
     {
-        // player->state = PLAYER_DEAD; Dying got very annoying
+        // player->stateExecute = PlayerStateDead; Dying got very annoying
     }
 }
 
@@ -92,7 +79,8 @@ void PlayerMoveToPoint(Player *player, Vector2 point)
 
 void PlayerBeginDash(Player *player, Vector2 point)
 {
-    player->state = PLAYER_DASHING;
+    player->stateExecute = PlayerStateDash;
+
     player->dash->reloadTime = player->dash->initReloadTime;
 
     Vector2 direction = Vector2Normalize((Vector2){player->position.x - point.x, player->position.y - point.y});
@@ -118,7 +106,7 @@ bool PlayerLerpUntilPoint(Player *player, Vector2 point)
     return false;
 }
 
-void PlayerDash(Player *player)
+void PlayerStateDash(Player *player)
 {
     if (player->colliding)
     {
@@ -127,7 +115,7 @@ void PlayerDash(Player *player)
 
     if (PlayerLerpUntilPoint(player, player->dash->targetPos))
     {
-        player->state = PLAYER_MOVING;
+        player->stateExecute = PlayerStateMove;
         comboScore = 0; // Dash without successful slice means loss of combo
     }
 }
@@ -136,7 +124,7 @@ void PlayerBeginSlice(Player *player)
 {
     if (player->collidingBall == NULL) return; // Error Handling
 
-    player->state = PLAYER_SLICING;
+    player->stateExecute = PlayerStateSlice;
     freezeBalls = true;
     player->dash->startPos = player->position;
 
@@ -166,7 +154,7 @@ void PlayerBeginSlice(Player *player)
     BallSplit(player->collidingBall, player->ballHeadRef, Vector2Normalize(sliceTargetPoint));
 }
 
-void PlayerSlice(Player *player)
+void PlayerStateSlice(Player *player)
 {
     if (PlayerLerpUntilPoint(player, player->dash->targetPos))
     {
@@ -179,10 +167,20 @@ void PlayerSlice(Player *player)
         }
 
         // End Dash
-        player->state = PLAYER_MOVING;
+        player->stateExecute = PlayerStateMove;
         freezeBalls = false;
         player->dash->reloadTime = 0;
     }
+}
+
+void PlayerStateIdle(Player *player)
+{
+    // Chill out
+}
+
+void PlayerStateDead(Player *player)
+{
+    // Chill out
 }
 
 bool IsInsideScreen(Player player)
@@ -226,7 +224,7 @@ void PlayerCollisionBall(Player *player)
 
 void PlayerDraw(Player player)
 {
-    if (player.state == PLAYER_DEAD) return;
+    if (player.stateExecute == PlayerStateDead) return;
 
     Vector2 textureOffset = { (float)player.texture->width / 2.0f, (float)player.texture->height / 2.0f };
 
@@ -246,7 +244,7 @@ void PlayerDraw(Player player)
         WHITE
     );
 
-    if (player.state == PLAYER_SLICING) PlayerDrawSlice(player);
+    if (player.stateExecute == PlayerStateSlice) PlayerDrawSlice(player);
 }
 
 void PlayerDrawSlice(Player player)
