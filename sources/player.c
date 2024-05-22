@@ -22,10 +22,14 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
     player->colliding = false;
 
     player->dash = (Dash *)malloc(sizeof(Dash));
-    if (player->dash != NULL) {
-        // Initialize the allocated memory
-        *player->dash = ( Dash){0.0f, 0.0f, 0.0f, 0.0f, 0.3f, 48.0f, 10, 30, 30, 0};
-    } else {
+    if (player->dash != NULL)
+    {
+        // Initialize allocated memory
+        player->dash = &(Dash){0.0f, 0.0f, 0.0f, 0.0f, 0.3f, 48.0f, 10, 30, 30, 0};
+        // *player->dash = (Dash){...}; is the same as player->dash = &(Dash){...}; Obviously
+    }
+    else
+    {
         // Handle failure to allocate memory IDK :/
     }
 
