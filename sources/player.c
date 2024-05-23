@@ -150,7 +150,7 @@ void PlayerBeginSlice(Player *player)
 
     player->dash->targetPos = (Vector2){ballPos.x + sliceTargetPoint.x, ballPos.y + sliceTargetPoint.y};
 
-    BallSplit(player->collidingBall, player->ballHeadRef, Vector2Normalize(sliceTargetPoint));
+    BallSplit(player->collidingBall, Vector2Normalize(sliceTargetPoint));
 }
 
 void PlayerStateSlice(Player *player)

@@ -4,7 +4,9 @@
 #include "raylib.h"
 #include "linked_list.h"
 
+extern ListNode *ballHead;
 extern float ballSpeed;
+extern bool freezeBalls;
 
 typedef struct Ball
 {
@@ -25,8 +27,8 @@ Ball *BallInit(Vector2 minInitPos,Vector2 maxInitPos, float radius);
 void BallSetPosition(Ball *ball, Vector2 pos);
 void BallMove(Ball *ball);
 void BallCollisionScreen(Ball *ball);
-void BallCollisionBall(Ball *ball, ListNode *ballHead);
-void BallSplit(Ball *ball, ListNode **ballHeadRef, Vector2 splitDir);
+void BallCollisionBall(Ball *ball);
+void BallSplit(Ball *ball, Vector2 splitDir);
 
 void BallDraw(Ball ball);
 void BallDrawShadow(Ball ball);

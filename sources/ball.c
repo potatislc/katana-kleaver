@@ -7,7 +7,9 @@
 // #define sign(a) ((a > 0) ? 1 : ((a < 0) ? -1 : 0))
 #define sign(a) ((a > 0) ? 1 : -1)
 
+ListNode *ballHead = NULL;
 float ballSpeed = .5f;
+bool freezeBalls = false;
 
 static Vector2 RandomPosition(Vector2 minPos, Vector2 maxPos)
 {
@@ -91,7 +93,7 @@ void BallCollisionScreen(Ball *ball)
     ball->position.y = fmaxf(ball->radius, fminf(ball->position.y, VIRTUAL_SCREEN_HEIGHT - ball->radius));
 }
 
-void BallCollisionBall(Ball *ball, ListNode *ballHead)
+void BallCollisionBall(Ball *ball)
 {
     ListNode *currentBallNode = ballHead;
 
@@ -140,7 +142,7 @@ void BallCollisionBall(Ball *ball, ListNode *ballHead)
     ball->colliding = false;
 }
 
-void BallSplit(Ball *ball, ListNode **ballHeadRef, Vector2 splitDir)
+void BallSplit(Ball *ball, Vector2 splitDir)
 {
     float newRadius = ball->radius/2;
     if (newRadius > MIN_BALL_RADIUS)
@@ -152,15 +154,15 @@ void BallSplit(Ball *ball, ListNode **ballHeadRef, Vector2 splitDir)
 
         Vector2 spawnPosRight = Vector2Add(ball->position, spawnPos);
         Ball *ballRight = BallInit(spawnPosRight, spawnPosRight, newRadius);
-        ListNodePush(ballHeadRef, ballRight);
+        ListNodePush(&ballHead, ballRight);
 
         Vector2 spawnPosLeft = Vector2Subtract(ball->position, spawnPos);
         Ball *ballLeft = BallInit(spawnPosLeft, spawnPosLeft, newRadius);
-        ListNodePush(ballHeadRef, ballLeft);
+        ListNodePush(&ballHead, ballLeft);
     }
 
     AddToScore(1); // Temp
-    ListNodeRemove(ballHeadRef, ball);
+    ListNodeRemove(&ballHead, ball);
 }
 
 void BallDraw(Ball ball)

@@ -27,8 +27,6 @@ int main(void)
 
     LoadGameTextures();
 
-    ListNode *ballHead = NULL;
-
     Player *player = PlayerInit(vScreenCenter, &ballHead);
 
     // ToggleFullscreen(); -- Wtfff
@@ -75,7 +73,7 @@ int main(void)
             ListNode* currentBallNode = ballHead;
             while (currentBallNode != NULL)
             {
-                BallCollisionBall(currentBallNode->data, ballHead);
+                BallCollisionBall(currentBallNode->data);
                 BallMove(currentBallNode->data);
                 BallCollisionScreen(currentBallNode->data);
                 currentBallNode = currentBallNode->next;
