@@ -24,6 +24,7 @@ typedef struct Ball
 } Ball;
 
 Ball *BallInit(Vector2 minInitPos,Vector2 maxInitPos, float radius);
+void BallUpdate(Ball *ball);
 void BallSetPosition(Ball *ball, Vector2 pos);
 void BallMove(Ball *ball);
 void BallCollisionScreen(Ball *ball);

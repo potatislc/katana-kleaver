@@ -73,9 +73,7 @@ int main(void)
             ListNode* currentBallNode = ballHead;
             while (currentBallNode != NULL)
             {
-                BallCollisionBall(currentBallNode->data);
-                BallMove(currentBallNode->data);
-                BallCollisionScreen(currentBallNode->data);
+                BallUpdate(currentBallNode->data);
                 currentBallNode = currentBallNode->next;
             }
         }

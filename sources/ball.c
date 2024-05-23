@@ -73,6 +73,13 @@ Ball *BallInit( Vector2 minInitPos, Vector2 maxInitPos, float radius)
     return ball;
 }
 
+void BallUpdate(Ball *ball)
+{
+    BallCollisionBall(ball);
+    BallMove(ball);
+    BallCollisionScreen(ball);
+}
+
 void BallSetPosition(Ball *ball, Vector2 pos)
 {
     ball->position = pos;
