@@ -4,7 +4,6 @@
 #include "raymath.h"
 #include "asset_loader.h"
 
-// #define sign(a) ((a > 0) ? 1 : ((a < 0) ? -1 : 0))
 #define sign(a) ((a > 0) ? 1 : -1)
 
 ListNode *ballHead = NULL;
@@ -51,6 +50,7 @@ Ball *BallInit( Vector2 minInitPos, Vector2 maxInitPos, float radius)
 {
     Ball *ball = (Ball *)malloc(sizeof(Ball));
 
+    ball->stateExecute = STATE_EXECUTE_BALL_MOVE;
     ball->speed = ballSpeed;
     ball->velocity = RandomDirection();
     ball->velocity = (Vector2){ball->velocity.x * ball->speed, ball->velocity.y * ball->speed};
@@ -76,7 +76,7 @@ Ball *BallInit( Vector2 minInitPos, Vector2 maxInitPos, float radius)
 void BallUpdate(Ball *ball)
 {
     BallCollisionBall(ball);
-    BallMove(ball);
+    ball->stateExecute(ball);
     BallCollisionScreen(ball);
 }
 
@@ -87,7 +87,13 @@ void BallSetPosition(Ball *ball, Vector2 pos)
     ball->collisionBox.y = pos.y - ball->radius;
 }
 
-void BallMove(Ball *ball)
+void BallStateSpawn(Ball *ball)
+{
+    ball->spawnTimer -= 1.0f/60.0f;
+    if (ball->spawnTimer <= 0.0f) ball->stateExecute = STATE_EXECUTE_BALL_MOVE;
+}
+
+void BallStateMove(Ball *ball)
 {
     BallSetPosition(ball, (Vector2) {ball->position.x + ball->velocity.x, ball->position.y + ball->velocity.y});
 }

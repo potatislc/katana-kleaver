@@ -10,12 +10,14 @@ extern bool freezeBalls;
 
 typedef struct Ball
 {
+    void (*stateExecute)(struct Ball*);
     Vector2 position;
     Vector2 velocity;
     float speed;
     float radius;
     bool colliding;
     Rectangle collisionBox;
+    float spawnTimer;
     Texture2D *texture;
     float textureScale;
     Vector2 textureOffset;
@@ -26,10 +28,13 @@ typedef struct Ball
 Ball *BallInit(Vector2 minInitPos,Vector2 maxInitPos, float radius);
 void BallUpdate(Ball *ball);
 void BallSetPosition(Ball *ball, Vector2 pos);
-void BallMove(Ball *ball);
 void BallCollisionScreen(Ball *ball);
 void BallCollisionBall(Ball *ball);
 void BallSplit(Ball *ball, Vector2 splitDir);
+
+void BallStateMove(Ball *ball);
+
+#define STATE_EXECUTE_BALL_MOVE (BallStateMove)
 
 void BallDraw(Ball ball);
 void BallDrawShadow(Ball ball);
