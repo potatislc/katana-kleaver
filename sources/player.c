@@ -12,7 +12,7 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
 {
     Player *player = (Player*) malloc(sizeof(Player));
 
-    player->stateExecute = PlayerStateMove;
+    player->stateExecute = STATE_EXEC_PLAYER_MOVE;
     player->texture = &samurai;
     player->shadowTexture = &samuraiShadow;
     player->position = initPos;
@@ -37,7 +37,7 @@ void PlayerUpdate(Player *player)
 
     PlayerCollisionScreen(player);
     if (player->dash->reloadTime > 0) player->dash->reloadTime--;
-    if (player->stateExecute != PlayerStateMove) PlayerCollisionBall(player);
+    if (player->stateExecute != STATE_EXEC_PLAYER_MOVE) PlayerCollisionBall(player);
 }
 
 void PlayerStateMove(Player *player)
@@ -54,7 +54,7 @@ void PlayerStateMove(Player *player)
 
     if (player->colliding)
     {
-        // player->stateExecute = PlayerStateDead; Dying got very annoying
+        // player->stateExecute = STATE_EXEC_PLAYER_DEAD; Dying got very annoying
     }
 }
 
@@ -78,7 +78,7 @@ void PlayerMoveToPoint(Player *player, Vector2 point)
 
 void PlayerBeginDash(Player *player, Vector2 point)
 {
-    player->stateExecute = PlayerStateDash;
+    player->stateExecute = STATE_EXEC_PLAYER_DASH;
 
     player->dash->reloadTime = player->dash->initReloadTime;
 
@@ -114,7 +114,7 @@ void PlayerStateDash(Player *player)
 
     if (PlayerLerpUntilPoint(player, player->dash->targetPos))
     {
-        player->stateExecute = PlayerStateMove;
+        player->stateExecute = STATE_EXEC_PLAYER_MOVE;
         comboScore = 0; // Dash without successful slice means loss of combo
     }
 }
@@ -123,7 +123,7 @@ void PlayerBeginSlice(Player *player)
 {
     if (player->collidingBall == NULL) return; // Error Handling
 
-    player->stateExecute = PlayerStateSlice;
+    player->stateExecute = STATE_EXEC_PLAYER_SLICE;
     freezeBalls = true;
     player->dash->startPos = player->position;
 
@@ -166,7 +166,7 @@ void PlayerStateSlice(Player *player)
         }
 
         // End Dash
-        player->stateExecute = PlayerStateMove;
+        player->stateExecute = STATE_EXEC_PLAYER_MOVE;
         freezeBalls = false;
         player->dash->reloadTime = 0;
     }
@@ -223,7 +223,7 @@ void PlayerCollisionBall(Player *player)
 
 void PlayerDraw(Player player)
 {
-    if (player.stateExecute == PlayerStateDead) return;
+    if (player.stateExecute == STATE_EXEC_PLAYER_DEAD) return;
 
     Vector2 textureOffset = { (float)player.texture->width / 2.0f, (float)player.texture->height / 2.0f };
 
@@ -243,7 +243,7 @@ void PlayerDraw(Player player)
         WHITE
     );
 
-    if (player.stateExecute == PlayerStateSlice) PlayerDrawSlice(player);
+    if (player.stateExecute == STATE_EXEC_PLAYER_SLICE) PlayerDrawSlice(player);
 }
 
 void PlayerDrawSlice(Player player)

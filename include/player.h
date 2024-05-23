@@ -51,6 +51,12 @@ void PlayerStateDash(Player *player);
 void PlayerStateSlice(Player *player);
 void PlayerStateDead(Player *player);
 
+#define STATE_EXEC_PLAYER_IDLE (PlayerStateIdle)
+#define STATE_EXEC_PLAYER_MOVE (PlayerStateMove)
+#define STATE_EXEC_PLAYER_DASH (PlayerStateDash)
+#define STATE_EXEC_PLAYER_SLICE (PlayerStateSlice)
+#define STATE_EXEC_PLAYER_DEAD (PlayerStateDead)
+
 void PlayerDraw(Player player);
 void PlayerDrawSlice(Player player);
 void PlayerDrawShadow(Player player);
