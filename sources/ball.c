@@ -87,12 +87,6 @@ void BallSetPosition(Ball *ball, Vector2 pos)
     ball->collisionBox.y = pos.y - ball->radius;
 }
 
-void BallStateSpawn(Ball *ball)
-{
-    ball->spawnTimer -= 1.0f/60.0f;
-    if (ball->spawnTimer <= 0.0f) ball->stateExecute = STATE_EXECUTE_BALL_MOVE;
-}
-
 void BallStateMove(Ball *ball)
 {
     BallSetPosition(ball, (Vector2) {ball->position.x + ball->velocity.x, ball->position.y + ball->velocity.y});

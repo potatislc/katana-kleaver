@@ -17,7 +17,6 @@ typedef struct Ball
     float radius;
     bool colliding;
     Rectangle collisionBox;
-    float spawnTimer;
     Texture2D *texture;
     float textureScale;
     Vector2 textureOffset;
