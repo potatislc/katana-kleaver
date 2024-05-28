@@ -7,6 +7,7 @@
 #define sign(a) ((a > 0) ? 1 : -1)
 
 ListNode *ballHead = NULL;
+ListNode *ballSpawnPointHead = NULL;
 float ballSpeed = .5f;
 bool freezeBalls = false;
 
@@ -182,4 +183,30 @@ void BallDrawShadow(Ball ball)
 {
     Vector2 ballShadowPos = {ball.position.x + ball.shadowOffset.x, ball.position.y + ball.shadowOffset.y };
     DrawCircleV(Vector2Round(ballShadowPos), ball.shadowRadius, shadowColor);
+}
+
+// Ball Spawn Point ----------
+BallSpawnPoint *BallSpawnPointInit(Ball *mockBall, double spawnTime)
+{
+    BallSpawnPoint *instance = (BallSpawnPoint*)malloc(sizeof(BallSpawnPoint));
+    instance->mockBall = mockBall;
+    instance->initTime = GetTime();
+    instance->spawnTime = instance->initTime + spawnTime;
+
+    return instance;
+}
+
+void BallSpawnPointUpdate(BallSpawnPoint *ballSpawnPoint)
+{
+    if (GetTime() < ballSpawnPoint->spawnTime) return;
+
+    ListNodePush(&ballHead, ballSpawnPoint->mockBall);
+    ListNodeRemove(&ballSpawnPointHead, ballSpawnPoint);
+}
+
+void BallSpawnPointDraw(BallSpawnPoint ballSpawnPoint)
+{
+    DrawCircleV(ballSpawnPoint.mockBall->position, ballSpawnPoint.mockBall->radius, WHITE);
+    float timerRadius = (float)(ballSpawnPoint.spawnTime / GetTime()) * ballSpawnPoint.mockBall->radius;
+    DrawCircleV(ballSpawnPoint.mockBall->position, timerRadius, ORANGE);
 }

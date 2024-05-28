@@ -5,6 +5,7 @@
 #include "linked_list.h"
 
 extern ListNode *ballHead;
+extern ListNode *ballSpawnPointHead;
 extern float ballSpeed;
 extern bool freezeBalls;
 
@@ -37,5 +38,17 @@ void BallStateMove(Ball *ball);
 
 void BallDraw(Ball ball);
 void BallDrawShadow(Ball ball);
+
+// BallSpawnPoint ---------------------------
+typedef struct BallSpawnPoint
+{
+    Ball *mockBall;
+    double initTime;
+    double spawnTime;
+} BallSpawnPoint;
+
+BallSpawnPoint *BallSpawnPointInit(Ball *mockBall, double spawnTime);
+void BallSpawnPointUpdate(BallSpawnPoint *ballSpawnPoint);
+void BallSpawnPointDraw(BallSpawnPoint ballSpawnPoint);
 
 #endif //BALL_GAME_BALL_H
