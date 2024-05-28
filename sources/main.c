@@ -50,21 +50,8 @@ int main(void)
                      (Vector2) {VIRTUAL_SCREEN_WIDTH - testRadius, VIRTUAL_SCREEN_HEIGHT - testRadius},
                      testRadius);
 
-            ListNodePush(&ballHead, newBall);
-
-            int ballAmount = 0;
-            ListNode* currentBall = ballHead;
-            while (currentBall != NULL)
-            {
-                ballAmount++;
-                printf("Ball data: %p", currentBall->data);
-                printf("\n");
-                currentBall = currentBall->next;
-            }
-
-            printf("Ball Spawned: %d\n", ballAmount);
-            printf("Ball Head ptr: %p\n", &ballHead);
-            printf("Ball Head from Player ptr: %p\n", player->ballHeadRef);
+            BallSpawnPoint *newBallSpawn = BallSpawnPointInit(newBall, 1);
+            ListNodePush(&ballSpawnPointHead, newBallSpawn);
         }
 
         if (!freezeBalls)
@@ -75,6 +62,13 @@ int main(void)
             {
                 BallUpdate(currentBallNode->data);
                 currentBallNode = currentBallNode->next;
+            }
+
+            ListNode* currentBallSpawnPointNode = ballSpawnPointHead;
+            while (currentBallSpawnPointNode != NULL)
+            {
+                BallSpawnPointUpdate(currentBallSpawnPointNode->data);
+                currentBallSpawnPointNode = currentBallSpawnPointNode->next;
             }
         }
 
@@ -107,6 +101,13 @@ int main(void)
                 {
                     BallDraw(*(Ball*)currentBallNode->data);
                     currentBallNode = currentBallNode->next;
+                }
+
+                ListNode* currentBallSpawnPointNode = ballSpawnPointHead;
+                while (currentBallSpawnPointNode != NULL)
+                {
+                    BallSpawnPointDraw(*(BallSpawnPoint*)currentBallSpawnPointNode->data);
+                    currentBallSpawnPointNode = currentBallSpawnPointNode->next;
                 }
 
                 PlayerDraw(*player);

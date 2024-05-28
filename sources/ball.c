@@ -206,7 +206,7 @@ void BallSpawnPointUpdate(BallSpawnPoint *ballSpawnPoint)
 
 void BallSpawnPointDraw(BallSpawnPoint ballSpawnPoint)
 {
-    DrawCircleV(ballSpawnPoint.mockBall->position, ballSpawnPoint.mockBall->radius, WHITE);
-    float timerRadius = (float)(ballSpawnPoint.spawnTime / GetTime()) * ballSpawnPoint.mockBall->radius;
-    DrawCircleV(ballSpawnPoint.mockBall->position, timerRadius, ORANGE);
+    DrawCircleLinesV(ballSpawnPoint.mockBall->position, ballSpawnPoint.mockBall->radius, WHITE);
+    float timerRadius = (float)(GetTime() / ballSpawnPoint.spawnTime) * ballSpawnPoint.mockBall->radius;
+    DrawCircleLinesV(ballSpawnPoint.mockBall->position, timerRadius, uiColorYellow);
 }
