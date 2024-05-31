@@ -8,6 +8,7 @@ extern ListNode *ballHead;
 extern ListNode *ballSpawnPointHead;
 extern float ballSpeed;
 extern bool freezeBalls;
+extern const double ballSpawnTime;
 
 typedef struct Ball
 {

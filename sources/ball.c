@@ -10,14 +10,15 @@ ListNode *ballHead = NULL;
 ListNode *ballSpawnPointHead = NULL;
 float ballSpeed = .5f;
 bool freezeBalls = false;
+const double ballSpawnTime = .8;
 
 static Vector2 RandomPosition(Vector2 minPos, Vector2 maxPos)
 {
     if (minPos.x == maxPos.x && minPos.y == maxPos.y) return minPos;
 
     Vector2 spawnAreaSize = Vector2Subtract(maxPos, minPos);
-    return (Vector2){minPos.x + ((float)rand()/(float)(RAND_MAX)) * spawnAreaSize.x,
-                     minPos.y + ((float)rand()/(float)(RAND_MAX)) * spawnAreaSize.y};
+    return Vector2Round((Vector2){minPos.x + ((float)rand()/(float)(RAND_MAX)) * spawnAreaSize.x,
+                     minPos.y + ((float)rand()/(float)(RAND_MAX)) * spawnAreaSize.y});
 }
 
 static Vector2 RandomDirection()
@@ -213,12 +214,13 @@ void BallSpawnPointDraw(BallSpawnPoint ballSpawnPoint)
 {
     double timeSinceInit = TimeSinceInit(ballSpawnPoint.initTime);
 
+    // Outer Circle
     double outerAnimTime = ballSpawnPoint.spawnTime * 1.f; // Maybe change this value?
     float outerRadius = (float)(fmin(timeSinceInit, outerAnimTime) / outerAnimTime);
     Color outerColor = {255, 255, 255, outerRadius * 255};
     DrawCircleLinesV(ballSpawnPoint.mockBall->position, (1.f / outerRadius) * ballSpawnPoint.mockBall->radius, outerColor);
 
-    // Circle grows until spawn
-    float timerRadius = (float)(timeSinceInit / ballSpawnPoint.spawnTime) * ballSpawnPoint.mockBall->radius;
-    DrawCircleLinesV(ballSpawnPoint.mockBall->position, timerRadius, uiColorYellow);
+    // Inner Circle
+    float innerRadius = (float)(timeSinceInit / ballSpawnPoint.spawnTime) * ballSpawnPoint.mockBall->radius;
+    DrawCircleLinesV(ballSpawnPoint.mockBall->position, innerRadius, uiColorYellow);
 }

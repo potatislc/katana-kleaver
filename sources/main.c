@@ -50,7 +50,7 @@ int main(void)
                      (Vector2) {VIRTUAL_SCREEN_WIDTH - testRadius, VIRTUAL_SCREEN_HEIGHT - testRadius},
                      testRadius);
 
-            BallSpawnPoint *newBallSpawn = BallSpawnPointInit(newBall, 1);
+            BallSpawnPoint *newBallSpawn = BallSpawnPointInit(newBall, ballSpawnTime);
             ListNodePush(&ballSpawnPointHead, newBallSpawn);
         }
 
