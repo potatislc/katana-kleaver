@@ -17,6 +17,7 @@ extern const float screenRatio;
 extern const Color shadowColor;
 extern const Color uiColorYellow;
 extern const Color uiColorRed;
+extern const Color guideColor;
 
 extern int score;
 extern int hiScore;

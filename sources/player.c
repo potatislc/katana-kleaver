@@ -221,9 +221,35 @@ void PlayerCollisionBall(Player *player)
     player->collidingBall = NULL;
 }
 
+static void DrawArrowTo(Vector2 from, Vector2 to, float offset, float width, float length, float perspectiveYShift, Color color)
+{
+    Vector2 dir = Vector2Normalize(Vector2Subtract(to, from));
+    float anglePerpendicular = atan2f(dir.y, dir.x) + PI / 2;
+    Vector2 dirPerpendicular = {cosf(anglePerpendicular), sinf(anglePerpendicular)};
+
+    float middleLength = offset + length;
+    Vector2 pointMiddle = {dir.x * middleLength, dir.y * middleLength * perspectiveYShift};
+
+    Vector2 pointRight = {
+            dir.x * offset + dirPerpendicular.x * width,
+            (dir.y * offset + dirPerpendicular.y * width) * perspectiveYShift};
+    Vector2 pointLeft = {
+            dir.x * offset - dirPerpendicular.x * width,
+            (dir.y * offset - dirPerpendicular.y * width) * perspectiveYShift};
+
+    DrawTriangle(
+            Vector2Add(from, pointLeft),
+            Vector2Add(from, pointRight),
+            Vector2Add(from, pointMiddle),
+            color);
+}
+
 void PlayerDraw(Player player)
 {
     if (player.stateExecute == STATE_EXEC_PLAYER_DEAD) return;
+
+    Vector2 fromFeet = {player.position.x, player.position.y + (float)player.texture->height/2.f - 2.f};
+    DrawArrowTo(fromFeet, Vector2ToVirtualCoords(GetMousePosition()), 8, 5, 10, .7f, guideColor);
 
     Vector2 textureOffset = { (float)player.texture->width / 2.0f, (float)player.texture->height / 2.0f };
 
