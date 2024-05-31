@@ -191,14 +191,19 @@ BallSpawnPoint *BallSpawnPointInit(Ball *mockBall, double spawnTime)
     BallSpawnPoint *instance = (BallSpawnPoint*)malloc(sizeof(BallSpawnPoint));
     instance->mockBall = mockBall;
     instance->initTime = GetTime();
-    instance->spawnTime = instance->initTime + spawnTime;
+    instance->spawnTime = spawnTime;
 
     return instance;
 }
 
+static double TimeSinceInit(double initTime)
+{
+    return GetTime() - initTime;
+}
+
 void BallSpawnPointUpdate(BallSpawnPoint *ballSpawnPoint)
 {
-    if (GetTime() < ballSpawnPoint->spawnTime) return;
+    if (TimeSinceInit(ballSpawnPoint->initTime) < ballSpawnPoint->spawnTime) return;
 
     ListNodePush(&ballHead, ballSpawnPoint->mockBall);
     ListNodeRemove(&ballSpawnPointHead, ballSpawnPoint);
@@ -207,6 +212,7 @@ void BallSpawnPointUpdate(BallSpawnPoint *ballSpawnPoint)
 void BallSpawnPointDraw(BallSpawnPoint ballSpawnPoint)
 {
     DrawCircleLinesV(ballSpawnPoint.mockBall->position, ballSpawnPoint.mockBall->radius, WHITE);
-    float timerRadius = (float)(GetTime() / ballSpawnPoint.spawnTime) * ballSpawnPoint.mockBall->radius;
+    // Circle grows until spawn
+    float timerRadius = (float)(TimeSinceInit(ballSpawnPoint.initTime) / ballSpawnPoint.spawnTime) * ballSpawnPoint.mockBall->radius;
     DrawCircleLinesV(ballSpawnPoint.mockBall->position, timerRadius, uiColorYellow);
 }
