@@ -4,7 +4,7 @@
 #include "raylib.h"
 
 #define DEFAULT_SCREEN_WIDTH (960)
-#define DEFAULT_SCREEN_HEIGHT (960+96)
+#define DEFAULT_SCREEN_HEIGHT (1056)
 #define VIRTUAL_SCREEN_WIDTH (160)
 #define VIRTUAL_SCREEN_HEIGHT (160)
 #define VIRTUAL_SCREEN_OFFSET_X (0)
@@ -13,7 +13,7 @@
 #define BALL_TOO_SMALL_FOR_CLEAN_SPLIT (8)
 #define ENOUGH ((CHAR_BIT * sizeof(int) - 1) / 3 + 2)
 
-extern const Vector2 screenRatio;
+extern Vector2 screenRatio;
 extern const Color shadowColor;
 extern const Color uiColorYellow;
 extern const Color uiColorRed;

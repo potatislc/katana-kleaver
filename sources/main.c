@@ -9,21 +9,24 @@
 
 #define WINDOW_TITLE "Ball Game"
 
-void ToggleFullscreenWindow()
+static void ToggleFullscreenWindow()
 {
-    int display = GetCurrentMonitor();
-
     if (IsWindowFullscreen())
     {
+        ToggleFullscreen();
         SetWindowSize(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
     }
     else
     {
+        int display = GetCurrentMonitor();
         SetWindowSize(GetMonitorWidth(display), GetMonitorHeight(display));
+        ToggleFullscreen();
         // SetWindowPosition(GetMonitorWidth(display)/2-GetScreenWidth()/2, 0);
     }
 
-    ToggleFullscreen();
+    screenRatio = (Vector2){
+            (float)GetScreenWidth() / (float)VIRTUAL_SCREEN_WIDTH,
+            (float)GetScreenHeight() / (float)VIRTUAL_SCREEN_HEIGHT};
 }
 
 int main(void)
@@ -46,12 +49,11 @@ int main(void)
 
     Player *player = PlayerInit(vScreenCenter, &ballHead);
 
-    // ToggleFullscreen(); -- Wtfff
-
     // Set Seed
     srand(time(0));
 
     SetTargetFPS(60);
+    ToggleFullscreenWindow();
     //----------------------------------------------------------
 
     // Main game loop
@@ -160,7 +162,21 @@ int main(void)
         if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
         {
             ToggleFullscreenWindow();
-            destRec = (Rectangle){-screenRatio.x, -screenRatio.y, (float)GetScreenHeight() + (screenRatio.x * 2), (float)GetScreenHeight() + (screenRatio.y * 2) };
+
+            int windowHeight = GetScreenHeight();
+            float aspectRatio = (float)DEFAULT_SCREEN_WIDTH / (float)DEFAULT_SCREEN_HEIGHT;
+            int newWidth = (int)(windowHeight * aspectRatio); // Calculate the new width based on the aspect ratio
+            printf("New Width: %9.6f\n", aspectRatio);
+
+            // Calculate position to center the texture on the screen
+            int posX = (GetScreenWidth() - newWidth) / 2;
+            int posY = 0; // Since we want the height to match the window's height, y-position is 0
+
+            destRec = (Rectangle){
+                    (float)posX,
+                    (float)posY,
+                (float)newWidth,
+                (float)GetScreenHeight()};
         }
         //-----------------------------------------------------
     }

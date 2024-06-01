@@ -1,7 +1,7 @@
 #include "global.h"
 #include <math.h>
 
-const Vector2 screenRatio = {
+Vector2 screenRatio = {
         (float)DEFAULT_SCREEN_WIDTH / (float)VIRTUAL_SCREEN_WIDTH,
         (float)DEFAULT_SCREEN_HEIGHT / (float)VIRTUAL_SCREEN_HEIGHT};
 const Color shadowColor = {121, 65, 0, 255};
