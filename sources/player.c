@@ -36,12 +36,13 @@ void PlayerUpdate(Player *player)
     player->stateExecute(player);
 
     PlayerCollisionScreen(player);
-    if (player->dash->reloadTime > 0) player->dash->reloadTime--;
     if (player->stateExecute != STATE_EXEC_PLAYER_MOVE) PlayerCollisionBall(player);
 }
 
 void PlayerStateMove(Player *player)
 {
+    if (player->dash->reloadTime > 0) player->dash->reloadTime--;
+
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
     {
         PlayerMoveToPoint(player, Vector2ToVirtualCoords(GetMousePosition()));
@@ -244,12 +245,22 @@ static void DrawArrowTo(Vector2 from, Vector2 to, float offset, float width, flo
             color);
 }
 
+static void DrawDashRing(Dash *dash, Vector2 pos, float innerRadius, float outerRadius, Color color)
+{
+    if (dash->reloadTime <= 0) return;
+    float ringPotion = (float)dash->reloadTime / (float)dash->initReloadTime;
+    DrawRing(Vector2Round(pos), innerRadius, outerRadius, 0, ringPotion*ringPotion*(360), 12, color);
+}
+
 void PlayerDraw(Player player)
 {
     if (player.stateExecute == STATE_EXEC_PLAYER_DEAD) return;
 
-    Vector2 fromFeet = {player.position.x, player.position.y + (float)player.texture->height/2.f - 2.f};
-    DrawArrowTo(fromFeet, Vector2ToVirtualCoords(GetMousePosition()), 8, 5, 10, .7f, guideColor);
+    Vector2 footPos = {player.position.x, player.position.y + (float)player.texture->height / 2.f - 2.f};
+
+    DrawArrowTo(footPos, Vector2ToVirtualCoords(GetMousePosition()), 8, 5, 10, .7f, guideColor);
+    if (player.stateExecute == STATE_EXEC_PLAYER_MOVE)
+        DrawDashRing(player.dash, (Vector2){player.position.x, player.position.y - 12}, 0.f, 4.f, guideColor);
 
     Vector2 textureOffset = { (float)player.texture->width / 2.0f, (float)player.texture->height / 2.0f };
 

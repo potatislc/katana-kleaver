@@ -35,11 +35,6 @@ typedef struct Dash
     int reloadTime;
 } Dash;
 
-typedef struct DashRing
-{
-    void (*stateExecute)(struct DashRing*);
-};
-
 Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef);
 void PlayerUpdate(Player *player);
 void PlayerMoveToPoint(Player *player, Vector2 point);
@@ -65,5 +60,7 @@ void PlayerStateDead(Player *player);
 void PlayerDraw(Player player);
 void PlayerDrawSlice(Player player);
 void PlayerDrawShadow(Player player);
+
+
 
 #endif
