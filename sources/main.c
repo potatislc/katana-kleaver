@@ -29,6 +29,22 @@ static void ToggleFullscreenWindow()
             (float)GetScreenHeight() / (float)VIRTUAL_SCREEN_HEIGHT};
 }
 
+Rectangle VirtualRect()
+{
+    int windowHeight = GetScreenHeight();
+    float aspectRatio = (float)DEFAULT_SCREEN_WIDTH / (float)DEFAULT_SCREEN_HEIGHT;
+    int newWidth = (int)((float)windowHeight * aspectRatio); // Calculate the new width based on the aspect ratio
+
+    int posX = (GetScreenWidth() - newWidth) / 2;
+    int posY = 0;
+
+    return (Rectangle){
+            (float)posX,
+            (float)posY,
+            (float)newWidth,
+            (float)GetScreenHeight()};
+}
+
 int main(void)
 {
     InitWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, WINDOW_TITLE);
@@ -41,7 +57,6 @@ int main(void)
     worldSpaceCamera.zoom = 1.0f;
 
     Rectangle sourceRec = { 0.0f, 0.0f, (float)target.texture.width, -(float)target.texture.height };
-    Rectangle destRec = {-screenRatio.x, -screenRatio.y, (float)GetScreenWidth() + (screenRatio.x * 2), (float)GetScreenHeight() + (screenRatio.y * 2) };
 
     Vector2 origin = { 0.0f, 0.0f };
 
@@ -53,7 +68,9 @@ int main(void)
     srand(time(0));
 
     SetTargetFPS(60);
+
     ToggleFullscreenWindow();
+    Rectangle destRec = VirtualRect();
     //----------------------------------------------------------
 
     // Main game loop
@@ -162,21 +179,7 @@ int main(void)
         if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
         {
             ToggleFullscreenWindow();
-
-            int windowHeight = GetScreenHeight();
-            float aspectRatio = (float)DEFAULT_SCREEN_WIDTH / (float)DEFAULT_SCREEN_HEIGHT;
-            int newWidth = (int)(windowHeight * aspectRatio); // Calculate the new width based on the aspect ratio
-            printf("New Width: %9.6f\n", aspectRatio);
-
-            // Calculate position to center the texture on the screen
-            int posX = (GetScreenWidth() - newWidth) / 2;
-            int posY = 0; // Since we want the height to match the window's height, y-position is 0
-
-            destRec = (Rectangle){
-                    (float)posX,
-                    (float)posY,
-                (float)newWidth,
-                (float)GetScreenHeight()};
+            destRec = VirtualRect();
         }
         //-----------------------------------------------------
     }
