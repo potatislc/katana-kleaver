@@ -9,9 +9,26 @@
 
 #define WINDOW_TITLE "Ball Game"
 
+void ToggleFullscreenWindow()
+{
+    int display = GetCurrentMonitor();
+
+    if (IsWindowFullscreen())
+    {
+        SetWindowSize(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
+    }
+    else
+    {
+        SetWindowSize(GetMonitorWidth(display), GetMonitorHeight(display));
+        // SetWindowPosition(GetMonitorWidth(display)/2-GetScreenWidth()/2, 0);
+    }
+
+    ToggleFullscreen();
+}
+
 int main(void)
 {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
+    InitWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, WINDOW_TITLE);
 
     Vector2 vScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
@@ -21,7 +38,7 @@ int main(void)
     worldSpaceCamera.zoom = 1.0f;
 
     Rectangle sourceRec = { 0.0f, 0.0f, (float)target.texture.width, -(float)target.texture.height };
-    Rectangle destRec = {-screenRatio, -screenRatio, SCREEN_WIDTH + (screenRatio * 2), SCREEN_HEIGHT + (screenRatio * 2) };
+    Rectangle destRec = {-screenRatio.x, -screenRatio.y, (float)GetScreenWidth() + (screenRatio.x * 2), (float)GetScreenHeight() + (screenRatio.y * 2) };
 
     Vector2 origin = { 0.0f, 0.0f };
 
@@ -78,7 +95,6 @@ int main(void)
         // Draw
         //-----------------------------------------------------
         BeginTextureMode(target);
-            ClearBackground((Color){ 121, 121, 121, 255});
 
             // Draw Game World
             BeginMode2D(worldSpaceCamera);
@@ -129,7 +145,7 @@ int main(void)
 
         // Draw to Screen
         BeginDrawing();
-            ClearBackground(DARKGRAY);
+            ClearBackground(BLACK);
 
             // Draw world camera to screen
             DrawTexturePro(target.texture, sourceRec, destRec, origin, 0.0f, WHITE);
@@ -143,22 +159,8 @@ int main(void)
         // check for alt + enter
         if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
         {
-            // see what display we are on right now
-            int display = GetCurrentMonitor();
-
-            if (IsWindowFullscreen())
-            {
-                // if we are full screen, then go back to the windowed size
-                SetWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-            }
-            else
-            {
-                // if we are not full screen, set the window size to match the monitor we are on
-                SetWindowSize(GetMonitorWidth(display), GetMonitorHeight(display));
-            }
-
-            // toggle the state
-            ToggleFullscreen();
+            ToggleFullscreenWindow();
+            destRec = (Rectangle){-screenRatio.x, -screenRatio.y, (float)GetScreenHeight() + (screenRatio.x * 2), (float)GetScreenHeight() + (screenRatio.y * 2) };
         }
         //-----------------------------------------------------
     }
