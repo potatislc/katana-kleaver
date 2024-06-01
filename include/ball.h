@@ -35,7 +35,7 @@ void BallSplit(Ball *ball, Vector2 splitDir);
 
 void BallStateMove(Ball *ball);
 
-#define STATE_EXECUTE_BALL_MOVE (BallStateMove)
+#define STATE_EXEC_BALL_MOVE (BallStateMove)
 
 void BallDraw(Ball ball);
 void BallDrawShadow(Ball ball);

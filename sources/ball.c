@@ -52,7 +52,7 @@ Ball *BallInit( Vector2 minInitPos, Vector2 maxInitPos, float radius)
 {
     Ball *ball = (Ball *)malloc(sizeof(Ball));
 
-    ball->stateExecute = STATE_EXECUTE_BALL_MOVE;
+    ball->stateExecute = STATE_EXEC_BALL_MOVE;
     ball->speed = ballSpeed;
     ball->velocity = RandomDirection();
     ball->velocity = (Vector2){ball->velocity.x * ball->speed, ball->velocity.y * ball->speed};
