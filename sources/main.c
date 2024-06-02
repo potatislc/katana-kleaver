@@ -202,6 +202,11 @@ int main(void)
 
                     int scoreTextWidth = MeasureText(scoreText, 8);
                     DrawText(scoreText, (int)vScreenCenter.x - scoreTextWidth / 2, (int)vScreenCenter.y+12, 8, WHITE);
+
+                    char hiScoreText[16];
+                    sprintf(hiScoreText, "HiScore: %d", hiScore);
+                    int hiScoreTextWidth = MeasureText(hiScoreText, 8);
+                    DrawText(hiScoreText, (int)vScreenCenter.x - hiScoreTextWidth / 2, (int)vScreenCenter.y+24, 8, WHITE);
                 }
 
                 // Mouse Icon
