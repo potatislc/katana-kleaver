@@ -14,6 +14,7 @@
 #define ENOUGH ((CHAR_BIT * sizeof(int) - 1) / 3 + 2)
 
 extern Vector2 screenRatio;
+extern Vector2 screenOffset;
 extern const Color shadowColor;
 extern const Color uiColorYellow;
 extern const Color uiColorRed;

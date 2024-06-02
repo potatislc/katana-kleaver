@@ -23,10 +23,6 @@ static void ToggleFullscreenWindow()
         ToggleFullscreen();
         // SetWindowPosition(GetMonitorWidth(display)/2-GetScreenWidth()/2, 0);
     }
-
-    screenRatio = (Vector2){
-            (float)GetScreenWidth() / (float)VIRTUAL_SCREEN_WIDTH,
-            (float)GetScreenHeight() / (float)VIRTUAL_SCREEN_HEIGHT};
 }
 
 Rectangle VirtualRect()
@@ -35,12 +31,15 @@ Rectangle VirtualRect()
     float aspectRatio = (float)DEFAULT_SCREEN_WIDTH / (float)DEFAULT_SCREEN_HEIGHT;
     int newWidth = (int)((float)windowHeight * aspectRatio); // Calculate the new width based on the aspect ratio
 
-    int posX = (GetScreenWidth() - newWidth) / 2;
-    int posY = 0;
+    screenOffset = (Vector2){(float)(GetScreenWidth() - newWidth) / 2.f, 0.f};
+
+    screenRatio = (Vector2){
+            ((float)newWidth) / (float)VIRTUAL_SCREEN_WIDTH,
+            (float)GetScreenHeight() / (float)(VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y)};
 
     return (Rectangle){
-            (float)posX,
-            (float)posY,
+            screenOffset.x,
+            screenOffset.y,
             (float)newWidth,
             (float)GetScreenHeight()};
 }
@@ -152,6 +151,8 @@ int main(void)
                 char scoreText[32];
                 sprintf(scoreText, "Score: %d", score);
                 DrawText(scoreText, 5, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorYellow);
+
+                DrawCircleV(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2, guideColor);
 
                 if (comboScore > 1)
                 {

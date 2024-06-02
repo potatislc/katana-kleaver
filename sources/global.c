@@ -1,13 +1,15 @@
 #include "global.h"
 #include <math.h>
+#include <stdio.h>
 
 Vector2 screenRatio = {
         (float)DEFAULT_SCREEN_WIDTH / (float)VIRTUAL_SCREEN_WIDTH,
         (float)DEFAULT_SCREEN_HEIGHT / (float)VIRTUAL_SCREEN_HEIGHT};
+Vector2 screenOffset = {0.f, 0.f};
 const Color shadowColor = {121, 65, 0, 255};
 const Color uiColorYellow = {255,243, 146, 255};
 const Color uiColorRed = { 219, 65, 97, 255};
-const Color guideColor = {255, 255, 255, 100};
+const Color guideColor = {81, 130, 255, 200};
 
 int score = 0;
 int hiScore = 0;
@@ -22,7 +24,10 @@ void AddToScore(int val)
 
 Vector2 Vector2ToVirtualCoords(Vector2 coords)
 {
-    return (Vector2){coords.x / screenRatio.x, coords.y / screenRatio.x };
+    printf("Window pos %9.6f\n", GetWindowPosition().x);
+    return (Vector2){
+        (coords.x / screenRatio.x) - screenOffset.x / screenRatio.x,
+        (coords.y / screenRatio.y) - screenOffset.y / screenRatio.y };
 }
 
 Vector2 Vector2Round(Vector2 vector)
