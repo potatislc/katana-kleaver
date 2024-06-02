@@ -20,6 +20,7 @@ extern const Color uiColorYellow;
 extern const Color uiColorRed;
 extern const Color guideColor;
 
+extern bool gameOver;
 extern int score;
 extern int hiScore;
 extern int comboScore;

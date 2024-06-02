@@ -88,6 +88,14 @@ int main(void)
         {
             Player *newPlayer = PlayerReset(player, vScreenCenter, &ballHead);
             player = newPlayer;
+
+            ListNodeRemoveAll(&ballHead);
+            ListNodeRemoveAll(&ballSpawnPointHead);
+
+            score = 0;
+            comboScore = 0;
+
+            gameOver = false;
         }
 
         if (GetTime() > timeSinceLastSpawn+spawnDelay)
@@ -178,6 +186,11 @@ int main(void)
                     char comboText[16];
                     sprintf(comboText, "x%d", comboScore);
                     DrawText(comboText, 69, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
+                }
+
+                if (gameOver)
+                {
+                    DrawText("Game Over", (int)vScreenCenter.x, (int)vScreenCenter.y, 8, WHITE);
                 }
             EndMode2D();
         EndTextureMode();

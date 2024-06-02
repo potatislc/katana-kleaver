@@ -11,6 +11,7 @@ const Color uiColorYellow = {255,243, 146, 255};
 const Color uiColorRed = { 219, 65, 97, 255};
 const Color guideColor = {81, 130, 255, 200};
 
+bool gameOver = false;
 int score = 0;
 int hiScore = 0;
 int comboScore = 0;

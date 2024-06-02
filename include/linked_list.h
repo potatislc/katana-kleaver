@@ -14,6 +14,7 @@ extern ListNode *head;
 ListNode* ListNodeCreate(void* data);
 void ListNodePush(ListNode** headRef, void* newData); // Pushes that node to the head of the list
 void ListNodeRemove(ListNode** headRef, void* key);
+void ListNodeRemoveAll(ListNode** headRef);
 void ListNodePrint(ListNode* node);
 
 #endif //BALL_GAME_LINKED_LIST_H

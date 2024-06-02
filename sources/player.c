@@ -37,6 +37,12 @@ Player *PlayerReset(Player *player, Vector2 initPos, ListNode **ballHeadRef)
     return PlayerInit(initPos, ballHeadRef);
 }
 
+void PlayerDie(Player *player)
+{
+    player->stateExecute = STATE_EXEC_PLAYER_DEAD;
+    gameOver = true;
+}
+
 void PlayerUpdate(Player *player)
 {
     player->stateExecute(player);
@@ -61,7 +67,7 @@ void PlayerStateMove(Player *player)
 
     if (player->colliding)
     {
-        player->stateExecute = STATE_EXEC_PLAYER_DEAD;
+        PlayerDie(player);
     }
 }
 
