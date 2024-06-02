@@ -77,7 +77,7 @@ int main(void)
 
     char gameOverText[16] = "- Game Over -";
     int gameOverTextWidth = MeasureText(gameOverText, 8);
-    char restartText[24] = "Press 'R' to Restart";
+    char restartText[32] = "'Middle Mouse Btn' to Restart";
     int restartTextWidth = MeasureText(restartText, 8);
 
     Player *player = PlayerInit(vScreenCenter, &ballHead);
@@ -89,7 +89,7 @@ int main(void)
         // Update
         //-----------------------------------------------------
 
-        if (IsKeyPressed(KEY_R))
+        if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE) && gameOver)
         {
             Player *newPlayer = PlayerReset(player, vScreenCenter, &ballHead);
             player = newPlayer;
@@ -101,6 +101,10 @@ int main(void)
             comboScore = 0;
 
             gameOver = false;
+
+            freezeBalls = false;
+
+            timeSinceLastSpawn = GetTime();
         }
 
         if (GetTime() > timeSinceLastSpawn+spawnDelay)
@@ -196,7 +200,11 @@ int main(void)
                 if (gameOver)
                 {
                     DrawText(gameOverText, (int)vScreenCenter.x - gameOverTextWidth / 2, (int)vScreenCenter.y, 8, WHITE);
-                    DrawText(restartText, (int)vScreenCenter.x - restartTextWidth / 2, (int)vScreenCenter.y+12, 8, WHITE);
+                    DrawText(restartText, (int)vScreenCenter.x - restartTextWidth / 2, (int)vScreenCenter.y+64, 8, WHITE);
+
+                    int scoreTextWidth = MeasureText(scoreText, 8);
+                    DrawText(scoreText, (int)vScreenCenter.x - scoreTextWidth / 2, (int)vScreenCenter.y+12, 8, WHITE);
+
                 }
             EndMode2D();
         EndTextureMode();

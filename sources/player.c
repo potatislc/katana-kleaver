@@ -40,7 +40,7 @@ Player *PlayerReset(Player *player, Vector2 initPos, ListNode **ballHeadRef)
 void PlayerDie(Player *player)
 {
     player->stateExecute = STATE_EXEC_PLAYER_DEAD;
-    gameOver = true;
+    EndGame();
 }
 
 void PlayerUpdate(Player *player)

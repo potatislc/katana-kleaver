@@ -25,6 +25,7 @@ extern int score;
 extern int hiScore;
 extern int comboScore;
 
+void EndGame();
 void AddToScore(int val);
 
 Vector2 Vector2ToVirtualCoords(Vector2 coords);

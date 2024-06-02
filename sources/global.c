@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ball.h"
 #include <math.h>
 #include <stdio.h>
 
@@ -21,6 +22,13 @@ void AddToScore(int val)
     score += val;
     comboScore += val;
     hiScore = (int)fmax(score, hiScore);
+}
+
+void EndGame()
+{
+    gameOver = true;
+    freezeBalls = true;
+    //ListNodeRemoveAll(&ballSpawnPointHead);
 }
 
 Vector2 Vector2ToVirtualCoords(Vector2 coords)
