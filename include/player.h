@@ -25,6 +25,7 @@ typedef struct Player
 
 typedef struct Dash
 {
+    bool bufferedDash;
     Vector2 targetPos;
     Vector2 startPos;
     float speed;

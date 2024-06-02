@@ -22,7 +22,7 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
     player->colliding = false;
 
     player->dash = (Dash *)malloc(sizeof(Dash));
-    *player->dash = (Dash){0.0f, 0.0f, 0.0f, 0.0f, 0.3f, 48.0f, 10, 30, 30, 0};
+    *player->dash = (Dash){false, 0.0f, 0.0f, 0.0f, 0.0f, 0.3f, 48.0f, 10, 30, 30, 0};
 
     // Allocate memory for whatever ball that goes here
     player->collidingBall = (Ball *)malloc(sizeof(Ball));
@@ -45,6 +45,8 @@ void PlayerDie(Player *player)
 
 void PlayerUpdate(Player *player)
 {
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) player->dash->bufferedDash = true;
+
     player->stateExecute(player);
 
     PlayerCollisionScreen(player);
@@ -60,8 +62,9 @@ void PlayerStateMove(Player *player)
         PlayerMoveToPoint(player, Vector2ToVirtualCoords(GetMousePosition()));
     }
 
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && player->dash->reloadTime == 0)
+    if (player->dash->bufferedDash && player->dash->reloadTime == 0)
     {
+        player->dash->bufferedDash = false;
         PlayerBeginDash(player, Vector2ToVirtualCoords(GetMousePosition()));
     }
 
