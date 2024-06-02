@@ -75,6 +75,11 @@ int main(void)
     double spawnDelay = 3.0;
     double timeSinceLastSpawn = GetTime();
 
+    char gameOverText[16] = "- Game Over -";
+    int gameOverTextWidth = MeasureText(gameOverText, 8);
+    char restartText[24] = "Press 'R' to Restart";
+    int restartTextWidth = MeasureText(restartText, 8);
+
     Player *player = PlayerInit(vScreenCenter, &ballHead);
     //----------------------------------------------------------
 
@@ -190,9 +195,8 @@ int main(void)
 
                 if (gameOver)
                 {
-                    char gameOverText[16] = "- Game Over -";
-                    int textWidth = MeasureText(gameOverText, 8);
-                    DrawText(gameOverText, (int)vScreenCenter.x-textWidth/2, (int)vScreenCenter.y, 8, WHITE);
+                    DrawText(gameOverText, (int)vScreenCenter.x - gameOverTextWidth / 2, (int)vScreenCenter.y, 8, WHITE);
+                    DrawText(restartText, (int)vScreenCenter.x - restartTextWidth / 2, (int)vScreenCenter.y+12, 8, WHITE);
                 }
             EndMode2D();
         EndTextureMode();
