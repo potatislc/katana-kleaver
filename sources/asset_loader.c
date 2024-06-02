@@ -13,8 +13,15 @@ void LoadGameTextures()
     gameTextures.samuraiShadow = LoadTexture("../assets/textures/samurai/samurai_shadow.png");
 }
 
+void MixGameAudio()
+{
+    SetSoundVolume(gameAudio.swordSlash, .6f);
+}
+
 void LoadGameAudio()
 {
     gameAudio.swordSlash = LoadSound("../assets/sfx/sword_slash.wav");
     gameAudio.dash = LoadSound("../assets/sfx/dash.wav");
+
+    MixGameAudio();
 }
