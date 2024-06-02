@@ -44,8 +44,6 @@ void PlayerMoveToPoint(Player *player, Vector2 point);
 void PlayerBeginDash(Player *player, Vector2 point);
 bool PlayerLerpUntilPoint(Player *player, Vector2 point);
 void PlayerBeginSlice(Player *player);
-bool IsInsideScreen(Player player);
-void PlayerCollisionScreen(Player *player);
 void PlayerCollisionBall(Player *player);
 
 void PlayerStateIdle(Player *player);

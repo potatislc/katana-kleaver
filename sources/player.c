@@ -8,6 +8,13 @@
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
+Vector2 ClampInsideScreen(Vector2 position, float radius)
+{
+    return (Vector2){
+            Clamp(position.x, radius, VIRTUAL_SCREEN_WIDTH - radius),
+            Clamp(position.y, radius, VIRTUAL_SCREEN_HEIGHT - radius)};
+}
+
 Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
 {
     Player *player = (Player*) malloc(sizeof(Player));
@@ -49,7 +56,7 @@ void PlayerUpdate(Player *player)
 
     player->stateExecute(player);
 
-    PlayerCollisionScreen(player);
+    player->position = ClampInsideScreen(player->position, player->radius);
     PlayerCollisionBall(player);
 }
 
@@ -109,16 +116,20 @@ void PlayerBeginDash(Player *player, Vector2 point)
 
 bool PlayerLerpUntilPoint(Player *player, Vector2 point)
 {
-    player->position = (Vector2){
+    Vector2 clampedPoint = ClampInsideScreen(point, player->radius);
+
+    Vector2 nextPosition = (Vector2){
             Lerp(player->position.x, point.x, player->dash->speed),
             Lerp(player->position.y, point.y, player->dash->speed) };
 
-    if (Vector2Distance(player->position, point) <= 2 || !IsInsideScreen(*player))
+    if (Vector2Distance(player->position, clampedPoint) <= 2.f)
     {
-        return true;
+        return false;
     }
 
-    return false;
+    player->position = nextPosition;
+
+    return true;
 }
 
 void PlayerStateDash(Player *player)
@@ -128,7 +139,7 @@ void PlayerStateDash(Player *player)
         PlayerBeginSlice(player);
     }
 
-    if (PlayerLerpUntilPoint(player, player->dash->targetPos))
+    if (!PlayerLerpUntilPoint(player, player->dash->targetPos))
     {
         player->stateExecute = STATE_EXEC_PLAYER_MOVE;
         comboScore = 0; // Dash without successful slice means loss of combo
@@ -171,7 +182,7 @@ void PlayerBeginSlice(Player *player)
 
 void PlayerStateSlice(Player *player)
 {
-    if (PlayerLerpUntilPoint(player, player->dash->targetPos))
+    if (!PlayerLerpUntilPoint(player, player->dash->targetPos))
     {
         // Perform another slice if it ends inside a ball
         PlayerCollisionBall(player);
@@ -196,20 +207,6 @@ void PlayerStateIdle(Player *player)
 void PlayerStateDead(Player *player)
 {
     // Chill out
-}
-
-bool IsInsideScreen(Player player)
-{
-    Vector2 clampedPos = {
-            Clamp(player.position.x, player.radius, VIRTUAL_SCREEN_WIDTH - player.radius),
-            Clamp(player.position.y, player.radius, VIRTUAL_SCREEN_HEIGHT - player.radius)};
-    return player.position.x == clampedPos.x && player.position.y == clampedPos.y;
-}
-
-void PlayerCollisionScreen(Player *player)
-{
-    player->position.x = fmaxf(player->radius, fminf(player->position.x, VIRTUAL_SCREEN_WIDTH - player->radius));
-    player->position.y = fmaxf(player->radius, fminf(player->position.y, VIRTUAL_SCREEN_HEIGHT - player->radius));
 }
 
 void PlayerCollisionBall(Player *player)

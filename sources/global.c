@@ -28,7 +28,7 @@ void EndGame()
 {
     gameOver = true;
     freezeBalls = true;
-    //ListNodeRemoveAll(&ballSpawnPointHead);
+    ListNodeRemoveAll(&ballSpawnPointHead);
 }
 
 Vector2 Vector2ToVirtualCoords(Vector2 coords)

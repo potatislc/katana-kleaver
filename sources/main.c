@@ -107,7 +107,7 @@ int main(void)
             timeSinceLastSpawn = GetTime();
         }
 
-        if (GetTime() > timeSinceLastSpawn+spawnDelay)
+        if (GetTime() > timeSinceLastSpawn+spawnDelay && !gameOver)
         {
             timeSinceLastSpawn = GetTime();
 
@@ -188,8 +188,6 @@ int main(void)
                 sprintf(scoreText, "Score: %d", score);
                 DrawText(scoreText, 5, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorYellow);
 
-                DrawCircleV(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2, guideColor);
-
                 if (comboScore > 1)
                 {
                     char comboText[16];
@@ -204,8 +202,10 @@ int main(void)
 
                     int scoreTextWidth = MeasureText(scoreText, 8);
                     DrawText(scoreText, (int)vScreenCenter.x - scoreTextWidth / 2, (int)vScreenCenter.y+12, 8, WHITE);
-
                 }
+
+                // Mouse Icon
+                DrawCircleV(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2, guideColor);
             EndMode2D();
         EndTextureMode();
 
