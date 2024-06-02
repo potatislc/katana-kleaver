@@ -13,8 +13,8 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
     Player *player = (Player*) malloc(sizeof(Player));
 
     player->stateExecute = STATE_EXEC_PLAYER_MOVE;
-    player->texture = &samurai;
-    player->shadowTexture = &samuraiShadow;
+    player->texture = &gameTextures.samurai;
+    player->shadowTexture = &gameTextures.samuraiShadow;
     player->position = initPos;
     player->speed = 2;
     player->radius = 6;

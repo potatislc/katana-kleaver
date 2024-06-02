@@ -124,7 +124,7 @@ int main(void)
             // Draw Game World
             BeginMode2D(worldSpaceCamera);
                 // Draw floor
-                DrawTexture(floorStandard, 0, 0, WHITE);
+                DrawTexture(gameTextures.floorStandard, 0, 0, WHITE);
 
                 // Draw Shadows
                 PlayerDrawShadow(*player);

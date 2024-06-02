@@ -3,13 +3,16 @@
 
 #include "raylib.h"
 
-extern Texture2D floorStandard;
-extern Texture2D melonBig;
-extern Texture2D melonSmall;
-extern Texture2D melonShadow;
+typedef struct {
+    Texture2D floorStandard;
+    Texture2D melonBig;
+    Texture2D melonSmall;
+    Texture2D melonShadow;
+    Texture2D samurai;
+    Texture2D samuraiShadow;
+} GameTextures;
 
-extern Texture2D samurai;
-extern Texture2D samuraiShadow;
+extern GameTextures gameTextures;
 
 void LoadGameTextures(); // Load all of it at once, the game is small
 

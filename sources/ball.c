@@ -65,12 +65,12 @@ Ball *BallInit( Vector2 minInitPos, Vector2 maxInitPos, float radius)
 
     BallSetPosition(ball, RandomPosition(minInitPos, maxInitPos));
 
-    ball->texture = (radius > BALL_TOO_SMALL_FOR_CLEAN_SPLIT) ? &melonBig : &melonSmall;
+    ball->texture = (radius > BALL_TOO_SMALL_FOR_CLEAN_SPLIT) ? &gameTextures.melonBig : &gameTextures.melonSmall;
     ball->textureScale = (ball->radius * 2) / (float)ball->texture->width;
     ball->textureOffset = (Vector2){ ((float)ball->texture->width / 2.0f) * ball->textureScale,
                                      ((float)ball->texture->height / 2.0f) * ball->textureScale };
 
-    ball->shadowScale = radius / ((float)melonShadow.width / 2.f);
+    ball->shadowScale = radius / ((float)gameTextures.melonShadow.width / 2.f);
     ball->shadowOffset = (Vector2){ 4.0f, 4.0f };
 
     return ball;
@@ -184,7 +184,7 @@ void BallDraw(Ball ball)
 void BallDrawShadow(Ball ball)
 {
     Vector2 ballShadowPos = {ball.position.x - ball.radius + ball.shadowOffset.x, ball.position.y - ball.radius + ball.shadowOffset.y };
-    DrawTextureEx(melonShadow, Vector2Round(ballShadowPos), 0, ball.shadowScale, shadowColor);
+    DrawTextureEx(gameTextures.melonShadow, Vector2Round(ballShadowPos), 0, ball.shadowScale, shadowColor);
 }
 
 // Ball Spawn Point ----------
