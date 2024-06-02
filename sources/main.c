@@ -9,6 +9,9 @@
 
 #define WINDOW_TITLE "Ball Game"
 
+#define BALL_SPAWN_DELAY_LONG (3.0)
+#define BALL_SPAWN_DELAY_SHORT (1.0)
+
 static void ToggleFullscreenWindow()
 {
     if (IsWindowFullscreen())
@@ -74,7 +77,7 @@ int main(void)
     char ballsSpawnedText[16];
     sprintf(ballsSpawnedText, "%d", ballsSpawned);
 
-    double spawnDelay = 3.0;
+    double spawnDelay = BALL_SPAWN_DELAY_LONG;
     double timeSinceLastSpawn = GetTime();
 
     char gameOverText[16] = "- Game Over -";
@@ -107,11 +110,13 @@ int main(void)
             freezeBalls = false;
 
             timeSinceLastSpawn = GetTime();
+            spawnDelay = BALL_SPAWN_DELAY_SHORT;
         }
 
         if (GetTime() > timeSinceLastSpawn+spawnDelay && !gameOver)
         {
             timeSinceLastSpawn = GetTime();
+            spawnDelay = BALL_SPAWN_DELAY_LONG;
 
             float testRadius = 32.0f;
             Ball *newBall = BallInit(
