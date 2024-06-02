@@ -190,7 +190,9 @@ int main(void)
 
                 if (gameOver)
                 {
-                    DrawText("Game Over", (int)vScreenCenter.x, (int)vScreenCenter.y, 8, WHITE);
+                    char gameOverText[16] = "- Game Over -";
+                    int textWidth = MeasureText(gameOverText, 8);
+                    DrawText(gameOverText, (int)vScreenCenter.x-textWidth/2, (int)vScreenCenter.y, 8, WHITE);
                 }
             EndMode2D();
         EndTextureMode();
