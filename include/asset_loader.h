@@ -3,7 +3,8 @@
 
 #include "raylib.h"
 
-typedef struct {
+typedef struct
+{
     Texture2D floorStandard;
     Texture2D melonBig;
     Texture2D melonSmall;
@@ -12,8 +13,16 @@ typedef struct {
     Texture2D samuraiShadow;
 } GameTextures;
 
+typedef struct
+{
+    Sound swordSlash;
+    Sound dash;
+} GameAudio;
+
 extern GameTextures gameTextures;
+extern GameAudio gameAudio;
 
 void LoadGameTextures(); // Load all of it at once, the game is small
+void LoadGameAudio();
 
 #endif //BALL_GAME_ASSET_LOADER_H

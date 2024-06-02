@@ -59,6 +59,8 @@ int main(void)
     Vector2 origin = { 0.0f, 0.0f };
 
     LoadGameTextures();
+    InitAudioDevice();
+    LoadGameAudio();
 
     // Set Seed
     srand(time(0));
@@ -197,7 +199,7 @@ int main(void)
 
                 if (gameOver)
                 {
-                    DrawText(gameOverText, (int)vScreenCenter.x - gameOverTextWidth / 2, (int)vScreenCenter.y, 8, WHITE);
+                    DrawText(gameOverText, (int)vScreenCenter.x - gameOverTextWidth / 2, (int)vScreenCenter.y-8, 8, WHITE);
                     DrawText(restartText, (int)vScreenCenter.x - restartTextWidth / 2, (int)vScreenCenter.y+64, 8, WHITE);
 
                     int scoreTextWidth = MeasureText(scoreText, 8);

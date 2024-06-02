@@ -1,6 +1,7 @@
 #include "asset_loader.h"
 
 GameTextures gameTextures;
+GameAudio gameAudio;
 
 void LoadGameTextures()
 {
@@ -10,4 +11,10 @@ void LoadGameTextures()
     gameTextures.melonShadow = LoadTexture("../assets/textures/melon/melon_shadow_big.png");
     gameTextures.samurai = LoadTexture("../assets/textures/samurai/samurai.png");
     gameTextures.samuraiShadow = LoadTexture("../assets/textures/samurai/samurai_shadow.png");
+}
+
+void LoadGameAudio()
+{
+    gameAudio.swordSlash = LoadSound("../assets/sfx/sword_slash.wav");
+    gameAudio.dash = LoadSound("../assets/sfx/dash.wav");
 }

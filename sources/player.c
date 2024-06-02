@@ -57,7 +57,7 @@ void PlayerUpdate(Player *player)
     player->stateExecute(player);
 
     player->position = ClampInsideScreen(player->position, player->radius);
-    PlayerCollisionBall(player);
+    if (player->stateExecute != STATE_EXEC_PLAYER_SLICE) PlayerCollisionBall(player);
 }
 
 void PlayerStateMove(Player *player)
@@ -99,8 +99,17 @@ void PlayerMoveToPoint(Player *player, Vector2 point)
     player->position.y += player->velocity.y;
 }
 
+void PlayDashSound()
+{
+    float randPitch = .8f  + (float)(rand() % 16) / 16.f * .4f;
+    SetSoundPitch(gameAudio.dash, randPitch);
+    PlaySound(gameAudio.dash);
+}
+
 void PlayerBeginDash(Player *player, Vector2 point)
 {
+    PlayDashSound();
+
     player->stateExecute = STATE_EXEC_PLAYER_DASH;
 
     player->dash->reloadTime = player->dash->initReloadTime;
@@ -146,9 +155,19 @@ void PlayerStateDash(Player *player)
     }
 }
 
+void PlaySliceSound()
+{
+    float initPitch = .95f;
+    float comboPitch = (comboScore > 5) ? initPitch + (float)comboScore * .005f : initPitch;
+    SetSoundPitch(gameAudio.swordSlash, comboPitch);
+    PlaySound(gameAudio.swordSlash);
+}
+
 void PlayerBeginSlice(Player *player)
 {
     if (player->collidingBall == NULL) return; // Error Handling
+
+    PlaySliceSound();
 
     player->stateExecute = STATE_EXEC_PLAYER_SLICE;
     freezeBalls = true;
