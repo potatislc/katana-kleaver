@@ -58,8 +58,6 @@ Ball *BallInit( Vector2 minInitPos, Vector2 maxInitPos, float radius)
     ball->velocity = (Vector2){ball->velocity.x * ball->speed, ball->velocity.y * ball->speed};
 
     ball->radius = radius;
-    ball->shadowRadius = radius;
-    ball->shadowOffset = (Vector2){ 4.0f, 4.0f };
 
     ball->colliding = false;
     float colliderScale = .8f;
@@ -71,6 +69,9 @@ Ball *BallInit( Vector2 minInitPos, Vector2 maxInitPos, float radius)
     ball->textureScale = (ball->radius * 2) / (float)ball->texture->width;
     ball->textureOffset = (Vector2){ ((float)ball->texture->width / 2.0f) * ball->textureScale,
                                      ((float)ball->texture->height / 2.0f) * ball->textureScale };
+
+    ball->shadowScale = radius / ((float)melonShadow.width / 2.f);
+    ball->shadowOffset = (Vector2){ 4.0f, 4.0f };
 
     return ball;
 }
@@ -182,8 +183,8 @@ void BallDraw(Ball ball)
 
 void BallDrawShadow(Ball ball)
 {
-    Vector2 ballShadowPos = {ball.position.x + ball.shadowOffset.x, ball.position.y + ball.shadowOffset.y };
-    DrawCircleV(Vector2Round(ballShadowPos), ball.shadowRadius, shadowColor);
+    Vector2 ballShadowPos = {ball.position.x - ball.radius + ball.shadowOffset.x, ball.position.y - ball.radius + ball.shadowOffset.y };
+    DrawTextureEx(melonShadow, Vector2Round(ballShadowPos), 0, ball.shadowScale, shadowColor);
 }
 
 // Ball Spawn Point ----------

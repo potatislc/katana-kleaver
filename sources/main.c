@@ -21,7 +21,6 @@ static void ToggleFullscreenWindow()
         int display = GetCurrentMonitor();
         SetWindowSize(GetMonitorWidth(display), GetMonitorHeight(display));
         ToggleFullscreen();
-        // SetWindowPosition(GetMonitorWidth(display)/2-GetScreenWidth()/2, 0);
     }
 }
 
@@ -70,6 +69,10 @@ int main(void)
 
     ToggleFullscreenWindow();
     Rectangle destRec = VirtualRect();
+
+    int ballsSpawned = 0;
+    char ballsSpawnedText[16];
+    sprintf(ballsSpawnedText, "%d", ballsSpawned);
     //----------------------------------------------------------
 
     // Main game loop
@@ -87,6 +90,10 @@ int main(void)
 
             BallSpawnPoint *newBallSpawn = BallSpawnPointInit(newBall, ballSpawnTime);
             ListNodePush(&ballSpawnPointHead, newBallSpawn);
+
+            // Only for debug
+            ballsSpawned++;
+            sprintf(ballsSpawnedText, "%d", ballsSpawned);
         }
 
         if (!freezeBalls)
@@ -158,7 +165,7 @@ int main(void)
                 {
                     char comboText[16];
                     sprintf(comboText, "x%d", comboScore);
-                    DrawText(comboText, 64+5, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
+                    DrawText(comboText, 69, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
                 }
             EndMode2D();
         EndTextureMode();
@@ -170,7 +177,9 @@ int main(void)
             // Draw world camera to screen
             DrawTexturePro(target.texture, sourceRec, destRec, origin, 0.0f, WHITE);
 
-            // DrawFPS(10, 10);
+            // Debug stuff
+            DrawFPS(10, 10);
+            DrawText(ballsSpawnedText, 10, 30, 21, GREEN);
         EndDrawing();
         //-----------------------------------------------------
 

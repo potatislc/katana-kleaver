@@ -23,7 +23,7 @@ typedef struct Ball
     float textureScale;
     Vector2 textureOffset;
     Vector2 shadowOffset;
-    float shadowRadius;
+    float shadowScale;
 } Ball;
 
 Ball *BallInit(Vector2 minInitPos,Vector2 maxInitPos, float radius);

@@ -24,7 +24,6 @@ void AddToScore(int val)
 
 Vector2 Vector2ToVirtualCoords(Vector2 coords)
 {
-    printf("Window pos %9.6f\n", GetWindowPosition().x);
     return (Vector2){
         (coords.x / screenRatio.x) - screenOffset.x / screenRatio.x,
         (coords.y / screenRatio.y) - screenOffset.y / screenRatio.y };
