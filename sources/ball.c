@@ -10,7 +10,7 @@ ListNode *ballHead = NULL;
 ListNode *ballSpawnPointHead = NULL;
 float ballSpeed = .5f;
 bool freezeBalls = false;
-const double ballSpawnTime = .8;
+const double ballSpawnTime = 1.f;
 
 static Vector2 RandomPosition(Vector2 minPos, Vector2 maxPos)
 {

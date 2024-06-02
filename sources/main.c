@@ -60,8 +60,6 @@ int main(void)
 
     LoadGameTextures();
 
-    Player *player = PlayerInit(vScreenCenter, &ballHead);
-
     // Set Seed
     srand(time(0));
 
@@ -73,6 +71,11 @@ int main(void)
     int ballsSpawned = 0;
     char ballsSpawnedText[16];
     sprintf(ballsSpawnedText, "%d", ballsSpawned);
+
+    double spawnDelay = 3.0;
+    double timeSinceLastSpawn = GetTime();
+
+    Player *player = PlayerInit(vScreenCenter, &ballHead);
     //----------------------------------------------------------
 
     // Main game loop
@@ -80,8 +83,17 @@ int main(void)
     {
         // Update
         //-----------------------------------------------------
-        if (IsKeyPressed(KEY_SPACE))
+
+        if (IsKeyPressed(KEY_R))
         {
+            Player *newPlayer = PlayerReset(player, vScreenCenter, &ballHead);
+            player = newPlayer;
+        }
+
+        if (GetTime() > timeSinceLastSpawn+spawnDelay)
+        {
+            timeSinceLastSpawn = GetTime();
+
             float testRadius = 32.0f;
             Ball *newBall = BallInit(
                      (Vector2) {testRadius, testRadius},

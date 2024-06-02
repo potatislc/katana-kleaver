@@ -31,12 +31,18 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
     return player;
 }
 
+Player *PlayerReset(Player *player, Vector2 initPos, ListNode **ballHeadRef)
+{
+    free(player);
+    return PlayerInit(initPos, ballHeadRef);
+}
+
 void PlayerUpdate(Player *player)
 {
     player->stateExecute(player);
 
     PlayerCollisionScreen(player);
-    if (player->stateExecute != STATE_EXEC_PLAYER_MOVE) PlayerCollisionBall(player);
+    PlayerCollisionBall(player);
 }
 
 void PlayerStateMove(Player *player)
@@ -55,7 +61,7 @@ void PlayerStateMove(Player *player)
 
     if (player->colliding)
     {
-        // player->stateExecute = STATE_EXEC_PLAYER_DEAD; Dying got very annoying
+        player->stateExecute = STATE_EXEC_PLAYER_DEAD;
     }
 }
 
@@ -254,7 +260,11 @@ static void DrawDashRing(Dash *dash, Vector2 pos, float innerRadius, float outer
 
 void PlayerDraw(Player player)
 {
-    if (player.stateExecute == STATE_EXEC_PLAYER_DEAD) return;
+    if (player.stateExecute == STATE_EXEC_PLAYER_DEAD)
+    {
+        DrawCircleV(Vector2Round(player.position), 8, uiColorRed);
+        return;
+    }
 
     Vector2 footPos = {player.position.x, player.position.y + (float)player.texture->height / 2.f - 2.f};
 
