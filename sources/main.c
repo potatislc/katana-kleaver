@@ -6,7 +6,17 @@
 #include "global.h"
 #include "linked_list.h"
 #include "asset_loader.h"
+#include "game.h"
 
+int main(void)
+{
+    GameInit();
+    GameRun();
+
+    return 0;
+}
+
+/*
 #define WINDOW_TITLE "Ball Game"
 
 #define BALL_SPAWN_DELAY_LONG (3.0)
@@ -251,3 +261,4 @@ int main(void)
 
     return 0;
 }
+*/

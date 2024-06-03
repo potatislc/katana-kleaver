@@ -9,7 +9,6 @@
 void GameInit()
 {
     WindowHandlerInit();
-    WindowHandlerToggleFullscreen();
 
     RendererInit();
 
@@ -19,8 +18,6 @@ void GameInit()
 
     // Set Seed
     srand(time(0));
-
-    GameRun();
 }
 
 void GameRun()
@@ -28,6 +25,8 @@ void GameRun()
     while (!WindowShouldClose())
     {
         GameUpdate();
+        RenderToTarget();
+        RenderToScreen();
     }
 
     GameDeInit();
@@ -40,5 +39,5 @@ void GameUpdate()
 
 void GameDeInit()
 {
-
+    CloseWindow();
 }

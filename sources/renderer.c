@@ -1,5 +1,6 @@
 #include "renderer.h"
 #include "window_handler.h"
+#include "asset_loader.h"
 
 Vector2 virtualScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
@@ -9,15 +10,17 @@ Camera2D worldSpaceCamera = { 0 };
 
 Rectangle sourceRec = { 0.f, 0.f, 0.f, 0.f};
 Rectangle destRec = { 0.f, 0.f, 0.f, 0.f};
+Vector2 origin = {0.f};
 
 void RendererInit()
 {
     virtualRenderTarget = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y);
     sourceRec = (Rectangle){ 0.f, 0.f, (float)virtualRenderTarget.texture.width, -(float)virtualRenderTarget.texture.height };
     worldSpaceCamera.zoom = 1.0f;
+    RendererFitVirtualRectToScreen();
 }
 
-void FitVirtualRectToScreen()
+void RendererFitVirtualRectToScreen()
 {
     int windowHeight = GetScreenHeight();
     float aspectRatio = (float)DEFAULT_SCREEN_WIDTH / (float)DEFAULT_SCREEN_HEIGHT;
@@ -34,4 +37,43 @@ void FitVirtualRectToScreen()
             screenOffset.y,
             (float)newWidth,
             (float)GetScreenHeight()};
+}
+
+void DrawShadows()
+{
+
+}
+
+void DrawEntities()
+{
+
+}
+
+void RendererDrawGame()
+{
+    DrawShadows();
+    DrawEntities();
+}
+
+void RenderToTarget()
+{
+    BeginTextureMode(virtualRenderTarget);
+
+    // Draw floor
+    DrawTexture(gameTextures.floorStandard, 0, 0, WHITE);
+
+    EndTextureMode();
+}
+
+void RenderToScreen()
+{
+    BeginDrawing();
+        ClearBackground(BLACK);
+
+        // Draw world camera to screen
+        DrawTexturePro(virtualRenderTarget.texture, sourceRec, destRec, origin, 0.0f, WHITE);
+
+        // Debug stuff
+        DrawFPS(10, 10);
+    EndDrawing();
 }
