@@ -24,10 +24,17 @@ void AddToScore(int val)
     hiScore = (int)fmax(score, hiScore);
 }
 
+void LoseCombo()
+{
+    score += comboScore;
+    comboScore = 0;
+}
+
 void EndGame()
 {
     gameOver = true;
     freezeBalls = true;
+    LoseCombo();
     ListNodeRemoveAll(&ballSpawnPointHead);
 }
 

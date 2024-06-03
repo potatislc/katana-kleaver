@@ -27,6 +27,7 @@ extern int comboScore;
 
 void EndGame();
 void AddToScore(int val);
+void LoseCombo();
 
 Vector2 Vector2ToVirtualCoords(Vector2 coords);
 Vector2 Vector2Round(Vector2 vector);

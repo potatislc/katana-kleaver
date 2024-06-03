@@ -103,7 +103,6 @@ int main(void)
             ListNodeRemoveAll(&ballSpawnPointHead);
 
             score = 0;
-            comboScore = 0;
 
             gameOver = false;
 
@@ -198,7 +197,7 @@ int main(void)
                 if (comboScore > 1)
                 {
                     char comboText[16];
-                    sprintf(comboText, "x%d", comboScore);
+                    sprintf(comboText, "+%d", comboScore);
                     DrawText(comboText, 69, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
                 }
 
