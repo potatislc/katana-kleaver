@@ -67,8 +67,8 @@ void RenderToTarget()
             DrawBackground();
             DrawShadows();
             DrawEntities();
-            DrawUi();
         EndMode2D();
+        DrawUi(); // Outside BeginMode2D so Ui doesn't get affected by camera shake?
     EndTextureMode();
 }
 

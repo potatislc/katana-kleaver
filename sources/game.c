@@ -9,7 +9,6 @@
 void GameInit()
 {
     WindowHandlerInit();
-    WindowHandlerToggleFullscreen();
 
     RendererInit();
 
@@ -19,6 +18,11 @@ void GameInit()
 
     // Set Seed
     srand(time(0));
+
+    //SetTargetFPS(60);
+
+    WindowHandlerToggleFullscreen();
+    RendererFitVirtualRectToScreen();
 }
 
 void GameRun()
@@ -35,7 +39,12 @@ void GameRun()
 
 void GameUpdate()
 {
-
+    // Toggle Fullscreen
+    if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
+    {
+        WindowHandlerToggleFullscreen();
+        RendererFitVirtualRectToScreen();
+    }
 }
 
 void GameDeInit()
