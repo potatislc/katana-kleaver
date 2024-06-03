@@ -23,7 +23,10 @@ set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/include/") # Define PROJECT_INCLU
 # In CLion /CMake Settings/CMake Options, add: -DCMAKE_INCLUDE_DIRECTORIES_PROJECT_BEFORE=TRUE, then rebuild
 
 # Declaring our executable
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCES}
+        include/game.h
+        sources/renderer.c
+        include/renderer.h)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
