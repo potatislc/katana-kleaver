@@ -4,7 +4,6 @@
 void WindowHandlerInit()
 {
     InitWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, WINDOW_TITLE);
-    WindowHandlerToggleFullscreen();
 }
 
 void WindowHandlerToggleFullscreen()

@@ -9,6 +9,7 @@
 void GameInit()
 {
     WindowHandlerInit();
+    WindowHandlerToggleFullscreen();
 
     RendererInit();
 

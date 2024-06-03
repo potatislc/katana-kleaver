@@ -49,19 +49,26 @@ void DrawEntities()
 
 }
 
-void RendererDrawGame()
+void DrawBackground()
 {
-    DrawShadows();
-    DrawEntities();
+    // Draw floor
+    DrawTexture(gameTextures.floorStandard, 0, 0, WHITE);
+}
+
+void DrawUi()
+{
+
 }
 
 void RenderToTarget()
 {
     BeginTextureMode(virtualRenderTarget);
-
-    // Draw floor
-    DrawTexture(gameTextures.floorStandard, 0, 0, WHITE);
-
+        BeginMode2D(worldSpaceCamera);
+            DrawBackground();
+            DrawShadows();
+            DrawEntities();
+            DrawUi();
+        EndMode2D();
     EndTextureMode();
 }
 
