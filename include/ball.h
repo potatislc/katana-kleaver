@@ -9,6 +9,7 @@
 
 extern ListNode *ballHead;
 extern ListNode *ballSpawnPointHead;
+extern int ballCount;
 extern float ballSpeed;
 extern bool freezeBalls;
 extern const double ballSpawnTime;
@@ -44,6 +45,10 @@ void BallStateMove(Ball *ball);
 
 void BallDraw(Ball ball);
 void BallDrawShadow(Ball ball);
+
+void BallSpawn(Ball *ballToSpawn);
+void BallDeSpawn(Ball *ballToDeSpawn);
+void BallDeSpawnAll();
 
 // BallSpawnPoint ---------------------------
 typedef struct BallSpawnPoint

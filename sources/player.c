@@ -56,10 +56,6 @@ void PlayerUpdate(Player *player)
 
     player->position = Vector2ClampInsideScreen(player->position, player->radius);
     if (player->stateExecute != STATE_EXEC_PLAYER_SLICE) PlayerCollisionBall(player);
-
-    // Test panning
-    SoundPanToWorld(gameAudio.dash, player->position, .5f);
-    SoundPanToWorld(gameAudio.swordSlash, player->position, .5f);
 }
 
 void PlayerStateMove(Player *player)
@@ -111,6 +107,7 @@ void PlayDashSound()
 void PlayerBeginDash(Player *player, Vector2 point)
 {
     PlayDashSound();
+    SoundPanToWorld(gameAudio.dash, player->position, .5f);
 
     player->stateExecute = STATE_EXEC_PLAYER_DASH;
 
@@ -204,6 +201,8 @@ void PlayerBeginSlice(Player *player)
 
 void PlayerStateSlice(Player *player)
 {
+    SoundPanToWorld(gameAudio.swordSlash, player->position, .5f);
+
     if (!PlayerLerpUntilPoint(player, player->dash->targetPos))
     {
         // Perform another slice if it ends inside a ball

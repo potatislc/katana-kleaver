@@ -50,10 +50,6 @@ void SpawnBall()
 
     BallSpawnPoint *newBallSpawn = BallSpawnPointInit(newBall, ballSpawnTime);
     ListNodePush(&ballSpawnPointHead, newBallSpawn);
-
-    // Only for debug
-    ballsSpawned++;
-    //sprintf(ballsSpawnedText, "%d", ballsSpawned);
 }
 
 void Update()
@@ -109,7 +105,7 @@ void GameRestart()
     Player *newPlayer = PlayerReset(playerRef, virtualScreenCenter, &ballHead);
     playerRef = newPlayer;
 
-    ListNodeRemoveAll(&ballHead);
+    BallDeSpawnAll();
     ListNodeRemoveAll(&ballSpawnPointHead);
 
     ScoreHandlerResetScore();

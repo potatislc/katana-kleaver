@@ -133,8 +133,13 @@ void RenderToScreen()
 
         // Debug stuff
         DrawFPS(10, 10);
-        char windowModeText[16];
+
+        char windowModeText[32];
         sprintf(windowModeText, "WINDOW MODE %d", WindowHandlerGetWindowMode());
         DrawText(windowModeText, 10, 30, 21, DARKGREEN);
+
+        char ballCountText[32];
+        sprintf(ballCountText, "BALL COUNT %d", ballCount);
+        DrawText(ballCountText, 10, 50, 21, DARKGREEN);
     EndDrawing();
 }

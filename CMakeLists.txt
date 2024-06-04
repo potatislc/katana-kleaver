@@ -28,7 +28,9 @@ add_executable(${PROJECT_NAME} ${PROJECT_SOURCES}
         sources/renderer.c
         include/renderer.h
         sources/score_handler.c
-        include/score_handler.h)
+        include/score_handler.h
+        sources/wave_handler.c
+        include/wave_handler.h)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 

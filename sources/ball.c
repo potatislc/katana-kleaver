@@ -10,6 +10,7 @@
 
 ListNode *ballHead = NULL;
 ListNode *ballSpawnPointHead = NULL;
+int ballCount = 0;
 float ballSpeed = .5f;
 bool freezeBalls = false;
 const double ballSpawnTime = 1.f;
@@ -166,15 +167,15 @@ void BallSplit(Ball *ball, Vector2 splitDir)
 
         Vector2 spawnPosRight = Vector2Add(ball->position, spawnPos);
         Ball *ballRight = BallInit(spawnPosRight, spawnPosRight, newRadius);
-        ListNodePush(&ballHead, ballRight);
+        BallSpawn(ballRight);
 
         Vector2 spawnPosLeft = Vector2Subtract(ball->position, spawnPos);
         Ball *ballLeft = BallInit(spawnPosLeft, spawnPosLeft, newRadius);
-        ListNodePush(&ballHead, ballLeft);
+        BallSpawn(ballLeft);
     }
 
     ScoreHandlerAddToScore(1); // Temp
-    ListNodeRemove(&ballHead, ball);
+    BallDeSpawn(ball);
 }
 
 void BallDraw(Ball ball)
@@ -189,7 +190,25 @@ void BallDrawShadow(Ball ball)
     DrawTextureEx(gameTextures.melonShadow, Vector2Round(ballShadowPos), 0, ball.shadowScale, shadowColor);
 }
 
-// Ball Spawn Point ----------
+// Ball Spawning ----------
+void BallSpawn(Ball *ballToSpawn)
+{
+    ListNodePush(&ballHead, ballToSpawn);
+    ballCount++;
+}
+
+void BallDeSpawn(Ball *ballToDeSpawn)
+{
+    ListNodeRemove(&ballHead, ballToDeSpawn);
+    ballCount--;
+}
+
+void BallDeSpawnAll()
+{
+    ListNodeRemoveAll(&ballHead);
+    ballCount = 0;
+}
+
 BallSpawnPoint *BallSpawnPointInit(Ball *mockBall, double spawnTime)
 {
     BallSpawnPoint *instance = (BallSpawnPoint*)malloc(sizeof(BallSpawnPoint));
@@ -209,7 +228,8 @@ void BallSpawnPointUpdate(BallSpawnPoint *ballSpawnPoint)
 {
     if (TimeSinceInit(ballSpawnPoint->initTime) < ballSpawnPoint->spawnTime) return;
 
-    ListNodePush(&ballHead, ballSpawnPoint->mockBall);
+    // Spawn a ball
+    BallSpawn(ballSpawnPoint->mockBall);
     ListNodeRemove(&ballSpawnPointHead, ballSpawnPoint);
 }
 
