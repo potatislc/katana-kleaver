@@ -3,6 +3,7 @@
 #include "global.h"
 #include "raymath.h"
 #include "asset_loader.h"
+#include "renderer.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 

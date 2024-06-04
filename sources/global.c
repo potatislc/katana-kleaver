@@ -1,42 +1,11 @@
 #include "global.h"
-#include "ball.h"
 #include <math.h>
-#include <stdio.h>
+#include "renderer.h"
 
-Vector2 screenRatio = {
-        (float)DEFAULT_SCREEN_WIDTH / (float)VIRTUAL_SCREEN_WIDTH,
-        (float)DEFAULT_SCREEN_HEIGHT / (float)VIRTUAL_SCREEN_HEIGHT};
-Vector2 screenOffset = {0.f, 0.f};
 const Color shadowColor = {121, 65, 0, 255};
 const Color uiColorYellow = {255,243, 146, 255};
 const Color uiColorRed = { 219, 65, 97, 255};
 const Color guideColor = {81, 130, 255, 200};
-
-bool gameOver = false;
-int score = 0;
-int hiScore = 0;
-int comboScore = 0;
-
-void AddToScore(int val)
-{
-    score += val;
-    comboScore += val;
-    hiScore = (int)fmax(score, hiScore);
-}
-
-void LoseCombo()
-{
-    score += comboScore;
-    comboScore = 0;
-}
-
-void EndGame()
-{
-    gameOver = true;
-    freezeBalls = true;
-    LoseCombo();
-    ListNodeRemoveAll(&ballSpawnPointHead);
-}
 
 Vector2 Vector2ToVirtualCoords(Vector2 coords)
 {

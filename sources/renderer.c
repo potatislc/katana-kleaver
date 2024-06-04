@@ -1,6 +1,7 @@
 #include "renderer.h"
 #include "asset_loader.h"
 #include "player.h"
+#include "window_handler.h"
 #include "global.h"
 
 Vector2 virtualScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
@@ -12,6 +13,9 @@ Camera2D worldSpaceCamera = { 0 };
 Rectangle sourceRec = { 0.f, 0.f, 0.f, 0.f};
 Rectangle destRec = { 0.f, 0.f, 0.f, 0.f};
 Vector2 origin = {0.f};
+
+Vector2 screenOffset;
+Vector2 screenRatio;
 
 void RendererInit()
 {

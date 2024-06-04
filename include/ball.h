@@ -4,6 +4,9 @@
 #include "raylib.h"
 #include "linked_list.h"
 
+#define MIN_BALL_RADIUS (4)
+#define BALL_TOO_SMALL_FOR_CLEAN_SPLIT (8)
+
 extern ListNode *ballHead;
 extern ListNode *ballSpawnPointHead;
 extern float ballSpeed;

@@ -5,6 +5,9 @@
 #include "global.h"
 #include "ball.h"
 #include "asset_loader.h"
+#include "renderer.h"
+#include "score_handler.h"
+#include "game.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
@@ -49,7 +52,7 @@ Player *PlayerReset(Player *player, Vector2 initPos, ListNode **ballHeadRef)
 void PlayerDie(Player *player)
 {
     player->stateExecute = STATE_EXEC_PLAYER_DEAD;
-    EndGame();
+    GameEnd(); // Should be a signal to game instead
 }
 
 void PlayerUpdate(Player *player)

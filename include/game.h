@@ -8,7 +8,10 @@
 
 void GameInit();
 void GameRun();
+void GameEnd();
 void GameRestart();
 void GameDeInit();
+
+extern bool gameOver;
 
 #endif //BALL_GAME_GAME_H

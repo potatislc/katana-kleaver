@@ -6,12 +6,14 @@
 #include "asset_loader.h"
 #include "renderer.h"
 #include "ball.h"
-#include "global.h"
+#include "score_handler.h"
 
 // Move these to spawner.c
 double spawnDelay = BALL_SPAWN_DELAY_LONG;
 double timeSinceLastSpawn;
 int ballsSpawned = 0;
+
+bool gameOver = false;
 
 void GameInit()
 {
@@ -91,6 +93,14 @@ void GameRun()
     }
 
     GameDeInit();
+}
+
+void GameEnd()
+{
+    gameOver = true;
+    freezeBalls = true;
+    LoseCombo();
+    ListNodeRemoveAll(&ballSpawnPointHead);
 }
 
 void GameRestart()
