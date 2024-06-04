@@ -18,3 +18,8 @@ Vector2 Vector2Round(Vector2 vector)
 {
     return (Vector2){ roundf(vector.x), roundf(vector.y) };
 }
+
+void SoundPanToWorld(Sound sound, Vector2 sourcePos, float intensity)
+{
+    SetSoundPan(sound, .5f + (.5f - (sourcePos.x / VIRTUAL_SCREEN_WIDTH)) * intensity);
+}

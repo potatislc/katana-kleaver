@@ -63,6 +63,10 @@ void PlayerUpdate(Player *player)
 
     player->position = ClampInsideScreen(player->position, player->radius);
     if (player->stateExecute != STATE_EXEC_PLAYER_SLICE) PlayerCollisionBall(player);
+
+    // Test panning
+    SoundPanToWorld(gameAudio.dash, player->position, .5f);
+    SoundPanToWorld(gameAudio.swordSlash, player->position, .5f);
 }
 
 void PlayerStateMove(Player *player)
