@@ -112,7 +112,7 @@ void GameRestart()
     ListNodeRemoveAll(&ballHead);
     ListNodeRemoveAll(&ballSpawnPointHead);
 
-    score = 0;
+    ScoreHandlerResetScore();
 
     gameOver = false;
 

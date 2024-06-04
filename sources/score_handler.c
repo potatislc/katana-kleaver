@@ -55,8 +55,13 @@ void ScoreHandlerAddToScore(int val)
 
 void ScoreHandlerLoseCombo()
 {
-    score += comboScore;
+    if (comboScore > 1) ScoreHandlerAddToScore(comboScore);
     comboScore = 0;
 
     UpdateText();
+}
+
+int ScoreHandlerGetComboScore()
+{
+    return comboScore;
 }

@@ -103,7 +103,7 @@ void DrawUi(bool gameOver)
 
     DrawText(scoreText, 5, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorYellow);
 
-    if (comboScore > 1)
+    if (ScoreHandlerGetComboScore() > 1)
     {
         DrawText(comboText, 69, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
     }
