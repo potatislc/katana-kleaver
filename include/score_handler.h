@@ -5,7 +5,20 @@ extern int score;
 extern int hiScore;
 extern int comboScore;
 
-void AddToScore(int val);
-void LoseCombo();
+extern char scoreText[32];
+extern char comboText[32];
+extern char hiScoreText[32];
+extern char gameOverText[32];
+extern char restartText[32];
+
+extern int scoreTextWidth;
+extern int comboTextWidth;
+extern int hiScoreTextWidth;
+extern const int gameOverTextWidth;
+extern const int restartTextWidth;
+
+void ScoreHandlerAddToScore(int val);
+void ScoreHandlerLoseCombo();
+void ScoreHandlerResetScore();
 
 #endif //BALL_GAME_SCORE_HANDLER_H

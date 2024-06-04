@@ -61,6 +61,7 @@ void Update()
     if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE) && gameOver)
     {
         GameRestart();
+        ScoreHandlerResetScore();
     }
 
     if (GetTime() > timeSinceLastSpawn+spawnDelay && !gameOver)
@@ -88,7 +89,7 @@ void GameRun()
     while (!WindowShouldClose())
     {
         Update();
-        RenderToTarget();
+        RenderToTarget(gameOver);
         RenderToScreen();
     }
 
@@ -99,7 +100,7 @@ void GameEnd()
 {
     gameOver = true;
     freezeBalls = true;
-    LoseCombo();
+    ScoreHandlerLoseCombo();
     ListNodeRemoveAll(&ballSpawnPointHead);
 }
 

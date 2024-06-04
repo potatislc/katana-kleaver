@@ -4,6 +4,7 @@
 #include "raymath.h"
 #include "asset_loader.h"
 #include "renderer.h"
+#include "score_handler.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
@@ -172,7 +173,7 @@ void BallSplit(Ball *ball, Vector2 splitDir)
         ListNodePush(&ballHead, ballLeft);
     }
 
-    AddToScore(1); // Temp
+    ScoreHandlerAddToScore(1); // Temp
     ListNodeRemove(&ballHead, ball);
 }
 

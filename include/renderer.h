@@ -13,7 +13,7 @@ void RendererDrawGame();
 void RendererDrawUi();
 void RendererDrawDebug();
 void RendererFitVirtualRectToScreen();
-void RenderToTarget();
+void RenderToTarget(bool gameOver);
 void RenderToScreen();
 
 extern Vector2 screenRatio;

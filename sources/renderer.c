@@ -3,6 +3,7 @@
 #include "player.h"
 #include "window_handler.h"
 #include "global.h"
+#include "score_handler.h"
 
 Vector2 virtualScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
@@ -81,16 +82,34 @@ void DrawEntities()
     PlayerDraw(*playerRef);
 }
 
-void DrawUi()
+void DrawUi(bool gameOver)
 {
+    if (gameOver)
+    {
+        DrawText(gameOverText, (int)virtualScreenCenter.x - gameOverTextWidth / 2, (int)virtualScreenCenter.y-8, 8, WHITE);
+        DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+64, 8, WHITE);
+
+        int scoreTextWidth = MeasureText(scoreText, 8);
+        DrawText(scoreText, (int)virtualScreenCenter.x - scoreTextWidth / 2, (int)virtualScreenCenter.y+12, 8, WHITE);
+
+        DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, WHITE);
+    }
+
     // Mouse Icon
     DrawCircleV(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2, guideColor);
 
     // Black Box
     DrawRectangle(0, VIRTUAL_SCREEN_HEIGHT, VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_OFFSET_Y, BLACK);
+
+    DrawText(scoreText, 5, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorYellow);
+
+    if (comboScore > 1)
+    {
+        DrawText(comboText, 69, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
+    }
 }
 
-void RenderToTarget()
+void RenderToTarget(bool gameOver)
 {
     BeginTextureMode(virtualRenderTarget);
         BeginMode2D(worldSpaceCamera);
@@ -98,7 +117,7 @@ void RenderToTarget()
             DrawShadows();
             DrawEntities();
         EndMode2D();
-        DrawUi(); // Outside BeginMode2D so Ui doesn't get affected by camera shake?
+        DrawUi(gameOver); // Outside BeginMode2D so Ui doesn't get affected by camera shake?
     EndTextureMode();
 }
 

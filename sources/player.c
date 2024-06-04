@@ -156,7 +156,7 @@ void PlayerStateDash(Player *player)
     if (!PlayerLerpUntilPoint(player, player->dash->targetPos))
     {
         player->stateExecute = STATE_EXEC_PLAYER_MOVE;
-        LoseCombo(); // Dash without successful slice means loss of combo
+        ScoreHandlerLoseCombo(); // Dash without successful slice means loss of combo
     }
 }
 
