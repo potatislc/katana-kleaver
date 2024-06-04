@@ -5,6 +5,13 @@
 #include "window_handler.h"
 #include "asset_loader.h"
 #include "renderer.h"
+#include "ball.h"
+#include "global.h"
+
+// Move these to spawner.c
+double spawnDelay = BALL_SPAWN_DELAY_LONG;
+double timeSinceLastSpawn;
+int ballsSpawned = 0;
 
 void GameInit()
 {
@@ -19,17 +26,66 @@ void GameInit()
     // Set Seed
     srand(time(0));
 
-    //SetTargetFPS(60);
+    SetTargetFPS(60);
 
     WindowHandlerToggleFullscreen();
     RendererFitVirtualRectToScreen();
+
+    playerRef = PlayerInit(virtualScreenCenter, &ballHead);
+    timeSinceLastSpawn = GetTime();
+}
+
+void SpawnBall()
+{
+    timeSinceLastSpawn = GetTime();
+    spawnDelay = BALL_SPAWN_DELAY_LONG;
+
+    float testRadius = 32.0f;
+    Ball *newBall = BallInit(
+            (Vector2) {testRadius, testRadius},
+            (Vector2) {VIRTUAL_SCREEN_WIDTH - testRadius, VIRTUAL_SCREEN_HEIGHT - testRadius},
+            testRadius);
+
+    BallSpawnPoint *newBallSpawn = BallSpawnPointInit(newBall, ballSpawnTime);
+    ListNodePush(&ballSpawnPointHead, newBallSpawn);
+
+    // Only for debug
+    ballsSpawned++;
+    //sprintf(ballsSpawnedText, "%d", ballsSpawned);
+}
+
+void Update()
+{
+    if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE) && gameOver)
+    {
+        GameRestart();
+    }
+
+    if (GetTime() > timeSinceLastSpawn+spawnDelay && !gameOver)
+    {
+        SpawnBall();
+    }
+
+    if (!freezeBalls)
+    {
+        BallsUpdate();
+    }
+
+    PlayerUpdate(playerRef);
+
+    // Toggle Fullscreen
+    if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
+    {
+        WindowHandlerToggleFullscreen();
+        RendererFitVirtualRectToScreen();
+    }
 }
 
 void GameRun()
 {
     while (!WindowShouldClose())
     {
-        GameUpdate();
+        Update();
         RenderToTarget();
         RenderToScreen();
     }
@@ -37,14 +93,22 @@ void GameRun()
     GameDeInit();
 }
 
-void GameUpdate()
+void GameRestart()
 {
-    // Toggle Fullscreen
-    if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
-    {
-        WindowHandlerToggleFullscreen();
-        RendererFitVirtualRectToScreen();
-    }
+    Player *newPlayer = PlayerReset(playerRef, virtualScreenCenter, &ballHead);
+    playerRef = newPlayer;
+
+    ListNodeRemoveAll(&ballHead);
+    ListNodeRemoveAll(&ballSpawnPointHead);
+
+    score = 0;
+
+    gameOver = false;
+
+    freezeBalls = false;
+
+    timeSinceLastSpawn = GetTime();
+    spawnDelay = BALL_SPAWN_DELAY_SHORT;
 }
 
 void GameDeInit()

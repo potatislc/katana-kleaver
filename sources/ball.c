@@ -48,7 +48,7 @@ static Vector2 RandomDirection()
     return directionVector;
 }
 
-Ball *BallInit( Vector2 minInitPos, Vector2 maxInitPos, float radius)
+Ball *BallInit(Vector2 minInitPos, Vector2 maxInitPos, float radius)
 {
     Ball *ball = (Ball *)malloc(sizeof(Ball));
 
@@ -224,4 +224,22 @@ void BallSpawnPointDraw(BallSpawnPoint ballSpawnPoint)
     // Inner Circle
     float innerRadius = (float)(timeSinceInit / ballSpawnPoint.spawnTime) * ballSpawnPoint.mockBall->radius;
     DrawCircleLinesV(ballSpawnPoint.mockBall->position, innerRadius, uiColorYellow);
+}
+
+// Update all balls
+void BallsUpdate()
+{
+    ListNode* currentBallNode = ballHead;
+    while (currentBallNode != NULL)
+    {
+        BallUpdate(currentBallNode->data);
+        currentBallNode = currentBallNode->next;
+    }
+
+    ListNode* currentBallSpawnPointNode = ballSpawnPointHead;
+    while (currentBallSpawnPointNode != NULL)
+    {
+        BallSpawnPointUpdate(currentBallSpawnPointNode->data);
+        currentBallSpawnPointNode = currentBallSpawnPointNode->next;
+    }
 }

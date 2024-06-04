@@ -1,6 +1,7 @@
 #include "renderer.h"
-#include "window_handler.h"
 #include "asset_loader.h"
+#include "player.h"
+#include "global.h"
 
 Vector2 virtualScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
@@ -39,25 +40,50 @@ void RendererFitVirtualRectToScreen()
             (float)GetScreenHeight()};
 }
 
+void DrawBackground()
+{
+    DrawTexture(gameTextures.floorStandard, 0, 0, WHITE);
+}
+
 void DrawShadows()
 {
+    PlayerDrawShadow(*playerRef);
 
+    ListNode* currentBallNode = ballHead;
+    while (currentBallNode != NULL)
+    {
+        BallDrawShadow(*(Ball*)currentBallNode->data);
+        currentBallNode = currentBallNode->next;
+    }
 }
 
 void DrawEntities()
 {
+    ListNode* currentBallNode = ballHead;
 
-}
+    while (currentBallNode != NULL)
+    {
+        BallDraw(*(Ball*)currentBallNode->data);
+        currentBallNode = currentBallNode->next;
+    }
 
-void DrawBackground()
-{
-    // Draw floor
-    DrawTexture(gameTextures.floorStandard, 0, 0, WHITE);
+    ListNode* currentBallSpawnPointNode = ballSpawnPointHead;
+    while (currentBallSpawnPointNode != NULL)
+    {
+        BallSpawnPointDraw(*(BallSpawnPoint*)currentBallSpawnPointNode->data);
+        currentBallSpawnPointNode = currentBallSpawnPointNode->next;
+    }
+
+    PlayerDraw(*playerRef);
 }
 
 void DrawUi()
 {
+    // Mouse Icon
+    DrawCircleV(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2, guideColor);
 
+    // Black Box
+    DrawRectangle(0, VIRTUAL_SCREEN_HEIGHT, VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_OFFSET_Y, BLACK);
 }
 
 void RenderToTarget()

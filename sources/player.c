@@ -8,6 +8,8 @@
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
+Player *playerRef;
+
 Vector2 ClampInsideScreen(Vector2 position, float radius)
 {
     return (Vector2){
