@@ -97,7 +97,8 @@ void DrawUi(bool gameOver)
     }
 
     // Mouse Icon
-    DrawCircleV(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2, guideColor);
+    Vector2 mousePos = Vector2ClampInsideScreen(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2);
+    DrawCircleV(mousePos, 2, guideColor);
 
     // Black Box
     DrawRectangle(0, VIRTUAL_SCREEN_HEIGHT, VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_OFFSET_Y, BLACK);

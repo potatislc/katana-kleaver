@@ -13,5 +13,6 @@ extern const Color guideColor;
 Vector2 Vector2ToVirtualCoords(Vector2 coords);
 Vector2 Vector2Round(Vector2 vector);
 void SoundPanToWorld(Sound sound, Vector2 sourcePos, float intensity);
+Vector2 Vector2ClampInsideScreen(Vector2 position, float radius);
 
 #endif //BALL_GAME_GLOBAL_H

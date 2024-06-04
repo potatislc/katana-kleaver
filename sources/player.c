@@ -13,13 +13,6 @@
 
 Player *playerRef;
 
-Vector2 ClampInsideScreen(Vector2 position, float radius)
-{
-    return (Vector2){
-            Clamp(position.x, radius, VIRTUAL_SCREEN_WIDTH - radius),
-            Clamp(position.y, radius, VIRTUAL_SCREEN_HEIGHT - radius)};
-}
-
 Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
 {
     Player *player = (Player*) malloc(sizeof(Player));
@@ -61,7 +54,7 @@ void PlayerUpdate(Player *player)
 
     player->stateExecute(player);
 
-    player->position = ClampInsideScreen(player->position, player->radius);
+    player->position = Vector2ClampInsideScreen(player->position, player->radius);
     if (player->stateExecute != STATE_EXEC_PLAYER_SLICE) PlayerCollisionBall(player);
 
     // Test panning
@@ -134,7 +127,7 @@ void PlayerBeginDash(Player *player, Vector2 point)
 
 bool PlayerLerpUntilPoint(Player *player, Vector2 point)
 {
-    Vector2 clampedPoint = ClampInsideScreen(point, player->radius);
+    Vector2 clampedPoint = Vector2ClampInsideScreen(point, player->radius);
 
     Vector2 nextPosition = (Vector2){
             Lerp(player->position.x, point.x, player->dash->speed),

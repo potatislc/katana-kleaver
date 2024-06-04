@@ -1,6 +1,7 @@
 #include "global.h"
 #include <math.h>
 #include "renderer.h"
+#include "raymath.h"
 
 const Color shadowColor = {121, 65, 0, 255};
 const Color uiColorYellow = {255,243, 146, 255};
@@ -22,4 +23,11 @@ Vector2 Vector2Round(Vector2 vector)
 void SoundPanToWorld(Sound sound, Vector2 sourcePos, float intensity)
 {
     SetSoundPan(sound, .5f + (.5f - (sourcePos.x / VIRTUAL_SCREEN_WIDTH)) * intensity);
+}
+
+Vector2 Vector2ClampInsideScreen(Vector2 position, float radius)
+{
+    return (Vector2){
+            Clamp(position.x, radius, VIRTUAL_SCREEN_WIDTH - radius),
+            Clamp(position.y, radius, VIRTUAL_SCREEN_HEIGHT - radius)};
 }
