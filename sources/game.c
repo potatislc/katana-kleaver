@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include "game.h"
 #include "raylib.h"
 #include "window_handler.h"
@@ -37,7 +38,7 @@ void GameInit()
     timeSinceLastSpawn = GetTime();
 }
 
-void SpawnBall()
+void PlaceBallSpawnPoint()
 {
     timeSinceLastSpawn = GetTime();
     spawnDelay = BALL_SPAWN_DELAY_LONG;
@@ -62,7 +63,10 @@ void Update()
 
     if (GetTime() > timeSinceLastSpawn+spawnDelay && !gameOver)
     {
-        SpawnBall();
+        PlaceBallSpawnPoint();
+        spawnDelay -= .15;
+        spawnDelay += ballCount * ballCount * .01;
+        spawnDelay = fmax(.5, spawnDelay);
     }
 
     if (!freezeBalls)
