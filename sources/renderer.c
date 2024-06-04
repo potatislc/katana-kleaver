@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "renderer.h"
 #include "asset_loader.h"
 #include "player.h"
@@ -131,5 +132,8 @@ void RenderToScreen()
 
         // Debug stuff
         DrawFPS(10, 10);
+        char windowModeText[16];
+        sprintf(windowModeText, "Window Mode %d", WindowHandlerGetWindowMode());
+        DrawText(windowModeText, 10, 30, 21, GREEN);
     EndDrawing();
 }

@@ -30,7 +30,7 @@ void GameInit()
 
     SetTargetFPS(60);
 
-    WindowHandlerToggleFullscreen();
+    WindowHandlerSetWindowMode(WM_BORDERLESS_FULL_WINDOWED);
     RendererFitVirtualRectToScreen();
 
     playerRef = PlayerInit(virtualScreenCenter, &ballHead);
@@ -77,9 +77,9 @@ void Update()
     PlayerUpdate(playerRef);
 
     // Toggle Fullscreen
-    if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
+    if ((IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT))) || IsKeyPressed(KEY_F11))
     {
-        WindowHandlerToggleFullscreen();
+        WindowHandlerToggleWindowMode();
         RendererFitVirtualRectToScreen();
     }
 }
