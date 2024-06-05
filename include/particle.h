@@ -24,6 +24,7 @@ typedef struct Particle
 void ParticleCreate(Particle *particle);
 void ParticleUpdate(Particle *particle);
 void ParticleDraw(Particle particle);
+void ParticleDrawAlpha(Particle particle, int alpha);
 void ParticlesUpdate();
 
 // Particle Presets

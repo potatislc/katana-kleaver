@@ -123,6 +123,8 @@ void GameRestart()
 
     timeSinceLastSpawn = GetTime();
     spawnDelay = BALL_SPAWN_DELAY_SHORT;
+
+    RendererClearBackgroundPaint();
 }
 
 void GameDeInit()

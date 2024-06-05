@@ -11,13 +11,11 @@
 Vector2 virtualScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
 RenderTexture2D virtualRenderTarget;
-RenderTexture2D particlePaintTarget;
+RenderTexture2D backgroundPaintTarget;
+TextureTransformRect virtualRenderRect;
+TextureTransformRect backgroundPaintRect;
 
 Camera2D worldSpaceCamera = { 0 };
-
-Rectangle sourceRec = { 0.f, 0.f, 0.f, 0.f};
-Rectangle destRec = { 0.f, 0.f, 0.f, 0.f};
-Vector2 origin = {0.f};
 
 Vector2 screenOffset;
 Vector2 screenRatio;
@@ -25,11 +23,17 @@ Vector2 screenRatio;
 void RendererInit()
 {
     virtualRenderTarget = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y);
-    sourceRec = (Rectangle){ 0.f, 0.f, (float)virtualRenderTarget.texture.width, -(float)virtualRenderTarget.texture.height };
+    virtualRenderRect.source = (Rectangle){ 0.f, 0.f, (float)virtualRenderTarget.texture.width, -(float)virtualRenderTarget.texture.height };
+    virtualRenderRect.dest = (Rectangle){0.f, 0.f ,0.f, 0.f};
+    virtualRenderRect.origin = Vector2Zero();
     worldSpaceCamera.zoom = 1.0f;
     RendererFitVirtualRectToScreen();
 
-    particlePaintTarget = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y);
+    backgroundPaintTarget = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT);
+    backgroundPaintRect.source = (Rectangle){ 0.f, 0.f, (float)backgroundPaintTarget.texture.width, -(float)backgroundPaintTarget.texture.height };
+    backgroundPaintRect.dest = (Rectangle){0.f, 0.f ,0.f, 0.f};
+    backgroundPaintRect.origin = Vector2Zero();
+
 }
 
 void RendererFitVirtualRectToScreen()
@@ -44,7 +48,7 @@ void RendererFitVirtualRectToScreen()
             ((float)newWidth) / (float)VIRTUAL_SCREEN_WIDTH,
             (float)GetScreenHeight() / (float)(VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y)};
 
-    destRec = (Rectangle){
+    virtualRenderRect.dest = (Rectangle){
             screenOffset.x,
             screenOffset.y,
             (float)newWidth,
@@ -54,7 +58,9 @@ void RendererFitVirtualRectToScreen()
 void DrawBackground()
 {
     DrawTexture(gameTextures.floorStandard, 0, 0, WHITE);
-    DrawTextureV(particlePaintTarget.texture, Vector2Zero(), WHITE);
+    Color paintBgAlphaColor = WHITE;
+    paintBgAlphaColor.a = 100;
+    DrawTextureRec(backgroundPaintTarget.texture, backgroundPaintRect.source, backgroundPaintRect.origin, paintBgAlphaColor);
 }
 
 void DrawShadows()
@@ -91,11 +97,19 @@ void DrawEntities()
 
 void DrawParticles()
 {
-    // Draw to paint texture
     ListNode* currentParticleNode = particleHead;
 
-    /*
-    BeginTextureMode(particlePaintTarget);
+    while (currentParticleNode != NULL) {
+        ParticleDraw(*(Particle *) currentParticleNode->data);
+        currentParticleNode = currentParticleNode->next;
+    }
+}
+
+void DrawParticlesToBackgroundPaint()
+{
+    ListNode* currentParticleNode = particleHead;
+
+    BeginTextureMode(backgroundPaintTarget);
     {
         while (currentParticleNode != NULL) {
             ParticleDraw(*(Particle *) currentParticleNode->data);
@@ -103,13 +117,13 @@ void DrawParticles()
         }
     }
     EndTextureMode();
-    */
+}
 
-    // Actually draw
-    currentParticleNode = particleHead;
-    while (currentParticleNode != NULL) {
-        ParticleDraw(*(Particle *) currentParticleNode->data);
-        currentParticleNode = currentParticleNode->next;
+void RendererClearBackgroundPaint()
+{
+    BeginTextureMode(backgroundPaintTarget);
+    {
+        ClearBackground(BLANK);
     }
 }
 
@@ -143,6 +157,8 @@ void DrawUi(bool gameOver)
 
 void RenderToTarget(bool gameOver)
 {
+    DrawParticlesToBackgroundPaint();
+
     BeginTextureMode(virtualRenderTarget);
     {
         BeginMode2D(worldSpaceCamera);
@@ -153,9 +169,22 @@ void RenderToTarget(bool gameOver)
             DrawParticles();
         }
         EndMode2D();
-        DrawUi(gameOver); // Outside BeginMode2D so Ui doesn't get affected by camera shake?
+        DrawUi(gameOver);
     }
     EndTextureMode();
+}
+
+void DrawDebug()
+{
+    DrawFPS(10, 10);
+
+    char windowModeText[32];
+    sprintf(windowModeText, "WINDOW MODE %d", WindowHandlerGetWindowMode());
+    DrawText(windowModeText, 10, 30, 21, DARKGREEN);
+
+    char ballCountText[32];
+    sprintf(ballCountText, "BALL COUNT %d", ballCount);
+    DrawText(ballCountText, 10, 50, 21, DARKGREEN);
 }
 
 void RenderToScreen()
@@ -165,18 +194,9 @@ void RenderToScreen()
         ClearBackground(BLACK);
 
         // Draw world camera to screen
-        DrawTexturePro(virtualRenderTarget.texture, sourceRec, destRec, origin, 0.0f, WHITE);
+        DrawTexturePro(virtualRenderTarget.texture, virtualRenderRect.source, virtualRenderRect.dest, virtualRenderRect.origin, 0.0f, WHITE);
 
-        // Debug stuff
-        DrawFPS(10, 10);
-
-        char windowModeText[32];
-        sprintf(windowModeText, "WINDOW MODE %d", WindowHandlerGetWindowMode());
-        DrawText(windowModeText, 10, 30, 21, DARKGREEN);
-
-        char ballCountText[32];
-        sprintf(ballCountText, "BALL COUNT %d", ballCount);
-        DrawText(ballCountText, 10, 50, 21, DARKGREEN);
+        DrawDebug();
     }
     EndDrawing();
 }

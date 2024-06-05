@@ -15,9 +15,17 @@ void RendererDrawDebug();
 void RendererFitVirtualRectToScreen();
 void RenderToTarget(bool gameOver);
 void RenderToScreen();
+void RendererClearBackgroundPaint();
 
 extern Vector2 screenRatio;
 extern Vector2 screenOffset;
 extern Vector2 virtualScreenCenter;
+
+typedef struct
+{
+    Rectangle source;
+    Rectangle dest;
+    Vector2 origin;
+} TextureTransformRect;
 
 #endif //BALL_GAME_RENDERER_H

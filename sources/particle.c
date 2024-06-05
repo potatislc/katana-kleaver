@@ -33,6 +33,15 @@ void ParticleDraw(Particle particle)
     DrawTextureEx(particle.texture, texturePos, 0.f, scale, particle.colorTint);
 }
 
+void ParticleDrawAlpha(Particle particle, int alpha)
+{
+    float scale = (float)(1 - (GetTime() - particle.initTime) / particle.lifeTime);
+    Vector2 scaledOffset = (Vector2){particle.textureOffset.x * scale, particle.textureOffset.y * scale};
+    Vector2 texturePos = Vector2Round(Vector2Subtract(particle.position, scaledOffset));
+    Color alphaColor = {particle.colorTint.r, particle.colorTint.g, particle.colorTint.b, alpha};
+    DrawTextureEx(particle.texture, texturePos, 0.f, scale, alphaColor);
+}
+
 void ParticlesUpdate()
 {
     ListNode* currentParticleNode = particleHead;
@@ -49,9 +58,9 @@ Particle *ParticlePresetRedJuice(Vector2 position)
     Particle* particle = (Particle*)malloc(sizeof(Particle));
 
     particle->initTime = GetTime();
-    particle->lifeTime = .5;
+    particle->lifeTime = .4;
     particle->position = position;
-    particle->velocity = LengthDirToVector2(2.f, (float)(((double)rand() / RAND_MAX) * 2 * M_PI));
+    particle->velocity = LengthDirToVector2(3.f, (float)(((double)rand() / RAND_MAX) * 2 * M_PI));
     particle->gravity = 0.f;
     particle->drag = .1f;
     particle->texture = gameTextures.particleRound;
