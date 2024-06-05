@@ -31,3 +31,8 @@ Vector2 Vector2ClampInsideScreen(Vector2 position, float radius)
             Clamp(position.x, radius, VIRTUAL_SCREEN_WIDTH - radius),
             Clamp(position.y, radius, VIRTUAL_SCREEN_HEIGHT - radius)};
 }
+
+Vector2 LengthDirToVector2(float length, float dir)
+{
+    return (Vector2){cosf(dir) * length, sinf(dir) * length};
+}
