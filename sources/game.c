@@ -3,6 +3,7 @@
 #include <math.h>
 #include "game.h"
 #include "raylib.h"
+#include "player.h"
 #include "window_handler.h"
 #include "asset_loader.h"
 #include "renderer.h"
@@ -12,7 +13,6 @@
 // Move these to spawner.c
 double spawnDelay = BALL_SPAWN_DELAY_LONG;
 double timeSinceLastSpawn;
-int ballsSpawned = 0;
 
 bool gameOver = false;
 

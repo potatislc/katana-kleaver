@@ -1,7 +1,7 @@
 #ifndef BALL_GAME_GAME_H
 #define BALL_GAME_GAME_H
 
-#include "player.h"
+#include <stdbool.h>
 
 #define BALL_SPAWN_DELAY_LONG (3.0)
 #define BALL_SPAWN_DELAY_SHORT (1.0)
