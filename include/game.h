@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 
+#define BALL_SPAWN_DELAY_FIRST (4.0)
 #define BALL_SPAWN_DELAY_LONG (3.0)
 #define BALL_SPAWN_DELAY_SHORT (1.0)
 

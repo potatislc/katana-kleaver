@@ -12,7 +12,7 @@
 #include "particle.h"
 
 // Move these to spawner.c
-double spawnDelay = BALL_SPAWN_DELAY_LONG;
+double spawnDelay = BALL_SPAWN_DELAY_FIRST;
 double timeSinceLastSpawn;
 
 bool gameOver = false;
@@ -64,10 +64,8 @@ void Update()
 
     if (GetTime() > timeSinceLastSpawn+spawnDelay && !gameOver)
     {
+        if (ballCount <= 2 && spawnDelay == BALL_SPAWN_DELAY_LONG) PlaceBallSpawnPoint();
         PlaceBallSpawnPoint();
-        spawnDelay -= .15;
-        spawnDelay += ballCount * ballCount * .01;
-        spawnDelay = fmax(.5, spawnDelay);
     }
 
     if (!freezeBalls)
