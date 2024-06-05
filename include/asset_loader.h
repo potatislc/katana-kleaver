@@ -11,6 +11,7 @@ typedef struct
     Texture2D melonShadow;
     Texture2D samurai;
     Texture2D samuraiShadow;
+    Texture2D particleRound;
 } GameTextures;
 
 typedef struct
