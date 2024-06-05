@@ -176,6 +176,8 @@ void BallSplit(Ball *ball, Vector2 splitDir)
     }
 
     ParticleCreate(ParticlePresetRedJuice(ball->position));
+    ParticleCreate(ParticlePresetRedJuice(ball->position));
+    ParticleCreate(ParticlePresetRedJuice(ball->position));
     ScoreHandlerAddToScore(1); // Temp
     BallDeSpawn(ball);
 }

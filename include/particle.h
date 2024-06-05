@@ -5,6 +5,7 @@
 #include "linked_list.h"
 
 extern ListNode *particleHead;
+extern ListNode *particleRedrawHead;
 
 typedef struct Particle
 {
@@ -15,6 +16,7 @@ typedef struct Particle
     float gravity;
     float drag;
     Texture2D texture;
+    Vector2 textureOffset;
     Color colorTint;
     float scaleAnim;
 } Particle;
