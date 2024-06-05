@@ -4,11 +4,12 @@
 #include "raylib.h"
 #include "linked_list.h"
 
-ListNode *particleHead;
+extern ListNode *particleHead;
 
 typedef struct Particle
 {
-    double deathTime; // InitTime+LifeTime
+    double initTime;
+    double lifeTime;
     Vector2 position;
     Vector2 velocity;
     float gravity;
@@ -18,11 +19,12 @@ typedef struct Particle
     float scaleAnim;
 } Particle;
 
-Particle *ParticleInit(double lifeTime );
+void ParticleCreate(Particle *particle);
 void ParticleUpdate(Particle *particle);
 void ParticleDraw(Particle particle);
+void ParticlesUpdate();
 
 // Particle Presets
-Particle *InitParticleBlood(Vector2 position);
+Particle *ParticlePresetRedJuice(Vector2 position);
 
 #endif //BALL_GAME_PARTICLE_H

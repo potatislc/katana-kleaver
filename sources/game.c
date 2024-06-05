@@ -9,6 +9,7 @@
 #include "renderer.h"
 #include "ball.h"
 #include "score_handler.h"
+#include "particle.h"
 
 // Move these to spawner.c
 double spawnDelay = BALL_SPAWN_DELAY_LONG;
@@ -75,6 +76,8 @@ void Update()
     }
 
     PlayerUpdate(playerRef);
+
+    ParticlesUpdate();
 
     // Toggle Fullscreen
     if ((IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT))) || IsKeyPressed(KEY_F11))

@@ -5,6 +5,7 @@
 #include "window_handler.h"
 #include "global.h"
 #include "score_handler.h"
+#include "particle.h"
 
 Vector2 virtualScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
@@ -83,6 +84,16 @@ void DrawEntities()
     PlayerDraw(*playerRef);
 }
 
+void DrawParticles()
+{
+    ListNode* currentParticleNode = particleHead;
+    while (currentParticleNode != NULL)
+    {
+        ParticleDraw(*(Particle*)currentParticleNode->data);
+        currentParticleNode = currentParticleNode->next;
+    }
+}
+
 void DrawUi(bool gameOver)
 {
     if (gameOver)
@@ -118,6 +129,7 @@ void RenderToTarget(bool gameOver)
             DrawBackground();
             DrawShadows();
             DrawEntities();
+            DrawParticles();
         EndMode2D();
         DrawUi(gameOver); // Outside BeginMode2D so Ui doesn't get affected by camera shake?
     EndTextureMode();

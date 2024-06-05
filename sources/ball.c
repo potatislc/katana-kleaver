@@ -5,6 +5,7 @@
 #include "asset_loader.h"
 #include "renderer.h"
 #include "score_handler.h"
+#include "particle.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
@@ -174,6 +175,7 @@ void BallSplit(Ball *ball, Vector2 splitDir)
         BallSpawn(ballLeft);
     }
 
+    ParticleCreate(ParticlePresetRedJuice(ball->position));
     ScoreHandlerAddToScore(1); // Temp
     BallDeSpawn(ball);
 }
