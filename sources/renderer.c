@@ -6,10 +6,12 @@
 #include "global.h"
 #include "score_handler.h"
 #include "particle.h"
+#include "raymath.h"
 
 Vector2 virtualScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
 RenderTexture2D virtualRenderTarget;
+RenderTexture2D particlePaintTarget;
 
 Camera2D worldSpaceCamera = { 0 };
 
@@ -26,6 +28,8 @@ void RendererInit()
     sourceRec = (Rectangle){ 0.f, 0.f, (float)virtualRenderTarget.texture.width, -(float)virtualRenderTarget.texture.height };
     worldSpaceCamera.zoom = 1.0f;
     RendererFitVirtualRectToScreen();
+
+    particlePaintTarget = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y);
 }
 
 void RendererFitVirtualRectToScreen()
@@ -50,6 +54,7 @@ void RendererFitVirtualRectToScreen()
 void DrawBackground()
 {
     DrawTexture(gameTextures.floorStandard, 0, 0, WHITE);
+    DrawTextureV(particlePaintTarget.texture, Vector2Zero(), WHITE);
 }
 
 void DrawShadows()
@@ -86,10 +91,24 @@ void DrawEntities()
 
 void DrawParticles()
 {
+    // Draw to paint texture
     ListNode* currentParticleNode = particleHead;
-    while (currentParticleNode != NULL)
+
+    /*
+    BeginTextureMode(particlePaintTarget);
     {
-        ParticleDraw(*(Particle*)currentParticleNode->data);
+        while (currentParticleNode != NULL) {
+            ParticleDraw(*(Particle *) currentParticleNode->data);
+            currentParticleNode = currentParticleNode->next;
+        }
+    }
+    EndTextureMode();
+    */
+
+    // Actually draw
+    currentParticleNode = particleHead;
+    while (currentParticleNode != NULL) {
+        ParticleDraw(*(Particle *) currentParticleNode->data);
         currentParticleNode = currentParticleNode->next;
     }
 }
@@ -125,19 +144,24 @@ void DrawUi(bool gameOver)
 void RenderToTarget(bool gameOver)
 {
     BeginTextureMode(virtualRenderTarget);
+    {
         BeginMode2D(worldSpaceCamera);
+        {
             DrawBackground();
             DrawShadows();
             DrawEntities();
             DrawParticles();
+        }
         EndMode2D();
         DrawUi(gameOver); // Outside BeginMode2D so Ui doesn't get affected by camera shake?
+    }
     EndTextureMode();
 }
 
 void RenderToScreen()
 {
     BeginDrawing();
+    {
         ClearBackground(BLACK);
 
         // Draw world camera to screen
@@ -153,5 +177,6 @@ void RenderToScreen()
         char ballCountText[32];
         sprintf(ballCountText, "BALL COUNT %d", ballCount);
         DrawText(ballCountText, 10, 50, 21, DARKGREEN);
+    }
     EndDrawing();
 }
