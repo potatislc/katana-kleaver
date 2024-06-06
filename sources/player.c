@@ -13,6 +13,9 @@
 
 Player *playerRef;
 
+int deathBuffer; // Some grace frames when colliding, when the buffer exceeds max, the player dies
+const int maxDeathBuffer = 4;
+
 Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
 {
     Player *player = (Player*) malloc(sizeof(Player));
@@ -45,6 +48,7 @@ Player *PlayerReset(Player *player, Vector2 initPos, ListNode **ballHeadRef)
 void PlayerDie(Player *player)
 {
     player->stateExecute = STATE_EXEC_PLAYER_DEAD;
+    deathBuffer = 0;
     GameEnd(); // Should be a signal to game instead
 }
 
@@ -75,7 +79,12 @@ void PlayerStateMove(Player *player)
 
     if (player->colliding)
     {
-        PlayerDie(player);
+        deathBuffer++;
+        if (deathBuffer > maxDeathBuffer) PlayerDie(player);
+    }
+    else
+    {
+        deathBuffer = 0;
     }
 }
 
