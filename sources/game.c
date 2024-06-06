@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <time.h>
-#include <math.h>
 #include "game.h"
 #include "raylib.h"
 #include "player.h"

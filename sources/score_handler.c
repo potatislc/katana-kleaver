@@ -39,7 +39,6 @@ void UpdateText()
 void ScoreHandlerResetScore()
 {
     score = 0;
-    hiScore = 0;
 
     UpdateText();
 }
