@@ -1,4 +1,6 @@
 #include "ball.h"
+
+#include <string.h>
 #include <math.h>
 #include "global.h"
 #include "raymath.h"
@@ -17,7 +19,7 @@ const double ballSpawnTime = 1.f;
 
 BallNbrCount ballNbrCount_All;
 
-int NbrOfBallsInMemory(BallNbrCount ballNbrCount)
+int BallNbrCountInMemory(BallNbrCount ballNbrCount)
 {
     return ballNbrCount.spawned - ballNbrCount.destroyed;
 }
@@ -215,8 +217,18 @@ void BallDeSpawn(Ball *ballToDeSpawn)
 
 void BallDeSpawnAll()
 {
-    ballNbrCount_All.destroyed = ballNbrCount_All.spawned;
+    ballNbrCount_All.destroyed += ListLength(&ballHead);
     ListRemoveAllNodes(&ballHead);
+}
+
+void BallNbrCountReset(BallNbrCount *ballNbrCount)
+{
+    memset(ballNbrCount, 0, sizeof(BallNbrCount));
+}
+
+int NbrOfBallsOnScreen(BallNbrCount ballNbrCount)
+{
+    return ballNbrCount.spawned - ballNbrCount.destroyed;
 }
 
 BallSpawnPoint *BallSpawnPointInit(Ball *mockBall, double spawnTime)
@@ -250,7 +262,7 @@ void BallSpawnPointDraw(BallSpawnPoint ballSpawnPoint)
     // Outer Circle
     double outerAnimTime = ballSpawnPoint.spawnTime * 1.f; // Maybe change this value?
     float outerRadius = (float)(fmin(timeSinceInit, outerAnimTime) / outerAnimTime);
-    Color outerColor = {255, 255, 255, outerRadius * 255};
+    Color outerColor = {255, 255, 255, (int)outerRadius * 255};
     DrawCircleLinesV(ballSpawnPoint.mockBall->position, (1.f / outerRadius) * ballSpawnPoint.mockBall->radius, outerColor);
 
     // Inner Circle

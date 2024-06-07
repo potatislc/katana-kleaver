@@ -42,7 +42,6 @@ void GameInit()
 void PlaceBallSpawnPoint()
 {
     timeSinceLastSpawn = GetTime();
-    spawnDelay = BALL_SPAWN_DELAY_LONG;
 
     float testRadius = RADIUS_LARGE;
     Ball *newBall = BallInit(
@@ -64,8 +63,26 @@ void Update()
 
     if (GetTime() > timeSinceLastSpawn+spawnDelay && !gameOver)
     {
-        if (NbrOfBallsInMemory(ballNbrCount_All) <= 2 && spawnDelay == BALL_SPAWN_DELAY_LONG) PlaceBallSpawnPoint();
-        PlaceBallSpawnPoint();
+        if (ballNbrCount_All.spawned == 0)
+        {
+            PlaceBallSpawnPoint();
+            spawnDelay = BALL_SPAWN_DELAY_LONG;
+        }
+
+        if (ballNbrCount_All.destroyed > 6)
+        {
+            PlaceBallSpawnPoint();
+        }
+
+        if (ballNbrCount_All.destroyed > 13 && NbrOfBallsOnScreen(ballNbrCount_All) <= 2 && spawnDelay == BALL_SPAWN_DELAY_LONG)
+        {
+            PlaceBallSpawnPoint();
+        }
+
+        if (NbrOfBallsOnScreen(ballNbrCount_Small) > 6)
+        {
+            // Spawn Orange
+        }
     }
 
     if (!freezeBalls)
@@ -112,6 +129,7 @@ void GameRestart()
 
     BallDeSpawnAll();
     ListRemoveAllNodes(&ballSpawnPointHead);
+    BallNbrCountReset(&ballNbrCount_All);
 
     ScoreHandlerResetScore();
 

@@ -183,7 +183,7 @@ void DrawDebug()
     DrawText(windowModeText, 10, 30, 21, DARKGREEN);
 
     char ballCountText[32];
-    sprintf(ballCountText, "BALL COUNT %d", NbrOfBallsInMemory(ballNbrCount_All));
+    sprintf(ballCountText, "BALLS ON SCREEN %d", NbrOfBallsOnScreen(ballNbrCount_All));
     DrawText(ballCountText, 10, 50, 21, DARKGREEN);
 }
 

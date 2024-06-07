@@ -63,9 +63,13 @@ typedef struct
     int destroyed;
 } BallNbrCount;
 
+int NbrOfBallsOnScreen(BallNbrCount ballNbrCount);
+void BallNbrCountReset(BallNbrCount *ballNbrCount);
+
 extern BallNbrCount ballNbrCount_All;
 extern BallNbrCount ballNbrCount_Small; // This determines when to spawn an orange
-int NbrOfBallsInMemory(BallNbrCount ballNbrCount);
+
+int ValueOfBall(float radius);
 
 BallSpawnPoint *BallSpawnPointInit(Ball *mockBall, double spawnTime);
 void BallSpawnPointUpdate(BallSpawnPoint *ballSpawnPoint);
