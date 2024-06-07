@@ -31,7 +31,7 @@ typedef struct Ball
 
 void BallsUpdate();
 
-Ball *BallInit(Vector2 minInitPos,Vector2 maxInitPos, float radius);
+Ball *BallInit(Vector2 position, float radius);
 void BallUpdate(Ball *ball);
 void BallSetPosition(Ball *ball, Vector2 pos);
 void BallCollisionScreen(Ball *ball);

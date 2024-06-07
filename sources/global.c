@@ -1,5 +1,6 @@
 #include "global.h"
 #include <math.h>
+#include <stdlib.h>
 #include "renderer.h"
 #include "raymath.h"
 
@@ -35,4 +36,13 @@ Vector2 Vector2ClampInsideScreen(Vector2 position, float radius)
 Vector2 LengthDirToVector2(float length, float dir)
 {
     return (Vector2){cosf(dir) * length, sinf(dir) * length};
+}
+
+Vector2 Vector2RandomRange(Vector2 minPos, Vector2 maxPos)
+{
+    if (minPos.x == maxPos.x && minPos.y == maxPos.y) return minPos;
+
+    Vector2 spawnAreaSize = Vector2Subtract(maxPos, minPos);
+    return Vector2Round((Vector2){minPos.x + ((float)rand()/(float)(RAND_MAX)) * spawnAreaSize.x,
+                                  minPos.y + ((float)rand()/(float)(RAND_MAX)) * spawnAreaSize.y});
 }

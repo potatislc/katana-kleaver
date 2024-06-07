@@ -10,6 +10,7 @@
 #include "score_handler.h"
 #include "particle.h"
 #include "global.h"
+#include "raymath.h"
 
 // Move these to spawner.c
 double spawnDelay = BALL_SPAWN_DELAY_FIRST;
@@ -39,15 +40,27 @@ void GameInit()
     timeSinceLastSpawn = GetTime();
 }
 
-void PlaceBallSpawnPoint()
+void PlaceBallSpawnPoint(float radius, bool avoidPlayer)
 {
     timeSinceLastSpawn = GetTime();
 
-    float testRadius = RADIUS_LARGE;
+    const Vector2 minInitPos = {radius, radius};
+    const Vector2 maxInitPos = {VIRTUAL_SCREEN_WIDTH - radius, VIRTUAL_SCREEN_HEIGHT - radius};
     Ball *newBall = BallInit(
-            (Vector2) {testRadius, testRadius},
-            (Vector2) {VIRTUAL_SCREEN_WIDTH - testRadius, VIRTUAL_SCREEN_HEIGHT - testRadius},
-            testRadius);
+            Vector2RandomRange(minInitPos, maxInitPos),
+            radius);
+
+    if (avoidPlayer)
+    {
+        float distanceToPlayer = Vector2Distance(playerRef->position, newBall->position);
+        const float collisionMargin = radius + playerRef->radius;
+        // Theoretically, in an alternate universe, the game could freeze here for a while
+        while (distanceToPlayer <= collisionMargin)
+        {
+            BallSetPosition(newBall, Vector2RandomRange(minInitPos, maxInitPos));
+            distanceToPlayer = Vector2Distance(playerRef->position, newBall->position);
+        }
+    }
 
     BallSpawnPoint *newBallSpawn = BallSpawnPointInit(newBall, ballSpawnTime);
     ListNodePush(&ballSpawnPointHead, newBallSpawn);
@@ -65,18 +78,18 @@ void Update()
     {
         if (ballNbrCount_All.spawned == 0)
         {
-            PlaceBallSpawnPoint();
+            PlaceBallSpawnPoint(RADIUS_LARGE, true);
             spawnDelay = BALL_SPAWN_DELAY_LONG;
         }
 
         if (ballNbrCount_All.destroyed > 6)
         {
-            PlaceBallSpawnPoint();
+            PlaceBallSpawnPoint(RADIUS_LARGE, true);
         }
 
-        if (ballNbrCount_All.destroyed > 13 && NbrOfBallsOnScreen(ballNbrCount_All) <= 2 && spawnDelay == BALL_SPAWN_DELAY_LONG)
+        if (ballNbrCount_All.destroyed > 20 && NbrOfBallsOnScreen(ballNbrCount_All) <= 2 && spawnDelay == BALL_SPAWN_DELAY_LONG)
         {
-            PlaceBallSpawnPoint();
+            PlaceBallSpawnPoint(RADIUS_LARGE, false);
         }
 
         if (NbrOfBallsOnScreen(ballNbrCount_Small) > 6)

@@ -20,15 +20,6 @@ const double ballSpawnTime = 1.f;
 BallNbrCount ballNbrCount_All;
 BallNbrCount ballNbrCount_Small;
 
-static Vector2 RandomPosition(Vector2 minPos, Vector2 maxPos)
-{
-    if (minPos.x == maxPos.x && minPos.y == maxPos.y) return minPos;
-
-    Vector2 spawnAreaSize = Vector2Subtract(maxPos, minPos);
-    return Vector2Round((Vector2){minPos.x + ((float)rand()/(float)(RAND_MAX)) * spawnAreaSize.x,
-                     minPos.y + ((float)rand()/(float)(RAND_MAX)) * spawnAreaSize.y});
-}
-
 static Vector2 RandomDirection()
 {
     // num = (rand() % (upper – lower + 1)) + lower
@@ -56,7 +47,7 @@ static Vector2 RandomDirection()
     return directionVector;
 }
 
-Ball *BallInit(Vector2 minInitPos, Vector2 maxInitPos, float radius)
+Ball *BallInit(Vector2 position, float radius)
 {
     Ball *ball = (Ball *)malloc(sizeof(Ball));
 
@@ -71,7 +62,7 @@ Ball *BallInit(Vector2 minInitPos, Vector2 maxInitPos, float radius)
     float colliderScale = .8f;
     ball->collisionBox = (Rectangle){ 0, 0, ball->radius * 2 * colliderScale, ball->radius * 2 * colliderScale};
 
-    BallSetPosition(ball, RandomPosition(minInitPos, maxInitPos));
+    BallSetPosition(ball, position);
 
     ball->texture = (radius > BALL_TOO_SMALL_FOR_CLEAN_SPLIT) ? &gameTextures.melonBig : &gameTextures.melonSmall;
     ball->textureScale = (ball->radius * 2) / (float)ball->texture->width;
@@ -171,11 +162,11 @@ void BallSplit(Ball *ball, Vector2 splitDir)
         Vector2 spawnPos = {cosf(spawnDirRad) * newRadius / 2, sinf(spawnDirRad) * newRadius / 2};
 
         Vector2 spawnPosRight = Vector2Add(ball->position, spawnPos);
-        Ball *ballRight = BallInit(spawnPosRight, spawnPosRight, newRadius);
+        Ball *ballRight = BallInit(spawnPosRight, newRadius);
         BallSpawn(ballRight);
 
         Vector2 spawnPosLeft = Vector2Subtract(ball->position, spawnPos);
-        Ball *ballLeft = BallInit(spawnPosLeft, spawnPosLeft, newRadius);
+        Ball *ballLeft = BallInit(spawnPosLeft, newRadius);
         BallSpawn(ballLeft);
     }
 

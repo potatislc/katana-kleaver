@@ -22,5 +22,6 @@ Vector2 Vector2Round(Vector2 vector);
 void SoundPanToWorld(Sound sound, Vector2 sourcePos, float intensity);
 Vector2 Vector2ClampInsideScreen(Vector2 position, float radius);
 Vector2 LengthDirToVector2(float length, float dir);
+Vector2 Vector2RandomRange(Vector2 minPos, Vector2 maxPos);
 
 #endif //BALL_GAME_GLOBAL_H
