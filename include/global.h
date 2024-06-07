@@ -10,6 +10,13 @@ extern const Color uiColorYellow;
 extern const Color uiColorRed;
 extern const Color guideColor;
 
+enum StandardRadius
+{
+    RADIUS_SMALL = 8,
+    RADIUS_MEDIUM = 16,
+    RADIUS_LARGE = 32
+};
+
 Vector2 Vector2ToVirtualCoords(Vector2 coords);
 Vector2 Vector2Round(Vector2 vector);
 void SoundPanToWorld(Sound sound, Vector2 sourcePos, float intensity);

@@ -9,6 +9,7 @@
 #include "ball.h"
 #include "score_handler.h"
 #include "particle.h"
+#include "global.h"
 
 // Move these to spawner.c
 double spawnDelay = BALL_SPAWN_DELAY_FIRST;
@@ -43,7 +44,7 @@ void PlaceBallSpawnPoint()
     timeSinceLastSpawn = GetTime();
     spawnDelay = BALL_SPAWN_DELAY_LONG;
 
-    float testRadius = 32.0f;
+    float testRadius = RADIUS_LARGE;
     Ball *newBall = BallInit(
             (Vector2) {testRadius, testRadius},
             (Vector2) {VIRTUAL_SCREEN_WIDTH - testRadius, VIRTUAL_SCREEN_HEIGHT - testRadius},
