@@ -15,7 +15,6 @@ typedef enum WindowMode
 } WindowMode;
 
 void WindowHandlerInit();
-void WindowHandlerToggleFullscreen();
 void WindowHandlerSetWindowMode(int mode);
 void WindowHandlerToggleWindowMode();
 WindowMode WindowHandlerGetWindowMode();
