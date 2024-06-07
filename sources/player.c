@@ -5,7 +5,6 @@
 #include "global.h"
 #include "ball.h"
 #include "asset_loader.h"
-#include "renderer.h"
 #include "score_handler.h"
 #include "game.h"
 
@@ -32,7 +31,6 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
     player->dash = (Dash *)malloc(sizeof(Dash));
     *player->dash = (Dash){false, 0.0f, 0.0f, 0.0f, 0.0f, 0.3f, 48.0f, 10, 30, 30, 0};
 
-    // Allocate memory for whatever ball that goes here
     player->collidingBall = (Ball *)malloc(sizeof(Ball));
     player->collidingBallCopy = (Ball *)malloc(sizeof(Ball));
 
@@ -49,7 +47,7 @@ void PlayerDie(Player *player)
 {
     player->stateExecute = STATE_EXEC_PLAYER_DEAD;
     deathBuffer = 0;
-    GameEnd(); // Should be a signal to game instead
+    GameEnd();
 }
 
 void PlayerUpdate(Player *player)

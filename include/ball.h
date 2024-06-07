@@ -9,7 +9,6 @@
 
 extern ListNode *ballHead;
 extern ListNode *ballSpawnPointHead;
-extern int ballCount;
 extern float ballSpeed;
 extern bool freezeBalls;
 extern const double ballSpawnTime;
@@ -57,6 +56,16 @@ typedef struct BallSpawnPoint
     double initTime;
     double spawnTime;
 } BallSpawnPoint;
+
+typedef struct
+{
+    int spawned;
+    int destroyed;
+} BallNbrCount;
+
+extern BallNbrCount ballNbrCount_All;
+extern BallNbrCount ballNbrCount_Small; // This determines when to spawn an orange
+int NbrOfBallsInMemory(BallNbrCount ballNbrCount);
 
 BallSpawnPoint *BallSpawnPointInit(Ball *mockBall, double spawnTime);
 void BallSpawnPointUpdate(BallSpawnPoint *ballSpawnPoint);

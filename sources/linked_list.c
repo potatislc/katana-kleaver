@@ -46,7 +46,7 @@ void ListNodeRemove(ListNode** headRef, void* key)
     free(temp);
 }
 
-void ListNodeRemoveAll(ListNode** headRef)
+void ListRemoveAllNodes(ListNode** headRef)
 {
     ListNode* current = *headRef;
     ListNode* next;
@@ -59,4 +59,21 @@ void ListNodeRemoveAll(ListNode** headRef)
     }
 
     *headRef = NULL;
+}
+
+int ListLength(ListNode** headRef)
+{
+   int length = 0;
+
+    ListNode* current = *headRef;
+    ListNode* next;
+
+    while (current != NULL)
+    {
+        next = current->next;
+        length++;
+        current = next;
+    }
+
+   return length;
 }

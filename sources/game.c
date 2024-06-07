@@ -63,7 +63,7 @@ void Update()
 
     if (GetTime() > timeSinceLastSpawn+spawnDelay && !gameOver)
     {
-        if (ballCount <= 2 && spawnDelay == BALL_SPAWN_DELAY_LONG) PlaceBallSpawnPoint();
+        if (NbrOfBallsInMemory(ballNbrCount_All) <= 2 && spawnDelay == BALL_SPAWN_DELAY_LONG) PlaceBallSpawnPoint();
         PlaceBallSpawnPoint();
     }
 
@@ -101,7 +101,7 @@ void GameEnd()
     gameOver = true;
     freezeBalls = true;
     ScoreHandlerLoseCombo();
-    ListNodeRemoveAll(&ballSpawnPointHead);
+    ListRemoveAllNodes(&ballSpawnPointHead);
 }
 
 void GameRestart()
@@ -110,7 +110,7 @@ void GameRestart()
     playerRef = newPlayer;
 
     BallDeSpawnAll();
-    ListNodeRemoveAll(&ballSpawnPointHead);
+    ListRemoveAllNodes(&ballSpawnPointHead);
 
     ScoreHandlerResetScore();
 

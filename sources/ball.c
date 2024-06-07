@@ -11,10 +11,16 @@
 
 ListNode *ballHead = NULL;
 ListNode *ballSpawnPointHead = NULL;
-int ballCount = 0;
 float ballSpeed = .5f;
 bool freezeBalls = false;
 const double ballSpawnTime = 1.f;
+
+BallNbrCount ballNbrCount_All;
+
+int NbrOfBallsInMemory(BallNbrCount ballNbrCount)
+{
+    return ballNbrCount.spawned - ballNbrCount.destroyed;
+}
 
 static Vector2 RandomPosition(Vector2 minPos, Vector2 maxPos)
 {
@@ -198,19 +204,19 @@ void BallDrawShadow(Ball ball)
 void BallSpawn(Ball *ballToSpawn)
 {
     ListNodePush(&ballHead, ballToSpawn);
-    ballCount++;
+    ballNbrCount_All.spawned++;
 }
 
 void BallDeSpawn(Ball *ballToDeSpawn)
 {
     ListNodeRemove(&ballHead, ballToDeSpawn);
-    ballCount--;
+    ballNbrCount_All.destroyed++;
 }
 
 void BallDeSpawnAll()
 {
-    ListNodeRemoveAll(&ballHead);
-    ballCount = 0;
+    ballNbrCount_All.destroyed += ListLength(&ballHead);
+    ListRemoveAllNodes(&ballHead);
 }
 
 BallSpawnPoint *BallSpawnPointInit(Ball *mockBall, double spawnTime)
