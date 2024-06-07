@@ -18,11 +18,7 @@ bool freezeBalls = false;
 const double ballSpawnTime = 1.f;
 
 BallNbrCount ballNbrCount_All;
-
-int BallNbrCountInMemory(BallNbrCount ballNbrCount)
-{
-    return ballNbrCount.spawned - ballNbrCount.destroyed;
-}
+BallNbrCount ballNbrCount_Small;
 
 static Vector2 RandomPosition(Vector2 minPos, Vector2 maxPos)
 {
