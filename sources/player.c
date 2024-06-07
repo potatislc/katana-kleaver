@@ -292,19 +292,27 @@ static void DrawDashRing(Dash *dash, Vector2 pos, float innerRadius, float outer
     DrawRing(Vector2Round(pos), innerRadius, outerRadius, 0, ringPotion*ringPotion*(360), 12, color);
 }
 
-void PlayerDraw(Player player)
-{
-    if (player.stateExecute == STATE_EXEC_PLAYER_DEAD)
-    {
+void PlayerDraw(Player player) {
+    if (player.stateExecute == STATE_EXEC_PLAYER_DEAD) {
         DrawCircleV(Vector2Round(player.position), 8, uiColorRed);
         return;
     }
 
-    Vector2 footPos = {player.position.x, player.position.y + (float)player.texture->height / 2.f - 2.f};
+    Vector2 footPos = {player.position.x, player.position.y + (float) player.texture->height / 2.f - 2.f};
 
     DrawArrowTo(footPos, Vector2ToVirtualCoords(GetMousePosition()), 8, 5, 10, .7f, guideColor);
+
     if (player.stateExecute == STATE_EXEC_PLAYER_MOVE)
+    {
         DrawDashRing(player.dash, (Vector2){player.position.x, player.position.y - 12}, 0.f, 4.f, guideColor);
+    }
+
+    // This didnt help at all
+    /*
+    Vector2 footToMouseDir = Vector2Normalize(Vector2Subtract(Vector2ToVirtualCoords(GetMousePosition()), footPos));
+    Vector2 linePoint = {footToMouseDir.x * 240, footToMouseDir.y * 240};
+    DrawLineV(footPos, Vector2Add(footPos, linePoint), guideColor);
+    */
 
     Vector2 textureOffset = { (float)player.texture->width / 2.0f, (float)player.texture->height / 2.0f };
 
