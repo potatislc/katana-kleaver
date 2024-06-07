@@ -215,7 +215,7 @@ void BallDeSpawn(Ball *ballToDeSpawn)
 
 void BallDeSpawnAll()
 {
-    ballNbrCount_All.destroyed += ListLength(&ballHead);
+    ballNbrCount_All.destroyed = ballNbrCount_All.spawned;
     ListRemoveAllNodes(&ballHead);
 }
 
