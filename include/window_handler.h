@@ -9,8 +9,8 @@
 
 typedef enum WindowMode
 {
-    WM_FULLSCREEN,
     WM_BORDERLESS_FULL_WINDOWED,
+    WM_FULLSCREEN,
     WM_WINDOWED
 } WindowMode;
 

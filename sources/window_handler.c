@@ -28,14 +28,14 @@ void WindowHandlerSetWindowMode(int mode)
 
     switch (windowMode)
     {
-        case WM_FULLSCREEN:
-            SetWindowSize(GetMonitorWidth(display), GetMonitorHeight(display));
-            if (!IsWindowFullscreen()) ToggleFullscreen();
-            break;
         case WM_BORDERLESS_FULL_WINDOWED:
             if (IsWindowFullscreen()) ToggleFullscreen();
             if (!windowIsBorderless) ToggleBorderLessWindowedOverride();
             SetWindowSize(GetMonitorWidth(display), GetMonitorHeight(display));
+            break;
+        case WM_FULLSCREEN:
+            SetWindowSize(GetMonitorWidth(display), GetMonitorHeight(display));
+            if (!IsWindowFullscreen()) ToggleFullscreen();
             break;
         case WM_WINDOWED:
             if (IsWindowFullscreen()) ToggleFullscreen();
