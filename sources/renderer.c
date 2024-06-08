@@ -146,6 +146,8 @@ void SetUiProgressBarMidToEnds(UiProgressBar *uiProgressBar, double current, dou
 
 void DrawUi(bool gameOver)
 {
+    DrawTexture(gameTextures.tvBorder, 0, 0, WHITE);
+
     if (gameOver)
     {
         DrawText(gameOverText, (int)virtualScreenCenter.x - gameOverTextWidth / 2, (int)virtualScreenCenter.y-8, 8, WHITE);

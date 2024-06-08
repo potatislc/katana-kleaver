@@ -8,6 +8,7 @@
 typedef struct
 {
     Texture2D floorStandard;
+    Texture2D tvBorder;
     Texture2D melonBig;
     Texture2D melonSmall;
     Texture2D melonShadow;
