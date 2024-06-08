@@ -98,6 +98,8 @@ void Update()
         }
     }
 
+    if (!gameOver) SetUiProgressBarLToR(&spawnProgressBar, GetTime() - timeSinceLastSpawn, spawnDelay);
+
     if (!freezeBalls)
     {
         BallsUpdate();

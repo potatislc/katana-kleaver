@@ -21,6 +21,14 @@ extern Vector2 screenRatio;
 extern Vector2 screenOffset;
 extern Vector2 virtualScreenCenter;
 
+typedef struct {
+   float start;
+    float end;
+} UiProgressBar;
+
+extern UiProgressBar spawnProgressBar;
+void SetUiProgressBarLToR(UiProgressBar *uiProgressBar, double current, double end);
+
 typedef struct
 {
     Rectangle source;

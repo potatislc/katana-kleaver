@@ -20,6 +20,8 @@ Camera2D worldSpaceCamera = { 0 };
 Vector2 screenOffset;
 Vector2 screenRatio;
 
+UiProgressBar spawnProgressBar;
+
 void RendererInit()
 {
     virtualRenderTarget = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y);
@@ -127,6 +129,15 @@ void RendererClearBackgroundPaint()
     }
 }
 
+void SetUiProgressBarLToR(UiProgressBar *uiProgressBar, double current, double end)
+{
+    // Left to right
+    uiProgressBar->start = 0;
+    uiProgressBar->end = (float)(current / end) * VIRTUAL_SCREEN_WIDTH;
+
+    // MiddleToEnd
+}
+
 void DrawUi(bool gameOver)
 {
     if (gameOver)
@@ -153,6 +164,11 @@ void DrawUi(bool gameOver)
     {
         DrawText(comboText, 69, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
     }
+
+    // Draw progressbar until next spawn
+    const Vector2 progLineStart = (Vector2){spawnProgressBar.start, VIRTUAL_SCREEN_HEIGHT};
+    const Vector2 progLineEnd = (Vector2){spawnProgressBar.end, VIRTUAL_SCREEN_HEIGHT};
+    DrawLineV(progLineStart, progLineEnd, DARKGRAY);
 }
 
 void RenderToTarget(bool gameOver)
