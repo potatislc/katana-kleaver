@@ -8,6 +8,7 @@
 extern const Color shadowColor;
 extern const Color uiColorYellow;
 extern const Color uiColorRed;
+extern const Color uiColorDarkGray;
 extern const Color guideColor;
 
 enum StandardRadius

@@ -7,6 +7,7 @@
 const Color shadowColor = {121, 65, 0, 255};
 const Color uiColorYellow = {255,243, 146, 255};
 const Color uiColorRed = { 219, 65, 97, 255};
+const Color uiColorDarkGray = {50, 50, 50, 255};
 const Color guideColor = {81, 130, 255, 200};
 
 Vector2 Vector2ToVirtualCoords(Vector2 coords)

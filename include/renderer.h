@@ -22,12 +22,14 @@ extern Vector2 screenOffset;
 extern Vector2 virtualScreenCenter;
 
 typedef struct {
-   float start;
+    float width;
+    float start;
     float end;
 } UiProgressBar;
 
 extern UiProgressBar spawnProgressBar;
 void SetUiProgressBarLToR(UiProgressBar *uiProgressBar, double current, double end);
+void SetUiProgressBarMidToEnds(UiProgressBar *uiProgressBar, double current, double end);
 
 typedef struct
 {

@@ -98,7 +98,7 @@ void Update()
         }
     }
 
-    if (!gameOver) SetUiProgressBarLToR(&spawnProgressBar, GetTime() - timeSinceLastSpawn, spawnDelay);
+    if (!gameOver) SetUiProgressBarMidToEnds(&spawnProgressBar, GetTime() - timeSinceLastSpawn, spawnDelay);
 
     if (!freezeBalls)
     {
