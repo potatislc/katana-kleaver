@@ -23,6 +23,7 @@ enum BallType
 typedef struct Ball
 {
     int type;
+    int health;
     void (*stateExecute)(struct Ball*);
     Vector2 position;
     Vector2 velocity;

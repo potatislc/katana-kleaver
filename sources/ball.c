@@ -82,6 +82,13 @@ void OnSplitOrange(Ball *ball, Vector2 splitDir)
     }
 
     ScoreHandlerAddToScore(1);
+
+    if (ball->health > 1)
+    {
+        Sound hitSound = gameAudio.melonSplats[0];
+        SetSoundPitch(hitSound, 2.f - (float)(ball->health) / 10.f);
+        PlaySound(hitSound);
+    }
 }
 
 Ball *BallInit(Vector2 position, float radius, int type)
@@ -93,10 +100,12 @@ Ball *BallInit(Vector2 position, float radius, int type)
     switch (type)
     {
         case TYPE_MELON:
+            ball->health = 1;
             ball->texture = (radius > BALL_TOO_SMALL_FOR_CLEAN_SPLIT) ? &gameTextures.melonBig : &gameTextures.melonSmall;
             ball->onSplitFunction = OnSplitMelon;
             break;
         case TYPE_ORANGE:
+            ball->health = 7;
             ball->texture = &gameTextures.orange;
             ball->onSplitFunction = OnSplitOrange; // Change it to correct
             break;
@@ -218,7 +227,8 @@ float RadiusToSplatPitch(float radius)
 void BallSplit(Ball *ball, Vector2 splitDir)
 {
     ball->onSplitFunction(ball, splitDir);
-    BallDestroy(ball);
+    ball->health--;
+    if (ball->health <= 0) BallDestroy(ball);
 }
 
 void BallDraw(Ball ball)

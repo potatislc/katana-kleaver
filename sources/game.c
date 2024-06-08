@@ -92,7 +92,7 @@ void Update()
             PlaceBallSpawnPoint(RADIUS_LARGE, false, TYPE_MELON);
         }
 
-        if (NbrOfBallsOnScreen(ballNbrCount_All) > 6)
+        if (NbrOfBallsOnScreen(ballNbrCount_All) > 4)
         {
             PlaceBallSpawnPoint(RADIUS_MEDIUM, false, TYPE_ORANGE);
         }
