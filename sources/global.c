@@ -46,3 +46,8 @@ Vector2 Vector2RandomRange(Vector2 minPos, Vector2 maxPos)
     return Vector2Round((Vector2){minPos.x + ((float)rand()/(float)(RAND_MAX)) * spawnAreaSize.x,
                                   minPos.y + ((float)rand()/(float)(RAND_MAX)) * spawnAreaSize.y});
 }
+
+Sound SoundPickRandom(Sound *sounds, int length)
+{
+    return sounds[rand() % length];
+}

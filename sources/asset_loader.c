@@ -23,6 +23,9 @@ void LoadGameAudio()
 {
     gameAudio.swordSlash = LoadSound("../assets/sfx/sword_slash.wav");
     gameAudio.dash = LoadSound("../assets/sfx/dash.wav");
+    gameAudio.melonSounds[0] = LoadSound("../assets/sfx/melon_splat_1.wav");
+    gameAudio.melonSounds[1] = LoadSound("../assets/sfx/melon_splat_2.wav");
+    gameAudio.melonSounds[2] = LoadSound("../assets/sfx/melon_splat_3.wav");
 
     MixGameAudio();
 }

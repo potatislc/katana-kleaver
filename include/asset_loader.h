@@ -3,6 +3,8 @@
 
 #include "raylib.h"
 
+#define MELON_SOUNDS_LENGTH (3)
+
 typedef struct
 {
     Texture2D floorStandard;
@@ -18,6 +20,7 @@ typedef struct
 {
     Sound swordSlash;
     Sound dash;
+    Sound melonSounds[MELON_SOUNDS_LENGTH];
 } GameAudio;
 
 extern GameTextures gameTextures;

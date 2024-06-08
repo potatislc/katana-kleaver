@@ -170,10 +170,15 @@ void BallSplit(Ball *ball, Vector2 splitDir)
         BallSpawn(ballLeft);
     }
 
+    Sound splatSound = SoundPickRandom(gameAudio.melonSounds, MELON_SOUNDS_LENGTH);
+    SoundPanToWorld(splatSound, ball->position, DEFAULT_SOUND_PAN_INTENSITY);
+    PlaySound(splatSound);
+
     ParticleCreate(ParticlePresetRedJuice(ball->position));
     ParticleCreate(ParticlePresetRedJuice(ball->position));
     ParticleCreate(ParticlePresetRedJuice(ball->position));
     ScoreHandlerAddToScore(1); // Temp
+
     BallDeSpawn(ball);
 }
 
