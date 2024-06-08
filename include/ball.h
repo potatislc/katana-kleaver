@@ -30,7 +30,7 @@ typedef struct Ball
     float radius;
     bool colliding;
     Rectangle collisionBox;
-    void (*onDestroyFunction)(struct Ball*);
+    void (*onSplitFunction)(struct Ball*, Vector2 splitDir);
     Texture2D *texture;
     float textureScale;
     Vector2 textureOffset;
@@ -55,7 +55,7 @@ void BallDraw(Ball ball);
 void BallDrawShadow(Ball ball);
 
 void BallSpawn(Ball *ballToSpawn);
-void BallDestroy(Ball *ballT);
+void BallDestroy(Ball *ball);
 void BallDeSpawnAll();
 
 // BallSpawnPoint ---------------------------

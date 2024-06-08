@@ -28,6 +28,6 @@ void ParticleDrawAlpha(Particle particle, int alpha);
 void ParticlesUpdate();
 
 // Particle Presets
-Particle *ParticlePresetRedJuice(Vector2 position);
+Particle *ParticlePresetJuice(Vector2 position, Color juiceColor);
 
 #endif //BALL_GAME_PARTICLE_H

@@ -53,7 +53,7 @@ void ParticlesUpdate()
 }
 
 // Preset Particles
-Particle *ParticlePresetRedJuice(Vector2 position)
+Particle *ParticlePresetJuice(Vector2 position, Color juiceColor)
 {
     Particle* particle = (Particle*)malloc(sizeof(Particle));
 
@@ -67,7 +67,7 @@ Particle *ParticlePresetRedJuice(Vector2 position)
     particle->drag = .1f;
     particle->texture = gameTextures.particleRound;
     particle->textureOffset = (Vector2){(float)particle->texture.width / 2.f, (float)particle->texture.height / 2.f};
-    particle->colorTint = uiColorRed;
+    particle->colorTint = juiceColor;
     particle->scaleAnim = 1.f;
 
     return particle;
