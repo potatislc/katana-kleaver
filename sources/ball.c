@@ -187,9 +187,11 @@ void BallSplit(Ball *ball, Vector2 splitDir)
     SetSoundPitch(splatSound, RadiusToSplatPitch(ball->radius));
     PlaySound(splatSound);
 
-    ParticleCreate(ParticlePresetRedJuice(ball->position));
-    ParticleCreate(ParticlePresetRedJuice(ball->position));
-    ParticleCreate(ParticlePresetRedJuice(ball->position));
+    for (int i = 0; i <= (int)(ball->radius / 2.f); i++)
+    {
+        ParticleCreate(ParticlePresetRedJuice(ball->position));
+    }
+
     ScoreHandlerAddToScore(1); // Temp
 
     BallDeSpawn(ball);

@@ -60,7 +60,9 @@ Particle *ParticlePresetRedJuice(Vector2 position)
     particle->initTime = GetTime();
     particle->lifeTime = .4;
     particle->position = position;
-    particle->velocity = LengthDirToVector2(3.f, (float)(((double)rand() / RAND_MAX) * 2 * M_PI));
+    const float randLength = 2.f + (float)((double)rand() / RAND_MAX) * 1.f;
+    const float randDir = (float)(((double)rand() / RAND_MAX) * 2 * M_PI);
+    particle->velocity = LengthDirToVector2(randLength, randDir);
     particle->gravity = 0.f;
     particle->drag = .1f;
     particle->texture = gameTextures.particleRound;
