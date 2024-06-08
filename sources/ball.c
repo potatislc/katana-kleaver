@@ -151,6 +151,18 @@ void BallCollisionBall(Ball *ball)
     ball->colliding = false;
 }
 
+float RadiusToSplatPitch(float radius)
+{
+    switch ((int)radius) {
+        case RADIUS_LARGE:
+            return .9f;
+        case RADIUS_MEDIUM:
+            return 1.2f;
+        case RADIUS_SMALL:
+            return 1.5f;
+    }
+}
+
 void BallSplit(Ball *ball, Vector2 splitDir)
 {
     float newRadius = ball->radius/2;
@@ -170,8 +182,9 @@ void BallSplit(Ball *ball, Vector2 splitDir)
         BallSpawn(ballLeft);
     }
 
-    Sound splatSound = SoundPickRandom(gameAudio.melonSounds, MELON_SOUNDS_LENGTH);
+    Sound splatSound = SoundPickRandom(gameAudio.melonSplats, MELON_SOUNDS_LENGTH);
     SoundPanToWorld(splatSound, ball->position, DEFAULT_SOUND_PAN_INTENSITY);
+    SetSoundPitch(splatSound, RadiusToSplatPitch(ball->radius));
     PlaySound(splatSound);
 
     ParticleCreate(ParticlePresetRedJuice(ball->position));

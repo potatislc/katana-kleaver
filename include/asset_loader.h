@@ -20,7 +20,7 @@ typedef struct
 {
     Sound swordSlash;
     Sound dash;
-    Sound melonSounds[MELON_SOUNDS_LENGTH];
+    Sound melonSplats[MELON_SOUNDS_LENGTH];
 } GameAudio;
 
 extern GameTextures gameTextures;
