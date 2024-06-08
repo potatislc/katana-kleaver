@@ -87,14 +87,17 @@ void Update()
             PlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
         }
 
-        if (ballNbrCount_All.destroyed > 20 && NbrOfBallsOnScreen(ballNbrCount_All) <= 2 && spawnDelay == BALL_SPAWN_DELAY_LONG)
+        if (ballNbrCount_All.destroyed > 20 && spawnDelay == BALL_SPAWN_DELAY_LONG)
         {
-            PlaceBallSpawnPoint(RADIUS_LARGE, false, TYPE_MELON);
-        }
+            if (NbrOfBallsOnScreen(ballNbrCount_All) <= 2)
+            {
+                PlaceBallSpawnPoint(RADIUS_LARGE, false, TYPE_MELON);
+            }
 
-        if (NbrOfBallsOnScreen(ballNbrCount_All) > 4)
-        {
-            PlaceBallSpawnPoint(RADIUS_MEDIUM, false, TYPE_ORANGE);
+            if (NbrOfBallsOnScreen(ballNbrCount_All) > 6)
+            {
+                PlaceBallSpawnPoint(RADIUS_MEDIUM, false, TYPE_ORANGE);
+            }
         }
     }
 

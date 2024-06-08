@@ -32,6 +32,7 @@ typedef struct Ball
     bool colliding;
     Rectangle collisionBox;
     void (*onSplitFunction)(struct Ball*, Vector2 splitDir);
+    void (*onDestroyFunction)(struct Ball*);
     Texture2D *texture;
     float textureScale;
     Vector2 textureOffset;

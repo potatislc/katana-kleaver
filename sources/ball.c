@@ -65,7 +65,10 @@ void OnSplitMelon(Ball *ball, Vector2 splitDir)
         Ball *ballLeft = BallInit(spawnPosLeft, newRadius, TYPE_MELON);
         BallSpawn(ballLeft);
     }
+}
 
+void OnDestroyMelon(Ball *ball)
+{
     for (int i = 0; i <= (int)(ball->radius / 2.f); i++)
     {
         ParticleCreate(ParticlePresetJuice(ball->position, uiColorRed));
@@ -76,19 +79,38 @@ void OnSplitMelon(Ball *ball, Vector2 splitDir)
 
 void OnSplitOrange(Ball *ball, Vector2 splitDir)
 {
-    for (int i = 0; i <= (int)(ball->radius); i++)
+    for (int i = 0; i <= (int)(ball->radius / 2.f); i++)
     {
         ParticleCreate(ParticlePresetJuice(ball->position, orangeColor));
     }
-
-    ScoreHandlerAddToScore(1);
 
     if (ball->health > 1)
     {
         Sound hitSound = gameAudio.melonSplats[0];
         SetSoundPitch(hitSound, 2.f - (float)(ball->health) / 10.f);
+        SoundPanToWorld(hitSound, ball->position, DEFAULT_SOUND_PAN_INTENSITY);
         PlaySound(hitSound);
+        return;
     }
+
+    // Screen wipe
+    ListNode *currentNode = ballHead;
+    while (currentNode != NULL)
+    {
+        ListNode *nextNode = currentNode->next;
+        if (currentNode->data != ball) BallDestroy(currentNode->data);
+        currentNode = nextNode;
+    }
+}
+
+void OnDestroyOrange(Ball *ball)
+{
+    for (int i = 0; i <= (int)(ball->radius / 2.f); i++)
+    {
+        ParticleCreate(ParticlePresetJuice(ball->position, orangeColor));
+    }
+
+    ScoreHandlerAddToScore(1);
 }
 
 Ball *BallInit(Vector2 position, float radius, int type)
@@ -103,11 +125,13 @@ Ball *BallInit(Vector2 position, float radius, int type)
             ball->health = 1;
             ball->texture = (radius > BALL_TOO_SMALL_FOR_CLEAN_SPLIT) ? &gameTextures.melonBig : &gameTextures.melonSmall;
             ball->onSplitFunction = OnSplitMelon;
+            ball->onDestroyFunction = OnDestroyMelon;
             break;
         case TYPE_ORANGE:
             ball->health = 7;
             ball->texture = &gameTextures.orange;
-            ball->onSplitFunction = OnSplitOrange; // Change it to correct
+            ball->onSplitFunction = OnSplitOrange;
+            ball->onDestroyFunction = OnDestroyOrange;
             break;
         case TYPE_ARMOR:
             break;
@@ -256,6 +280,8 @@ void BallDestroy(Ball *ball)
     SoundPanToWorld(splatSound, ball->position, DEFAULT_SOUND_PAN_INTENSITY);
     SetSoundPitch(splatSound, RadiusToSplatPitch(ball->radius));
     PlaySound(splatSound);
+
+    ball->onDestroyFunction(ball);
 
     ListNodeRemove(&ballHead, ball);
     ballNbrCount_All.destroyed++;
