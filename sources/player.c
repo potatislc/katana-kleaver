@@ -114,7 +114,7 @@ void PlayDashSound()
 void PlayerBeginDash(Player *player, Vector2 point)
 {
     PlayDashSound();
-    SoundPanToWorld(gameAudio.dash, player->position, .5f);
+    SoundPanToWorld(gameAudio.dash, player->position, DEFAULT_SOUND_PAN_INTENSITY);
 
     player->stateExecute = STATE_EXEC_PLAYER_DASH;
 
@@ -208,7 +208,7 @@ void PlayerBeginSlice(Player *player)
 
 void PlayerStateSlice(Player *player)
 {
-    SoundPanToWorld(gameAudio.swordSlash, player->position, .5f);
+    SoundPanToWorld(gameAudio.swordSlash, player->position, DEFAULT_SOUND_PAN_INTENSITY);
 
     if (!PlayerLerpUntilPoint(player, player->dash->targetPos))
     {
