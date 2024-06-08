@@ -47,9 +47,35 @@ static Vector2 RandomDirection()
     return directionVector;
 }
 
-Ball *BallInit(Vector2 position, float radius)
+void OnDestroyMelon(Ball *ball)
+{
+    for (int i = 0; i <= (int)(ball->radius / 2.f); i++)
+    {
+        ParticleCreate(ParticlePresetRedJuice(ball->position));
+    }
+
+    ScoreHandlerAddToScore(1);
+}
+
+Ball *BallInit(Vector2 position, float radius, int type)
 {
     Ball *ball = (Ball *)malloc(sizeof(Ball));
+
+    ball->type = type;
+
+    switch (type)
+    {
+        case TYPE_MELON:
+            ball->texture = (radius > BALL_TOO_SMALL_FOR_CLEAN_SPLIT) ? &gameTextures.melonBig : &gameTextures.melonSmall;
+            ball->onDestroyFunction = OnDestroyMelon;
+            break;
+        case TYPE_ORANGE:
+            ball->texture = &gameTextures.orange;
+            ball->onDestroyFunction = OnDestroyMelon; // Change it to correct
+            break;
+        case TYPE_ARMOR:
+            break;
+    }
 
     ball->stateExecute = STATE_EXEC_BALL_MOVE;
     ball->speed = ballSpeed;
@@ -64,7 +90,6 @@ Ball *BallInit(Vector2 position, float radius)
 
     BallSetPosition(ball, position);
 
-    ball->texture = (radius > BALL_TOO_SMALL_FOR_CLEAN_SPLIT) ? &gameTextures.melonBig : &gameTextures.melonSmall;
     ball->textureScale = (ball->radius * 2) / (float)ball->texture->width;
     ball->textureOffset = (Vector2){ ((float)ball->texture->width / 2.0f) * ball->textureScale,
                                      ((float)ball->texture->height / 2.0f) * ball->textureScale };
@@ -166,7 +191,7 @@ float RadiusToSplatPitch(float radius)
 void BallSplit(Ball *ball, Vector2 splitDir)
 {
     float newRadius = ball->radius/2;
-    if (newRadius > MIN_BALL_RADIUS)
+    if (newRadius > MIN_BALL_RADIUS && ball->type != TYPE_ORANGE)
     {
         float spawnDirRad = atan2f(splitDir.y, splitDir.x) + PI / 2;
         if (spawnDirRad > PI * 2) spawnDirRad -= PI * 2;
@@ -174,27 +199,15 @@ void BallSplit(Ball *ball, Vector2 splitDir)
         Vector2 spawnPos = {cosf(spawnDirRad) * newRadius / 2, sinf(spawnDirRad) * newRadius / 2};
 
         Vector2 spawnPosRight = Vector2Add(ball->position, spawnPos);
-        Ball *ballRight = BallInit(spawnPosRight, newRadius);
+        Ball *ballRight = BallInit(spawnPosRight, newRadius, TYPE_MELON);
         BallSpawn(ballRight);
 
         Vector2 spawnPosLeft = Vector2Subtract(ball->position, spawnPos);
-        Ball *ballLeft = BallInit(spawnPosLeft, newRadius);
+        Ball *ballLeft = BallInit(spawnPosLeft, newRadius, TYPE_MELON);
         BallSpawn(ballLeft);
     }
 
-    Sound splatSound = SoundPickRandom(gameAudio.melonSplats, MELON_SOUNDS_LENGTH);
-    SoundPanToWorld(splatSound, ball->position, DEFAULT_SOUND_PAN_INTENSITY);
-    SetSoundPitch(splatSound, RadiusToSplatPitch(ball->radius));
-    PlaySound(splatSound);
-
-    for (int i = 0; i <= (int)(ball->radius / 2.f); i++)
-    {
-        ParticleCreate(ParticlePresetRedJuice(ball->position));
-    }
-
-    ScoreHandlerAddToScore(1); // Temp
-
-    BallDeSpawn(ball);
+    BallDestroy(ball);
 }
 
 void BallDraw(Ball ball)
@@ -216,9 +229,16 @@ void BallSpawn(Ball *ballToSpawn)
     ballNbrCount_All.spawned++;
 }
 
-void BallDeSpawn(Ball *ballToDeSpawn)
+void BallDestroy(Ball *ball)
 {
-    ListNodeRemove(&ballHead, ballToDeSpawn);
+    Sound splatSound = SoundPickRandom(gameAudio.melonSplats, MELON_SOUNDS_LENGTH);
+    SoundPanToWorld(splatSound, ball->position, DEFAULT_SOUND_PAN_INTENSITY);
+    SetSoundPitch(splatSound, RadiusToSplatPitch(ball->radius));
+    PlaySound(splatSound);
+
+    ball->onDestroyFunction(ball);
+
+    ListNodeRemove(&ballHead, ball);
     ballNbrCount_All.destroyed++;
 }
 

@@ -40,7 +40,7 @@ void GameInit()
     timeSinceLastSpawn = GetTime();
 }
 
-void PlaceBallSpawnPoint(float radius, bool avoidPlayer)
+void PlaceBallSpawnPoint(float radius, bool avoidPlayer, int type)
 {
     timeSinceLastSpawn = GetTime();
 
@@ -48,7 +48,7 @@ void PlaceBallSpawnPoint(float radius, bool avoidPlayer)
     const Vector2 maxInitPos = {VIRTUAL_SCREEN_WIDTH - radius, VIRTUAL_SCREEN_HEIGHT - radius};
     Ball *newBall = BallInit(
             Vector2RandomRange(minInitPos, maxInitPos),
-            radius);
+            radius, type);
 
     if (avoidPlayer)
     {
@@ -78,23 +78,23 @@ void Update()
     {
         if (ballNbrCount_All.spawned == 0)
         {
-            PlaceBallSpawnPoint(RADIUS_LARGE, true);
+            PlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
             spawnDelay = BALL_SPAWN_DELAY_LONG;
         }
 
         if (ballNbrCount_All.destroyed > 6)
         {
-            PlaceBallSpawnPoint(RADIUS_LARGE, true);
+            PlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
         }
 
         if (ballNbrCount_All.destroyed > 20 && NbrOfBallsOnScreen(ballNbrCount_All) <= 2 && spawnDelay == BALL_SPAWN_DELAY_LONG)
         {
-            PlaceBallSpawnPoint(RADIUS_LARGE, false);
+            PlaceBallSpawnPoint(RADIUS_LARGE, false, TYPE_MELON);
         }
 
-        if (NbrOfBallsOnScreen(ballNbrCount_Small) > 6)
+        if (NbrOfBallsOnScreen(ballNbrCount_All) > 6)
         {
-            // Spawn Orange
+            PlaceBallSpawnPoint(RADIUS_MEDIUM, false, TYPE_ORANGE);
         }
     }
 

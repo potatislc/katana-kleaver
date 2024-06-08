@@ -13,8 +13,16 @@ extern float ballSpeed;
 extern bool freezeBalls;
 extern const double ballSpawnTime;
 
+enum BallType
+{
+    TYPE_MELON,
+    TYPE_ORANGE,
+    TYPE_ARMOR
+};
+
 typedef struct Ball
 {
+    int type;
     void (*stateExecute)(struct Ball*);
     Vector2 position;
     Vector2 velocity;
@@ -22,6 +30,7 @@ typedef struct Ball
     float radius;
     bool colliding;
     Rectangle collisionBox;
+    void (*onDestroyFunction)(struct Ball*);
     Texture2D *texture;
     float textureScale;
     Vector2 textureOffset;
@@ -31,7 +40,7 @@ typedef struct Ball
 
 void BallsUpdate();
 
-Ball *BallInit(Vector2 position, float radius);
+Ball *BallInit(Vector2 position, float radius, int type);
 void BallUpdate(Ball *ball);
 void BallSetPosition(Ball *ball, Vector2 pos);
 void BallCollisionScreen(Ball *ball);
@@ -46,7 +55,7 @@ void BallDraw(Ball ball);
 void BallDrawShadow(Ball ball);
 
 void BallSpawn(Ball *ballToSpawn);
-void BallDeSpawn(Ball *ballToDeSpawn);
+void BallDestroy(Ball *ballT);
 void BallDeSpawnAll();
 
 // BallSpawnPoint ---------------------------

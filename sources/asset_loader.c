@@ -9,6 +9,7 @@ void LoadGameTextures()
     gameTextures.tvBorder = LoadTexture("../assets/textures/tv_border.png");
     gameTextures.melonBig = LoadTexture("../assets/textures/melon/melon_big.png");
     gameTextures.melonSmall = LoadTexture("../assets/textures/melon/melon_small.png");
+    gameTextures.orange = LoadTexture("../assets/textures/melon/orange.png");
     gameTextures.melonShadow = LoadTexture("../assets/textures/melon/melon_shadow_big.png");
     gameTextures.samurai = LoadTexture("../assets/textures/samurai/samurai.png");
     gameTextures.samuraiShadow = LoadTexture("../assets/textures/samurai/samurai_shadow.png");
