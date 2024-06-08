@@ -269,7 +269,7 @@ void BallSpawnPointDraw(BallSpawnPoint ballSpawnPoint)
     // Outer Circle
     double outerAnimTime = ballSpawnPoint.spawnTime * 1.f; // Maybe change this value?
     float outerRadius = (float)(fmin(timeSinceInit, outerAnimTime) / outerAnimTime);
-    Color outerColor = {255, 255, 255, (int)outerRadius * 255};
+    Color outerColor = {255, 255, 255, (unsigned char)(outerRadius * 255.f)};
     DrawCircleLinesV(ballSpawnPoint.mockBall->position, (1.f / outerRadius) * ballSpawnPoint.mockBall->radius, outerColor);
 
     // Inner Circle
