@@ -298,7 +298,8 @@ void PlayerDraw(Player player) {
         return;
     }
 
-    Vector2 footPos = {player.position.x, player.position.y + (float) player.texture->height / 2.f - 2.f};
+    const float footOffset = (float) player.texture->height / 2.f - 2.f;
+    const Vector2 footPos = {player.position.x, player.position.y + footOffset};
 
     DrawArrowTo(footPos, Vector2ToVirtualCoords(GetMousePosition()), 8, 5, 10, .7f, guideColor);
 
@@ -312,6 +313,15 @@ void PlayerDraw(Player player) {
     Vector2 footToMouseDir = Vector2Normalize(Vector2Subtract(Vector2ToVirtualCoords(GetMousePosition()), footPos));
     Vector2 linePoint = {footToMouseDir.x * 240, footToMouseDir.y * 240};
     DrawLineV(footPos, Vector2Add(footPos, linePoint), guideColor);
+    */
+
+    // This didn't either
+    /*
+    if (player.stateExecute == STATE_EXEC_PLAYER_DASH)
+    {
+        const Vector2 footTargetPos = Vector2Add(player.dash->targetPos, (Vector2){0, footOffset});
+        DrawCircleLinesV(Vector2Round(footTargetPos), 3.f, guideColor);
+    }
     */
 
     Vector2 textureOffset = { (float)player.texture->width / 2.0f, (float)player.texture->height / 2.0f };
