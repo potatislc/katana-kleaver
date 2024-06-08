@@ -56,6 +56,7 @@ void PlayerUpdate(Player *player)
 
     player->stateExecute(player);
 
+    player->radius = (player->stateExecute == STATE_EXEC_PLAYER_MOVE) ? 6.f : 8.f;
     player->position = Vector2ClampInsideScreen(player->position, player->radius);
     if (player->stateExecute != STATE_EXEC_PLAYER_SLICE) PlayerCollisionBall(player);
 }
