@@ -25,6 +25,8 @@ UiProgressBar spawnProgressBar = {VIRTUAL_SCREEN_WIDTH, 0, 0};
 
 Texture2D *bgTexture;
 
+char getReadyText[] = "- Get Ready! -";
+
 void RendererInit()
 {
     virtualRenderTarget = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y);

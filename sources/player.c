@@ -47,7 +47,9 @@ Player *PlayerReset(Player *player, Vector2 initPos, ListNode **ballHeadRef)
 
 void PlayerDie(Player *player)
 {
-    PlaySound(gameAudio.deathScream);
+    Sound deathSound = gameAudio.deathScream;
+    SoundPanToWorld(deathSound, player->position, DEFAULT_SOUND_PAN_INTENSITY);
+    PlaySound(deathSound);
 
     for (int i = 0; i < 35; i++)
     {

@@ -93,7 +93,7 @@ void Update()
     if (!IsBallClearingFinished())
     {
         ListRemoveAllNodes(&ballSpawnPointHead);
-        if (frameCounter % 10 == 0) BallClearerUpdate();
+        if (frameCounter % 6 == 0) BallClearerUpdate();
     }
 
     if (GetTime() > timeSinceLastSpawn+spawnDelay && !gameOver)

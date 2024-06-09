@@ -86,7 +86,7 @@ void BeginBallClear(Ball *ball)
     ballClearer.listLength = ListLength(&ballHead);
     ballClearer.ballToAvoid = ball;
     ballClearer.clearingFinished = false;
-    // targetFps = 20;
+    targetFps = 20;
     GameFreezeAllEntities(true);
 }
 
