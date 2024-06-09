@@ -29,5 +29,6 @@ void ParticlesUpdate();
 
 // Particle Presets
 Particle *ParticlePresetJuice(Vector2 position, Color juiceColor);
+Particle *ParticlePresetPlayerBlood(Vector2 position);
 
 #endif //BALL_GAME_PARTICLE_H

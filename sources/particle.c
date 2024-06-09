@@ -72,3 +72,11 @@ Particle *ParticlePresetJuice(Vector2 position, Color juiceColor)
 
     return particle;
 }
+
+Particle *ParticlePresetPlayerBlood(Vector2 position)
+{
+    Particle *particle = ParticlePresetJuice(position, playerBloodColor);
+    particle->lifeTime = 1;
+
+    return particle;
+}

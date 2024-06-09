@@ -16,6 +16,8 @@
 double spawnDelay = BALL_SPAWN_DELAY_FIRST;
 double timeSinceLastSpawn;
 
+const int initFps = 60;
+int targetFps = 60;
 bool gameOver = false;
 
 void GameInit()
@@ -31,7 +33,7 @@ void GameInit()
     // Set Seed
     srand(time(0));
 
-    SetTargetFPS(60);
+    SetTargetFPS(initFps);
 
     WindowHandlerSetWindowMode(WM_BORDERLESS_FULL_WINDOWED);
     RendererFitVirtualRectToScreen();
@@ -66,9 +68,22 @@ void PlaceBallSpawnPoint(float radius, bool avoidPlayer, int type)
     ListNodePush(&ballSpawnPointHead, newBallSpawn);
 }
 
+void SpeedUpFpsEffect()
+{
+    SetTargetFPS(targetFps);
+    targetFps++;
+
+    if (targetFps < 20) targetFps = 20;
+}
+
 void Update()
 {
-    if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE) && gameOver)
+    if (targetFps < initFps)
+    {
+        SpeedUpFpsEffect();
+    }
+
+    if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE) && gameOver && targetFps == initFps)
     {
         GameRestart();
         ScoreHandlerResetScore();
@@ -135,9 +150,10 @@ void GameRun()
 void GameEnd()
 {
     gameOver = true;
-    freezeBalls = true;
+    // freezeBalls = true;
     ScoreHandlerLoseCombo();
     ListRemoveAllNodes(&ballSpawnPointHead);
+    targetFps = 2;
 }
 
 void GameRestart()

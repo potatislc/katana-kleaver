@@ -13,6 +13,8 @@ void GameEnd();
 void GameRestart();
 void GameDeInit();
 
+extern const int initFps;
+extern int targetFps;
 extern bool gameOver;
 
 #endif //BALL_GAME_GAME_H

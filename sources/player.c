@@ -7,6 +7,7 @@
 #include "asset_loader.h"
 #include "score_handler.h"
 #include "game.h"
+#include "particle.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
@@ -45,6 +46,11 @@ Player *PlayerReset(Player *player, Vector2 initPos, ListNode **ballHeadRef)
 
 void PlayerDie(Player *player)
 {
+    for (int i = 0; i < 9; i++)
+    {
+        ParticleCreate(ParticlePresetPlayerBlood(player->position));
+    }
+
     player->stateExecute = STATE_EXEC_PLAYER_DEAD;
     deathBuffer = 0;
     GameEnd();
@@ -295,7 +301,7 @@ static void DrawDashRing(Dash *dash, Vector2 pos, float innerRadius, float outer
 
 void PlayerDraw(Player player) {
     if (player.stateExecute == STATE_EXEC_PLAYER_DEAD) {
-        DrawCircleV(Vector2Round(player.position), 8, uiColorRed);
+        DrawCircleV(Vector2Round(player.position), 8, playerBloodColor);
         return;
     }
 

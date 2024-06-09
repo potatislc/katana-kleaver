@@ -7,6 +7,7 @@
 #include "score_handler.h"
 #include "particle.h"
 #include "raymath.h"
+#include "game.h"
 
 Vector2 virtualScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
@@ -144,19 +145,33 @@ void SetUiProgressBarMidToEnds(UiProgressBar *uiProgressBar, double current, dou
     uiProgressBar->end = maxLength + progress * maxLength;
 }
 
+void DrawUiDeathRing()
+{
+    Vector2 center = playerRef->position;
+
+    DrawRing(center, (float)(targetFps) * ((float)targetFps / 12.f), 240, 0, 360, 32, BLACK);
+}
+
 void DrawUi(bool gameOver)
 {
     DrawTexture(gameTextures.tvBorder, 0, 0, WHITE);
 
     if (gameOver)
     {
-        DrawText(gameOverText, (int)virtualScreenCenter.x - gameOverTextWidth / 2, (int)virtualScreenCenter.y-8, 8, WHITE);
-        DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+64, 8, WHITE);
+        if (targetFps != initFps)
+        {
+            DrawUiDeathRing();
+        }
+        else
+        {
+            DrawText(gameOverText, (int)virtualScreenCenter.x - gameOverTextWidth / 2, (int)virtualScreenCenter.y-8, 8, WHITE);
+            DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+64, 8, WHITE);
 
-        int scoreTextWidth = MeasureText(scoreText, 8);
-        DrawText(scoreText, (int)virtualScreenCenter.x - scoreTextWidth / 2, (int)virtualScreenCenter.y+12, 8, WHITE);
+            int scoreTextWidth = MeasureText(scoreText, 8);
+            DrawText(scoreText, (int)virtualScreenCenter.x - scoreTextWidth / 2, (int)virtualScreenCenter.y+12, 8, WHITE);
 
-        DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, WHITE);
+            DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, WHITE);
+        }
     }
 
     // Mouse Icon
