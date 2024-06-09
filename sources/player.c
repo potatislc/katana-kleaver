@@ -46,7 +46,7 @@ Player *PlayerReset(Player *player, Vector2 initPos, ListNode **ballHeadRef)
 
 void PlayerDie(Player *player)
 {
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < 35; i++)
     {
         ParticleCreate(ParticlePresetPlayerBlood(player->position));
     }

@@ -62,7 +62,7 @@ void DrawBackground()
 {
     DrawTexture(gameTextures.floorStandard, 0, 0, WHITE);
     Color paintBgAlphaColor = WHITE;
-    paintBgAlphaColor.a = 100;
+    paintBgAlphaColor.a = 200;
     DrawTextureRec(backgroundPaintTarget.texture, backgroundPaintRect.source, backgroundPaintRect.origin, paintBgAlphaColor);
 }
 
