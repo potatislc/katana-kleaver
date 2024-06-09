@@ -25,6 +25,7 @@ typedef struct
     Sound swordSlash;
     Sound dash;
     Sound melonSplats[MELON_SOUNDS_LENGTH];
+    Sound deathScream;
 } GameAudio;
 
 extern GameTextures gameTextures;

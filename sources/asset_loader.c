@@ -34,6 +34,7 @@ void LoadGameAudio()
     gameAudio.melonSplats[0] = LoadSound("../assets/sfx/melon_splat_1.wav");
     gameAudio.melonSplats[1] = LoadSound("../assets/sfx/melon_splat_2.wav");
     gameAudio.melonSplats[2] = LoadSound("../assets/sfx/melon_splat_3.wav");
+    gameAudio.deathScream = LoadSound("../assets/sfx/death_scream.wav");
 
     MixGameAudio();
 }

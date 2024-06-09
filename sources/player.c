@@ -47,6 +47,8 @@ Player *PlayerReset(Player *player, Vector2 initPos, ListNode **ballHeadRef)
 
 void PlayerDie(Player *player)
 {
+    PlaySound(gameAudio.deathScream);
+
     for (int i = 0; i < 35; i++)
     {
         ParticleCreate(ParticlePresetPlayerBlood(player->position));
