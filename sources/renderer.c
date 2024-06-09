@@ -60,7 +60,7 @@ void RendererFitVirtualRectToScreen()
 
 void DrawBackground()
 {
-    DrawTexture(gameTextures.floorStandard, 0, 0, WHITE);
+    DrawTexture(gameTextures.floorStandard, 0, 0, (IsBallClearingFinished()) ? WHITE : BLACK);
     Color paintBgAlphaColor = WHITE;
     paintBgAlphaColor.a = 200;
     DrawTextureRec(backgroundPaintTarget.texture, backgroundPaintRect.source, backgroundPaintRect.origin, paintBgAlphaColor);

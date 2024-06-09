@@ -50,8 +50,19 @@ void BallCollisionBall(Ball *ball);
 void BallSplit(Ball *ball, Vector2 splitDir);
 
 void BallStateMove(Ball *ball);
+void BallClearerUpdate();
+bool IsBallClearingFinished();
 
 #define STATE_EXEC_BALL_MOVE (BallStateMove)
+
+typedef struct
+{
+    ListNode *currentNode;
+    int nodeIndex;
+    int listLength;
+    bool clearingFinished;
+    Ball *ballToAvoid;
+} BallClearer;
 
 void BallDraw(Ball ball);
 void BallDrawShadow(Ball ball);

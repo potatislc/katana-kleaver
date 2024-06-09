@@ -12,9 +12,11 @@ void GameRun();
 void GameEnd();
 void GameRestart();
 void GameDeInit();
+void GameFreezeAllEntities(bool enable);
 
 extern const int initFps;
 extern int targetFps;
 extern bool gameOver;
+extern int frameCounter;
 
 #endif //BALL_GAME_GAME_H

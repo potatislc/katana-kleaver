@@ -15,6 +15,7 @@ Player *playerRef;
 
 int deathBuffer; // Some grace frames when colliding, when the buffer exceeds max, the player dies
 const int maxDeathBuffer = 4;
+bool freezePlayer = false;
 
 Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
 {

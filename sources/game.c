@@ -19,6 +19,7 @@ double timeSinceLastSpawn;
 const int initFps = 60;
 int targetFps = 60;
 bool gameOver = false;
+int frameCounter = 0;
 
 void GameInit()
 {
@@ -89,6 +90,12 @@ void Update()
         ScoreHandlerResetScore();
     }
 
+    if (!IsBallClearingFinished())
+    {
+        ListRemoveAllNodes(&ballSpawnPointHead);
+        if (frameCounter % 10 == 0) BallClearerUpdate();
+    }
+
     if (GetTime() > timeSinceLastSpawn+spawnDelay && !gameOver)
     {
         if (ballNbrCount_All.spawned == 0)
@@ -109,7 +116,7 @@ void Update()
                 PlaceBallSpawnPoint(RADIUS_LARGE, false, TYPE_MELON);
             }
 
-            if (NbrOfBallsOnScreen(ballNbrCount_All) > 6)
+            if (NbrOfBallsOnScreen(ballNbrCount_All) > 5)
             {
                 PlaceBallSpawnPoint(RADIUS_MEDIUM, false, TYPE_ORANGE);
             }
@@ -123,7 +130,10 @@ void Update()
         BallsUpdate();
     }
 
-    PlayerUpdate(playerRef);
+    if (!freezePlayer)
+    {
+        PlayerUpdate(playerRef);
+    }
 
     ParticlesUpdate();
 
@@ -139,6 +149,7 @@ void GameRun()
 {
     while (!WindowShouldClose())
     {
+        frameCounter++;
         Update();
         RenderToTarget(gameOver);
         RenderToScreen();
@@ -180,4 +191,10 @@ void GameRestart()
 void GameDeInit()
 {
     CloseWindow();
+}
+
+void GameFreezeAllEntities(bool enable)
+{
+    freezeBalls = enable;
+    freezePlayer = enable;
 }

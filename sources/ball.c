@@ -1,14 +1,13 @@
 #include "ball.h"
-
 #include <string.h>
 #include <math.h>
-#include <stdio.h>
 #include "global.h"
 #include "raymath.h"
 #include "asset_loader.h"
 #include "renderer.h"
 #include "score_handler.h"
 #include "particle.h"
+#include "game.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
@@ -20,6 +19,8 @@ const double ballSpawnTime = 1.f;
 
 BallNbrCount ballNbrCount_All;
 BallNbrCount ballNbrCount_Small;
+
+BallClearer ballClearer = {NULL, 0, 0, true};
 
 static Vector2 RandomDirection()
 {
@@ -78,6 +79,17 @@ void OnDestroyMelon(Ball *ball)
     ScoreHandlerAddToScore(1);
 }
 
+void BeginBallClear(Ball *ball)
+{
+    ballClearer.currentNode = ballHead;
+    ballClearer.nodeIndex = 0;
+    ballClearer.listLength = ListLength(&ballHead);
+    ballClearer.ballToAvoid = ball;
+    ballClearer.clearingFinished = false;
+    // targetFps = 20;
+    GameFreezeAllEntities(true);
+}
+
 void OnSplitOrange(Ball *ball, Vector2 splitDir)
 {
     for (int i = 0; i <= (int)(ball->radius / 2.f); i++)
@@ -85,7 +97,7 @@ void OnSplitOrange(Ball *ball, Vector2 splitDir)
         ParticleCreate(ParticlePresetJuice(ball->position, orangeColor));
     }
 
-    if (ball->health > 1)
+    if (ball->health > 2)
     {
         Sound hitSound = gameAudio.melonSplats[0];
         SetSoundPitch(hitSound, 2.f - (float)(ball->health) / 10.f);
@@ -95,6 +107,8 @@ void OnSplitOrange(Ball *ball, Vector2 splitDir)
     }
 
     // Screen wipe
+    if (ball->health == 2) BeginBallClear(ball);
+    /*
     ListNode *currentNode = ballHead;
     int listLength = ListLength(&ballHead);
     for (int i = 0; i < listLength; i++)
@@ -104,6 +118,7 @@ void OnSplitOrange(Ball *ball, Vector2 splitDir)
         if (currentNode->data != ball) BallSplit(currentNode->data, RandomDirection());
         currentNode = nextNode;
     }
+    */
 }
 
 void OnDestroyOrange(Ball *ball)
@@ -180,6 +195,28 @@ void BallSetPosition(Ball *ball, Vector2 pos)
 void BallStateMove(Ball *ball)
 {
     BallSetPosition(ball, (Vector2) {ball->position.x + ball->velocity.x, ball->position.y + ball->velocity.y});
+}
+
+bool IsBallClearingFinished()
+{
+    return ballClearer.clearingFinished;
+}
+
+void BallClearerUpdate()
+{
+    if (ballClearer.nodeIndex < ballClearer.listLength && ballClearer.currentNode != NULL)
+    {
+        ballClearer.nodeIndex++;
+        ListNode *nextNode = ballClearer.currentNode->next;
+        if (ballClearer.currentNode->data != ballClearer.ballToAvoid) BallSplit(ballClearer.currentNode->data, RandomDirection());
+        ballClearer.currentNode = nextNode;
+
+        return;
+    }
+
+    GameFreezeAllEntities(false);
+    BallSplit(ballClearer.ballToAvoid, RandomDirection());
+    ballClearer.clearingFinished = true;
 }
 
 void BallCollisionScreen(Ball *ball)

@@ -37,6 +37,7 @@ typedef struct Dash
 } Dash;
 
 extern Player *playerRef;
+extern bool freezePlayer;
 
 Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef);
 Player *PlayerReset(Player *player, Vector2 initPos, ListNode **ballHeadRef);
