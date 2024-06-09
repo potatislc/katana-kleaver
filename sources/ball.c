@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include <math.h>
+#include <stdio.h>
 #include "global.h"
 #include "raymath.h"
 #include "asset_loader.h"
@@ -95,10 +96,12 @@ void OnSplitOrange(Ball *ball, Vector2 splitDir)
 
     // Screen wipe
     ListNode *currentNode = ballHead;
-    while (currentNode != NULL)
+    int listLength = ListLength(&ballHead);
+    for (int i = 0; i < listLength; i++)
     {
+        if (currentNode == NULL) return;
         ListNode *nextNode = currentNode->next;
-        if (currentNode->data != ball) BallDestroy(currentNode->data);
+        if (currentNode->data != ball) BallSplit(currentNode->data, RandomDirection());
         currentNode = nextNode;
     }
 }
