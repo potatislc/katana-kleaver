@@ -19,7 +19,7 @@ double timeSinceLastSpawn;
 const int initFps = 60;
 int targetFps = 60;
 bool gameOver = false;
-int frameCounter = 0;
+unsigned int frameCounter = 0;
 
 void GameInit()
 {

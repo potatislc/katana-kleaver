@@ -23,6 +23,8 @@ Vector2 screenRatio;
 
 UiProgressBar spawnProgressBar = {VIRTUAL_SCREEN_WIDTH, 0, 0};
 
+Texture2D *bgTexture;
+
 void RendererInit()
 {
     virtualRenderTarget = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y);
@@ -37,6 +39,7 @@ void RendererInit()
     backgroundPaintRect.dest = (Rectangle){0.f, 0.f ,0.f, 0.f};
     backgroundPaintRect.origin = Vector2Zero();
 
+    bgTexture = &gameTextures.bgFloorStandard;
 }
 
 void RendererFitVirtualRectToScreen()
@@ -60,10 +63,23 @@ void RendererFitVirtualRectToScreen()
 
 void DrawBackground()
 {
-    DrawTexture(gameTextures.floorStandard, 0, 0, (IsBallClearingFinished()) ? WHITE : BLACK);
-    Color paintBgAlphaColor = WHITE;
-    paintBgAlphaColor.a = 200;
-    DrawTextureRec(backgroundPaintTarget.texture, backgroundPaintRect.source, backgroundPaintRect.origin, paintBgAlphaColor);
+    if (!IsBallClearingFinished())
+    {
+        if (bgTexture != &gameTextures.bgBallClear)
+        {
+            bgTexture = &gameTextures.bgBallClear;
+            DrawTexture(*bgTexture, 0, 0, WHITE);
+        }
+    }
+    else
+    {
+        bgTexture = &gameTextures.bgFloorStandard;
+        DrawTexture(*bgTexture, 0, 0, WHITE);
+
+        Color paintBgAlphaColor = WHITE;
+        paintBgAlphaColor.a = 200;
+        DrawTextureRec(backgroundPaintTarget.texture, backgroundPaintRect.source, backgroundPaintRect.origin, paintBgAlphaColor);
+    }
 }
 
 void DrawShadows()
