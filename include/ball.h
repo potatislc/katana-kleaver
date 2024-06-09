@@ -31,6 +31,7 @@ typedef struct Ball
     float radius;
     bool colliding;
     Rectangle collisionBox;
+    void (*drawFunction)(struct Ball, Vector2 drawPos);
     void (*onSplitFunction)(struct Ball*, Vector2 splitDir);
     void (*onDestroyFunction)(struct Ball*);
     Texture2D *texture;

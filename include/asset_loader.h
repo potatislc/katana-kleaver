@@ -14,6 +14,7 @@ typedef struct
     Texture2D melonSmall;
     Texture2D melonShadow;
     Texture2D orange;
+    Texture2D orangeHalo;
     Texture2D samurai;
     Texture2D samuraiShadow;
     Texture2D particleRound;

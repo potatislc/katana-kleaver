@@ -131,6 +131,23 @@ void OnDestroyOrange(Ball *ball)
     ScoreHandlerAddToScore(1);
 }
 
+void DrawDefault(Ball ball, Vector2 drawPos)
+{
+    DrawTextureEx(*ball.texture, Vector2Round(drawPos), 0, ball.textureScale, WHITE);
+}
+
+// This looks like garbage when it gets drawn
+void DrawOrange(Ball ball, Vector2 drawPos)
+{
+    Texture2D haloTexture = gameTextures.orangeHalo;
+    Vector2 haloPos = {ball.position.x - (float)haloTexture.width / 2.f, ball.position.y - (float)haloTexture.height / 2.f};
+    Color haloColor = WHITE;
+    haloColor.a = 100;
+    DrawTextureEx(haloTexture, haloPos, 0, 1, haloColor);
+
+    DrawDefault(ball, drawPos);
+}
+
 Ball *BallInit(Vector2 position, float radius, int type)
 {
     Ball *ball = (Ball *)malloc(sizeof(Ball));
@@ -142,12 +159,14 @@ Ball *BallInit(Vector2 position, float radius, int type)
         case TYPE_MELON:
             ball->health = 1;
             ball->texture = (radius > BALL_TOO_SMALL_FOR_CLEAN_SPLIT) ? &gameTextures.melonBig : &gameTextures.melonSmall;
+            ball->drawFunction = DrawDefault;
             ball->onSplitFunction = OnSplitMelon;
             ball->onDestroyFunction = OnDestroyMelon;
             break;
         case TYPE_ORANGE:
             ball->health = 7;
             ball->texture = &gameTextures.orange;
+            ball->drawFunction = DrawDefault;
             ball->onSplitFunction = OnSplitOrange;
             ball->onDestroyFunction = OnDestroyOrange;
             break;
@@ -312,7 +331,7 @@ void BallSplit(Ball *ball, Vector2 splitDir)
 void BallDraw(Ball ball)
 {
     Vector2 drawPos = {ball.position.x - ball.textureOffset.x, ball.position.y - ball.textureOffset.y};
-    DrawTextureEx(*ball.texture, Vector2Round(drawPos), 0, ball.textureScale, WHITE);
+    ball.drawFunction(ball, drawPos);
 }
 
 void BallDrawShadow(Ball ball)
