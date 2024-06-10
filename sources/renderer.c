@@ -261,7 +261,7 @@ void RenderToScreen()
         // Draw world camera to screen
         DrawTexturePro(virtualRenderTarget.texture, virtualRenderRect.source, virtualRenderRect.dest, virtualRenderRect.origin, 0.0f, WHITE);
 
-        DrawDebug();
+        // DrawDebug();
     }
     EndDrawing();
 }

@@ -24,15 +24,7 @@ set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/include/") # Define PROJECT_INCLU
 
 # Declaring our executable
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES}
-        include/game.h
-        sources/renderer.c
-        include/renderer.h
-        sources/score_handler.c
-        include/score_handler.h
-        sources/wave_handler.c
-        include/wave_handler.h
-        sources/particle.c
-        sources/particle.h)
+        sources/sprite.c)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
