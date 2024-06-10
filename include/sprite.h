@@ -15,6 +15,6 @@ typedef struct
 Sprite *SpriteInit(Texture2D spriteSheet, Rectangle frameRect, int startingFrame);
 void SpriteSetFrame(Sprite *sprite, int frame);
 void SpriteAnimate(Sprite *sprite, float speed, bool looping);
-void SpriteDraw(Sprite sprite);
+void SpriteDraw(Sprite sprite, Vector2 position);
 
 #endif //BALL_GAME_SPRITE_H

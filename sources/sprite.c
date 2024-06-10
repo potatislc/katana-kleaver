@@ -42,3 +42,8 @@ void SpriteAnimate(Sprite *sprite, float speed, bool looping)
 
     SpriteSetFrame(sprite, nextFrame);
 }
+
+void SpriteDraw(Sprite sprite, Vector2 position)
+{
+    DrawTextureRec(sprite.sheet, sprite.frameRect, position, WHITE);
+}
