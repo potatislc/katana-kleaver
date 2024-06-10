@@ -9,7 +9,7 @@ typedef struct
     Rectangle frameRect;
     int frame;
     int frameCount;
-    float animProgress;
+    float animProgress; // From 0 (start) to 1 (end)
     int fps;
     Vector2 drawingOffset;
 } Sprite;

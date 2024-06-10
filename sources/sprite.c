@@ -42,28 +42,6 @@ void SpriteAnimate(Sprite *sprite, float speed, bool looping)
     }
 
     SpriteSetFrame(sprite, (int)(sprite->animProgress * (float)sprite->frameCount));
-
-    /*
-    int nextFrame = sprite->frame + 1; // The 1 is temporary
-
-    if (!looping)
-    {
-        nextFrame = (int)fmax(0, fmin(nextFrame, sprite->sheet.width));
-    }
-    else
-    {
-        if (nextFrame > sprite->frameCount)
-        {
-            nextFrame = 0;
-        }
-        else if (nextFrame < 0)
-        {
-            nextFrame = sprite->frameCount;
-        }
-    }
-
-    SpriteSetFrame(sprite, nextFrame);
-    */
 }
 
 void SpriteDraw(Sprite sprite, Vector2 position, Vector2 scale, float rotation)

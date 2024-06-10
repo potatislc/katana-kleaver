@@ -22,8 +22,8 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
     Player *player = (Player*) malloc(sizeof(Player));
 
     player->stateExecute = STATE_EXEC_PLAYER_MOVE;
-    player->texture = &gameTextures.samurai;
-    player->sprite = SpriteInit(gameTextures.samuraiRunSheet, (Rectangle){0, 0, 16, 16}, 0, true);
+    player->spriteIdle = SpriteInit(gameTextures.samurai, (Rectangle){0, 0, 16, 16}, 0, true);
+    player->spriteRun = SpriteInit(gameTextures.samuraiRunSheet, (Rectangle){0, 0, 16, 16}, 0, true);
     player->shadowTexture = &gameTextures.samuraiShadow;
     player->position = initPos;
     player->speed = 2;
@@ -311,7 +311,7 @@ void PlayerDraw(Player player) {
         return;
     }
 
-    const float footOffset = (float) player.texture->height / 2.f - 2.f;
+    const float footOffset = (float) player.spriteIdle->frameRect.height / 2.f - 2.f;
     const Vector2 footPos = {player.position.x, player.position.y + footOffset};
 
     DrawArrowTo(footPos, Vector2ToVirtualCoords(GetMousePosition()), 8, 5, 10, .7f, guideColor);
@@ -337,32 +337,24 @@ void PlayerDraw(Player player) {
     }
     */
 
-    if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT) && player.stateExecute == STATE_EXEC_PLAYER_MOVE)
+    Vector2 spriteFacing = {sign(player.velocity.x), 1};
+
+    if (player.stateExecute == STATE_EXEC_PLAYER_MOVE)
     {
-        SpriteAnimate(player.sprite, .05f, true);
-        Vector2 facing = {sign(player.velocity.x), 1};
-        SpriteDraw(*player.sprite, player.position, facing, 0);
+        if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+        {
+            SpriteAnimate(player.spriteRun, .05f, true);
+            SpriteDraw(*player.spriteRun, player.position, spriteFacing, 0);
+        }
+        else
+        {
+            SpriteDraw(*player.spriteIdle, player.position, spriteFacing, 0);
+        }
     }
     else
     {
-        // Change this into a sprite instead
-        Vector2 textureOffset = { (float)player.texture->width / 2.0f, (float)player.texture->height / 2.0f };
-
-        Rectangle playerRect =
-            {
-                    0,
-                    0,
-                    sign(player.velocity.x) * player.texture->width,
-                    (float)player.texture->height
-            };
-
-        DrawTextureRec
-        (
-                *player.texture,
-                playerRect,
-                (Vector2){ player.position.x - textureOffset.x,player.position.y - textureOffset.y },
-                WHITE
-        );
+        // Temporary, change it to the other sprites for the other states
+        SpriteDraw(*player.spriteIdle, player.position, spriteFacing, 0);
     }
 
     if (player.stateExecute == STATE_EXEC_PLAYER_SLICE) PlayerDrawSlice(player);
@@ -396,5 +388,5 @@ void PlayerDrawSlice(Player player)
 
 void PlayerDrawShadow(Player player)
 {
-    DrawTexture(*player.shadowTexture, (int)roundf(player.position.x) - player.texture->width / 2, (int)roundf(player.position.y) - player.texture->height / 2, shadowColor);
+    DrawTexture(*player.shadowTexture, (int)roundf(player.position.x) - player.spriteIdle->frameRect.width / 2, (int)roundf(player.position.y) - player.spriteIdle->frameRect.height / 2, shadowColor);
 }

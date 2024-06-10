@@ -14,8 +14,8 @@ typedef struct Player
     float radius;
     int state;
     void (*stateExecute)(struct Player*);
-    Texture2D *texture;
-    Sprite *sprite;
+    Sprite *spriteIdle;
+    Sprite *spriteRun;
     Texture2D *shadowTexture;
     bool colliding;
     ListNode **ballHeadRef;
