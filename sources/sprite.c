@@ -23,6 +23,27 @@ void SpriteSetFrame(Sprite *sprite, int frame)
 
 void SpriteAnimate(Sprite *sprite, float speed, bool looping)
 {
+    sprite->animProgress += speed;
+
+    if (!looping)
+    {
+        sprite->animProgress = fmaxf(0.f, fminf(sprite->animProgress, 1.f));
+    }
+    else
+    {
+        if (sprite->animProgress > 1.f)
+        {
+            sprite->animProgress = 0.f;
+        }
+        else if (sprite->animProgress < 0.f)
+        {
+            sprite->animProgress = 1.f;
+        }
+    }
+
+    SpriteSetFrame(sprite, (int)(sprite->animProgress * (float)sprite->frameCount));
+
+    /*
     int nextFrame = sprite->frame + 1; // The 1 is temporary
 
     if (!looping)
@@ -42,6 +63,7 @@ void SpriteAnimate(Sprite *sprite, float speed, bool looping)
     }
 
     SpriteSetFrame(sprite, nextFrame);
+    */
 }
 
 void SpriteDraw(Sprite sprite, Vector2 position, Vector2 scale, float rotation)

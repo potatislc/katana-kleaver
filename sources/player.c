@@ -337,28 +337,33 @@ void PlayerDraw(Player player) {
     }
     */
 
-    Vector2 textureOffset = { (float)player.texture->width / 2.0f, (float)player.texture->height / 2.0f };
+    if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT) && player.stateExecute == STATE_EXEC_PLAYER_MOVE)
+    {
+        SpriteAnimate(player.sprite, .05f, true);
+        Vector2 facing = {sign(player.velocity.x), 1};
+        SpriteDraw(*player.sprite, player.position, facing, 0);
+    }
+    else
+    {
+        // Change this into a sprite instead
+        Vector2 textureOffset = { (float)player.texture->width / 2.0f, (float)player.texture->height / 2.0f };
 
-    Rectangle playerRect =
+        Rectangle playerRect =
             {
-                0,
-                0,
-                sign(player.velocity.x) * player.texture->width,
-                (float)player.texture->height
+                    0,
+                    0,
+                    sign(player.velocity.x) * player.texture->width,
+                    (float)player.texture->height
             };
 
-    /*
-    DrawTextureRec
-    (
-        *player.texture,
-        playerRect,
-        (Vector2){ player.position.x - textureOffset.x,player.position.y - textureOffset.y },
-        WHITE
-    );
-    */
-    SpriteAnimate(player.sprite, 1, true);
-    Vector2 facing = {sign(player.velocity.x), 1};
-    SpriteDraw(*player.sprite, player.position, facing, 0);
+        DrawTextureRec
+        (
+                *player.texture,
+                playerRect,
+                (Vector2){ player.position.x - textureOffset.x,player.position.y - textureOffset.y },
+                WHITE
+        );
+    }
 
     if (player.stateExecute == STATE_EXEC_PLAYER_SLICE) PlayerDrawSlice(player);
 }
