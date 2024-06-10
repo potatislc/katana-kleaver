@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "ball.h"
 #include "linked_list.h"
+#include "sprite.h"
 
 typedef struct Player
 {
@@ -14,6 +15,7 @@ typedef struct Player
     int state;
     void (*stateExecute)(struct Player*);
     Texture2D *texture;
+    Sprite *sprite;
     Texture2D *shadowTexture;
     bool colliding;
     ListNode **ballHeadRef;

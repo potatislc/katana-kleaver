@@ -1,8 +1,8 @@
-#include <stdlib.h>
-#include <math.h>
 #include "sprite.h"
+#include <stdlib.h>
+#include "raymath.h"
 
-Sprite *SpriteInit(Texture2D spriteSheet, Rectangle frameRect, int startingFrame)
+Sprite *SpriteInit(Texture2D spriteSheet, Rectangle frameRect, int startingFrame, bool centered)
 {
     Sprite *sprite = (Sprite*)malloc(sizeof(Sprite));
 
@@ -10,6 +10,7 @@ Sprite *SpriteInit(Texture2D spriteSheet, Rectangle frameRect, int startingFrame
     sprite->frameRect = frameRect;
     sprite->frame = startingFrame;
     sprite->frameCount = spriteSheet.width / (int)frameRect.width;
+    sprite->drawingOffset = (centered) ? (Vector2){frameRect.width / 2, frameRect.height / 2} : Vector2Zero();
 
     return sprite;
 }
@@ -43,7 +44,11 @@ void SpriteAnimate(Sprite *sprite, float speed, bool looping)
     SpriteSetFrame(sprite, nextFrame);
 }
 
-void SpriteDraw(Sprite sprite, Vector2 position)
+void SpriteDraw(Sprite sprite, Vector2 position, Vector2 scale, float rotation)
 {
-    DrawTextureRec(sprite.sheet, sprite.frameRect, position, WHITE);
+    Rectangle source = {sprite.frameRect.x, sprite.frameRect.y, sprite.frameRect.width * scale.x, sprite.frameRect.height * scale.y};
+    Rectangle dest = {position.x, position.y, sprite.frameRect.width, sprite.frameRect.height};
+    Vector2 scaledOffset = {fabsf(sprite.drawingOffset.x * scale.x), fabsf(sprite.drawingOffset.y * scale.y)};
+
+    DrawTexturePro(sprite.sheet, source, dest, scaledOffset, rotation, WHITE);
 }

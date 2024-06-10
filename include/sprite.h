@@ -10,11 +10,12 @@ typedef struct
     int frame;
     int frameCount;
     int fps;
+    Vector2 drawingOffset;
 } Sprite;
 
-Sprite *SpriteInit(Texture2D spriteSheet, Rectangle frameRect, int startingFrame);
+Sprite *SpriteInit(Texture2D spriteSheet, Rectangle frameRect, int startingFrame, bool centered);
 void SpriteSetFrame(Sprite *sprite, int frame);
 void SpriteAnimate(Sprite *sprite, float speed, bool looping);
-void SpriteDraw(Sprite sprite, Vector2 position);
+void SpriteDraw(Sprite sprite, Vector2 position, Vector2 scale, float rotation);
 
 #endif //BALL_GAME_SPRITE_H

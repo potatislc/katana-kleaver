@@ -23,6 +23,7 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
 
     player->stateExecute = STATE_EXEC_PLAYER_MOVE;
     player->texture = &gameTextures.samurai;
+    player->sprite = SpriteInit(gameTextures.samuraiRunSheet, (Rectangle){0, 0, 16, 16}, 0, true);
     player->shadowTexture = &gameTextures.samuraiShadow;
     player->position = initPos;
     player->speed = 2;
@@ -346,6 +347,7 @@ void PlayerDraw(Player player) {
                 (float)player.texture->height
             };
 
+    /*
     DrawTextureRec
     (
         *player.texture,
@@ -353,6 +355,10 @@ void PlayerDraw(Player player) {
         (Vector2){ player.position.x - textureOffset.x,player.position.y - textureOffset.y },
         WHITE
     );
+    */
+    SpriteAnimate(player.sprite, 1, true);
+    Vector2 facing = {sign(player.velocity.x), 1};
+    SpriteDraw(*player.sprite, player.position, facing, 0);
 
     if (player.stateExecute == STATE_EXEC_PLAYER_SLICE) PlayerDrawSlice(player);
 }
