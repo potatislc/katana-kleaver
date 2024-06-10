@@ -26,6 +26,7 @@ UiProgressBar spawnProgressBar = {VIRTUAL_SCREEN_WIDTH, 0, 0};
 Texture2D *bgTexture;
 
 char getReadyText[] = "- Get Ready! -";
+int getReadyTextWidth = 0;
 
 void RendererInit()
 {
@@ -42,6 +43,8 @@ void RendererInit()
     backgroundPaintRect.origin = Vector2Zero();
 
     bgTexture = &gameTextures.bgFloorStandard;
+
+    getReadyTextWidth = MeasureText(getReadyText, 8);
 }
 
 void RendererFitVirtualRectToScreen()
@@ -173,6 +176,11 @@ void DrawUiDeathRing()
 void DrawUi(bool gameOver)
 {
     DrawTexture(gameTextures.tvBorder, 0, 0, WHITE);
+
+    if (ballNbrCount_All.spawned == 0 && frameCounter / 30 % 2 == 0)
+    {
+        DrawText(getReadyText, (int)virtualScreenCenter.x - getReadyTextWidth / 2, (int)virtualScreenCenter.y-32, 8, WHITE);
+    }
 
     if (gameOver)
     {
