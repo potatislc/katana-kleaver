@@ -114,6 +114,11 @@ void Update()
             if (NbrOfBallsOnScreen(ballNbrCount_All) <= 2)
             {
                 PlaceBallSpawnPoint(RADIUS_LARGE, false, TYPE_MELON);
+
+                if (ballNbrCount_All.destroyed > 50 && NbrOfBallsOnScreen(ballNbrCount_All) == 0)
+                {
+                    PlaceBallSpawnPoint(RADIUS_LARGE, false, TYPE_MELON);
+                }
             }
 
             if (NbrOfBallsOnScreen(ballNbrCount_All) > 5)
