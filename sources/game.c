@@ -21,6 +21,9 @@ int targetFps = 60;
 bool gameOver = false;
 unsigned int frameCounter = 0;
 
+int secondBallLimit = 2;
+int thirdBallLimit = 3;
+
 void GameInit()
 {
     WindowHandlerInit();
@@ -111,11 +114,11 @@ void Update()
 
         if (ballNbrCount_All.destroyed > 20 && spawnDelay == BALL_SPAWN_DELAY_LONG)
         {
-            if (NbrOfBallsOnScreen(ballNbrCount_All) <= 2)
+            if (NbrOfBallsOnScreen(ballNbrCount_All) <= secondBallLimit)
             {
                 PlaceBallSpawnPoint(RADIUS_LARGE, false, TYPE_MELON);
 
-                if (ballNbrCount_All.destroyed > 50 && NbrOfBallsOnScreen(ballNbrCount_All) == 0)
+                if (NbrOfBallsOnScreen(ballNbrCount_All) == thirdBallLimit && ballNbrCount_All.destroyed > 50)
                 {
                     PlaceBallSpawnPoint(RADIUS_LARGE, false, TYPE_MELON);
                 }

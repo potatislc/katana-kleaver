@@ -87,7 +87,7 @@ void BeginBallClear(Ball *ball)
     ballClearer.ballToAvoid = ball;
     ballClearer.clearingFinished = false;
     targetFps = 20;
-    GameFreezeAllEntities(true);
+    // GameFreezeAllEntities(true);
 }
 
 void OnSplitOrange(Ball *ball, Vector2 splitDir)
@@ -107,7 +107,7 @@ void OnSplitOrange(Ball *ball, Vector2 splitDir)
     }
 
     // Screen wipe
-    if (ball->health == 2) BeginBallClear(ball);
+    if (ball->health <= 1) BeginBallClear(ball);
     /*
     ListNode *currentNode = ballHead;
     int listLength = ListLength(&ballHead);
@@ -247,7 +247,7 @@ void BallClearerUpdate()
         return;
     }
 
-    GameFreezeAllEntities(false);
+    // GameFreezeAllEntities(false);
     BallSplit(ballClearer.ballToAvoid, RandomDirection());
     ballClearer.clearingFinished = true;
 }

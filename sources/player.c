@@ -92,7 +92,7 @@ void PlayerStateMove(Player *player)
         PlayerBeginDash(player, Vector2ToVirtualCoords(GetMousePosition()));
     }
 
-    if (player->colliding)
+    if (player->colliding && IsBallClearingFinished())
     {
         deathBuffer++;
         if (deathBuffer > maxDeathBuffer) PlayerDie(player);
