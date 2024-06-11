@@ -224,6 +224,7 @@ bool IsBallClearingFinished()
 void BallClearerUpdate()
 {
     // Slice all balls
+    /*
     if (ListLength(&ballHead) > 1)
     {
         ballClearer.nodeIndex++;
@@ -233,9 +234,9 @@ void BallClearerUpdate()
 
         return;
     }
+    */
 
     // Slice all balls only once
-    /*
     if (ballClearer.nodeIndex < ballClearer.listLength && ballClearer.currentNode != NULL)
     {
         ballClearer.nodeIndex++;
@@ -245,7 +246,6 @@ void BallClearerUpdate()
 
         return;
     }
-    */
 
     GameFreezeAllEntities(false);
     BallSplit(ballClearer.ballToAvoid, RandomDirection());
