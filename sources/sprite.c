@@ -11,8 +11,8 @@ Sprite *SpriteInit(Texture2D spriteSheet, Rectangle frameRect, int startingFrame
     sprite->frameRect = frameRect;
     sprite->frame = startingFrame;
     SpriteSetFrame(sprite, startingFrame);
-    sprite->animProgress = 0.f;
     sprite->frameCount = spriteSheet.width / (int)frameRect.width;
+    sprite->animProgress = (float)startingFrame / (float)sprite->frameCount;
     sprite->drawingOffset = (centered) ? (Vector2){frameRect.width / 2, frameRect.height / 2} : Vector2Zero();
 
     return sprite;
