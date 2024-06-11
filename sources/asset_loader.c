@@ -26,6 +26,8 @@ void MixGameAudio()
     SetSoundVolume(gameAudio.melonSplats[1], .7f);
     SetSoundVolume(gameAudio.melonSplats[2], .7f);
     SetSoundVolume(gameAudio.deathScream, .7f);
+
+    SetMusicVolume(gameAudio.mainTheme, .3f);
 }
 
 void LoadGameAudio()
@@ -36,6 +38,8 @@ void LoadGameAudio()
     gameAudio.melonSplats[1] = LoadSound("../assets/sfx/melon_splat_2.wav");
     gameAudio.melonSplats[2] = LoadSound("../assets/sfx/melon_splat_3.wav");
     gameAudio.deathScream = LoadSound("../assets/sfx/death_scream.wav");
+
+    gameAudio.mainTheme = LoadMusicStream("../assets/bgm/ball_music.mp3");
 
     MixGameAudio();
 }

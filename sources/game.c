@@ -34,6 +34,8 @@ void GameInit()
     InitAudioDevice();
     LoadGameAudio();
 
+    PlayMusicStream(gameAudio.mainTheme);
+
     // Set Seed
     srand(time(0));
 
@@ -78,10 +80,14 @@ void SpeedUpFpsEffect()
     targetFps++;
 
     if (targetFps < 20) targetFps = 20;
+
+    SetMusicPitch(gameAudio.mainTheme, (1.f/(float)initFps) * (float)targetFps);
 }
 
 void Update()
 {
+    UpdateMusicStream(gameAudio.mainTheme);
+
     if (targetFps < initFps)
     {
         SpeedUpFpsEffect();
