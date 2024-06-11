@@ -42,6 +42,10 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
 
 Player *PlayerReset(Player *player, Vector2 initPos, ListNode **ballHeadRef)
 {
+    free(player->dash);
+    free(player->spriteIdle);
+    free(player->spriteRun);
+    free(player->collidingBallCopy);
     free(player);
     return PlayerInit(initPos, ballHeadRef);
 }
@@ -343,7 +347,7 @@ void PlayerDraw(Player player) {
     {
         if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
         {
-            SpriteAnimate(player.spriteRun, .05f, true);
+            SpriteAnimate(player.spriteRun, .04f, true);
             SpriteDraw(*player.spriteRun, player.position, spriteFacing, 0);
         }
         else
