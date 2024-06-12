@@ -76,6 +76,8 @@ void PlayerUpdate(Player *player)
     player->radius = (player->stateExecute == STATE_EXEC_PLAYER_MOVE) ? 6.f : 8.f;
     player->position = Vector2ClampInsideScreen(player->position, player->radius);
     if (player->stateExecute != STATE_EXEC_PLAYER_SLICE) PlayerCollisionBall(player);
+
+    SoundPanToWorld(gameAudio.footstep, player->position, DEFAULT_SOUND_PAN_INTENSITY);
 }
 
 void PlayerStateMove(Player *player)
@@ -85,6 +87,7 @@ void PlayerStateMove(Player *player)
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
     {
         PlayerMoveToPoint(player, Vector2ToVirtualCoords(GetMousePosition()));
+        if (!IsSoundPlaying(gameAudio.footstep)) PlaySound(gameAudio.footstep);
     }
 
     if (player->dash->bufferedDash && player->dash->reloadTime == 0)
@@ -174,6 +177,7 @@ void PlayerStateDash(Player *player)
 
     if (!PlayerLerpUntilPoint(player, player->dash->targetPos))
     {
+        PlaySound(gameAudio.footstep);
         player->stateExecute = STATE_EXEC_PLAYER_MOVE;
         ScoreHandlerLoseCombo(); // Dash without successful slice means loss of combo
     }
