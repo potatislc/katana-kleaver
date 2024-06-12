@@ -58,7 +58,7 @@ void PlayerDie(Player *player)
     SoundPanToWorld(deathSound, player->position, DEFAULT_SOUND_PAN_INTENSITY);
     PlaySound(deathSound);
 
-    CameraSetShake(6, .7f, 3.f);
+    CameraSetShake(4, 1.f, 3.f);
 
     for (int i = 0; i < 35; i++)
     {
