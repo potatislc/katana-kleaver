@@ -57,8 +57,20 @@ void AddBallToQueue(float radius, bool avoidPlayer, int type)
     ListNodePush(&spawnQueueHead, spawnData);
 }
 
+void UpdateBallLimits()
+{
+    if (ballNbrCount_All.spawned > 60)
+    {
+        if (ballNbrCount_All.spawned % 20 == 0) secondBallLimit++;
+
+        if (ballNbrCount_All.spawned % 30 == 0) secondBallLimit++;
+    }
+}
+
 void AddBallsToQueue()
 {
+    UpdateBallLimits();
+
     if (GetTime() < timeSinceLastSpawn+spawnDelay) return;
 
     if (ballNbrCount_All.spawned == 0)
