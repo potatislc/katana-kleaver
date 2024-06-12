@@ -24,6 +24,7 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
     player->stateExecute = STATE_EXEC_PLAYER_MOVE;
     player->spriteIdle = SpriteInit(gameTextures.samurai, (Rectangle){0, 0, 16, 16}, 0, true);
     player->spriteRun = SpriteInit(gameTextures.samuraiRunSheet, (Rectangle){0, 0, 16, 16}, 0, true);
+    player->spriteDie = SpriteInit(gameTextures.samuraiDieSheet, (Rectangle){0, 0, 48, 48}, 0, true);
     player->shadowTexture = &gameTextures.samuraiShadow;
     player->position = initPos;
     player->speed = 2;
@@ -310,11 +311,6 @@ static void DrawDashRing(Dash *dash, Vector2 pos, float innerRadius, float outer
 }
 
 void PlayerDraw(Player player) {
-    if (player.stateExecute == STATE_EXEC_PLAYER_DEAD) {
-        DrawCircleV(Vector2Round(player.position), 8, playerBloodColor);
-        return;
-    }
-
     const float footOffset = (float) player.spriteIdle->frameRect.height / 2.f - 2.f;
     const Vector2 footPos = {player.position.x, player.position.y + footOffset};
 
@@ -354,6 +350,11 @@ void PlayerDraw(Player player) {
         {
             SpriteDraw(*player.spriteIdle, player.position, spriteFacing, 0);
         }
+    }
+    else if (player.stateExecute == STATE_EXEC_PLAYER_DEAD)
+    {
+        SpriteAnimate(player.spriteDie, .015f, false);
+        SpriteDraw(*player.spriteDie, player.position, spriteFacing, 0);
     }
     else
     {

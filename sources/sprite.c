@@ -31,13 +31,13 @@ void SpriteAnimate(Sprite *sprite, float speed, bool looping)
     if (!looping)
     {
         sprite->animProgress = fmaxf(0.f, fminf(sprite->animProgress, 1.f));
+        SpriteSetFrame(sprite, (int)(sprite->animProgress * (float)(sprite->frameCount-1)));
     }
     else
     {
         sprite->animProgress = fmodf(sprite->animProgress + 1.f, 1.f);
+        SpriteSetFrame(sprite, (int)(sprite->animProgress * (float)sprite->frameCount));
     }
-
-    SpriteSetFrame(sprite, (int)(sprite->animProgress * (float)sprite->frameCount));
 }
 
 void SpriteDraw(Sprite sprite, Vector2 position, Vector2 scale, float rotation)

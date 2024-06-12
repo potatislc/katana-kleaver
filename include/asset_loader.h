@@ -17,6 +17,7 @@ typedef struct
     Texture2D orangeHalo;
     Texture2D samurai;
     Texture2D samuraiRunSheet;
+    Texture2D samuraiDieSheet;
     Texture2D samuraiShadow;
     Texture2D particleRound;
 } GameTextures;

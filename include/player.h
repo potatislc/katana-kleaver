@@ -16,6 +16,7 @@ typedef struct Player
     void (*stateExecute)(struct Player*);
     Sprite *spriteIdle;
     Sprite *spriteRun;
+    Sprite *spriteDie;
     Texture2D *shadowTexture;
     bool colliding;
     ListNode **ballHeadRef;

@@ -16,6 +16,7 @@ void LoadGameTextures()
     gameTextures.samurai = LoadTexture("../assets/textures/samurai/samurai.png");
     gameTextures.samuraiRunSheet = LoadTexture("../assets/textures/samurai/samurai_run.png");
     gameTextures.samuraiShadow = LoadTexture("../assets/textures/samurai/samurai_shadow.png");
+    gameTextures.samuraiDieSheet = LoadTexture("../assets/textures/samurai/samurai_die.png");
     gameTextures.particleRound = LoadTexture("../assets/textures/particle/particle_round.png");
 }
 
