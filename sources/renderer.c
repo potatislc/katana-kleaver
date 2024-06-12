@@ -8,6 +8,7 @@
 #include "particle.h"
 #include "raymath.h"
 #include "game.h"
+#include "camera.h"
 
 Vector2 virtualScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
@@ -15,8 +16,6 @@ RenderTexture2D virtualRenderTarget;
 RenderTexture2D backgroundPaintTarget;
 TextureTransformRect virtualRenderRect;
 TextureTransformRect backgroundPaintRect;
-
-Camera2D worldSpaceCamera = { 0 };
 
 Vector2 screenOffset;
 Vector2 screenRatio;
@@ -223,6 +222,7 @@ void DrawUi(bool gameOver)
 void RenderToTarget(bool gameOver)
 {
     DrawParticlesToBackgroundPaint();
+    CameraShakeUpdate();
 
     BeginTextureMode(virtualRenderTarget);
     {
