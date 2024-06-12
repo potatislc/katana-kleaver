@@ -90,7 +90,7 @@ void AddBallsToQueue()
         {
             AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
 
-            if (NbrOfBallsOnScreen(ballNbrCount_All) == thirdBallLimit && ballNbrCount_All.destroyed > 50)
+            if (NbrOfBallsOnScreen(ballNbrCount_All) <= thirdBallLimit && ballNbrCount_All.destroyed > 50)
             {
                 AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
             }
