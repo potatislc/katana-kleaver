@@ -26,7 +26,7 @@ void UpdateText()
 {
     sprintf(scoreText, "Score: %d", score);
     sprintf(comboText, "+%d", comboScore);
-    if (comboMultiplier > 1) sprintf(comboText, "%s *%d", comboText, (int)comboMultiplier);
+    if (comboMultiplier > 1) sprintf(comboText, "%s x%d", comboText, (int)comboMultiplier);
     sprintf(hiScoreText, "High Score: %d", hiScore);
 
     scoreTextWidth = MeasureText(scoreText, 8);
