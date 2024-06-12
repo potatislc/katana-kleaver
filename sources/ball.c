@@ -128,7 +128,7 @@ void OnDestroyOrange(Ball *ball)
         ParticleCreate(ParticlePresetJuice(ball->position, orangeColor));
     }
 
-    ScoreHandlerAddToScore(1);
+    ScoreHandlerAddToMultiplier(1.f);
 }
 
 void DrawDefault(Ball ball, Vector2 drawPos)
@@ -248,7 +248,7 @@ void BallClearerUpdate()
     }
 
     // GameFreezeAllEntities(false);
-    BallSplit(ballClearer.ballToAvoid, RandomDirection());
+    // BallSplit(ballClearer.ballToAvoid, RandomDirection()); // It's already destroyed so no need right?
     ballClearer.clearingFinished = true;
 }
 

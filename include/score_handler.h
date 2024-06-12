@@ -14,6 +14,7 @@ extern const int gameOverTextWidth;
 extern const int restartTextWidth;
 
 void ScoreHandlerAddToScore(int val);
+void ScoreHandlerAddToMultiplier(float val);
 void ScoreHandlerLoseCombo();
 void ScoreHandlerResetScore();
 int ScoreHandlerGetComboScore();
