@@ -347,7 +347,7 @@ void PlayerDraw(Player player) {
     {
         if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
         {
-            SpriteAnimate(player.spriteRun, .04f, true);
+            SpriteAnimate(player.spriteRun, .05f, true);
             SpriteDraw(*player.spriteRun, player.position, spriteFacing, 0);
         }
         else
