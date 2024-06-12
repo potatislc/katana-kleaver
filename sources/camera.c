@@ -1,28 +1,22 @@
 #include <stdlib.h>
 #include "camera.h"
 #include "raymath.h"
+#include "global.h"
 
 Camera2D worldSpaceCamera = { 0, 0 };
 
-typedef struct
-{
-    Vector2 target;
-    float amount;
-    float speed;
-    double startTime;
-    double endTime;
-} Shake;
+Shake shake = {(Vector2){0.f, 0.f}, (Vector2){0.f, 0.f}, 0.f, 0.f, 0, 0};
 
-Shake shake = {(Vector2){0.f, 0.f}, 10.f, .5, 0, 10};
+ShakeSettings shakeSettings = {1.f, 1.f, 1};
 
 void CameraSetShake(float amount, float speed, float duration)
 {
-    shake.amount = amount;
-    shake.speed = speed;
+    shake.amount = amount * shakeSettings.amountIntensity;
+    shake.speed = speed  * shakeSettings.speedIntensity;
     shake.startTime = GetTime();
-    shake.endTime = GetTime() + duration;
+    shake.endTime = GetTime() + duration  * shakeSettings.durationIntensity;
 
-    shake.target = Vector2Zero();
+    shake.targetPoint = Vector2Zero();
 }
 
 void CameraShakeUpdate()
@@ -38,15 +32,16 @@ void CameraShakeUpdate()
     float effectiveAmount = shake.amount * shakeProgress;
     float effectiveSpeed = shake.speed * shakeProgress;
 
-    //worldSpaceCamera.offset = Vector2MoveTowards(worldSpaceCamera.offset, shake.target, shake.speed * 6);
+    shake.currentPoint = Vector2MoveTowards(worldSpaceCamera.offset, shake.targetPoint, effectiveSpeed * 6);
+    //shake.currentPoint = Vector2Lerp(worldSpaceCamera.offset, shake.targetPoint, effectiveSpeed);
 
-    worldSpaceCamera.offset = Vector2Lerp(worldSpaceCamera.offset, shake.target, effectiveSpeed);
+    worldSpaceCamera.offset = Vector2Round(shake.currentPoint);
 
-    if (Vector2Distance(worldSpaceCamera.offset, shake.target) <= 1.f)
+    if (Vector2Distance(worldSpaceCamera.offset, shake.targetPoint) <= 1.f)
     {
-        worldSpaceCamera.offset = shake.target;
+        worldSpaceCamera.offset = shake.targetPoint;
 
         float randAngle = (rand() / (float)RAND_MAX) * (PI * 2);
-        shake.target = (Vector2){cosf(randAngle) * effectiveAmount, sinf(randAngle) * effectiveAmount};
+        shake.targetPoint = (Vector2){cosf(randAngle) * effectiveAmount, sinf(randAngle) * effectiveAmount};
     }
 }

@@ -8,6 +8,7 @@
 #include "score_handler.h"
 #include "game.h"
 #include "particle.h"
+#include "camera.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
@@ -56,6 +57,8 @@ void PlayerDie(Player *player)
     Sound deathSound = gameAudio.deathScream;
     SoundPanToWorld(deathSound, player->position, DEFAULT_SOUND_PAN_INTENSITY);
     PlaySound(deathSound);
+
+    CameraSetShake(6, .7f, 3.f);
 
     for (int i = 0; i < 35; i++)
     {

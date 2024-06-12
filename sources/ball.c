@@ -8,6 +8,7 @@
 #include "score_handler.h"
 #include "particle.h"
 #include "game.h"
+#include "camera.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
@@ -324,6 +325,8 @@ float RadiusToSplatPitch(float radius)
 
 void BallSplit(Ball *ball, Vector2 splitDir)
 {
+    CameraSetShake(fminf(1.5f, ball->radius / 8), .4f, .2f);
+
     ball->onSplitFunction(ball, splitDir);
     ball->health--;
     if (ball->health <= 0) BallDestroy(ball);
