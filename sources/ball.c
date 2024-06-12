@@ -249,6 +249,7 @@ void BallClearerUpdate()
 
     // GameFreezeAllEntities(false);
     // BallSplit(ballClearer.ballToAvoid, RandomDirection()); // It's already destroyed so no need right?
+    if (ballClearer.ballToAvoid->type == TYPE_ORANGE) targetFps = 20;
     ballClearer.clearingFinished = true;
 }
 
