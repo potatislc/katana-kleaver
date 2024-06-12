@@ -72,14 +72,14 @@ void Update()
         if (frameCounter % 6 == 0) BallClearerUpdate();
     }
 
-    if (frameCounter % 20 == 0)
+    if (!gameOver)
     {
-
+        SpawnerUpdate();
     }
 
-    if (GetTime() > timeSinceLastSpawn+spawnDelay && !gameOver)
+    if (frameCounter % 20 == 0)
     {
-        SpawnBalls();
+        SpawnFromQueue();
     }
 
     if (!gameOver) SetUiProgressBarMidToEnds(&spawnProgressBar, GetTime() - timeSinceLastSpawn, spawnDelay);

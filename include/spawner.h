@@ -20,6 +20,7 @@ extern double timeSinceLastSpawn;
 extern ListNode *spawnQueueHead;
 
 void SpawnerInit();
-void SpawnBalls();
+void SpawnerUpdate();
+void SpawnFromQueue();
 
 #endif //BALL_GAME_SPAWNER_H

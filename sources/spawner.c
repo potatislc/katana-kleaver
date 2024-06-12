@@ -1,7 +1,6 @@
 #include "spawner.h"
 #include "raylib.h"
 #include "raymath.h"
-#include "game.h"
 #include "renderer.h"
 #include "player.h"
 #include "ball.h"
@@ -16,8 +15,6 @@ int thirdBallLimit = 3;
 
 void PlaceBallSpawnPoint(float radius, bool avoidPlayer, int type)
 {
-    timeSinceLastSpawn = GetTime();
-
     const Vector2 minInitPos = {radius, radius};
     const Vector2 maxInitPos = {VIRTUAL_SCREEN_WIDTH - radius, VIRTUAL_SCREEN_HEIGHT - radius};
     Ball *newBall = BallInit(
@@ -40,40 +37,69 @@ void PlaceBallSpawnPoint(float radius, bool avoidPlayer, int type)
     ListNodePush(&ballSpawnPointHead, newBallSpawn);
 }
 
-void SpawnerInit()
+void SpawnFromQueue()
 {
-    timeSinceLastSpawn = GetTime();
+    if (spawnQueueHead == NULL) return;
+    SpawnData *headData = (SpawnData*)spawnQueueHead->data;
+    PlaceBallSpawnPoint(headData->radius, headData->avoidPlayer, headData->type);
+    ListNodeRemove(&spawnQueueHead, spawnQueueHead->data);
 }
 
-void SpawnBalls()
+void AddBallToQueue(float radius, bool avoidPlayer, int type)
 {
+    timeSinceLastSpawn = GetTime();
+
+    SpawnData *spawnData = (SpawnData*)malloc(sizeof(SpawnData));
+    spawnData->radius = radius;
+    spawnData->avoidPlayer = avoidPlayer;
+    spawnData->type = type;
+
+    ListNodePush(&spawnQueueHead, spawnData);
+}
+
+void AddBallsToQueue()
+{
+    if (GetTime() < timeSinceLastSpawn+spawnDelay) return;
+
     if (ballNbrCount_All.spawned == 0)
     {
-        PlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
-        // ListNodePush(&spawnQueueHead, &(SpawnData){RADIUS_LARGE, true, TYPE_MELON});
+        AddBallToQueue(RADIUS_LARGE, true, TYPE_MELON);
         spawnDelay = BALL_SPAWN_DELAY_LONG;
     }
 
     if (ballNbrCount_All.destroyed > 6)
     {
-        PlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
+        AddBallToQueue(RADIUS_LARGE, true, TYPE_MELON);
     }
 
     if (ballNbrCount_All.destroyed > 20 && spawnDelay == BALL_SPAWN_DELAY_LONG)
     {
         if (NbrOfBallsOnScreen(ballNbrCount_All) <= secondBallLimit)
         {
-            PlaceBallSpawnPoint(RADIUS_LARGE, false, TYPE_MELON);
+            AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
 
             if (NbrOfBallsOnScreen(ballNbrCount_All) == thirdBallLimit && ballNbrCount_All.destroyed > 50)
             {
-                PlaceBallSpawnPoint(RADIUS_LARGE, false, TYPE_MELON);
+                AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
             }
         }
 
         if (NbrOfBallsOnScreen(ballNbrCount_All) > 5)
         {
-            PlaceBallSpawnPoint(RADIUS_MEDIUM, false, TYPE_ORANGE);
+            AddBallToQueue(RADIUS_MEDIUM, false, TYPE_ORANGE);
         }
+    }
+}
+
+void SpawnerInit()
+{
+    timeSinceLastSpawn = GetTime();
+}
+
+void SpawnerUpdate()
+{
+    if (GetTime() > timeSinceLastSpawn+spawnDelay)
+    {
+        AddBallsToQueue();
     }
 }
