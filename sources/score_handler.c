@@ -6,9 +6,10 @@
 int score = 0;
 int hiScore = 0;
 int comboScore = 0;
+float comboMultiplier = 1.f;
 
 char scoreText[32] = "Score: 0";
-char comboText[32];
+char comboText[128];
 char hiScoreText[32] = "High Score: 0";
 
 char gameOverText[32] = "- Game Over -";
@@ -25,6 +26,7 @@ void UpdateText()
 {
     sprintf(scoreText, "Score: %d", score);
     sprintf(comboText, "+%d", comboScore);
+    // sprintf(comboText, "%s *%9.1f", comboText, comboMultiplier);
     sprintf(hiScoreText, "High Score: %d", hiScore);
 
     scoreTextWidth = MeasureText(scoreText, 8);
@@ -47,6 +49,7 @@ void ScoreHandlerAddToScore(int val)
 {
     score += val;
     comboScore += val;
+    // comboMultiplier += (float)val / 10.f;
     hiScore = (int)fmax(score, hiScore);
 
     UpdateText();
@@ -54,8 +57,9 @@ void ScoreHandlerAddToScore(int val)
 
 void ScoreHandlerLoseCombo()
 {
-    if (comboScore > 1) ScoreHandlerAddToScore(comboScore);
+    if (comboScore > 1) ScoreHandlerAddToScore((int)((float)comboScore * comboMultiplier));
     comboScore = 0;
+    comboMultiplier = 1.f;
 
     UpdateText();
 }

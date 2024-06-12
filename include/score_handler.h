@@ -2,7 +2,7 @@
 #define BALL_GAME_SCORE_HANDLER_H
 
 extern char scoreText[32];
-extern char comboText[32];
+extern char comboText[128];
 extern char hiScoreText[32];
 extern char gameOverText[32];
 extern char restartText[32];

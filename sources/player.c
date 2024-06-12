@@ -179,7 +179,14 @@ void PlayerStateDash(Player *player)
     {
         PlaySound(gameAudio.footstep);
         player->stateExecute = STATE_EXEC_PLAYER_MOVE;
-        ScoreHandlerLoseCombo(); // Dash without successful slice means loss of combo
+        if (IsBallClearingFinished())
+        {
+            ScoreHandlerLoseCombo(); // Dash without successful slice means loss of combo
+        }
+        else
+        {
+            player->dash->reloadTime = 0;
+        }
     }
 }
 
