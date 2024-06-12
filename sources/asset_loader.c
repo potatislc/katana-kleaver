@@ -27,7 +27,7 @@ void MixGameAudio()
     SetSoundVolume(gameAudio.melonSplats[2], .7f);
     SetSoundVolume(gameAudio.deathScream, .7f);
 
-    SetMusicVolume(gameAudio.mainTheme, .3f);
+    SetMusicVolume(gameAudio.mainTheme, .4f);
 }
 
 void LoadGameAudio()
