@@ -33,6 +33,16 @@ float eraserRadius = 31.f;
 
 typedef struct
 {
+    float startAngle;
+    float endAngle;
+    double duration;
+    double timeSinceLastTransition;
+} RingTransition;
+
+RingTransition ringTrans = {0.f, 0.f, .8, 0};
+
+typedef struct
+{
     Color color;
     float radius;
     int blendMode;
@@ -244,6 +254,31 @@ void DrawUiGameOver()
     DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, WHITE);
 }
 
+void DrawUiRingTransition()
+{
+    double progress = (GetTime() - ringTrans.timeSinceLastTransition) / ringTrans.duration;
+
+    if (progress > 1.f) return;
+
+    ringTrans.endAngle = fminf((float)progress * 2.f * 360.f, 360.f);
+
+    DrawRing(virtualScreenCenter, 0, 240, ringTrans.startAngle, ringTrans.endAngle, 32, BLACK);
+
+    if (ringTrans.endAngle == 360.f)
+    {
+        if (ringTrans.startAngle == 0.f) GameRestart(); // Hard Coded haha
+
+        ringTrans.startAngle = fmaxf(((float)progress-.5f) * 2.f * 360.f, 0.f);
+    }
+}
+
+void RendererPlayRingTransition()
+{
+    ringTrans.timeSinceLastTransition = GetTime();
+    ringTrans.startAngle = 0;
+    ringTrans.endAngle = 0;
+}
+
 void DrawUi()
 {
     // Borders
@@ -299,6 +334,8 @@ void DrawUi()
             }
             break;
     }
+
+    DrawUiRingTransition();
 
     DrawCircleV(mousePos, 2, guideColor);
 }

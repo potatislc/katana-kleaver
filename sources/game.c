@@ -88,7 +88,7 @@ void Update()
             {
                 if (RendererGetPaintPercentage() < .5f && ListLength(&ballHead) == 0)
                 {
-                    GameRestart();
+                    RendererPlayRingTransition();
                 }
             }
             break;

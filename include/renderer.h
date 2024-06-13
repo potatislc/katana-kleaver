@@ -17,6 +17,7 @@ void RenderToTarget();
 void RenderToScreen();
 void RendererClearBackgroundPaint();
 float RendererGetPaintPercentage();
+void RendererPlayRingTransition();
 
 extern Vector2 screenRatio;
 extern Vector2 screenOffset;

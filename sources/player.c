@@ -328,7 +328,10 @@ void PlayerDraw(Player player) {
     const float footOffset = (float) player.spriteIdle->frameRect.height / 2.f - 2.f;
     const Vector2 footPos = {player.position.x, player.position.y + footOffset};
 
-    DrawArrowTo(footPos, Vector2ToVirtualCoords(GetMousePosition()), 8, 5, 10, .7f, guideColor);
+    if(player.stateExecute != STATE_EXEC_PLAYER_DEAD)
+    {
+        DrawArrowTo(footPos, Vector2ToVirtualCoords(GetMousePosition()), 8, 5, 10, .7f, guideColor);
+    }
 
     if (player.stateExecute == STATE_EXEC_PLAYER_MOVE)
     {
