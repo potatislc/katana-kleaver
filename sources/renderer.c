@@ -27,6 +27,8 @@ Texture2D *bgTexture;
 char getReadyText[] = "- Get Ready! -";
 int getReadyTextWidth = 0;
 
+Vector2 titleScreenOffset;
+
 void RendererInit()
 {
     virtualRenderTarget = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y);
@@ -172,51 +174,70 @@ void DrawUiDeathRing()
     DrawRing(center, (float)(targetFps) * ((float)targetFps / 12.f), 240, 0, 360, 32, BLACK);
 }
 
-void DrawUi()
+void DrawUiScore()
 {
-    DrawTexture(gameTextures.tvBorder, 0, 0, WHITE);
-
-    if (gameState == GAME_PLAY && ballNbrCount_All.spawned == 0 && frameCounter / 30 % 2 == 0)
-    {
-        DrawText(getReadyText, (int)virtualScreenCenter.x - getReadyTextWidth / 2, (int)virtualScreenCenter.y-32, 8, WHITE);
-    }
-
-    if (gameState == GAME_OVER)
-    {
-        if (targetFps != initFps)
-        {
-            DrawUiDeathRing();
-        }
-        else
-        {
-            DrawText(gameOverText, (int)virtualScreenCenter.x - gameOverTextWidth / 2, (int)virtualScreenCenter.y-8, 8, WHITE);
-            DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+64, 8, WHITE);
-
-            int scoreTextWidth = MeasureText(scoreText, 8);
-            DrawText(scoreText, (int)virtualScreenCenter.x - scoreTextWidth / 2, (int)virtualScreenCenter.y+12, 8, WHITE);
-
-            DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, WHITE);
-        }
-    }
-
-    // Mouse Icon
-    Vector2 mousePos = Vector2ClampInsideScreen(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2);
-    DrawCircleV(mousePos, 2, guideColor);
-
-    // Black Box
-    DrawRectangle(0, VIRTUAL_SCREEN_HEIGHT, VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_OFFSET_Y, BLACK);
-
     DrawText(scoreText, 5, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorYellow);
 
     if (ScoreHandlerGetComboScore() > 1)
     {
         DrawText(comboText, 69, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
     }
+}
 
-    // Draw progressbar until next spawn
+void DrawUiProgressBar()
+{
     const Vector2 progLineStart = (Vector2){spawnProgressBar.start, VIRTUAL_SCREEN_HEIGHT};
     const Vector2 progLineEnd = (Vector2){spawnProgressBar.end, VIRTUAL_SCREEN_HEIGHT};
     DrawLineV(progLineStart, progLineEnd, uiColorDarkGray);
+}
+
+void DrawUi()
+{
+    // Borders
+    DrawRectangle(0, VIRTUAL_SCREEN_HEIGHT, VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_OFFSET_Y, BLACK);
+    DrawTexture(gameTextures.tvBorder, 0, 0, WHITE);
+
+    switch(gameState)
+    {
+        case GAME_TITLE:
+            double speed = GetTime() * 2;
+            titleScreenOffset = (Vector2){(float)cos(speed) * 8, (float)sin(speed * 2) * 4};
+            DrawTextureV(gameTextures.titleText, titleScreenOffset, WHITE);
+            break;
+
+        case GAME_PLAY:
+            if (ballNbrCount_All.spawned == 0 && frameCounter / 30 % 2 == 0)
+            {
+                DrawText(getReadyText, (int)virtualScreenCenter.x - getReadyTextWidth / 2, (int)virtualScreenCenter.y-32, 8, WHITE);
+            }
+
+            DrawUiScore();
+            DrawUiProgressBar();
+            break;
+        case GAME_OVER:
+            if (targetFps != initFps)
+            {
+                DrawUiDeathRing();
+            }
+            else
+            {
+                DrawText(gameOverText, (int)virtualScreenCenter.x - gameOverTextWidth / 2, (int)virtualScreenCenter.y-8, 8, WHITE);
+                DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+64, 8, WHITE);
+
+                int scoreTextWidth = MeasureText(scoreText, 8);
+                DrawText(scoreText, (int)virtualScreenCenter.x - scoreTextWidth / 2, (int)virtualScreenCenter.y+12, 8, WHITE);
+
+                DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, WHITE);
+            }
+
+            DrawUiScore();
+            DrawUiProgressBar();
+            break;
+    }
+
+    // Mouse Icon
+    Vector2 mousePos = Vector2ClampInsideScreen(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2);
+    DrawCircleV(mousePos, 2, guideColor);
 }
 
 void RenderToTarget()

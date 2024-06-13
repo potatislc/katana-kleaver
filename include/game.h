@@ -20,9 +20,11 @@ extern unsigned int frameCounter;
 
 enum GameStates
 {
-    GAME_START,
+    GAME_TITLE,
     GAME_PLAY,
-    GAME_OVER
+    GAME_OVER,
+    GAME_TUTORIAL,
+    GAME_SETTINGS
 };
 
 extern int gameState;

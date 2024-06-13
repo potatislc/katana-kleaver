@@ -10,10 +10,11 @@
 #include "score_handler.h"
 #include "particle.h"
 #include "spawner.h"
+#include "raymath.h"
 
 const int initFps = 60;
 int targetFps = 60;
-int gameState = GAME_PLAY;
+int gameState = GAME_TITLE;
 unsigned int frameCounter = 0;
 
 void GameInit()
@@ -36,9 +37,10 @@ void GameInit()
     WindowHandlerSetWindowMode(WM_BORDERLESS_FULL_WINDOWED);
     RendererFitVirtualRectToScreen();
 
-    playerRef = PlayerInit(virtualScreenCenter, &ballHead);
+    Vector2 playerStartPos = Vector2Add(virtualScreenCenter, (Vector2){0.f, 48.f});
+    playerRef = PlayerInit(playerStartPos, &ballHead);
 
-    SpawnerInit();
+    freezePlayer = true;
 }
 
 void SpeedUpFpsEffect()
@@ -49,6 +51,13 @@ void SpeedUpFpsEffect()
     if (targetFps < 20) targetFps = 20;
 
     SetMusicPitch(gameAudio.mainTheme, (1.f/(float)initFps) * (float)targetFps);
+}
+
+void StartGame()
+{
+    gameState = GAME_PLAY;
+    freezePlayer = false;
+    SpawnerInit();
 }
 
 void Update()
@@ -62,8 +71,8 @@ void Update()
 
     switch(gameState)
     {
-        case GAME_START:
-
+        case GAME_TITLE:
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) StartGame();
             break;
         case GAME_PLAY:
             SetUiProgressBarMidToEnds(&spawnProgressBar, GetTime() - timeSinceLastSpawn, spawnDelay);

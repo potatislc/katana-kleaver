@@ -355,6 +355,8 @@ void PlayerDraw(Player player) {
 
     if (player.stateExecute == STATE_EXEC_PLAYER_MOVE)
     {
+        spriteFacing = (Vector2){sign(Vector2ToVirtualCoords(GetMousePosition()).x - player.position.x), 1};
+
         if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
         {
             SpriteAnimate(player.spriteRun, .05f, true);

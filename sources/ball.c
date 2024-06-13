@@ -19,7 +19,6 @@ bool freezeBalls = false;
 const double ballSpawnTime = 1.f;
 
 BallNbrCount ballNbrCount_All;
-BallNbrCount ballNbrCount_Small;
 
 BallClearer ballClearer = {NULL, 0, 0, true};
 
