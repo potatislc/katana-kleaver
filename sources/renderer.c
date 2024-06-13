@@ -31,6 +31,17 @@ Vector2 titleScreenOffset;
 
 float eraserRadius = 31.f;
 
+typedef struct
+{
+    Color color;
+    float radius;
+    int blendMode;
+    double sprayDuration;
+    double timeSinceLastSpray;
+} SprayCan;
+
+SprayCan sprayCanFoam = {WHITE, 16.f, BLEND_SUBTRACT_COLORS, .15, 0};
+
 void RendererInit()
 {
     virtualRenderTarget = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y);
@@ -152,14 +163,34 @@ void RendererClearBackgroundPaint()
     {
         ClearBackground(BLANK);
     }
+    EndTextureMode();
 }
 
 void EraseBackgroundPaint(Vector2 position, float radius)
 {
     BeginTextureMode(backgroundPaintTarget);
+    {
         BeginBlendMode(BLEND_SUBTRACT_COLORS);
+        {
             DrawCircleV(position, radius, BLANK);
+        }
         EndBlendMode();
+    }
+    EndTextureMode();
+}
+
+void SprayBackgroundPaint(Vector2 position, SprayCan sprayCan)
+{
+    position = (Vector2){position.x + (float)cos(GetTime() * 4) * 4, position.y + (float)sin(GetTime() * 7) * 7};
+
+    BeginTextureMode(backgroundPaintTarget);
+    {
+        BeginBlendMode(BLEND_SUBTRACT_COLORS);
+        {
+            DrawCircleV(position, sprayCan.radius, sprayCan.color);
+        }
+        EndBlendMode();
+    }
     EndTextureMode();
 }
 
@@ -253,9 +284,18 @@ void DrawUi()
 
             DrawCircleLinesV(mousePos, eraserRadius, guideColor);
 
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && targetFps == initFps)
+            if (targetFps == initFps)
             {
-                EraseBackgroundPaint(mousePos, eraserRadius);
+                if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                {
+                    EraseBackgroundPaint(mousePos, eraserRadius);
+                }
+                else if (GetTime() < sprayCanFoam.timeSinceLastSpray + sprayCanFoam.sprayDuration)
+                {
+                    SprayBackgroundPaint(mousePos, sprayCanFoam);
+                }
+
+                if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) sprayCanFoam.timeSinceLastSpray = GetTime();
             }
             break;
     }
