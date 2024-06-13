@@ -16,10 +16,12 @@ void RendererFitVirtualRectToScreen();
 void RenderToTarget();
 void RenderToScreen();
 void RendererClearBackgroundPaint();
+float RendererGetPaintPercentage();
 
 extern Vector2 screenRatio;
 extern Vector2 screenOffset;
 extern Vector2 virtualScreenCenter;
+extern float eraserRadius;
 
 typedef struct {
     float width;

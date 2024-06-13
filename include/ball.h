@@ -51,10 +51,13 @@ void BallCollisionBall(Ball *ball);
 void BallSplit(Ball *ball, Vector2 splitDir);
 
 void BallStateMove(Ball *ball);
-void BallClearerUpdate();
-bool IsBallClearingFinished();
 
 #define STATE_EXEC_BALL_MOVE (BallStateMove)
+
+void BallClearerBegin(Ball *ball, int slowDownFps);
+void BallClearerUpdate();
+bool IsBallClearingFinished();
+void BallClearerForceFinish();
 
 typedef struct
 {

@@ -79,14 +79,14 @@ void OnDestroyMelon(Ball *ball)
     ScoreHandlerAddToScore(1);
 }
 
-void BeginBallClear(Ball *ball)
+void BallClearerBegin(Ball *ball, int slowDownFps)
 {
     ballClearer.currentNode = ballHead;
     ballClearer.nodeIndex = 0;
     ballClearer.listLength = ListLength(&ballHead);
     ballClearer.ballToAvoid = ball;
     ballClearer.clearingFinished = false;
-    targetFps = 20;
+    targetFps = slowDownFps;
     // GameFreezeAllEntities(true);
 }
 
@@ -107,7 +107,7 @@ void OnSplitOrange(Ball *ball, Vector2 splitDir)
     }
 
     // Screen wipe
-    if (ball->health <= 1) BeginBallClear(ball);
+    if (ball->health <= 1 && gameState == GAME_PLAY) BallClearerBegin(ball, 20);
     /*
     ListNode *currentNode = ballHead;
     int listLength = ListLength(&ballHead);
@@ -247,9 +247,12 @@ void BallClearerUpdate()
         return;
     }
 
-    // GameFreezeAllEntities(false);
-    // BallSplit(ballClearer.ballToAvoid, RandomDirection()); // It's already destroyed so no need right?
-    if (ballClearer.ballToAvoid->type == TYPE_ORANGE) targetFps = 20;
+    if (ballClearer.ballToAvoid != NULL && ballClearer.ballToAvoid->type == TYPE_ORANGE) targetFps = 20;
+    ballClearer.clearingFinished = true;
+}
+
+void BallClearerForceFinish()
+{
     ballClearer.clearingFinished = true;
 }
 

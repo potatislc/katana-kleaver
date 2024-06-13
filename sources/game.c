@@ -79,10 +79,17 @@ void Update()
             SpawnerUpdate();
             break;
         case GAME_OVER:
-            if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE) && targetFps == initFps)
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsBallClearingFinished() && targetFps == initFps)
             {
-                GameRestart();
-                ScoreHandlerResetScore();
+                BallClearerBegin(NULL, initFps);
+            }
+
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+            {
+                if (RendererGetPaintPercentage() < .5f && ListLength(&ballHead) == 0)
+                {
+                    GameRestart();
+                }
             }
             break;
     }
@@ -144,6 +151,8 @@ void GameRestart()
 {
     Player *newPlayer = PlayerReset(playerRef, virtualScreenCenter, &ballHead);
     playerRef = newPlayer;
+
+    BallClearerForceFinish();
 
     BallDeSpawnAll();
     ListRemoveAllNodes(&ballSpawnPointHead);

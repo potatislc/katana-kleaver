@@ -29,6 +29,8 @@ int getReadyTextWidth = 0;
 
 Vector2 titleScreenOffset;
 
+float eraserRadius = 31.f;
+
 void RendererInit()
 {
     virtualRenderTarget = LoadRenderTexture(VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y);
@@ -69,7 +71,7 @@ void RendererFitVirtualRectToScreen()
 
 void DrawBackground()
 {
-    if (!IsBallClearingFinished())
+    if (!IsBallClearingFinished() && gameState == GAME_PLAY)
     {
         if (bgTexture != &gameTextures.bgBallClear)
         {
@@ -152,6 +154,15 @@ void RendererClearBackgroundPaint()
     }
 }
 
+void EraseBackgroundPaint(Vector2 position, float radius)
+{
+    BeginTextureMode(backgroundPaintTarget);
+        BeginBlendMode(BLEND_SUBTRACT_COLORS);
+            DrawCircleV(position, radius, BLANK);
+        EndBlendMode();
+    EndTextureMode();
+}
+
 void SetUiProgressBarLToR(UiProgressBar *uiProgressBar, double current, double end)
 {
     // Left to right
@@ -191,11 +202,24 @@ void DrawUiProgressBar()
     DrawLineV(progLineStart, progLineEnd, uiColorDarkGray);
 }
 
+void DrawUiGameOver()
+{
+    DrawText(gameOverText, (int)virtualScreenCenter.x - gameOverTextWidth / 2, (int)virtualScreenCenter.y-8, 8, WHITE);
+    if (frameCounter / 15 % 2 == 0) DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+64, 8, WHITE);
+
+    scoreTextWidth = MeasureText(scoreText, 8);
+    DrawText(scoreText, (int)virtualScreenCenter.x - scoreTextWidth / 2, (int)virtualScreenCenter.y+12, 8, WHITE);
+
+    DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, WHITE);
+}
+
 void DrawUi()
 {
     // Borders
     DrawRectangle(0, VIRTUAL_SCREEN_HEIGHT, VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_OFFSET_Y, BLACK);
     DrawTexture(gameTextures.tvBorder, 0, 0, WHITE);
+
+    Vector2 mousePos = Vector2ClampInsideScreen(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2);
 
     switch(gameState)
     {
@@ -221,23 +245,44 @@ void DrawUi()
             }
             else
             {
-                DrawText(gameOverText, (int)virtualScreenCenter.x - gameOverTextWidth / 2, (int)virtualScreenCenter.y-8, 8, WHITE);
-                DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+64, 8, WHITE);
-
-                int scoreTextWidth = MeasureText(scoreText, 8);
-                DrawText(scoreText, (int)virtualScreenCenter.x - scoreTextWidth / 2, (int)virtualScreenCenter.y+12, 8, WHITE);
-
-                DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, WHITE);
+                DrawUiGameOver();
             }
 
             DrawUiScore();
             DrawUiProgressBar();
+
+            DrawCircleLinesV(mousePos, eraserRadius, guideColor);
+
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && targetFps == initFps)
+            {
+                EraseBackgroundPaint(mousePos, eraserRadius);
+            }
             break;
     }
 
-    // Mouse Icon
-    Vector2 mousePos = Vector2ClampInsideScreen(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2);
     DrawCircleV(mousePos, 2, guideColor);
+}
+
+
+float RendererGetPaintPercentage()
+{
+    Image image = LoadImageFromTexture(backgroundPaintTarget.texture);
+
+    Color *pixels = LoadImageColors(image);
+
+    int totalPixels = image.width * image.height;
+
+    int blankPixelCount = 0;
+    for (int i = 0; i < totalPixels; i++)
+    {
+        if (pixels[i].a == 0) blankPixelCount++;
+    }
+
+    UnloadImageColors(pixels);
+    UnloadImage(image);
+
+    float blankPixelPercentage = (float)(totalPixels - blankPixelCount) / (float)totalPixels * 100.0f;
+    return blankPixelPercentage;
 }
 
 void RenderToTarget()

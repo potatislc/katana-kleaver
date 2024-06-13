@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "score_handler.h"
 #include "raylib.h"
+#include "game.h"
 
 int score = 0;
 int hiScore = 0;
@@ -13,13 +14,13 @@ char comboText[128];
 char hiScoreText[32] = "High Score: 0";
 
 char gameOverText[32] = "- Game Over -";
-char restartText[32] = "'Middle Mouse' to restart";
+char restartText[32] = "Clean up to restart!";
 
 int scoreTextWidth;
 int comboTextWidth;
 int hiScoreTextWidth;
 const int gameOverTextWidth = 71;
-const int restartTextWidth = 131;
+const int restartTextWidth = 104;
 
 
 void UpdateText()
@@ -47,6 +48,8 @@ void ScoreHandlerResetScore()
 
 void ScoreHandlerAddToScore(int val)
 {
+    if (gameState != GAME_PLAY) return;
+
     score += val;
     comboScore += val;
     hiScore = (int)fmax(score, hiScore);
@@ -61,7 +64,8 @@ void ScoreHandlerAddToMultiplier(float val)
 
 void ScoreHandlerLoseCombo()
 {
-    if (comboScore > 1) ScoreHandlerAddToScore((int)((float)comboScore * comboMultiplier));
+    if (comboScore > 1) score += (int)((float)comboScore * comboMultiplier);
+    hiScore = (int)fmax(score, hiScore);
     comboScore = 0;
     comboMultiplier = 1.f;
 
