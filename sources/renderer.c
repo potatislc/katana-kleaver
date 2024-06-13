@@ -295,7 +295,7 @@ void DrawUi()
                     SprayBackgroundPaint(mousePos, sprayCanFoam);
                 }
 
-                if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) sprayCanFoam.timeSinceLastSpray = GetTime();
+                if (IsKeyPressed(KEY_S)) sprayCanFoam.timeSinceLastSpray = GetTime();
             }
             break;
     }
