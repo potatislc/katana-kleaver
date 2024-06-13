@@ -30,7 +30,13 @@ void MixGameAudio()
     SetSoundVolume(gameAudio.melonSplats[2], 1.f);
     SetSoundVolume(gameAudio.deathScream, .7f);
     SetSoundVolume(gameAudio.footstep, .3f);
-    SetSoundPitch(gameAudio.footstep, 1.f);
+    SetSoundVolume(gameAudio.ballSpawn, .6f);
+    SetSoundVolume(gameAudio.orangeSpawn, .6f);
+    SetSoundVolume(gameAudio.postBallClarity, .3f);
+
+    SetSoundPitch(gameAudio.ballSpawn, 1.2f);
+    SetSoundPitch(gameAudio.orangeSpawn, 1.05f);
+    SetSoundPitch(gameAudio.postBallClarity, 1.05f);
 
     SetMusicVolume(gameAudio.mainTheme, .4f);
 }
@@ -44,6 +50,9 @@ void LoadGameAudio()
     gameAudio.melonSplats[2] = LoadSound("../assets/sfx/melon_splat_3.wav");
     gameAudio.deathScream = LoadSound("../assets/sfx/death_scream.wav");
     gameAudio.footstep = LoadSound("../assets/sfx/samurai_footstep.wav");
+    gameAudio.ballSpawn = LoadSound("../assets/sfx/ball_spawn.wav");
+    gameAudio.orangeSpawn = LoadSound("../assets/sfx/orange_spawn.wav");
+    gameAudio.postBallClarity = LoadSound("../assets/sfx/post_ball_clarity.wav");
 
     gameAudio.mainTheme = LoadMusicStream("../assets/bgm/ball_music.mp3");
 

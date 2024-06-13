@@ -249,6 +249,7 @@ void BallClearerUpdate()
 
     if (ballClearer.ballToAvoid != NULL && ballClearer.ballToAvoid->type == TYPE_ORANGE) targetFps = 20;
     ballClearer.clearingFinished = true;
+    if (gameState == GAME_PLAY) PlaySound(gameAudio.postBallClarity);
 }
 
 void BallClearerForceFinish()

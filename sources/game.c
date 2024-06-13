@@ -88,7 +88,7 @@ void Update()
             {
                 if (RendererGetPaintPercentage() < .5f && ListLength(&ballHead) == 0)
                 {
-                    RendererPlayRingTransition();
+                    if (!RendererIsRingTransitionActive()) RendererPlayRingTransition();
                 }
             }
             break;
@@ -97,6 +97,8 @@ void Update()
     if (!IsBallClearingFinished())
     {
         ListRemoveAllNodes(&ballSpawnPointHead);
+        if (IsSoundPlaying(gameAudio.ballSpawn)) StopSound(gameAudio.ballSpawn);
+        if (IsSoundPlaying(gameAudio.orangeSpawn)) StopSound(gameAudio.orangeSpawn);
         if (frameCounter % 6 == 0) BallClearerUpdate();
     }
 
@@ -144,6 +146,7 @@ void GameEnd()
     // freezeBalls = true;
     ScoreHandlerLoseCombo();
     ListRemoveAllNodes(&ballSpawnPointHead);
+    ListRemoveAllNodes(&spawnQueueHead);
     targetFps = 2;
 }
 

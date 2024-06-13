@@ -30,6 +30,9 @@ typedef struct
     Sound melonSplats[MELON_SOUNDS_LENGTH];
     Sound deathScream;
     Sound footstep;
+    Sound ballSpawn;
+    Sound orangeSpawn;
+    Sound postBallClarity;
     Music mainTheme;
 } GameAudio;
 

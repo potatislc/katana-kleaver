@@ -39,7 +39,7 @@ typedef struct
     double timeSinceLastTransition;
 } RingTransition;
 
-RingTransition ringTrans = {0.f, 0.f, .8, 0};
+RingTransition ringTrans = {360.f, 360.f, .8, 0};
 
 typedef struct
 {
@@ -270,6 +270,11 @@ void DrawUiRingTransition()
 
         ringTrans.startAngle = fmaxf(((float)progress-.5f) * 2.f * 360.f, 0.f);
     }
+}
+
+bool RendererIsRingTransitionActive()
+{
+    return GetTime() <= ringTrans.timeSinceLastTransition + ringTrans.duration;
 }
 
 void RendererPlayRingTransition()
