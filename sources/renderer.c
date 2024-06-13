@@ -292,10 +292,12 @@ void DrawUi()
     switch(gameState)
     {
         case GAME_TITLE:
+        {
             double speed = GetTime() * 2;
-            titleScreenOffset = (Vector2){(float)cos(speed) * 8, (float)sin(speed * 2) * 4};
+            titleScreenOffset = (Vector2) {(float) cos(speed) * 8, (float) sin(speed * 2) * 4};
             DrawTextureV(gameTextures.titleText, titleScreenOffset, WHITE);
             break;
+        }
 
         case GAME_PLAY:
             if (ballNbrCount_All.spawned == 0 && frameCounter / 30 % 2 == 0)
