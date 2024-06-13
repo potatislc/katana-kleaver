@@ -7,6 +7,7 @@
 
 typedef struct
 {
+    Texture2D titleText;
     Texture2D bgFloorStandard;
     Texture2D bgBallClear;
     Texture2D tvBorder;
