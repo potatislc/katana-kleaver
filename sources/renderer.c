@@ -277,6 +277,8 @@ void RendererPlayRingTransition()
     ringTrans.timeSinceLastTransition = GetTime();
     ringTrans.startAngle = 0;
     ringTrans.endAngle = 0;
+
+    PlaySound(gameAudio.dash);
 }
 
 void DrawUi()
