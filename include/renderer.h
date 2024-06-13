@@ -13,7 +13,7 @@ void RendererDrawGame();
 void RendererDrawUi();
 void RendererDrawDebug();
 void RendererFitVirtualRectToScreen();
-void RenderToTarget(bool gameOver);
+void RenderToTarget();
 void RenderToScreen();
 void RendererClearBackgroundPaint();
 

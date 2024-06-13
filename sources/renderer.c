@@ -172,16 +172,16 @@ void DrawUiDeathRing()
     DrawRing(center, (float)(targetFps) * ((float)targetFps / 12.f), 240, 0, 360, 32, BLACK);
 }
 
-void DrawUi(bool gameOver)
+void DrawUi()
 {
     DrawTexture(gameTextures.tvBorder, 0, 0, WHITE);
 
-    if (ballNbrCount_All.spawned == 0 && frameCounter / 30 % 2 == 0)
+    if (gameState == GAME_PLAY && ballNbrCount_All.spawned == 0 && frameCounter / 30 % 2 == 0)
     {
         DrawText(getReadyText, (int)virtualScreenCenter.x - getReadyTextWidth / 2, (int)virtualScreenCenter.y-32, 8, WHITE);
     }
 
-    if (gameOver)
+    if (gameState == GAME_OVER)
     {
         if (targetFps != initFps)
         {
@@ -219,7 +219,7 @@ void DrawUi(bool gameOver)
     DrawLineV(progLineStart, progLineEnd, uiColorDarkGray);
 }
 
-void RenderToTarget(bool gameOver)
+void RenderToTarget()
 {
     DrawParticlesToBackgroundPaint();
     CameraShakeUpdate();
@@ -234,7 +234,7 @@ void RenderToTarget(bool gameOver)
             DrawParticles();
         }
         EndMode2D();
-        DrawUi(gameOver);
+        DrawUi();
     }
     EndTextureMode();
 }

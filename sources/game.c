@@ -13,7 +13,7 @@
 
 const int initFps = 60;
 int targetFps = 60;
-bool gameOver = false;
+int gameState = GAME_PLAY;
 unsigned int frameCounter = 0;
 
 void GameInit()
@@ -60,10 +60,22 @@ void Update()
         SpeedUpFpsEffect();
     }
 
-    if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE) && gameOver && targetFps == initFps)
+    switch(gameState)
     {
-        GameRestart();
-        ScoreHandlerResetScore();
+        case GAME_START:
+
+            break;
+        case GAME_PLAY:
+            SetUiProgressBarMidToEnds(&spawnProgressBar, GetTime() - timeSinceLastSpawn, spawnDelay);
+            SpawnerUpdate();
+            break;
+        case GAME_OVER:
+            if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE) && targetFps == initFps)
+            {
+                GameRestart();
+                ScoreHandlerResetScore();
+            }
+            break;
     }
 
     if (!IsBallClearingFinished())
@@ -72,17 +84,10 @@ void Update()
         if (frameCounter % 6 == 0) BallClearerUpdate();
     }
 
-    if (!gameOver)
-    {
-        SpawnerUpdate();
-    }
-
     if (frameCounter % 20 == 0)
     {
         SpawnFromQueue();
     }
-
-    if (!gameOver) SetUiProgressBarMidToEnds(&spawnProgressBar, GetTime() - timeSinceLastSpawn, spawnDelay);
 
     if (!freezeBalls)
     {
@@ -110,7 +115,7 @@ void GameRun()
     {
         frameCounter++;
         Update();
-        RenderToTarget(gameOver);
+        RenderToTarget();
         RenderToScreen();
     }
 
@@ -119,7 +124,7 @@ void GameRun()
 
 void GameEnd()
 {
-    gameOver = true;
+    gameState = GAME_OVER;
     // freezeBalls = true;
     ScoreHandlerLoseCombo();
     ListRemoveAllNodes(&ballSpawnPointHead);
@@ -137,7 +142,7 @@ void GameRestart()
 
     ScoreHandlerResetScore();
 
-    gameOver = false;
+    gameState = GAME_PLAY;
 
     freezeBalls = false;
 

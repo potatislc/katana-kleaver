@@ -16,7 +16,15 @@ void GameFreezeAllEntities(bool enable);
 
 extern const int initFps;
 extern int targetFps;
-extern bool gameOver;
 extern unsigned int frameCounter;
+
+enum GameStates
+{
+    GAME_START,
+    GAME_PLAY,
+    GAME_OVER
+};
+
+extern int gameState;
 
 #endif //BALL_GAME_GAME_H
