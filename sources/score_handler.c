@@ -8,6 +8,7 @@
 int score = 0;
 int hiScore = 0;
 int comboScore = 0;
+int comboScoreBuffer = 0;
 float comboMultiplier = 1.f;
 // A lost combo gets added to here then it slowly adds to the main score
 int bonusScorePool = 0;
@@ -58,7 +59,8 @@ void ScoreHandlerAddToScore(int val)
     if (gameState != GAME_PLAY) return;
 
     score += val;
-    comboScore += val;
+    comboScoreBuffer += val;
+    comboScore = (comboScoreBuffer > COMBO_BUFFER_SIZE) ? comboScoreBuffer - COMBO_BUFFER_SIZE : 0;
     hiScore = (int)fmax(score, hiScore);
 
     UpdateText();
@@ -71,7 +73,13 @@ void ScoreHandlerAddToMultiplier(float val)
 
 void ScoreHandlerLoseCombo()
 {
-    if (comboScore > 1) bonusScorePool += (int)((float)comboScore * comboMultiplier);
+    if (comboScore > 0)
+    {
+        bonusScorePool += (int)((float)comboScore * comboMultiplier);
+        // PlaySound(gameAudio.loseCombo); It sucked :/
+    }
+
+    comboScoreBuffer = 0;
     comboScore = 0;
     comboMultiplier = 1.f;
 
@@ -89,7 +97,7 @@ void ScoreHandlerAddToScoreFromBonusPool()
     score++;
     hiScore = (int)fmax(score, hiScore);
 
-    PlaySound(gameAudio.bonus_score);
+    PlaySound(gameAudio.bonusScore);
 
     UpdateText();
 }
@@ -97,6 +105,11 @@ void ScoreHandlerAddToScoreFromBonusPool()
 int ScoreHandlerGetComboScore()
 {
     return comboScore;
+}
+
+int ScoreHandlerGetComboScoreBuffer()
+{
+    return comboScoreBuffer;
 }
 
 int ScoreHandlerGetBonusScorePool()

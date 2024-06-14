@@ -1,6 +1,8 @@
 #ifndef BALL_GAME_SCORE_HANDLER_H
 #define BALL_GAME_SCORE_HANDLER_H
 
+#define COMBO_BUFFER_SIZE (4)
+
 extern char scoreText[128];
 extern char comboText[128];
 extern char hiScoreText[128];
@@ -20,6 +22,7 @@ void ScoreHandlerAddToMultiplier(float val);
 void ScoreHandlerLoseCombo();
 void ScoreHandlerResetScore();
 int ScoreHandlerGetComboScore();
+int ScoreHandlerGetComboScoreBuffer();
 int ScoreHandlerGetBonusScorePool();
 void ScoreHandlerAddToScoreFromBonusPool();
 

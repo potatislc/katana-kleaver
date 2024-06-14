@@ -196,8 +196,7 @@ void PlayerStateDash(Player *player)
 void PlaySliceSound()
 {
     float initPitch = .95f;
-    int comboScore = ScoreHandlerGetComboScore();
-    float comboPitch = (comboScore > 5) ? initPitch + (float)comboScore * .005f : initPitch;
+    float comboPitch = (ScoreHandlerGetComboScoreBuffer() >= COMBO_BUFFER_SIZE) ? initPitch + ((float)ScoreHandlerGetComboScore()+1) * .005f : initPitch;
     SetSoundPitch(gameAudio.swordSlash, comboPitch);
     PlaySound(gameAudio.swordSlash);
 }

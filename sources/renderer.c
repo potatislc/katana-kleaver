@@ -239,7 +239,7 @@ void DrawUiScore()
         DrawText(bonusScorePoolText, bonusScoreOffset, VIRTUAL_SCREEN_HEIGHT + 3, 8, guideColor);
     }
 
-    if (ScoreHandlerGetComboScore() > 1)
+    if (ScoreHandlerGetComboScore() > 0)
     {
         DrawText(comboText, comboScoreOffset, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
     }
