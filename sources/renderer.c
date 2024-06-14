@@ -189,6 +189,17 @@ void EraseBackgroundPaint(Vector2 position, float radius)
         EndBlendMode();
     }
     EndTextureMode();
+
+    if (!IsSoundPlaying(gameAudio.wipes[0]) && !IsSoundPlaying(gameAudio.wipes[1]))
+    {
+        Sound wipeSound = SoundPickRandom(gameAudio.wipes, WIPE_SOUNDS_LENGTH);
+        if (!IsSoundPlaying(wipeSound))
+        {
+            SoundPanToWorld(wipeSound, position, DEFAULT_SOUND_PAN_INTENSITY);
+            SetSoundPitch(wipeSound, .9f + ((float)rand() / RAND_MAX) * .5f);
+            PlaySound(wipeSound);
+        }
+    }
 }
 
 void SprayBackgroundPaint(Vector2 position, SprayCan sprayCan)

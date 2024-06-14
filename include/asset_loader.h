@@ -4,6 +4,7 @@
 #include "raylib.h"
 
 #define MELON_SOUNDS_LENGTH (3)
+#define WIPE_SOUNDS_LENGTH (2)
 
 typedef struct
 {
@@ -35,6 +36,7 @@ typedef struct
     Sound postBallClarity;
     Sound bonusScore;
     Sound loseCombo;
+    Sound wipes[2];
     Music mainTheme;
 } GameAudio;
 

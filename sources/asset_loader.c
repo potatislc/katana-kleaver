@@ -35,6 +35,9 @@ void MixGameAudio()
     SetSoundVolume(gameAudio.postBallClarity, .3f);
     SetSoundVolume(gameAudio.bonusScore, .7f);
     SetSoundVolume(gameAudio.loseCombo, .1f);
+    SetSoundVolume(gameAudio.wipes[0], .2f);
+    SetSoundVolume(gameAudio.wipes[1], .2f);
+
 
     SetSoundPitch(gameAudio.ballSpawn, 1.2f);
     SetSoundPitch(gameAudio.orangeSpawn, 1.05f);
@@ -57,6 +60,8 @@ void LoadGameAudio()
     gameAudio.postBallClarity = LoadSound("../assets/sfx/post_ball_clarity.wav");
     gameAudio.bonusScore = LoadSound("../assets/sfx/bonus_score.wav");
     gameAudio.loseCombo = LoadSound("../assets/sfx/lose_combo.wav");
+    gameAudio.wipes[0] = LoadSound("../assets/sfx/wipe_1.wav");
+    gameAudio.wipes[1] = LoadSound("../assets/sfx/wipe_2.wav");
 
     gameAudio.mainTheme = LoadMusicStream("../assets/bgm/ball_music.mp3");
 
