@@ -232,7 +232,12 @@ void DrawUiScore()
 
     if (ScoreHandlerGetComboScore() > 1)
     {
-        DrawText(comboText, 69, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
+        DrawText(comboText, 120, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
+    }
+
+    if (ScoreHandlerGetBonusScorePool() > 0)
+    {
+        DrawText(bonusScorePoolText, 69, VIRTUAL_SCREEN_HEIGHT + 3, 8, guideColor);
     }
 }
 

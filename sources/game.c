@@ -119,6 +119,8 @@ void Update()
 
     ParticlesUpdate();
 
+    if (frameCounter % 2 == 0) ScoreHandlerAddToScoreFromPool();
+
     // Toggle Fullscreen
     if ((IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT))) || IsKeyPressed(KEY_F11))
     {
