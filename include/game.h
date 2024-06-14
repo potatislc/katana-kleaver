@@ -2,6 +2,7 @@
 #define BALL_GAME_GAME_H
 
 #include <stdbool.h>
+#include "circular_button.h"
 
 #define BALL_SPAWN_DELAY_FIRST (4.0)
 #define BALL_SPAWN_DELAY_LONG (3.0)
@@ -28,5 +29,6 @@ enum GameStates
 };
 
 extern int gameState;
+extern CircularButton *startButton;
 
 #endif //BALL_GAME_GAME_H

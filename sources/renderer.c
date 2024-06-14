@@ -354,6 +354,11 @@ void DrawUiBallClearerTarget()
     }
 }
 
+void DrawUiButtons()
+{
+    CircularButtonDraw(*startButton);
+}
+
 void DrawUi()
 {
     // Borders
@@ -369,6 +374,8 @@ void DrawUi()
             double speed = GetTime() * 2;
             titleScreenOffset = (Vector2) {(float) cos(speed) * 8, (float) sin(speed * 2) * 4};
             DrawTextureV(gameTextures.titleText, titleScreenOffset, WHITE);
+
+            DrawUiButtons();
             break;
         }
 

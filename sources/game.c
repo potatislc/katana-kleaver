@@ -11,11 +11,22 @@
 #include "particle.h"
 #include "spawner.h"
 #include "raymath.h"
+#include "global.h"
 
 const int initFps = 60;
 int targetFps = 60;
 int gameState = GAME_TITLE;
 unsigned int frameCounter = 0;
+
+CircularButton *startButton;
+
+void StartGame()
+{
+    gameState = GAME_PLAY;
+    playerRef->stateExecute = STATE_EXEC_PLAYER_MOVE;
+    freezePlayer = false;
+    SpawnerInit();
+}
 
 void GameInit()
 {
@@ -41,6 +52,9 @@ void GameInit()
     playerRef = PlayerInit(playerStartPos, &ballHead);
 
     freezePlayer = true;
+
+    Vector2 startBtnPos = {24, VIRTUAL_SCREEN_HEIGHT - 24};
+    startButton = CircularButtonInit(startBtnPos, 16, gameTextures.melonBig, StartGame);
 }
 
 void SpeedUpFpsEffect()
@@ -51,14 +65,6 @@ void SpeedUpFpsEffect()
     if (targetFps < 20) targetFps = 20;
 
     SetMusicPitch(gameAudio.mainTheme, (1.f/(float)initFps) * (float)targetFps);
-}
-
-void StartGame()
-{
-    gameState = GAME_PLAY;
-    playerRef->stateExecute = STATE_EXEC_PLAYER_MOVE;
-    freezePlayer = false;
-    SpawnerInit();
 }
 
 void Update()
@@ -73,8 +79,12 @@ void Update()
     switch(gameState)
     {
         case GAME_TITLE:
-            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) StartGame();
+        {
+            Vector2 mousePos = Vector2ToVirtualCoords(GetMousePosition());
+            bool startCondition = IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsPointInsideCircularButton(*startButton, mousePos);
+            CircularButtonDownOnCondition(startButton, startCondition);
             break;
+        }
         case GAME_PLAY:
             SetUiProgressBarMidToEnds(&spawnProgressBar, GetTime() - timeSinceLastSpawn, spawnDelay);
             SpawnerUpdate();
