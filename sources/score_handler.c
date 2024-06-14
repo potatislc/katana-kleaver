@@ -70,6 +70,8 @@ void ScoreHandlerAddToScore(int val)
 
 void ScoreHandlerAddToMultiplier(int val)
 {
+    if (gameState != GAME_PLAY) return;
+
     comboMultiplier += val;
 
     UpdateText();

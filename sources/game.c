@@ -45,8 +45,8 @@ void GameInit()
 
 void SpeedUpFpsEffect()
 {
-    SetTargetFPS(targetFps);
     targetFps++;
+    SetTargetFPS(targetFps);
 
     if (targetFps < 20) targetFps = 20;
 
@@ -126,6 +126,12 @@ void Update()
     {
         WindowHandlerToggleWindowMode();
         RendererFitVirtualRectToScreen();
+    }
+
+    // Toggle Debug Draw
+    if (IsKeyPressed(KEY_D) && IsKeyDown(KEY_LEFT_SHIFT))
+    {
+        debugDrawing = !debugDrawing;
     }
 }
 

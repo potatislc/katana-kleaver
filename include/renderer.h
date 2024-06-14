@@ -25,6 +25,8 @@ extern Vector2 screenOffset;
 extern Vector2 virtualScreenCenter;
 extern float eraserRadius;
 
+extern bool debugDrawing;
+
 typedef struct {
     float width;
     float start;

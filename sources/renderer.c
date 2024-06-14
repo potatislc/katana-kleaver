@@ -31,6 +31,8 @@ Vector2 titleScreenOffset;
 
 float eraserRadius = 31.f;
 
+bool debugDrawing = false;
+
 typedef struct
 {
     float startAngle;
@@ -470,7 +472,7 @@ void RenderToScreen()
         // Draw world camera to screen
         DrawTexturePro(virtualRenderTarget.texture, virtualRenderRect.source, virtualRenderRect.dest, virtualRenderRect.origin, 0.0f, WHITE);
 
-        // DrawDebug();
+        if (debugDrawing) DrawDebug();
     }
     EndDrawing();
 }
