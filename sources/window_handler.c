@@ -9,7 +9,9 @@ void WindowHandlerInit()
     InitWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, WINDOW_TITLE);
     //SetWindowState(FLAG_WINDOW_UNFOCUSED);
     //SetWindowState(FLAG_WINDOW_UNDECORATED);
-    SetWindowIcon(LoadImage("../assets/textures/melon/melon_big.png"));
+    Image icon = LoadImage("../assets/textures/melon/melon_big.png");
+    SetWindowIcon(icon);
+    UnloadImage(icon);
 }
 
 void ToggleBorderLessWindowedOverride()
