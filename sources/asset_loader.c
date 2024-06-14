@@ -35,8 +35,8 @@ void MixGameAudio()
     SetSoundVolume(gameAudio.postBallClarity, .3f);
     SetSoundVolume(gameAudio.bonusScore, .7f);
     SetSoundVolume(gameAudio.loseCombo, .1f);
-    SetSoundVolume(gameAudio.wipes[0], .2f);
-    SetSoundVolume(gameAudio.wipes[1], .2f);
+    SetSoundVolume(gameAudio.wipes[0], .5f);
+    SetSoundVolume(gameAudio.wipes[1], .5f);
 
 
     SetSoundPitch(gameAudio.ballSpawn, 1.2f);
