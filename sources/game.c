@@ -56,6 +56,7 @@ void SpeedUpFpsEffect()
 void StartGame()
 {
     gameState = GAME_PLAY;
+    playerRef->stateExecute = STATE_EXEC_PLAYER_MOVE;
     freezePlayer = false;
     SpawnerInit();
 }
@@ -162,6 +163,8 @@ void GameRestart()
 {
     Player *newPlayer = PlayerReset(playerRef, virtualScreenCenter, &ballHead);
     playerRef = newPlayer;
+
+    playerRef->stateExecute = STATE_EXEC_PLAYER_MOVE;
 
     BallClearerForceFinish();
 

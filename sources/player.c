@@ -22,7 +22,7 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
 {
     Player *player = (Player*) malloc(sizeof(Player));
 
-    player->stateExecute = STATE_EXEC_PLAYER_MOVE;
+    player->stateExecute = STATE_EXEC_PLAYER_IDLE;
     player->spriteIdle = SpriteInit(gameTextures.samurai, (Rectangle){0, 0, 16, 16}, 0, true);
     player->spriteRun = SpriteInit(gameTextures.samuraiRunSheet, (Rectangle){0, 0, 16, 16}, 0, true);
     player->spriteDie = SpriteInit(gameTextures.samuraiDieSheet, (Rectangle){0, 0, 48, 48}, 0, true);
@@ -357,8 +357,6 @@ void PlayerDraw(Player player) {
 
     if (player.stateExecute == STATE_EXEC_PLAYER_MOVE)
     {
-        spriteFacing = (Vector2){sign(Vector2ToVirtualCoords(GetMousePosition()).x - player.position.x), 1};
-
         if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
         {
             SpriteAnimate(player.spriteRun, .05f, true);
@@ -376,7 +374,7 @@ void PlayerDraw(Player player) {
     }
     else
     {
-        // Temporary, change it to the other sprites for the other states
+        spriteFacing = (Vector2){sign(Vector2ToVirtualCoords(GetMousePosition()).x - player.position.x), 1};
         SpriteDraw(*player.spriteIdle, player.position, spriteFacing, 0);
     }
 
