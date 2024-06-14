@@ -228,16 +228,20 @@ void DrawUiDeathRing()
 
 void DrawUiScore()
 {
-    DrawText(scoreText, 5, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorYellow);
+    int scoreOffset = 5;
+    int bonusScoreOffset = scoreOffset + scoreTextWidth;
+    int comboScoreOffset = bonusScoreOffset + bonusScorePoolTextWidth + 16;
 
-    if (ScoreHandlerGetComboScore() > 1)
-    {
-        DrawText(comboText, 120, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
-    }
+    DrawText(scoreText, scoreOffset, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorYellow);
 
     if (ScoreHandlerGetBonusScorePool() > 0)
     {
-        DrawText(bonusScorePoolText, 69, VIRTUAL_SCREEN_HEIGHT + 3, 8, guideColor);
+        DrawText(bonusScorePoolText, bonusScoreOffset, VIRTUAL_SCREEN_HEIGHT + 3, 8, guideColor);
+    }
+
+    if (ScoreHandlerGetComboScore() > 1)
+    {
+        DrawText(comboText, comboScoreOffset, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
     }
 }
 

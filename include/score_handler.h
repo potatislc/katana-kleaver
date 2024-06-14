@@ -11,6 +11,7 @@ extern char restartText[32];
 extern int scoreTextWidth;
 extern int comboTextWidth;
 extern int hiScoreTextWidth;
+extern int bonusScorePoolTextWidth;
 extern const int gameOverTextWidth;
 extern const int restartTextWidth;
 
@@ -20,6 +21,6 @@ void ScoreHandlerLoseCombo();
 void ScoreHandlerResetScore();
 int ScoreHandlerGetComboScore();
 int ScoreHandlerGetBonusScorePool();
-void ScoreHandlerAddToScoreFromPool();
+void ScoreHandlerAddToScoreFromBonusPool();
 
 #endif //BALL_GAME_SCORE_HANDLER_H

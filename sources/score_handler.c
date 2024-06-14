@@ -77,7 +77,7 @@ void ScoreHandlerLoseCombo()
     UpdateText();
 }
 
-void ScoreHandlerAddToScoreFromPool()
+void ScoreHandlerAddToScoreFromBonusPool()
 {
     if (bonusScorePool <= 0) return;
     bonusScorePool--;

@@ -119,7 +119,8 @@ void Update()
 
     ParticlesUpdate();
 
-    if (frameCounter % 2 == 0) ScoreHandlerAddToScoreFromPool();
+    int bonusScorePoolUpdateSpeed = (ScoreHandlerGetBonusScorePool() < 200) ? 4 : 2;
+    if (frameCounter % bonusScorePoolUpdateSpeed == 0) ScoreHandlerAddToScoreFromBonusPool();
 
     // Toggle Fullscreen
     if ((IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT))) || IsKeyPressed(KEY_F11))
