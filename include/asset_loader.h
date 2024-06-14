@@ -33,6 +33,7 @@ typedef struct
     Sound ballSpawn;
     Sound orangeSpawn;
     Sound postBallClarity;
+    Sound bonus_score;
     Music mainTheme;
 } GameAudio;
 

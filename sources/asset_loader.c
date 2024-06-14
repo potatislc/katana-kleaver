@@ -33,6 +33,7 @@ void MixGameAudio()
     SetSoundVolume(gameAudio.ballSpawn, .6f);
     SetSoundVolume(gameAudio.orangeSpawn, .6f);
     SetSoundVolume(gameAudio.postBallClarity, .3f);
+    SetSoundVolume(gameAudio.bonus_score, .7f);
 
     SetSoundPitch(gameAudio.ballSpawn, 1.2f);
     SetSoundPitch(gameAudio.orangeSpawn, 1.05f);
@@ -53,6 +54,7 @@ void LoadGameAudio()
     gameAudio.ballSpawn = LoadSound("../assets/sfx/ball_spawn.wav");
     gameAudio.orangeSpawn = LoadSound("../assets/sfx/orange_spawn.wav");
     gameAudio.postBallClarity = LoadSound("../assets/sfx/post_ball_clarity.wav");
+    gameAudio.bonus_score = LoadSound("../assets/sfx/bonus_score.wav");
 
     gameAudio.mainTheme = LoadMusicStream("../assets/bgm/ball_music.mp3");
 
