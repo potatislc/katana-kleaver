@@ -229,19 +229,30 @@ void DrawUiDeathRing()
 void DrawUiScore()
 {
     int scoreOffset = 5;
-    int bonusScoreOffset = scoreOffset + scoreTextWidth;
+    int bonusScoreOffset = scoreOffset + scoreTextWidth + 1;
     int comboScoreOffset = bonusScoreOffset + bonusScorePoolTextWidth + 16;
+    int comboMultiplierOffset = comboScoreOffset + comboTextWidth + 1;
 
-    DrawText(scoreText, scoreOffset, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorYellow);
+    int yOffset = VIRTUAL_SCREEN_HEIGHT + 3;
+    int defaultSize = 8;
+
+    DrawText(scoreText, scoreOffset, yOffset, defaultSize, uiColorYellow);
 
     if (ScoreHandlerGetBonusScorePool() > 0)
     {
-        DrawText(bonusScorePoolText, bonusScoreOffset, VIRTUAL_SCREEN_HEIGHT + 3, 8, guideColor);
+        DrawText(bonusScorePoolText, bonusScoreOffset, yOffset, defaultSize, guideColor);
     }
 
     if (ScoreHandlerGetComboScore() > 0)
     {
-        DrawText(comboText, comboScoreOffset, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorRed);
+        DrawText(comboText, comboScoreOffset, yOffset, defaultSize, uiColorRed);
+    }
+
+    if (ScoreHandlerGetComboMultiplier() > 1)
+    {
+        double pulse = sin(GetTime() * 10) * 50;
+        Color pulsatingColor = {(int)fmin(orangeColor.r + pulse, 255), (int)fmin(orangeColor.g + pulse, 255), orangeColor.b, 255};
+        DrawText(comboMultiplierText, comboMultiplierOffset, yOffset, defaultSize, pulsatingColor);
     }
 }
 

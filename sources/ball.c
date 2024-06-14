@@ -128,7 +128,7 @@ void OnDestroyOrange(Ball *ball)
         ParticleCreate(ParticlePresetJuice(ball->position, orangeColor));
     }
 
-    ScoreHandlerAddToMultiplier(1.f);
+    ScoreHandlerAddToMultiplier(1);
 }
 
 void DrawDefault(Ball ball, Vector2 drawPos)
