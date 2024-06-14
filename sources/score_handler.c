@@ -3,6 +3,7 @@
 #include "score_handler.h"
 #include "raylib.h"
 #include "game.h"
+#include "asset_loader.h"
 
 int score = 0;
 int hiScore = 0;
@@ -80,9 +81,15 @@ void ScoreHandlerLoseCombo()
 void ScoreHandlerAddToScoreFromBonusPool()
 {
     if (bonusScorePool <= 0) return;
+
+    int updateSpeed = (bonusScorePool < 50) ? 2 : 1;
+    if (frameCounter % updateSpeed != 0) return;
+
     bonusScorePool--;
     score++;
     hiScore = (int)fmax(score, hiScore);
+
+    PlaySound(gameAudio.bonus_score);
 
     UpdateText();
 }
