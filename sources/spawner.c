@@ -14,6 +14,8 @@ ListNode *spawnQueueHead = NULL;
 int secondBallLimit = 2;
 int thirdBallLimit = 3;
 
+int wavesSinceLastOrange = 0;
+
 void PlaceBallSpawnPoint(float radius, bool avoidPlayer, int type)
 {
     const Vector2 minInitPos = {radius, radius};
@@ -78,6 +80,10 @@ void AddBallsToQueue()
 
     if (GetTime() < timeSinceLastSpawn+spawnDelay) return;
 
+    // Spawn Wave -----------------
+
+    wavesSinceLastOrange++;
+
     if (ballNbrCount_All.spawned == 0)
     {
         AddBallToQueue(RADIUS_LARGE, true, TYPE_MELON);
@@ -101,9 +107,10 @@ void AddBallsToQueue()
             }
         }
 
-        if (NbrOfBallsOnScreen(ballNbrCount_All) > 5)
+        if (NbrOfBallsOnScreen(ballNbrCount_All) > 5 && wavesSinceLastOrange > 1)
         {
             AddBallToQueue(RADIUS_MEDIUM, false, TYPE_ORANGE);
+            wavesSinceLastOrange = 0;
         }
     }
 }

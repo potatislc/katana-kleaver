@@ -58,6 +58,7 @@ void BallClearerBegin(Ball *ball, int slowDownFps);
 void BallClearerUpdate();
 bool IsBallClearingFinished();
 void BallClearerForceFinish();
+Ball *BallClearerTarget();
 
 typedef struct
 {

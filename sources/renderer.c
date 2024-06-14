@@ -286,6 +286,41 @@ void RendererPlayRingTransition()
     PlaySound(gameAudio.dash);
 }
 
+void DrawUiBallClearerTarget()
+{
+    if (BallClearerTarget() == NULL) return;
+
+    Ball *targetBall = BallClearerTarget();
+    Vector2 center = targetBall->position;
+    float radius = targetBall->radius;
+    float rotation = (float)GetTime() * 1.5f;
+    float rAng = PI / 2;
+
+    Vector2 dirs[4] = {
+            {cosf(rotation), sinf(rotation)},
+            {cosf(rotation + rAng), sinf(rotation + rAng)},
+            {cosf(rotation + PI), sinf(rotation + PI)},
+            {cosf(rotation + PI + rAng), sinf(rotation + PI + rAng)}
+    };
+
+    Color triColor = orangeColor;
+    float triLength = 16;
+    float triWidth = 8;
+
+    for (int i = 0; i < 4; i++) {
+        Vector2 dir = dirs[i];
+        Vector2 dirNext = dirs[(i + 1) % 4];
+
+        Vector2 outerVertPivot = Vector2Add(center, (Vector2){dir.x * (radius + triLength), dir.y * (radius + triLength)});
+        Vector2 outerVertCorner = {dirNext.x * triWidth, dirNext.y * triWidth};
+        DrawTriangleLines(
+                Vector2Add(center, (Vector2){dir.x * radius, dir.y * radius}),
+                Vector2Add(outerVertPivot, outerVertCorner),
+                Vector2Subtract(outerVertPivot, outerVertCorner),
+                triColor);
+    }
+}
+
 void DrawUi()
 {
     // Borders
@@ -312,6 +347,8 @@ void DrawUi()
 
             DrawUiScore();
             DrawUiProgressBar();
+
+            if (!IsBallClearingFinished()) DrawUiBallClearerTarget();
             break;
         case GAME_OVER:
             if (targetFps != initFps)

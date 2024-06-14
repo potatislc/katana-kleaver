@@ -257,6 +257,12 @@ void BallClearerForceFinish()
     ballClearer.clearingFinished = true;
 }
 
+Ball *BallClearerTarget()
+{
+    if (ballClearer.currentNode == NULL) return NULL;
+    return ballClearer.currentNode->data;
+}
+
 void BallCollisionScreen(Ball *ball)
 {
     if ((ball->position.x >= (VIRTUAL_SCREEN_WIDTH - ball->radius)) || (ball->position.x <= ball->radius)) ball->velocity.x *= -1.0f;
