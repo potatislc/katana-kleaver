@@ -19,6 +19,7 @@ int gameState = GAME_TITLE;
 unsigned int frameCounter = 0;
 
 CircularButton *startButton;
+CircularButton *settingsButton;
 
 void StartGame()
 {
@@ -55,6 +56,9 @@ void GameInit()
 
     Vector2 startBtnPos = {24, VIRTUAL_SCREEN_HEIGHT - 24};
     startButton = CircularButtonInit(startBtnPos, 16, gameTextures.melonBig, StartGame);
+
+    Vector2 settingBtnPos = {VIRTUAL_SCREEN_WIDTH - 24, startBtnPos.y};
+    settingsButton = CircularButtonInit(settingBtnPos, 16, gameTextures.settingsIcon, StartGame);
 }
 
 void SpeedUpFpsEffect()
@@ -83,6 +87,9 @@ void Update()
             Vector2 mousePos = Vector2ToVirtualCoords(GetMousePosition());
             bool startCondition = IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsPointInsideCircularButton(*startButton, mousePos);
             CircularButtonDownOnCondition(startButton, startCondition);
+
+            bool settingsCondition = IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsPointInsideCircularButton(*settingsButton, mousePos);
+            CircularButtonDownOnCondition(settingsButton, settingsCondition);
             break;
         }
         case GAME_PLAY:

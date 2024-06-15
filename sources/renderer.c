@@ -357,6 +357,7 @@ void DrawUiBallClearerTarget()
 void DrawUiButtons()
 {
     CircularButtonDraw(*startButton);
+    CircularButtonDraw(*settingsButton);
 }
 
 void DrawUi()
