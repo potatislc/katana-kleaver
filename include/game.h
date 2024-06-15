@@ -31,4 +31,5 @@ enum GameStates
 extern int gameState;
 extern CircularButton *startButton;
 extern CircularButton *settingsButton;
+extern CircularButton *backButton;
 #endif //BALL_GAME_GAME_H

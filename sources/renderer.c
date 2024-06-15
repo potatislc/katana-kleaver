@@ -278,13 +278,20 @@ void DrawUiProgressBar()
 
 void DrawUiGameOver()
 {
-    DrawText(gameOverText, (int)virtualScreenCenter.x - gameOverTextWidth / 2, (int)virtualScreenCenter.y-8, 8, WHITE);
-    if (frameCounter / 15 % 2 == 0) DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+64, 8, WHITE);
+    if (RendererIsRingTransitionActive()) return;
 
-    scoreTextWidth = MeasureText(scoreText, 8);
-    DrawText(scoreText, (int)virtualScreenCenter.x - scoreTextWidth / 2, (int)virtualScreenCenter.y+12, 8, WHITE);
+    if (!IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+    {
+        DrawText(gameOverText, (int)virtualScreenCenter.x - gameOverTextWidth / 2, (int)virtualScreenCenter.y-8, 8, WHITE);
 
-    DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, WHITE);
+        scoreTextWidth = MeasureText(scoreText, 8);
+        DrawText(scoreText, (int)virtualScreenCenter.x - scoreTextWidth / 2, (int)virtualScreenCenter.y+12, 8, WHITE);
+
+        DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, WHITE);
+    }
+
+    if (frameCounter / 15 % 2 == 0) DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+66, 8, WHITE);
+    if (!IsMouseButtonDown(MOUSE_BUTTON_LEFT)) CircularButtonDraw(*backButton);
 }
 
 void DrawUiRingTransition()
@@ -354,10 +361,15 @@ void DrawUiBallClearerTarget()
     }
 }
 
-void DrawUiButtons()
+void DrawUiTitleButtons()
 {
     CircularButtonDraw(*startButton);
     CircularButtonDraw(*settingsButton);
+}
+
+void DrawUiSettingsButtons()
+{
+    CircularButtonDraw(*backButton);
 }
 
 void DrawUi()
@@ -376,14 +388,21 @@ void DrawUi()
             titleScreenOffset = (Vector2) {(float) cos(speed) * 8, (float) sin(speed * 2) * 4};
             DrawTextureV(gameTextures.titleText, titleScreenOffset, WHITE);
 
-            DrawUiButtons();
+            DrawUiTitleButtons();
+            break;
+        }
+
+        case GAME_SETTINGS:
+        {
+            DrawUiSettingsButtons();
             break;
         }
 
         case GAME_PLAY:
-            if (ballNbrCount_All.spawned == 0 && frameCounter / 30 % 2 == 0)
-            {
-                DrawText(getReadyText, (int)virtualScreenCenter.x - getReadyTextWidth / 2, (int)virtualScreenCenter.y-32, 8, WHITE);
+        {
+            if (ballNbrCount_All.spawned == 0 && frameCounter / 30 % 2 == 0) {
+                DrawText(getReadyText, (int) virtualScreenCenter.x - getReadyTextWidth / 2,
+                         (int) virtualScreenCenter.y - 32, 8, WHITE);
             }
 
             DrawUiScore();
@@ -391,12 +410,14 @@ void DrawUi()
 
             if (!IsBallClearingFinished()) DrawUiBallClearerTarget();
             break;
+        }
+
         case GAME_OVER:
+        {
             if (targetFps != initFps)
             {
                 DrawUiDeathRing();
-            }
-            else
+            } else
             {
                 DrawUiGameOver();
             }
@@ -419,7 +440,9 @@ void DrawUi()
 
                 if (IsKeyPressed(KEY_S)) sprayCanFoam.timeSinceLastSpray = GetTime();
             }
+
             break;
+        }
     }
 
     DrawUiRingTransition();

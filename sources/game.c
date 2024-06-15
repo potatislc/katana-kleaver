@@ -20,6 +20,7 @@ unsigned int frameCounter = 0;
 
 CircularButton *startButton;
 CircularButton *settingsButton;
+CircularButton *backButton; // Back changes depending on state
 
 void StartGame()
 {
@@ -27,6 +28,16 @@ void StartGame()
     playerRef->stateExecute = STATE_EXEC_PLAYER_MOVE;
     freezePlayer = false;
     SpawnerInit();
+}
+
+void OpenSettings()
+{
+    gameState = GAME_SETTINGS;
+}
+
+void GoBack()
+{
+    gameState = GAME_TITLE;
 }
 
 void GameInit()
@@ -58,7 +69,10 @@ void GameInit()
     startButton = CircularButtonInit(startBtnPos, 16, gameTextures.melonBig, StartGame);
 
     Vector2 settingBtnPos = {VIRTUAL_SCREEN_WIDTH - 24, startBtnPos.y};
-    settingsButton = CircularButtonInit(settingBtnPos, 16, gameTextures.settingsIcon, StartGame);
+    settingsButton = CircularButtonInit(settingBtnPos, 16, gameTextures.settingsIcon, OpenSettings);
+
+    Vector2 backBtnPos = {24, VIRTUAL_SCREEN_HEIGHT - 24};
+    backButton = CircularButtonInit(backBtnPos, 16, gameTextures.arrowIcon, GoBack);
 }
 
 void SpeedUpFpsEffect()
@@ -80,11 +94,12 @@ void Update()
         SpeedUpFpsEffect();
     }
 
+    Vector2 mousePos = Vector2ToVirtualCoords(GetMousePosition());
+
     switch(gameState)
     {
         case GAME_TITLE:
         {
-            Vector2 mousePos = Vector2ToVirtualCoords(GetMousePosition());
             bool startCondition = IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsPointInsideCircularButton(*startButton, mousePos);
             CircularButtonDownOnCondition(startButton, startCondition);
 
@@ -92,24 +107,34 @@ void Update()
             CircularButtonDownOnCondition(settingsButton, settingsCondition);
             break;
         }
+
         case GAME_PLAY:
+        {
             SetUiProgressBarMidToEnds(&spawnProgressBar, GetTime() - timeSinceLastSpawn, spawnDelay);
             SpawnerUpdate();
             break;
+        }
+
         case GAME_OVER:
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsBallClearingFinished() && targetFps == initFps)
-            {
+        {
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsBallClearingFinished() && targetFps == initFps) {
                 BallClearerBegin(NULL, initFps);
             }
 
-            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
-            {
-                if (RendererGetPaintPercentage() < .5f && ListLength(&ballHead) == 0)
-                {
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+                if (RendererGetPaintPercentage() < .5f && ListLength(&ballHead) == 0) {
                     if (!RendererIsRingTransitionActive()) RendererPlayRingTransition();
                 }
             }
             break;
+        }
+
+        case GAME_SETTINGS:
+        {
+            bool backCondition = IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsPointInsideCircularButton(*backButton, mousePos);
+            CircularButtonDownOnCondition(backButton, backCondition);
+            break;
+        }
     }
 
     if (!IsBallClearingFinished())

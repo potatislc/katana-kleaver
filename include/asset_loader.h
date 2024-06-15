@@ -23,6 +23,7 @@ typedef struct
     Texture2D samuraiShadow;
     Texture2D particleRound;
     Texture2D settingsIcon;
+    Texture2D arrowIcon;
 } GameTextures;
 
 typedef struct
