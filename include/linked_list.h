@@ -3,6 +3,17 @@
 
 #include <stdlib.h>
 
+#define LIST_MAP_DATA(headNode, function, ref) \
+do                                        \
+{                                         \
+    ListNode* currentNode = headNode;     \
+    while (currentNode != NULL)           \
+    {                                     \
+        function( ref currentNode->data);      \
+        currentNode = currentNode->next;  \
+    }                                     \
+} while (0)                               \
+
 typedef struct ListNode
 {
     void *next;

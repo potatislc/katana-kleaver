@@ -61,10 +61,7 @@ void PlayerDie(Player *player)
 
     CameraSetShake(4, 1.f, 2.f);
 
-    for (int i = 0; i < 35; i++)
-    {
-        ParticleCreate(ParticlePresetPlayerBlood(player->position));
-    }
+    CREATE_PARTICLES(ParticlePresetPlayerBlood(player->position), 35);
 
     player->stateExecute = STATE_EXEC_PLAYER_DEAD;
     deathBuffer = 0;

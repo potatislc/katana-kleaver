@@ -188,7 +188,8 @@ void Update()
 
     if (!freezeBalls)
     {
-        BallsUpdate();
+        LIST_MAP_DATA(ballHead, BallUpdate, (Ball *));
+        LIST_MAP_DATA(ballSpawnPointHead, BallSpawnPointUpdate, (BallSpawnPoint *));
     }
 
     if (!freezePlayer)
@@ -222,10 +223,9 @@ void GameRun()
         RenderToTarget();
         RenderToScreen();
 
-        if (WindowShouldClose() && (gameState == GAME_TITLE || !IsKeyPressed(KEY_ESCAPE))) break;
+        if (WindowShouldClose() && (gameState == GAME_TITLE || gameState == GAME_PLAY || !IsKeyPressed(KEY_ESCAPE))) break;
     }
 
-    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n hej\n\n\n\n\n\n\n\n\n\n\n\n");
     GameDeInit();
 }
 

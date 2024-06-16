@@ -4,6 +4,15 @@
 #include "raylib.h"
 #include "linked_list.h"
 
+#define CREATE_PARTICLES(type, amount) \
+do                                     \
+{                                      \
+    for (int i = 0; i < amount; i++)  \
+    {                                  \
+        ParticleCreate(type);          \
+    }                                  \
+} while (0)                            \
+
 extern ListNode *particleHead;
 extern ListNode *particleRedrawHead;
 

@@ -71,10 +71,7 @@ void OnSplitMelon(Ball *ball, Vector2 splitDir)
 
 void OnDestroyMelon(Ball *ball)
 {
-    for (int i = 0; i <= (int)(ball->radius / 2.f); i++)
-    {
-        ParticleCreate(ParticlePresetJuice(ball->position, uiColorRed));
-    }
+    CREATE_PARTICLES(ParticlePresetJuice(ball->position, uiColorRed), (int)(ball->radius / 2.f) + 1);
 
     ScoreHandlerAddToScore(1);
 }
@@ -92,10 +89,7 @@ void BallClearerBegin(Ball *ball, int slowDownFps)
 
 void OnSplitOrange(Ball *ball, Vector2 splitDir)
 {
-    for (int i = 0; i <= (int)(ball->radius / 2.f); i++)
-    {
-        ParticleCreate(ParticlePresetJuice(ball->position, orangeColor));
-    }
+    CREATE_PARTICLES(ParticlePresetJuice(ball->position, orangeColor), (int)(ball->radius / 2.f) + 1);
 
     if (ball->health > 2)
     {
@@ -123,10 +117,7 @@ void OnSplitOrange(Ball *ball, Vector2 splitDir)
 
 void OnDestroyOrange(Ball *ball)
 {
-    for (int i = 0; i <= (int)(ball->radius / 2.f); i++)
-    {
-        ParticleCreate(ParticlePresetJuice(ball->position, orangeColor));
-    }
+    CREATE_PARTICLES(ParticlePresetJuice(ball->position, orangeColor), (int)(ball->radius / 2.f) + 1);
 
     ScoreHandlerAddToMultiplier(1);
 }
@@ -426,22 +417,4 @@ void BallSpawnPointDraw(BallSpawnPoint ballSpawnPoint)
     // Inner Circle
     float innerRadius = (float)(timeSinceInit / ballSpawnPoint.spawnTime) * ballSpawnPoint.mockBall->radius;
     DrawCircleLinesV(ballSpawnPoint.mockBall->position, innerRadius, uiColorYellow);
-}
-
-// Update all balls
-void BallsUpdate()
-{
-    ListNode* currentBallNode = ballHead;
-    while (currentBallNode != NULL)
-    {
-        BallUpdate(currentBallNode->data);
-        currentBallNode = currentBallNode->next;
-    }
-
-    ListNode* currentBallSpawnPointNode = ballSpawnPointHead;
-    while (currentBallSpawnPointNode != NULL)
-    {
-        BallSpawnPointUpdate(currentBallSpawnPointNode->data);
-        currentBallSpawnPointNode = currentBallSpawnPointNode->next;
-    }
 }

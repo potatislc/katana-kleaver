@@ -119,55 +119,26 @@ void DrawBackground()
 void DrawShadows()
 {
     PlayerDrawShadow(*playerRef);
-
-    ListNode* currentBallNode = ballHead;
-    while (currentBallNode != NULL)
-    {
-        BallDrawShadow(*(Ball*)currentBallNode->data);
-        currentBallNode = currentBallNode->next;
-    }
+    LIST_MAP_DATA(ballHead, BallDrawShadow, *(Ball *));
 }
 
 void DrawEntities()
 {
-    ListNode* currentBallNode = ballHead;
-
-    while (currentBallNode != NULL)
-    {
-        BallDraw(*(Ball*)currentBallNode->data);
-        currentBallNode = currentBallNode->next;
-    }
-
-    ListNode* currentBallSpawnPointNode = ballSpawnPointHead;
-    while (currentBallSpawnPointNode != NULL)
-    {
-        BallSpawnPointDraw(*(BallSpawnPoint*)currentBallSpawnPointNode->data);
-        currentBallSpawnPointNode = currentBallSpawnPointNode->next;
-    }
-
+    LIST_MAP_DATA(ballHead, BallDraw, *(Ball *));
+    LIST_MAP_DATA(ballSpawnPointHead, BallSpawnPointDraw, *(BallSpawnPoint *));
     PlayerDraw(*playerRef);
 }
 
 void DrawParticles()
 {
-    ListNode* currentParticleNode = particleHead;
-
-    while (currentParticleNode != NULL) {
-        ParticleDraw(*(Particle *) currentParticleNode->data);
-        currentParticleNode = currentParticleNode->next;
-    }
+    LIST_MAP_DATA(particleHead, ParticleDraw, *(Particle *));
 }
 
 void DrawParticlesToBackgroundPaint()
 {
-    ListNode* currentParticleNode = particleHead;
-
     BeginTextureMode(backgroundPaintTarget);
     {
-        while (currentParticleNode != NULL) {
-            ParticleDraw(*(Particle *) currentParticleNode->data);
-            currentParticleNode = currentParticleNode->next;
-        }
+        LIST_MAP_DATA(particleHead, ParticleDraw, *(Particle *));
     }
     EndTextureMode();
 }

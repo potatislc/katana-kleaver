@@ -41,8 +41,6 @@ typedef struct Ball
     float shadowScale;
 } Ball;
 
-void BallsUpdate();
-
 Ball *BallInit(Vector2 position, float radius, BallType type);
 void BallUpdate(Ball *ball);
 void BallSetPosition(Ball *ball, Vector2 pos);
