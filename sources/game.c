@@ -22,8 +22,19 @@ CircularButton *startButton;
 CircularButton *settingsButton;
 CircularButton *backButton; // Back changes depending on state
 
+bool IsFloorCleaned()
+{
+    return RendererGetPaintPercentage() < .5f && ListLength(&ballHead) == 0;
+}
+
 void StartGame()
 {
+    if (!IsFloorCleaned())
+    {
+        gameState = GAME_OVER;
+        return;
+    }
+
     gameState = GAME_PLAY;
     playerRef->stateExecute = STATE_EXEC_PLAYER_MOVE;
     freezePlayer = false;
@@ -66,7 +77,7 @@ void GameInit()
     freezePlayer = true;
 
     Vector2 startBtnPos = {24, VIRTUAL_SCREEN_HEIGHT - 24};
-    startButton = CircularButtonInit(startBtnPos, 16, gameTextures.melonBig, StartGame);
+    startButton = CircularButtonInit(startBtnPos, 16, gameTextures.playIcon, StartGame);
 
     Vector2 settingBtnPos = {VIRTUAL_SCREEN_WIDTH - 24, startBtnPos.y};
     settingsButton = CircularButtonInit(settingBtnPos, 16, gameTextures.settingsIcon, OpenSettings);
@@ -100,11 +111,11 @@ void Update()
     {
         case GAME_TITLE:
         {
-            bool startCondition = IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsPointInsideCircularButton(*startButton, mousePos);
-            CircularButtonDownOnCondition(startButton, startCondition);
+            CircularButtonMousePress(startButton, MOUSE_BUTTON_LEFT, mousePos);
+            CircularButtonMouseRelease(startButton, MOUSE_BUTTON_LEFT, mousePos);
 
-            bool settingsCondition = IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsPointInsideCircularButton(*settingsButton, mousePos);
-            CircularButtonDownOnCondition(settingsButton, settingsCondition);
+            CircularButtonMousePress(settingsButton, MOUSE_BUTTON_LEFT, mousePos);
+            CircularButtonMouseRelease(settingsButton, MOUSE_BUTTON_LEFT, mousePos);
             break;
         }
 
@@ -117,12 +128,18 @@ void Update()
 
         case GAME_OVER:
         {
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsBallClearingFinished() && targetFps == initFps) {
+            CircularButtonMousePress(backButton, MOUSE_BUTTON_LEFT, mousePos);
+            CircularButtonMouseRelease(backButton, MOUSE_BUTTON_LEFT, mousePos);
+
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsBallClearingFinished() && targetFps == initFps && !backButton->pressed)
+            {
                 BallClearerBegin(NULL, initFps);
             }
 
-            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
-                if (RendererGetPaintPercentage() < .5f && ListLength(&ballHead) == 0) {
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+            {
+                if (RendererGetPaintPercentage() < .5f && ListLength(&ballHead) == 0)
+                {
                     if (!RendererIsRingTransitionActive()) RendererPlayRingTransition();
                 }
             }
@@ -131,8 +148,8 @@ void Update()
 
         case GAME_SETTINGS:
         {
-            bool backCondition = IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsPointInsideCircularButton(*backButton, mousePos);
-            CircularButtonDownOnCondition(backButton, backCondition);
+            CircularButtonMousePress(backButton, MOUSE_BUTTON_LEFT, mousePos);
+            CircularButtonMouseRelease(backButton, MOUSE_BUTTON_LEFT, mousePos);
             break;
         }
     }

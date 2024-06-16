@@ -27,14 +27,40 @@ CircularButton *CircularButtonInit(Vector2 position, float radius, Texture2D tex
     return circularButton;
 }
 
-void CircularButtonDownOnCondition(CircularButton *button, bool condition)
+bool CircularButtonMousePress(CircularButton *circularButton, MouseButton mouseButton, Vector2 mousePos)
 {
-    if (condition != button->pressed)
+    if (IsPointInsideCircularButton(*circularButton, mousePos))
     {
-        (condition ? button->onPressFunc : button->onReleaseFunc)();
+        if (IsMouseButtonPressed(mouseButton))
+        {
+            CircularButtonPress(circularButton);
+            return true;
+        }
+    }
+    else
+    {
+        circularButton->pressed = false;
     }
 
-    button->pressed = condition;
+    return false;
+}
+
+bool CircularButtonMouseRelease(CircularButton *circularButton, MouseButton mouseButton, Vector2 mousePos)
+{
+    bool condition = (IsMouseButtonReleased(mouseButton) && IsPointInsideCircularButton(*circularButton, mousePos) && circularButton->pressed);
+    if (condition) CircularButtonRelease(circularButton);
+    return condition;
+}
+void CircularButtonPress(CircularButton *circularButton)
+{
+    circularButton->pressed = true;
+    circularButton->onPressFunc();
+}
+
+void CircularButtonRelease(CircularButton *circularButton)
+{
+    circularButton->pressed = false;
+    circularButton->onReleaseFunc();
 }
 
 void CircularButtonDraw(CircularButton circularButton)

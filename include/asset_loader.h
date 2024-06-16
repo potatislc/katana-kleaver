@@ -24,6 +24,7 @@ typedef struct
     Texture2D particleRound;
     Texture2D settingsIcon;
     Texture2D arrowIcon;
+    Texture2D playIcon;
 } GameTextures;
 
 typedef struct

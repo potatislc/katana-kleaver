@@ -148,7 +148,7 @@ void DrawOrange(Ball ball, Vector2 drawPos)
     DrawDefault(ball, drawPos);
 }
 
-Ball *BallInit(Vector2 position, float radius, int type)
+Ball *BallInit(Vector2 position, float radius, BallType type)
 {
     Ball *ball = (Ball *)malloc(sizeof(Ball));
 

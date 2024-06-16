@@ -21,6 +21,7 @@ void LoadGameTextures()
     gameTextures.particleRound = LoadTexture("../assets/textures/particle/particle_round.png");
     gameTextures.settingsIcon = LoadTexture("../assets/textures/settings_icon.png");
     gameTextures.arrowIcon = LoadTexture("../assets/textures/arrow_icon.png");
+    gameTextures.playIcon = LoadTexture("../assets/textures/play_icon.png");
 }
 
 void MixGameAudio()

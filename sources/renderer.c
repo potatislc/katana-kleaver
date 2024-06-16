@@ -43,6 +43,8 @@ typedef struct
 
 RingTransition ringTrans = {360.f, 360.f, .8, 0};
 
+Vector2 mousePos;
+
 typedef struct
 {
     Color color;
@@ -291,7 +293,11 @@ void DrawUiGameOver()
     }
 
     if (frameCounter / 15 % 2 == 0) DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+66, 8, WHITE);
-    if (!IsMouseButtonDown(MOUSE_BUTTON_LEFT)) CircularButtonDraw(*backButton);
+
+    if ((backButton->pressed || !IsMouseButtonDown(MOUSE_BUTTON_LEFT)) && IsPointInsideCircularButton(*backButton, mousePos))
+    {
+        CircularButtonDraw(*backButton);
+    }
 }
 
 void DrawUiRingTransition()
@@ -378,7 +384,7 @@ void DrawUi()
     DrawRectangle(0, VIRTUAL_SCREEN_HEIGHT, VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_OFFSET_Y, BLACK);
     DrawTexture(gameTextures.tvBorder, 0, 0, WHITE);
 
-    Vector2 mousePos = Vector2ClampInsideScreen(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2);
+    mousePos = Vector2ClampInsideScreen(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2);
 
     switch(gameState)
     {
@@ -427,7 +433,7 @@ void DrawUi()
 
             DrawCircleLinesV(mousePos, eraserRadius, guideColor);
 
-            if (targetFps == initFps)
+            if (targetFps == initFps && !backButton->pressed)
             {
                 if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
                 {

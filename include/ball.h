@@ -13,12 +13,12 @@ extern float ballSpeed;
 extern bool freezeBalls;
 extern const double ballSpawnTime;
 
-enum BallType
+typedef enum
 {
     TYPE_MELON,
     TYPE_ORANGE,
     TYPE_ARMOR
-};
+} BallType;
 
 typedef struct Ball
 {
@@ -43,7 +43,7 @@ typedef struct Ball
 
 void BallsUpdate();
 
-Ball *BallInit(Vector2 position, float radius, int type);
+Ball *BallInit(Vector2 position, float radius, BallType type);
 void BallUpdate(Ball *ball);
 void BallSetPosition(Ball *ball, Vector2 pos);
 void BallCollisionScreen(Ball *ball);
