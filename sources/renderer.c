@@ -377,6 +377,7 @@ void DrawUiTitleButtons()
 void DrawUiSettingsButtons()
 {
     CircularButtonDraw(*backButton);
+    CircularButtonDraw(*windowModeButton);
 }
 
 void DrawUi()

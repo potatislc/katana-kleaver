@@ -1,5 +1,6 @@
 #include "window_handler.h"
 #include "raylib.h"
+#include "renderer.h"
 
 int windowMode = -1;
 bool windowIsBorderless = false;
@@ -49,6 +50,8 @@ void WindowHandlerSetWindowMode(int mode)
             SetWindowSize(DEFAULT_SCREEN_WIDTH(display), DEFAULT_SCREEN_HEIGHT(display));
             break;
     }
+
+    RendererFitVirtualRectToScreen();
 }
 
 void WindowHandlerToggleWindowMode()

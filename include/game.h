@@ -33,4 +33,6 @@ extern int gameState;
 extern CircularButton *startButton;
 extern CircularButton *settingsButton;
 extern CircularButton *backButton;
+extern CircularButton *windowModeButton;
+
 #endif //BALL_GAME_GAME_H

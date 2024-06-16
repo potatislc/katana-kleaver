@@ -22,7 +22,7 @@ unsigned int frameCounter = 0;
 CircularButton *startButton;
 CircularButton *settingsButton;
 CircularButton *backButton;
-
+CircularButton *windowModeButton;
 
 bool IsFloorCleaned()
 {
@@ -51,6 +51,12 @@ void OpenSettings()
 void GoBackToTitle()
 {
     gameState = GAME_TITLE;
+}
+
+void ToggleWindowMode()
+{
+    WindowHandlerToggleWindowMode();
+    RendererFitVirtualRectToScreen();
 }
 
 void GameInit()
@@ -86,6 +92,9 @@ void GameInit()
 
     Vector2 backBtnPos = {24, VIRTUAL_SCREEN_HEIGHT - 24};
     backButton = CircularButtonInit(backBtnPos, 16, gameTextures.arrowIcon, GoBackToTitle);
+
+    Vector2 windowModeBtnPos = {24, 16 + 24};
+    windowModeButton = CircularButtonInit(windowModeBtnPos, 16, gameTextures.melonBig, ToggleWindowMode);
 }
 
 void SpeedUpFpsEffect()
@@ -155,6 +164,10 @@ void Update()
         {
             CircularButtonMousePress(backButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(backButton, MOUSE_BUTTON_LEFT, mousePos);
+
+            CircularButtonMousePress(windowModeButton, MOUSE_BUTTON_LEFT, mousePos);
+            CircularButtonMouseRelease(windowModeButton, MOUSE_BUTTON_LEFT, mousePos);
+
             if (IsKeyPressed(KEY_ESCAPE)) GoBackToTitle();
             break;
         }
@@ -190,8 +203,7 @@ void Update()
     // Toggle Fullscreen
     if ((IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT))) || IsKeyPressed(KEY_F11))
     {
-        WindowHandlerToggleWindowMode();
-        RendererFitVirtualRectToScreen();
+        ToggleWindowMode();
     }
 
     // Toggle Debug Draw
