@@ -380,9 +380,13 @@ void PlayerDraw(Player player) {
         SpriteAnimate(player.spriteDie, -.015f, false);
         SpriteDraw(*player.spriteDie, player.position, spriteFacing, 0);
     }
-    else
+    else if (player.stateExecute == STATE_EXEC_PLAYER_IDLE)
     {
         spriteFacing = (Vector2){sign(Vector2ToVirtualCoords(GetMousePosition()).x - player.position.x), 1};
+        SpriteDraw(*player.spriteIdle, player.position, spriteFacing, 0);
+    }
+    else
+    {
         SpriteDraw(*player.spriteIdle, player.position, spriteFacing, 0);
     }
 

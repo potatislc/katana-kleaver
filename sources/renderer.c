@@ -369,7 +369,7 @@ void DrawUi()
 
             DrawUiTitleButtons();
 
-            // DrawTextureV(gameTextures.infoQuit, Vector2Zero(), WHITE);
+            DrawTextureV(gameTextures.infoQuit, Vector2Zero(), WHITE);
             break;
         }
 
@@ -395,8 +395,6 @@ void DrawUi()
 
         case GAME_OVER:
         {
-            // DrawTextureV(gameTextures.infoQuit, Vector2Zero(), WHITE);
-
             if (RendererIsRingTransitionActive()) break;
 
             if (targetFps != initFps)
@@ -488,6 +486,10 @@ void DrawDebug()
     char ballCountText[32];
     sprintf(ballCountText, "BALLS ON SCREEN %d", NbrOfBallsOnScreen(ballNbrCount_All));
     DrawText(ballCountText, 10, 50, 21, DARKGREEN);
+
+    char ballsSpawnedText[32];
+    sprintf(ballsSpawnedText, "BALLS SPAWNED %d", ballNbrCount_All.spawned);
+    DrawText(ballsSpawnedText, 10, 70, 21, DARKGREEN);
 }
 
 void RenderToScreen()
