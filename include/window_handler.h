@@ -15,8 +15,9 @@ typedef enum WindowMode
 } WindowMode;
 
 void WindowHandlerInit();
-void WindowHandlerSetWindowMode(int mode);
+void WindowHandlerSetWindowMode(WindowMode mode);
 void WindowHandlerToggleWindowMode();
 WindowMode WindowHandlerGetWindowMode();
+char *GetWindowModeAsText();
 
 #endif //BALL_GAME_WINDOW_HANDLER_H

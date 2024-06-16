@@ -27,7 +27,7 @@ WindowMode WindowHandlerGetWindowMode()
     return windowMode;
 }
 
-void WindowHandlerSetWindowMode(int mode)
+void WindowHandlerSetWindowMode(WindowMode mode)
 {
     windowMode = mode;
 
