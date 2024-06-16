@@ -5,24 +5,24 @@ GameAudio gameAudio;
 
 void LoadGameTextures()
 {
-    gameTextures.titleText = LoadTexture("../assets/textures/title_test.png");
-    gameTextures.bgFloorStandard = LoadTexture("../assets/textures/floor.png");
-    gameTextures.bgBallClear = LoadTexture("../assets/textures/bg_ball_clear.png");
-    gameTextures.tvBorder = LoadTexture("../assets/textures/tv_border.png");
-    gameTextures.melonBig = LoadTexture("../assets/textures/melon/melon_big.png");
-    gameTextures.melonSmall = LoadTexture("../assets/textures/melon/melon_small.png");
-    gameTextures.orange = LoadTexture("../assets/textures/melon/orange.png");
-    gameTextures.orangeHalo = LoadTexture("../assets/textures/melon/orange_halo.png");
-    gameTextures.melonShadow = LoadTexture("../assets/textures/melon/melon_shadow_big.png");
-    gameTextures.samurai = LoadTexture("../assets/textures/samurai/samurai.png");
-    gameTextures.samuraiRunSheet = LoadTexture("../assets/textures/samurai/samurai_run.png");
-    gameTextures.samuraiShadow = LoadTexture("../assets/textures/samurai/samurai_shadow.png");
-    gameTextures.samuraiDieSheet = LoadTexture("../assets/textures/samurai/samurai_die.png");
-    gameTextures.particleRound = LoadTexture("../assets/textures/particle/particle_round.png");
-    gameTextures.settingsIcon = LoadTexture("../assets/textures/settings_icon.png");
-    gameTextures.arrowIcon = LoadTexture("../assets/textures/arrow_icon.png");
-    gameTextures.playIcon = LoadTexture("../assets/textures/play_icon.png");
-    gameTextures.infoQuit = LoadTexture("../assets/textures/info_quit.png");
+    gameTextures.titleText = LoadTexture(ASSETS_PATH "textures/title_test.png");
+    gameTextures.bgFloorStandard = LoadTexture(ASSETS_PATH "textures/floor.png");
+    gameTextures.bgBallClear = LoadTexture(ASSETS_PATH "textures/bg_ball_clear.png");
+    gameTextures.tvBorder = LoadTexture(ASSETS_PATH "textures/tv_border.png");
+    gameTextures.melonBig = LoadTexture(ASSETS_PATH "textures/melon/melon_big.png");
+    gameTextures.melonSmall = LoadTexture(ASSETS_PATH "textures/melon/melon_small.png");
+    gameTextures.orange = LoadTexture(ASSETS_PATH "textures/melon/orange.png");
+    gameTextures.orangeHalo = LoadTexture(ASSETS_PATH "textures/melon/orange_halo.png");
+    gameTextures.melonShadow = LoadTexture(ASSETS_PATH "textures/melon/melon_shadow_big.png");
+    gameTextures.samurai = LoadTexture(ASSETS_PATH "textures/samurai/samurai.png");
+    gameTextures.samuraiRunSheet = LoadTexture(ASSETS_PATH "textures/samurai/samurai_run.png");
+    gameTextures.samuraiShadow = LoadTexture(ASSETS_PATH "textures/samurai/samurai_shadow.png");
+    gameTextures.samuraiDieSheet = LoadTexture(ASSETS_PATH "textures/samurai/samurai_die.png");
+    gameTextures.particleRound = LoadTexture(ASSETS_PATH "textures/particle/particle_round.png");
+    gameTextures.settingsIcon = LoadTexture(ASSETS_PATH "textures/settings_icon.png");
+    gameTextures.arrowIcon = LoadTexture(ASSETS_PATH "textures/arrow_icon.png");
+    gameTextures.playIcon = LoadTexture(ASSETS_PATH "textures/play_icon.png");
+    gameTextures.infoQuit = LoadTexture(ASSETS_PATH "textures/info_quit.png");
 }
 
 void MixGameAudio()
@@ -52,22 +52,22 @@ void MixGameAudio()
 
 void LoadGameAudio()
 {
-    gameAudio.swordSlash = LoadSound("../assets/sfx/sword_slash.wav");
-    gameAudio.dash = LoadSound("../assets/sfx/dash.wav");
-    gameAudio.melonSplats[0] = LoadSound("../assets/sfx/melon_splat_1.wav");
-    gameAudio.melonSplats[1] = LoadSound("../assets/sfx/melon_splat_2.wav");
-    gameAudio.melonSplats[2] = LoadSound("../assets/sfx/melon_splat_3.wav");
-    gameAudio.deathScream = LoadSound("../assets/sfx/death_scream.wav");
-    gameAudio.footstep = LoadSound("../assets/sfx/samurai_footstep.wav");
-    gameAudio.ballSpawn = LoadSound("../assets/sfx/ball_spawn.wav");
-    gameAudio.orangeSpawn = LoadSound("../assets/sfx/orange_spawn.wav");
-    gameAudio.postBallClarity = LoadSound("../assets/sfx/post_ball_clarity.wav");
-    gameAudio.bonusScore = LoadSound("../assets/sfx/bonus_score.wav");
-    gameAudio.loseCombo = LoadSound("../assets/sfx/lose_combo.wav");
-    gameAudio.wipes[0] = LoadSound("../assets/sfx/wipe_1.wav");
-    gameAudio.wipes[1] = LoadSound("../assets/sfx/wipe_2.wav");
+    gameAudio.swordSlash = LoadSound(ASSETS_PATH "sfx/sword_slash.wav");
+    gameAudio.dash = LoadSound(ASSETS_PATH "sfx/dash.wav");
+    gameAudio.melonSplats[0] = LoadSound(ASSETS_PATH "sfx/melon_splat_1.wav");
+    gameAudio.melonSplats[1] = LoadSound(ASSETS_PATH "sfx/melon_splat_2.wav");
+    gameAudio.melonSplats[2] = LoadSound(ASSETS_PATH "sfx/melon_splat_3.wav");
+    gameAudio.deathScream = LoadSound(ASSETS_PATH "sfx/death_scream.wav");
+    gameAudio.footstep = LoadSound(ASSETS_PATH "sfx/samurai_footstep.wav");
+    gameAudio.ballSpawn = LoadSound(ASSETS_PATH "sfx/ball_spawn.wav");
+    gameAudio.orangeSpawn = LoadSound(ASSETS_PATH "sfx/orange_spawn.wav");
+    gameAudio.postBallClarity = LoadSound(ASSETS_PATH "sfx/post_ball_clarity.wav");
+    gameAudio.bonusScore = LoadSound(ASSETS_PATH "sfx/bonus_score.wav");
+    gameAudio.loseCombo = LoadSound(ASSETS_PATH "sfx/lose_combo.wav");
+    gameAudio.wipes[0] = LoadSound(ASSETS_PATH "sfx/wipe_1.wav");
+    gameAudio.wipes[1] = LoadSound(ASSETS_PATH "sfx/wipe_2.wav");
 
-    gameAudio.mainTheme = LoadMusicStream("../assets/bgm/ball_music.mp3");
+    gameAudio.mainTheme = LoadMusicStream(ASSETS_PATH "bgm/ball_music.mp3");
 
     MixGameAudio();
 }
