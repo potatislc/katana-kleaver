@@ -61,3 +61,17 @@ void WindowHandlerToggleWindowMode()
 
     WindowHandlerSetWindowMode(windowMode);
 }
+
+char *GetWindowModeAsString()
+{
+    switch (windowMode) {
+        case WM_BORDERLESS_FULL_WINDOWED:
+            return "Borderless";
+        case WM_FULLSCREEN:
+            return "Fullscreen";
+        case WM_WINDOWED:
+            return "Window";
+        default:
+            return "w h a t?";
+    }
+}

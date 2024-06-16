@@ -18,6 +18,6 @@ void WindowHandlerInit();
 void WindowHandlerSetWindowMode(WindowMode mode);
 void WindowHandlerToggleWindowMode();
 WindowMode WindowHandlerGetWindowMode();
-char *GetWindowModeAsText();
+char *GetWindowModeAsString();
 
 #endif //BALL_GAME_WINDOW_HANDLER_H

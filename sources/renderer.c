@@ -349,6 +349,7 @@ void DrawUiSettingsButtons()
 {
     CircularButtonDraw(*backButton);
     CircularButtonDraw(*windowModeButton);
+    DrawText(GetWindowModeAsString(), (int)windowModeButton->position.x + 24, (int)windowModeButton->position.y, 8, WHITE);
 }
 
 void DrawUi()
