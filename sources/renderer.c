@@ -78,7 +78,8 @@ void RendererInit()
 void RendererFitVirtualRectToScreen()
 {
     int windowHeight = GetScreenHeight();
-    float aspectRatio = (float)DEFAULT_SCREEN_WIDTH / (float)DEFAULT_SCREEN_HEIGHT;
+    int display = GetCurrentMonitor();
+    float aspectRatio = (float)DEFAULT_SCREEN_WIDTH(display) / (float)DEFAULT_SCREEN_HEIGHT(display);
     int newWidth = (int)((float)windowHeight * aspectRatio); // Calculate the new width based on the aspect ratio
 
     screenOffset = (Vector2){(float)(GetScreenWidth() - newWidth) / 2.f, 0.f};

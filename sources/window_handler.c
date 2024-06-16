@@ -6,7 +6,8 @@ bool windowIsBorderless = false;
 
 void WindowHandlerInit()
 {
-    InitWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, WINDOW_TITLE);
+    int display = GetCurrentMonitor();
+    InitWindow(DEFAULT_SCREEN_WIDTH(display), DEFAULT_SCREEN_HEIGHT(display), WINDOW_TITLE);
     //SetWindowState(FLAG_WINDOW_UNFOCUSED);
     //SetWindowState(FLAG_WINDOW_UNDECORATED);
     Image icon = LoadImage("../assets/textures/melon/melon_big.png");
@@ -45,7 +46,7 @@ void WindowHandlerSetWindowMode(int mode)
         case WM_WINDOWED:
             if (IsWindowFullscreen()) ToggleFullscreen();
             if (windowIsBorderless) ToggleBorderLessWindowedOverride();
-            SetWindowSize(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
+            SetWindowSize(DEFAULT_SCREEN_WIDTH(display), DEFAULT_SCREEN_HEIGHT(display));
             break;
     }
 }

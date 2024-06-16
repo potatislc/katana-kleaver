@@ -3,8 +3,8 @@
 
 #define WINDOW_TITLE "Ball Game"
 
-#define DEFAULT_SCREEN_WIDTH (960)
-#define DEFAULT_SCREEN_HEIGHT (1056)
+#define DEFAULT_SCREEN_WIDTH(display) ((GetMonitorHeight(display) <= 1408) ? 800 : 1280)
+#define DEFAULT_SCREEN_HEIGHT(display) ((GetMonitorHeight(display) <= 1408) ? 880 : 1408)
 #define WINDOW_MODES_AMOUNT (2)
 
 typedef enum WindowMode
