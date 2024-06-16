@@ -421,6 +421,8 @@ void DrawUi()
 
         case GAME_OVER:
         {
+            if (RendererIsRingTransitionActive()) break;
+
             if (targetFps != initFps)
             {
                 DrawUiDeathRing();
