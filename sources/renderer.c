@@ -396,6 +396,8 @@ void DrawUi()
             DrawTextureV(gameTextures.titleText, titleScreenOffset, WHITE);
 
             DrawUiTitleButtons();
+
+            // DrawTextureV(gameTextures.infoQuit, Vector2Zero(), WHITE);
             break;
         }
 
@@ -421,6 +423,8 @@ void DrawUi()
 
         case GAME_OVER:
         {
+            // DrawTextureV(gameTextures.infoQuit, Vector2Zero(), WHITE);
+
             if (RendererIsRingTransitionActive()) break;
 
             if (targetFps != initFps)

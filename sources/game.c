@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
 #include "game.h"
 #include "raylib.h"
@@ -20,7 +21,8 @@ unsigned int frameCounter = 0;
 
 CircularButton *startButton;
 CircularButton *settingsButton;
-CircularButton *backButton; // Back changes depending on state
+CircularButton *backButton;
+
 
 bool IsFloorCleaned()
 {
@@ -46,7 +48,7 @@ void OpenSettings()
     gameState = GAME_SETTINGS;
 }
 
-void GoBack()
+void GoBackToTitle()
 {
     gameState = GAME_TITLE;
 }
@@ -83,7 +85,7 @@ void GameInit()
     settingsButton = CircularButtonInit(settingBtnPos, 16, gameTextures.settingsIcon, OpenSettings);
 
     Vector2 backBtnPos = {24, VIRTUAL_SCREEN_HEIGHT - 24};
-    backButton = CircularButtonInit(backBtnPos, 16, gameTextures.arrowIcon, GoBack);
+    backButton = CircularButtonInit(backBtnPos, 16, gameTextures.arrowIcon, GoBackToTitle);
 }
 
 void SpeedUpFpsEffect()
@@ -144,6 +146,8 @@ void Update()
                     // GameRestart();
                 }
             }
+
+            if (IsKeyPressed(KEY_ESCAPE)) GoBackToTitle();
             break;
         }
 
@@ -151,6 +155,7 @@ void Update()
         {
             CircularButtonMousePress(backButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(backButton, MOUSE_BUTTON_LEFT, mousePos);
+            if (IsKeyPressed(KEY_ESCAPE)) GoBackToTitle();
             break;
         }
     }
@@ -198,14 +203,17 @@ void Update()
 
 void GameRun()
 {
-    while (!WindowShouldClose())
+    while (1)
     {
         frameCounter++;
         Update();
         RenderToTarget();
         RenderToScreen();
+
+        if (WindowShouldClose() && (gameState == GAME_TITLE || !IsKeyPressed(KEY_ESCAPE))) break;
     }
 
+    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n hej\n\n\n\n\n\n\n\n\n\n\n\n");
     GameDeInit();
 }
 

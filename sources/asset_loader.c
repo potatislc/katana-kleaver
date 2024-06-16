@@ -22,6 +22,7 @@ void LoadGameTextures()
     gameTextures.settingsIcon = LoadTexture("../assets/textures/settings_icon.png");
     gameTextures.arrowIcon = LoadTexture("../assets/textures/arrow_icon.png");
     gameTextures.playIcon = LoadTexture("../assets/textures/play_icon.png");
+    gameTextures.infoQuit = LoadTexture("../assets/textures/info_quit.png");
 }
 
 void MixGameAudio()
