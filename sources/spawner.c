@@ -13,6 +13,7 @@ ListNode *spawnQueueHead = NULL;
 
 int secondBallLimit = 2;
 int thirdBallLimit = 3;
+int fourthBallLimit = 0;
 
 int wavesSinceLastOrange = 0;
 
@@ -68,9 +69,14 @@ void UpdateBallLimits()
 {
     if (ballNbrCount_All.spawned > 60)
     {
-        if (ballNbrCount_All.spawned % 20 == 0) secondBallLimit++;
+        if (ballNbrCount_All.spawned % 20 == 0 || ballNbrCount_All.spawned % 30 == 0) secondBallLimit++;
 
-        if (ballNbrCount_All.spawned % 30 == 0) secondBallLimit++;
+        if (ballNbrCount_All.spawned % 30 == 0) thirdBallLimit++;
+    }
+
+    if (ballNbrCount_All.spawned > 170)
+    {
+        if (ballNbrCount_All.spawned % 30 == 0) fourthBallLimit++;
     }
 }
 
@@ -102,6 +108,11 @@ void AddBallsToQueue()
             AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
 
             if (NbrOfBallsOnScreen(ballNbrCount_All) <= thirdBallLimit && ballNbrCount_All.destroyed > 50)
+            {
+                AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
+            }
+
+            if (NbrOfBallsOnScreen(ballNbrCount_All) <= fourthBallLimit && ballNbrCount_All.destroyed > 100)
             {
                 AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
             }
