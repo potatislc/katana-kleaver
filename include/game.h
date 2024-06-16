@@ -25,7 +25,8 @@ enum GameStates
     GAME_PLAY,
     GAME_OVER,
     GAME_TUTORIAL,
-    GAME_SETTINGS
+    GAME_SETTINGS,
+    GAME_RESTARTING
 };
 
 extern int gameState;

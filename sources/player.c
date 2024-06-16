@@ -9,6 +9,7 @@
 #include "game.h"
 #include "particle.h"
 #include "camera.h"
+#include "renderer.h"
 
 #define sign(a) ((a > 0) ? 1 : -1)
 
@@ -268,6 +269,11 @@ void PlayerStateDead(Player *player)
     // Chill out
 }
 
+void PlayerStateRevive(Player *player)
+{
+    PlayerMoveToPoint(player, virtualScreenCenter);
+}
+
 void PlayerCollisionBall(Player *player)
 {
     ListNode *currentBallNode = *player->ballHeadRef;
@@ -370,6 +376,11 @@ void PlayerDraw(Player player) {
     else if (player.stateExecute == STATE_EXEC_PLAYER_DEAD)
     {
         SpriteAnimate(player.spriteDie, .015f, false);
+        SpriteDraw(*player.spriteDie, player.position, spriteFacing, 0);
+    }
+    else if (player.stateExecute == STATE_EXEC_PLAYER_REVIVE)
+    {
+        SpriteAnimate(player.spriteDie, -.015f, false);
         SpriteDraw(*player.spriteDie, player.position, spriteFacing, 0);
     }
     else

@@ -141,6 +141,7 @@ void Update()
                 if (RendererGetPaintPercentage() < .5f && ListLength(&ballHead) == 0)
                 {
                     if (!RendererIsRingTransitionActive()) RendererPlayRingTransition();
+                    // GameRestart();
                 }
             }
             break;
@@ -220,6 +221,13 @@ void GameEnd()
 
 void GameRestart()
 {
+    /*
+    gameState = GAME_RESTARTING;
+    playerRef->stateExecute = STATE_EXEC_PLAYER_REVIVE;
+    targetFps = 20;
+    return;
+    */
+
     Player *newPlayer = PlayerReset(playerRef, virtualScreenCenter, &ballHead);
     playerRef = newPlayer;
 
