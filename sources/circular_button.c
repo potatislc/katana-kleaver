@@ -12,7 +12,6 @@ void DefaultOnRelease()
     // Do nothing
 }
 
-
 CircularButton *CircularButtonInit(Vector2 position, float radius, Texture2D texture, void (*onReleaseFunc)())
 {
     CircularButton *circularButton = (CircularButton*)malloc(sizeof(CircularButton));
