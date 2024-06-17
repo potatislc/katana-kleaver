@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include "circular_button.h"
+#include "slider_button.h"
 
 #define BALL_SPAWN_DELAY_FIRST (4.0)
 #define BALL_SPAWN_DELAY_LONG (3.0)
@@ -34,5 +35,13 @@ extern CircularButton *startButton;
 extern CircularButton *settingsButton;
 extern CircularButton *backButton;
 extern CircularButton *windowModeButton;
+extern CircularButton *muteBgmButton;
+extern CircularButton *muteSfxButton;
+
+/*
+extern SliderButton *bgmVolSlider;
+extern SliderButton *sfxVolSlider;
+extern SliderButton *screenShakeSlider;
+*/
 
 #endif //BALL_GAME_GAME_H

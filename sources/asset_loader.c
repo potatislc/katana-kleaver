@@ -19,10 +19,13 @@ void LoadGameTextures()
     gameTextures.samuraiShadow = LoadTexture(ASSETS_PATH "textures/samurai/samurai_shadow.png");
     gameTextures.samuraiDieSheet = LoadTexture(ASSETS_PATH "textures/samurai/samurai_die.png");
     gameTextures.particleRound = LoadTexture(ASSETS_PATH "textures/particle/particle_round.png");
-    gameTextures.settingsIcon = LoadTexture(ASSETS_PATH "textures/settings_icon.png");
-    gameTextures.arrowIcon = LoadTexture(ASSETS_PATH "textures/arrow_icon.png");
-    gameTextures.playIcon = LoadTexture(ASSETS_PATH "textures/play_icon.png");
+    gameTextures.settingsIcon = LoadTexture(ASSETS_PATH "textures/icons/settings_icon.png");
+    gameTextures.arrowIcon = LoadTexture(ASSETS_PATH "textures/icons/arrow_icon.png");
+    gameTextures.playIcon = LoadTexture(ASSETS_PATH "textures/icons/play_icon.png");
+    gameTextures.windowIcon = LoadTexture(ASSETS_PATH "textures/icons/window_icon.png");
+    gameTextures.bgmIcon = LoadTexture(ASSETS_PATH "textures/icons/bgm_icon.png");
     gameTextures.infoQuit = LoadTexture(ASSETS_PATH "textures/info_quit.png");
+
 }
 
 void MixGameAudio()
@@ -47,7 +50,7 @@ void MixGameAudio()
     SetSoundPitch(gameAudio.orangeSpawn, 1.05f);
     SetSoundPitch(gameAudio.postBallClarity, 1.05f);
 
-    SetMusicVolume(gameAudio.mainTheme, .4f);
+    SetMusicVolume(gameAudio.mainTheme, DEFAULT_BGM_VOL);
 }
 
 void LoadGameAudio()
@@ -70,4 +73,12 @@ void LoadGameAudio()
     gameAudio.mainTheme = LoadMusicStream(ASSETS_PATH "bgm/ball_music.mp3");
 
     MixGameAudio();
+}
+
+bool muted = false;
+
+void MuteUnmuteMusic()
+{
+    SetMusicVolume(gameAudio.mainTheme, (!muted) ? 0.f : DEFAULT_BGM_VOL);
+    muted = !muted;
 }

@@ -23,6 +23,14 @@ CircularButton *startButton;
 CircularButton *settingsButton;
 CircularButton *backButton;
 CircularButton *windowModeButton;
+CircularButton *muteBgmButton;
+CircularButton *muteSfxButton;
+
+/*
+SliderButton *bgmVolSlider;
+SliderButton *sfxVolSlider;
+SliderButton *screenShakeSlider;
+*/
 
 bool IsFloorCleaned()
 {
@@ -94,7 +102,17 @@ void GameInit()
     backButton = CircularButtonInit(backBtnPos, 16, gameTextures.arrowIcon, GoBackToTitle);
 
     Vector2 windowModeBtnPos = {24, 16 + 24};
-    windowModeButton = CircularButtonInit(windowModeBtnPos, 16, gameTextures.melonBig, ToggleWindowMode);
+    windowModeButton = CircularButtonInit(windowModeBtnPos, 16, gameTextures.windowIcon, ToggleWindowMode);
+
+    Vector2 muteBgmBtnPos = {24, 24 + 24 + 32};
+    muteBgmButton = CircularButtonInit(muteBgmBtnPos, 16, gameTextures.bgmIcon, MuteUnmuteMusic);
+
+    /*
+    const Rectangle sliderRect = {24, 32, VIRTUAL_SCREEN_WIDTH - 24, 24};
+    bgmVolSlider = (SliderButton*) malloc(sizeof(SliderButton*));
+    bgmVolSlider->rectangle = sliderRect;
+    bgmVolSlider->percent = DEFAULT_BGM_VOL;
+    */
 }
 
 void SpeedUpFpsEffect()
@@ -167,6 +185,11 @@ void Update()
 
             CircularButtonMousePress(windowModeButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(windowModeButton, MOUSE_BUTTON_LEFT, mousePos);
+
+            CircularButtonMousePress(muteBgmButton, MOUSE_BUTTON_LEFT, mousePos);
+            CircularButtonMouseRelease(muteBgmButton, MOUSE_BUTTON_LEFT, mousePos);
+
+            // SetMusicVolume(gameAudio.mainTheme, SliderButtonInput(bgmVolSlider, IsMouseButtonDown(MOUSE_BUTTON_LEFT), mousePos));
 
             if (IsKeyPressed(KEY_ESCAPE)) GoBackToTitle();
             break;
