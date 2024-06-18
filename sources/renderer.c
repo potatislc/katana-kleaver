@@ -350,6 +350,8 @@ void DrawUiSettingsButtons()
     CircularButtonDraw(*backButton);
     CircularButtonDraw(*windowModeButton);
     DrawText(GetWindowModeAsString(), (int)windowModeButton->position.x + 24, (int)windowModeButton->position.y, 8, WHITE);
+    CircularButtonDraw(*muteBgmButton);
+    DrawText((muted) ? "Unmute" : "Mute", (int)muteBgmButton->position.x + 24, (int)muteBgmButton->position.y, 8, WHITE);
 }
 
 void DrawUi()
