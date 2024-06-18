@@ -109,7 +109,7 @@ void ScoreHandlerAddToScoreFromBonusPool(bool instant)
         bonusScorePool--;
         score++;
     }
-    
+
     hiScore = (int)fmax(score, hiScore);
 
     PlaySound(gameAudio.bonusScore);
@@ -135,4 +135,9 @@ int ScoreHandlerGetComboMultiplier()
 int ScoreHandlerGetBonusScorePool()
 {
     return bonusScorePool;
+}
+
+int ScoreHandlerGetHiScore()
+{
+    return hiScore;
 }

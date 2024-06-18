@@ -373,6 +373,8 @@ void DrawUi()
             DrawUiTitleButtons();
 
             DrawTextureV(gameTextures.infoQuit, Vector2Zero(), WHITE);
+
+            if (ScoreHandlerGetHiScore() > 0) DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, VIRTUAL_SCREEN_HEIGHT - 52, 8, WHITE);
             break;
         }
 
