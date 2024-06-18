@@ -23,12 +23,10 @@ set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/include/") # Define PROJECT_INCLU
 # In CLion /CMake Settings/CMake Options, add: -DCMAKE_INCLUDE_DIRECTORIES_PROJECT_BEFORE=TRUE, then rebuild
 
 # Declaring our executable
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES}
-        sources/slider_button.c
-        include/slider_button.h)
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
 # Setting ASSETS_PATH
 target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/") # Set the asset path macro to the absolute path on the dev machine
-#target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="./assets") # Set the asset path macro in release mode to a relative path that assumes the assets folder is in the same directory as the game executable
+#target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="./assets/") # Set the asset path macro in release mode to a relative path that assumes the assets folder is in the same directory as the game executable

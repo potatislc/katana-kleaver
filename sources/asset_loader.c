@@ -5,7 +5,7 @@ GameAudio gameAudio;
 
 void LoadGameTextures()
 {
-    gameTextures.titleText = LoadTexture(ASSETS_PATH "textures/title_test.png");
+    gameTextures.titleText = LoadTexture(ASSETS_PATH "textures/title_test_2.png");
     gameTextures.bgFloorStandard = LoadTexture(ASSETS_PATH "textures/floor.png");
     gameTextures.bgBallClear = LoadTexture(ASSETS_PATH "textures/bg_ball_clear.png");
     gameTextures.tvBorder = LoadTexture(ASSETS_PATH "textures/tv_border.png");
