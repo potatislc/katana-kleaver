@@ -6,4 +6,4 @@ bin/
 build/
 out/
 CMakeSettings.json
-/cmake-build-release/
+cmake-build-release/
