@@ -30,6 +30,7 @@ int ScoreHandlerGetComboMultiplier();
 int ScoreHandlerGetComboScoreBuffer();
 int ScoreHandlerGetBonusScorePool();
 int ScoreHandlerGetHiScore();
+int ScoreHandlerSetHiScore(int newHiScore);
 void ScoreHandlerAddToScoreFromBonusPool(bool instant);
 
 #endif //BALL_GAME_SCORE_HANDLER_H

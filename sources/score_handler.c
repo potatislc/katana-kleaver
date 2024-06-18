@@ -141,3 +141,9 @@ int ScoreHandlerGetHiScore()
 {
     return hiScore;
 }
+
+int ScoreHandlerSetHiScore(int newHiScore)
+{
+    hiScore = newHiScore;
+    UpdateText();
+}

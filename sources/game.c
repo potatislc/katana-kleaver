@@ -13,6 +13,7 @@
 #include "spawner.h"
 #include "raymath.h"
 #include "global.h"
+#include "storage.h"
 
 const int initFps = 60;
 int targetFps = 60;
@@ -91,6 +92,8 @@ void GameInit()
     playerRef = PlayerInit(playerStartPos, &ballHead);
 
     freezePlayer = true;
+
+    ScoreHandlerSetHiScore(LoadStorageValue(STORAGE_POSITION_HISCORE));
 
     Vector2 startBtnPos = {24, VIRTUAL_SCREEN_HEIGHT - 24};
     startButton = CircularButtonInit(startBtnPos, 16, gameTextures.playIcon, StartGame);
@@ -255,9 +258,11 @@ void GameRun()
 
 void GameEnd()
 {
+    if (gameState == GAME_OVER) return;
     gameState = GAME_OVER;
-    // freezeBalls = true;
     ScoreHandlerLoseCombo();
+    ScoreHandlerAddToScoreFromBonusPool(true);
+    SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
     ListRemoveAllNodes(&ballSpawnPointHead);
     ListRemoveAllNodes(&spawnQueueHead);
     targetFps = 2;
@@ -297,6 +302,9 @@ void GameRestart()
 
 void GameDeInit()
 {
+    ScoreHandlerLoseCombo();
+    ScoreHandlerAddToScoreFromBonusPool(true);
+    SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
     CloseWindow();
 }
 
