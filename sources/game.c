@@ -222,7 +222,8 @@ void Update()
 
     ParticlesUpdate();
 
-    ScoreHandlerAddToScoreFromBonusPool();
+    bool instantAdd = IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && gameState != GAME_PLAY && targetFps == initFps;
+    ScoreHandlerAddToScoreFromBonusPool(instantAdd);
 
     // Toggle Fullscreen
     if ((IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT))) || IsKeyPressed(KEY_F11))

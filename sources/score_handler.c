@@ -92,15 +92,24 @@ void ScoreHandlerLoseCombo()
     UpdateText();
 }
 
-void ScoreHandlerAddToScoreFromBonusPool()
+void ScoreHandlerAddToScoreFromBonusPool(bool instant)
 {
     if (bonusScorePool <= 0) return;
 
     int updateSpeed = (bonusScorePool < 50) ? 2 : 1;
     if (frameCounter % updateSpeed != 0) return;
 
-    bonusScorePool--;
-    score++;
+    if (instant)
+    {
+        score += bonusScorePool;
+        bonusScorePool = 0;
+    }
+    else
+    {
+        bonusScorePool--;
+        score++;
+    }
+    
     hiScore = (int)fmax(score, hiScore);
 
     PlaySound(gameAudio.bonusScore);
