@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(ball_game C)
+project(katana_kleaver C)
 set(CMAKE_C_STANDARD 99)
 
 # Adding Raylib

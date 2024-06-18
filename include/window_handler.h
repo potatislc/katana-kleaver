@@ -1,7 +1,7 @@
 #ifndef BALL_GAME_WINDOW_HANDLER_H
 #define BALL_GAME_WINDOW_HANDLER_H
 
-#define WINDOW_TITLE "Ball Game"
+#define WINDOW_TITLE "Katana Kleaver"
 
 #define DEFAULT_SCREEN_WIDTH(display) ((GetMonitorHeight(display) <= 1408) ? 800 : 960)
 #define DEFAULT_SCREEN_HEIGHT(display) ((GetMonitorHeight(display) <= 1408) ? 880 : 1056)
