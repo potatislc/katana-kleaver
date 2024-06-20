@@ -210,7 +210,7 @@ void TutorialSetState(int index)
         default:
         {
             SetTutorialText("");
-            RendererPlayRingTransition();
+            RendererPlayRingTransition(GameStart);
             return;
         }
     }

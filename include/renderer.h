@@ -17,7 +17,7 @@ void RenderToTarget();
 void RenderToScreen();
 void RendererClearBackgroundPaint();
 float RendererGetPaintPercentage();
-void RendererPlayRingTransition();
+void RendererPlayRingTransition(void (*transitionFunction)());
 bool RendererIsRingTransitionActive();
 
 extern Vector2 screenRatio;

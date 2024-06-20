@@ -40,6 +40,7 @@ typedef struct
     float endAngle;
     double duration;
     double timeSinceLastTransition;
+    void (*transitionFunction)();
 } RingTransition;
 
 RingTransition ringTrans = {360.f, 360.f, .8, 0};
@@ -285,7 +286,7 @@ void DrawUiRingTransition()
 
     if (ringTrans.endAngle == 360.f)
     {
-        if (ringTrans.startAngle == 0.f) GameRestart(); // Hard Coded haha
+        if (ringTrans.startAngle == 0.f) ringTrans.transitionFunction();
 
         ringTrans.startAngle = fmaxf(((float)progress-.5f) * 2.f * 360.f, 0.f);
     }
@@ -296,11 +297,12 @@ bool RendererIsRingTransitionActive()
     return GetTime() <= ringTrans.timeSinceLastTransition + ringTrans.duration;
 }
 
-void RendererPlayRingTransition()
+void RendererPlayRingTransition(void (*transitionFunction)())
 {
     ringTrans.timeSinceLastTransition = GetTime();
     ringTrans.startAngle = 0;
     ringTrans.endAngle = 0;
+    ringTrans.transitionFunction = transitionFunction;
 
     PlaySound(gameAudio.dash);
 }

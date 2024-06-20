@@ -131,6 +131,8 @@ void AddBallsToQueue()
 void SpawnerInit()
 {
     timeSinceLastSpawn = GetTime();
+    ballNbrCount_All.spawned = 0;
+    ballNbrCount_All.destroyed = 0;
 }
 
 void SpawnerUpdate()

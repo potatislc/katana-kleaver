@@ -61,8 +61,6 @@ void GameStart()
 
     freezeBalls = false;
 
-    timeSinceLastSpawn = GetTime();
-
     RendererClearBackgroundPaint();
 
     if (tutorialStateIndex < TUTORIAL_LENGTH)
@@ -73,6 +71,7 @@ void GameStart()
 
     gameState = GAME_PLAY;
     SpawnerInit();
+    spawnDelay = BALL_SPAWN_DELAY_FIRST;
 }
 
 void OpenSettings()
@@ -196,7 +195,7 @@ void Update()
             {
                 if (RendererGetPaintPercentage() < .5f && ListLength(&ballHead) == 0)
                 {
-                    if (!RendererIsRingTransitionActive()) RendererPlayRingTransition();
+                    if (!RendererIsRingTransitionActive()) RendererPlayRingTransition(GameRestart);
                     // GameRestart();
                 }
             }
@@ -311,9 +310,9 @@ void GameRestart()
     Player *newPlayer = PlayerReset(playerRef, virtualScreenCenter, &ballHead);
     playerRef = newPlayer;
 
-    spawnDelay = BALL_SPAWN_DELAY_SHORT;
-
     GameStart();
+
+    spawnDelay = BALL_SPAWN_DELAY_SHORT;
 }
 
 void GameDeInit()
