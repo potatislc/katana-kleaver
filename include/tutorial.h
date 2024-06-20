@@ -1,15 +1,19 @@
 #ifndef KATANA_KLEAVER_TUTORIAL_H
 #define KATANA_KLEAVER_TUTORIAL_H
 
-#include <stdbool.h>
+#include "raylib.h"
+
+#define FRAME_COUNTER_TO_TIME ((double)frameCounter / initFps)
 
 typedef enum
 {
     TUTORIAL_MOVING,
     TUTORIAL_DASHING,
-    TUTORIAL_SLASHING,
+    TUTORIAL_SLICING,
     TUTORIAL_COMBOS,
+    TUTORIAL_COMBOS_2,
     TUTORIAL_ORANGES,
+    TUTORIAL_ORANGES_2,
     TUTORIAL_END,
     TUTORIAL_LENGTH
 } TutorialStates;
@@ -17,6 +21,7 @@ typedef enum
 void TutorialBegin();
 void TutorialUpdate();
 void TutorialDraw();
+void TutorialSetState(int index);
 
 extern int tutorialStateIndex;
 extern void (*tutorialState)();

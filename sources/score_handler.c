@@ -51,6 +51,8 @@ void UpdateText()
 
 void ScoreHandlerResetScore()
 {
+    ScoreHandlerLoseCombo();
+    ScoreHandlerAddToScoreFromBonusPool(true);
     score = 0;
 
     UpdateText();
@@ -58,7 +60,7 @@ void ScoreHandlerResetScore()
 
 void ScoreHandlerAddToScore(int val)
 {
-    if (gameState != GAME_PLAY) return;
+    if (!IS_GAME_STATE_PLAYABLE) return;
 
     score += val;
     comboScoreBuffer += val;
@@ -70,7 +72,7 @@ void ScoreHandlerAddToScore(int val)
 
 void ScoreHandlerAddToMultiplier(int val)
 {
-    if (gameState != GAME_PLAY) return;
+    if (!IS_GAME_STATE_PLAYABLE) return;
 
     comboMultiplier += val;
 
@@ -108,11 +110,10 @@ void ScoreHandlerAddToScoreFromBonusPool(bool instant)
     {
         bonusScorePool--;
         score++;
+        PlaySound(gameAudio.bonusScore);
     }
 
     hiScore = (int)fmax(score, hiScore);
-
-    PlaySound(gameAudio.bonusScore);
 
     UpdateText();
 }

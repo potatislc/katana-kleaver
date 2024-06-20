@@ -17,7 +17,7 @@ int fourthBallLimit = 0;
 
 int wavesSinceLastOrange = 0;
 
-void PlaceBallSpawnPoint(float radius, bool avoidPlayer, int type)
+void SpawnerPlaceBallSpawnPoint(float radius, bool avoidPlayer, int type)
 {
     const Vector2 minInitPos = {radius, radius};
     const Vector2 maxInitPos = {VIRTUAL_SCREEN_WIDTH - radius, VIRTUAL_SCREEN_HEIGHT - radius};
@@ -49,7 +49,7 @@ void SpawnFromQueue()
 {
     if (spawnQueueHead == NULL) return;
     SpawnData *headData = (SpawnData*)spawnQueueHead->data;
-    PlaceBallSpawnPoint(headData->radius, headData->avoidPlayer, headData->type);
+    SpawnerPlaceBallSpawnPoint(headData->radius, headData->avoidPlayer, headData->type);
     ListNodeRemove(&spawnQueueHead, spawnQueueHead->data);
 }
 

@@ -101,7 +101,7 @@ void OnSplitOrange(Ball *ball, Vector2 splitDir)
     }
 
     // Screen wipe
-    if (ball->health <= 1 && gameState == GAME_PLAY) BallClearerBegin(ball, 20);
+    if (ball->health <= 1 && IS_GAME_STATE_PLAYABLE) BallClearerBegin(ball, 20);
     /*
     ListNode *currentNode = ballHead;
     int listLength = ListLength(&ballHead);
@@ -240,7 +240,7 @@ void BallClearerUpdate()
 
     if (ballClearer.ballToAvoid != NULL && ballClearer.ballToAvoid->type == TYPE_ORANGE) targetFps = 20;
     ballClearer.clearingFinished = true;
-    if (gameState == GAME_PLAY) PlaySound(gameAudio.postBallClarity);
+    if (IS_GAME_STATE_PLAYABLE) PlaySound(gameAudio.postBallClarity);
 }
 
 void BallClearerForceFinish()

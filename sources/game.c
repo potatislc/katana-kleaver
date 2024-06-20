@@ -41,14 +41,29 @@ bool IsFloorCleaned()
 
 void GameStart()
 {
-    if (!IsFloorCleaned())
+    if (!IsFloorCleaned() && gameState != GAME_TUTORIAL)
     {
         gameState = GAME_OVER;
         return;
     }
 
-    playerRef->stateExecute = STATE_EXEC_PLAYER_MOVE;
     freezePlayer = false;
+
+    playerRef->stateExecute = STATE_EXEC_PLAYER_MOVE;
+
+    BallClearerForceFinish();
+
+    BallDeSpawnAll();
+    ListRemoveAllNodes(&ballSpawnPointHead);
+    BallNbrCountReset(&ballNbrCount_All);
+
+    ScoreHandlerResetScore();
+
+    freezeBalls = false;
+
+    timeSinceLastSpawn = GetTime();
+
+    RendererClearBackgroundPaint();
 
     if (tutorialStateIndex < TUTORIAL_LENGTH)
     {
@@ -68,6 +83,7 @@ void OpenSettings()
 void GoBackToTitle()
 {
     gameState = GAME_TITLE;
+    if (playerRef != NULL && playerRef->stateExecute != STATE_EXEC_PLAYER_DEAD) playerRef->stateExecute = STATE_EXEC_PLAYER_IDLE;
 }
 
 void ToggleWindowMode()
@@ -265,7 +281,7 @@ void GameRun()
         RenderToTarget();
         RenderToScreen();
 
-        if (WindowShouldClose() && (gameState == GAME_TITLE || gameState == GAME_PLAY || !IsKeyPressed(KEY_ESCAPE))) break;
+        if (WindowShouldClose() && (gameState == GAME_TITLE || !IsKeyPressed(KEY_ESCAPE))) break;
     }
 
     GameDeInit();
@@ -295,24 +311,9 @@ void GameRestart()
     Player *newPlayer = PlayerReset(playerRef, virtualScreenCenter, &ballHead);
     playerRef = newPlayer;
 
-    playerRef->stateExecute = STATE_EXEC_PLAYER_MOVE;
-
-    BallClearerForceFinish();
-
-    BallDeSpawnAll();
-    ListRemoveAllNodes(&ballSpawnPointHead);
-    BallNbrCountReset(&ballNbrCount_All);
-
-    ScoreHandlerResetScore();
-
-    gameState = GAME_PLAY;
-
-    freezeBalls = false;
-
-    timeSinceLastSpawn = GetTime();
     spawnDelay = BALL_SPAWN_DELAY_SHORT;
 
-    RendererClearBackgroundPaint();
+    GameStart();
 }
 
 void GameDeInit()

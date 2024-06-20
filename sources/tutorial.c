@@ -1,6 +1,10 @@
 #include "tutorial.h"
 #include "game.h"
 #include "renderer.h"
+#include "spawner.h"
+#include "global.h"
+#include "ball.h"
+#include "score_handler.h"
 
 int tutorialStateIndex = 0;
 void (*tutorialState)();
@@ -8,10 +12,18 @@ double stateEndTime = 0;
 char *tutorialText = "Text";
 int tutorialTextWidth;
 
+bool hasGottenCombo = false;
+
 const double statesTimeDuration[TUTORIAL_LENGTH] =
         {
             1,
             1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            3
         };
 bool statesComplete[TUTORIAL_LENGTH] = {false};
 
@@ -33,15 +45,58 @@ void StateDashing()
 
 void StateSlashing()
 {
-
+    if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
+    {
+        statesComplete[TUTORIAL_SLICING] = true;
+    }
 }
 
-void StateCombo()
+void StateCombos()
 {
-
+    if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
+    {
+        if (ScoreHandlerGetComboScore() > 5)
+        {
+            statesComplete[TUTORIAL_COMBOS] = true;
+        }
+        else
+        {
+            TutorialSetState(TUTORIAL_COMBOS);
+        }
+    }
 }
 
-void SetState(int index)
+void StateCombos2()
+{
+    if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
+    {
+        statesComplete[TUTORIAL_COMBOS_2] = true;
+    }
+}
+
+void StateOranges()
+{
+    if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
+    {
+        if (!statesComplete[TUTORIAL_ORANGES]) targetFps = 2;
+        statesComplete[TUTORIAL_ORANGES] = true;
+    }
+}
+
+void StateOranges2()
+{
+    if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
+    {
+        statesComplete[TUTORIAL_ORANGES_2] = true;
+    }
+}
+
+void StateEnd()
+{
+    statesComplete[TUTORIAL_END] = true;
+}
+
+void TutorialSetState(int index)
 {
     tutorialStateIndex = index;
 
@@ -61,35 +116,65 @@ void SetState(int index)
             break;
         }
 
-        case TUTORIAL_SLASHING:
+        case TUTORIAL_SLICING:
         {
             SetTutorialText("Dash though a fruit to slice it.");
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
             tutorialState = StateSlashing;
             break;
         }
 
         case TUTORIAL_COMBOS:
         {
-            SetTutorialText("Do 5 slashes without missing to gain combo!");
+            SetTutorialText("Missed slice = Lose Combo.");
+            SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
+            tutorialState = StateCombos;
+            break;
+        }
+
+        case TUTORIAL_COMBOS_2:
+        {
+            SetTutorialText("Do consecutive slices rapidly.");
+            SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
+            tutorialState = StateCombos2;
             break;
         }
 
         case TUTORIAL_ORANGES:
         {
-            SetTutorialText("Oranges multiply your combo!");
+            SetTutorialText("Oranges multiply your combo.");
+            SpawnerPlaceBallSpawnPoint(RADIUS_MEDIUM, true, TYPE_ORANGE);
+            tutorialState = StateOranges;
+            break;
+        }
+
+        case TUTORIAL_ORANGES_2:
+        {
+            SetTutorialText("Oranges also clear melons.");
+            SpawnerPlaceBallSpawnPoint(RADIUS_MEDIUM, true, TYPE_ORANGE);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            tutorialState = StateOranges2;
             break;
         }
 
         case TUTORIAL_END:
         {
             SetTutorialText("Good luck.");
+            tutorialState = StateEnd;
             break;
         }
 
         default:
         {
             SetTutorialText("");
-            GameStart();
+            RendererPlayRingTransition();
             return;
         }
     }
@@ -100,18 +185,18 @@ void TutorialBegin()
     if (gameState == GAME_TUTORIAL) return;
 
     gameState = GAME_TUTORIAL;
-    stateEndTime = GetTime();
-    SetState(tutorialStateIndex);
+    stateEndTime = FRAME_COUNTER_TO_TIME;
+    TutorialSetState(tutorialStateIndex);
 }
 
 void TutorialUpdate()
 {
     tutorialState();
 
-    if (!statesComplete[tutorialStateIndex]) stateEndTime = GetTime() + statesTimeDuration[tutorialStateIndex];
-    if (GetTime() > stateEndTime + statesTimeDuration[tutorialStateIndex])
+    if (!statesComplete[tutorialStateIndex]) stateEndTime = FRAME_COUNTER_TO_TIME + statesTimeDuration[tutorialStateIndex];
+    if (FRAME_COUNTER_TO_TIME > stateEndTime + statesTimeDuration[tutorialStateIndex])
     {
-        SetState(tutorialStateIndex+1);
+        TutorialSetState(tutorialStateIndex+1);
     }
 }
 

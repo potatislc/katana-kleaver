@@ -22,5 +22,6 @@ extern ListNode *spawnQueueHead;
 void SpawnerInit();
 void SpawnerUpdate();
 void SpawnFromQueue();
+void SpawnerPlaceBallSpawnPoint(float radius, bool avoidPlayer, int type);
 
 #endif //BALL_GAME_SPAWNER_H

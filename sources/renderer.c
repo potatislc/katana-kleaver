@@ -98,7 +98,7 @@ void RendererFitVirtualRectToScreen()
 
 void DrawBackground()
 {
-    if (!IsBallClearingFinished() && gameState == GAME_PLAY)
+    if (!IsBallClearingFinished() && IS_GAME_STATE_PLAYABLE)
     {
         if (bgTexture != &gameTextures.bgBallClear)
         {
@@ -406,9 +406,11 @@ void DrawUi()
             if (targetFps != initFps)
             {
                 DrawUiDeathRing();
-            } else
+            }
+            else
             {
                 DrawUiGameOver();
+                DrawTextureV(gameTextures.infoQuit, Vector2Zero(), WHITE);
             }
 
             DrawUiScore();
@@ -436,6 +438,8 @@ void DrawUi()
         case GAME_TUTORIAL:
         {
             TutorialDraw();
+            if (!IsBallClearingFinished()) DrawUiBallClearerTarget();
+            if (tutorialStateIndex >= TUTORIAL_SLICING) DrawUiScore();
             break;
         }
     }
