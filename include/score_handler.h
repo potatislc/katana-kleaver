@@ -5,6 +5,14 @@
 
 #define COMBO_BUFFER_SIZE (4)
 
+enum Medal
+{
+    M_BRONZE,
+    M_SILVER,
+    M_GOLD,
+    M_PLATINUM
+};
+
 extern char scoreText[128];
 extern char comboText[128];
 extern char comboMultiplierText[128];

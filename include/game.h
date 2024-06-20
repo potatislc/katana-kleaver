@@ -10,6 +10,7 @@
 #define BALL_SPAWN_DELAY_SHORT (1.0)
 
 void GameInit();
+void GameStart();
 void GameRun();
 void GameEnd();
 void GameRestart();

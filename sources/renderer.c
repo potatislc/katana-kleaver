@@ -9,6 +9,7 @@
 #include "raymath.h"
 #include "game.h"
 #include "camera.h"
+#include "tutorial.h"
 
 Vector2 virtualScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
@@ -429,6 +430,12 @@ void DrawUi()
                 if (IsKeyPressed(KEY_S)) sprayCanFoam.timeSinceLastSpray = GetTime();
             }
 
+            break;
+        }
+
+        case GAME_TUTORIAL:
+        {
+            TutorialDraw();
             break;
         }
     }

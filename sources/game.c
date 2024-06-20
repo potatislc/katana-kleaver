@@ -14,6 +14,7 @@
 #include "raymath.h"
 #include "global.h"
 #include "storage.h"
+#include "tutorial.h"
 
 const int initFps = 60;
 int targetFps = 60;
@@ -38,7 +39,7 @@ bool IsFloorCleaned()
     return RendererGetPaintPercentage() < .5f && ListLength(&ballHead) == 0;
 }
 
-void StartGame()
+void GameStart()
 {
     if (!IsFloorCleaned())
     {
@@ -46,9 +47,16 @@ void StartGame()
         return;
     }
 
-    gameState = GAME_PLAY;
     playerRef->stateExecute = STATE_EXEC_PLAYER_MOVE;
     freezePlayer = false;
+
+    if (tutorialStateIndex < TUTORIAL_LENGTH)
+    {
+        TutorialBegin();
+        return;
+    }
+
+    gameState = GAME_PLAY;
     SpawnerInit();
 }
 
@@ -96,7 +104,7 @@ void GameInit()
     ScoreHandlerSetHiScore(LoadStorageValue(STORAGE_POSITION_HISCORE));
 
     Vector2 startBtnPos = {24, VIRTUAL_SCREEN_HEIGHT - 24};
-    startButton = CircularButtonInit(startBtnPos, 16, gameTextures.playIcon, StartGame);
+    startButton = CircularButtonInit(startBtnPos, 16, gameTextures.playIcon, GameStart);
 
     Vector2 settingBtnPos = {VIRTUAL_SCREEN_WIDTH - 24, startBtnPos.y};
     settingsButton = CircularButtonInit(settingBtnPos, 16, gameTextures.settingsIcon, OpenSettings);
@@ -194,6 +202,13 @@ void Update()
 
             // SetMusicVolume(gameAudio.mainTheme, SliderButtonInput(bgmVolSlider, IsMouseButtonDown(MOUSE_BUTTON_LEFT), mousePos));
 
+            if (IsKeyPressed(KEY_ESCAPE)) GoBackToTitle();
+            break;
+        }
+
+        case GAME_TUTORIAL:
+        {
+            TutorialUpdate();
             if (IsKeyPressed(KEY_ESCAPE)) GoBackToTitle();
             break;
         }
