@@ -24,9 +24,18 @@ const double statesTimeDuration[TUTORIAL_LENGTH] =
             1,
             1,
             1,
-            3
+            2
         };
 bool statesComplete[TUTORIAL_LENGTH] = {false};
+
+typedef struct
+{
+    bool started;
+    double startTime;
+    double duration;
+} SliceTimer;
+
+SliceTimer combos2Timer = {false, 0, 3};
 
 void SetTutorialText(char* text)
 {
@@ -69,9 +78,24 @@ void StateCombos()
 
 void StateCombos2()
 {
+    if (statesComplete[TUTORIAL_COMBOS_2]) return;
+
+    if (ListLength(&ballHead) > 1 && !combos2Timer.started)
+    {
+        combos2Timer.started = true;
+        combos2Timer.startTime = GetTime();
+    }
+
     if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
     {
-        statesComplete[TUTORIAL_COMBOS_2] = true;
+        if (GetTime() <= combos2Timer.startTime + combos2Timer.duration)
+        {
+            statesComplete[TUTORIAL_COMBOS_2] = true;
+        }
+        else
+        {
+            TutorialSetState(TUTORIAL_COMBOS_2);
+        }
     }
 }
 
@@ -130,7 +154,7 @@ void TutorialSetState(int index)
 
         case TUTORIAL_SLICING:
         {
-            SetTutorialText("Dash though a fruit to slice it.");
+            SetTutorialText("Dash though a melon to slice it.");
             SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
             tutorialState = StateSlashing;
             break;
@@ -146,7 +170,8 @@ void TutorialSetState(int index)
 
         case TUTORIAL_COMBOS_2:
         {
-            SetTutorialText("Do consecutive slices rapidly.");
+            SetTutorialText("Destroy the entire melon in 3s");
+            combos2Timer.started = false;
             SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
             tutorialState = StateCombos2;
             break;
@@ -218,9 +243,4 @@ void TutorialDraw()
     Color textColor = (statesComplete[tutorialStateIndex]) ? GREEN : WHITE;
     int yPos = (int)virtualScreenCenter.y - 8 + (int)(sin(GetTime() * 4) * 4);
     DrawText(tutorialText, (int)virtualScreenCenter.x - tutorialTextWidth / 2, yPos, 8, textColor);
-}
-
-void TutorialEnd()
-{
-
 }
