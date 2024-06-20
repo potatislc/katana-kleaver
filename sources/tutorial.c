@@ -1,3 +1,4 @@
+#include <math.h>
 #include "tutorial.h"
 #include "game.h"
 #include "renderer.h"
@@ -85,6 +86,17 @@ void StateOranges()
 
 void StateOranges2()
 {
+    if (ListLength(&ballHead) == 1 && ListLength(&ballSpawnPointHead) == 0)
+    {
+        Ball *ball = (Ball*)ballHead->data;
+        if (ball->type == TYPE_ORANGE)
+        {
+            BallDestroy(ball);
+            TutorialSetState(TUTORIAL_ORANGES_2);
+            return;
+        }
+    }
+
     if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
     {
         statesComplete[TUTORIAL_ORANGES_2] = true;
@@ -204,7 +216,8 @@ void TutorialUpdate()
 void TutorialDraw()
 {
     Color textColor = (statesComplete[tutorialStateIndex]) ? GREEN : WHITE;
-    DrawText(tutorialText, (int)virtualScreenCenter.x - tutorialTextWidth / 2, (int)virtualScreenCenter.y - 8, 8, textColor);
+    int yPos = (int)virtualScreenCenter.y - 8 + (int)(sin(GetTime() * 4) * 4);
+    DrawText(tutorialText, (int)virtualScreenCenter.x - tutorialTextWidth / 2, yPos, 8, textColor);
 }
 
 void TutorialEnd()

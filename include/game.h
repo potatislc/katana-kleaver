@@ -5,6 +5,7 @@
 #include "circular_button.h"
 #include "slider_button.h"
 
+#define FRAME_COUNTER_TO_TIME ((double)frameCounter / initFps)
 #define IS_GAME_STATE_PLAYABLE (gameState == GAME_PLAY || gameState == GAME_TUTORIAL)
 
 #define BALL_SPAWN_DELAY_FIRST (4.0)

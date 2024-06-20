@@ -3,8 +3,6 @@
 
 #include "raylib.h"
 
-#define FRAME_COUNTER_TO_TIME ((double)frameCounter / initFps)
-
 typedef enum
 {
     TUTORIAL_MOVING,
