@@ -42,6 +42,7 @@ void MixGameAudio()
     SetSoundVolume(gameAudio.postBallClarity, .3f);
     SetSoundVolume(gameAudio.bonusScore, .7f);
     SetSoundVolume(gameAudio.loseCombo, .1f);
+    SetSoundVolume(gameAudio.tutorialClear, .2f);
     SetSoundVolume(gameAudio.wipes[0], .5f);
     SetSoundVolume(gameAudio.wipes[1], .5f);
 
@@ -67,6 +68,7 @@ void LoadGameAudio()
     gameAudio.postBallClarity = LoadSound(ASSETS_PATH "sfx/post_ball_clarity.wav");
     gameAudio.bonusScore = LoadSound(ASSETS_PATH "sfx/bonus_score.wav");
     gameAudio.loseCombo = LoadSound(ASSETS_PATH "sfx/lose_combo.wav");
+    gameAudio.tutorialClear = LoadSound(ASSETS_PATH "sfx/tutorial_clear.wav");
     gameAudio.wipes[0] = LoadSound(ASSETS_PATH "sfx/wipe_1.wav");
     gameAudio.wipes[1] = LoadSound(ASSETS_PATH "sfx/wipe_2.wav");
 

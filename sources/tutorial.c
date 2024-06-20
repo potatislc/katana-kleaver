@@ -6,14 +6,13 @@
 #include "global.h"
 #include "ball.h"
 #include "score_handler.h"
+#include "asset_loader.h"
 
 int tutorialStateIndex = 0;
 void (*tutorialState)();
 double stateEndTime = 0;
 char *tutorialText = "Text";
 int tutorialTextWidth;
-
-bool hasGottenCombo = false;
 
 const double statesTimeDuration[TUTORIAL_LENGTH] =
         {
@@ -230,7 +229,14 @@ void TutorialUpdate()
 {
     if (!statesComplete[tutorialStateIndex]) stateEndTime = FRAME_COUNTER_TO_TIME + statesTimeDuration[tutorialStateIndex];
 
+    bool playedClearSound = statesComplete[tutorialStateIndex];
+
     tutorialState();
+
+    if (playedClearSound != statesComplete[tutorialStateIndex])
+    {
+        PlaySound(gameAudio.tutorialClear);
+    }
 
     if (FRAME_COUNTER_TO_TIME > stateEndTime + statesTimeDuration[tutorialStateIndex])
     {

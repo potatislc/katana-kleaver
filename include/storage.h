@@ -8,7 +8,8 @@
 #define STORAGE_DATA_FILE   "storage.data"
 
 typedef enum {
-    STORAGE_POSITION_HISCORE
+    STORAGE_POSITION_HISCORE,
+    STORAGE_POSITION_TUTORIAL_STATE_INDEX
 } StorageData;
 
 bool SaveStorageValue(unsigned int position, int value);
