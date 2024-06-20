@@ -16,7 +16,8 @@ ListNode *ballHead = NULL;
 ListNode *ballSpawnPointHead = NULL;
 float ballSpeed = .5f;
 bool freezeBalls = false;
-const double ballSpawnTime = 1.f;
+const double gameplaySpawnTime = 1.f;
+const double tutorialSpawnTime = 2.f;
 
 BallNbrCount ballNbrCount_All;
 

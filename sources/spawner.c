@@ -6,6 +6,7 @@
 #include "ball.h"
 #include "global.h"
 #include "asset_loader.h"
+#include "game.h"
 
 double spawnDelay = BALL_SPAWN_DELAY_FIRST;
 double timeSinceLastSpawn;
@@ -37,7 +38,8 @@ void SpawnerPlaceBallSpawnPoint(float radius, bool avoidPlayer, int type)
         }
     }
 
-    BallSpawnPoint *newBallSpawn = BallSpawnPointInit(newBall, ballSpawnTime);
+    double spawnTime = (gameState == GAME_PLAY) ? gameplaySpawnTime : tutorialSpawnTime;
+    BallSpawnPoint *newBallSpawn = BallSpawnPointInit(newBall, spawnTime);
     ListNodePush(&ballSpawnPointHead, newBallSpawn);
 
     Sound spawnSfx = (newBall->type == TYPE_MELON) ? gameAudio.ballSpawn : gameAudio.orangeSpawn;

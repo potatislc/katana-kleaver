@@ -22,7 +22,7 @@ const double statesTimeDuration[TUTORIAL_LENGTH] =
             1,
             1,
             1,
-            2,
+            1,
             3
         };
 bool statesComplete[TUTORIAL_LENGTH] = {false};
@@ -191,9 +191,10 @@ void TutorialBegin()
 
 void TutorialUpdate()
 {
+    if (!statesComplete[tutorialStateIndex]) stateEndTime = FRAME_COUNTER_TO_TIME + statesTimeDuration[tutorialStateIndex];
+
     tutorialState();
 
-    if (!statesComplete[tutorialStateIndex]) stateEndTime = FRAME_COUNTER_TO_TIME + statesTimeDuration[tutorialStateIndex];
     if (FRAME_COUNTER_TO_TIME > stateEndTime + statesTimeDuration[tutorialStateIndex])
     {
         TutorialSetState(tutorialStateIndex+1);

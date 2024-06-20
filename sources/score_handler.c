@@ -51,9 +51,11 @@ void UpdateText()
 
 void ScoreHandlerResetScore()
 {
-    ScoreHandlerLoseCombo();
-    ScoreHandlerAddToScoreFromBonusPool(true);
     score = 0;
+    comboScore = 0;
+    bonusScorePool = 0;
+    comboScoreBuffer = 0;
+    comboMultiplier = 1;
 
     UpdateText();
 }

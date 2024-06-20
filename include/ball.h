@@ -11,7 +11,8 @@ extern ListNode *ballHead;
 extern ListNode *ballSpawnPointHead;
 extern float ballSpeed;
 extern bool freezeBalls;
-extern const double ballSpawnTime;
+extern const double gameplaySpawnTime;
+extern const double tutorialSpawnTime;
 
 typedef enum
 {
