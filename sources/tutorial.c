@@ -156,7 +156,7 @@ void TutorialSetState(TutorialStates index)
         case TUTORIAL_SLICING:
         {
             SetTutorialText("Dash though a melon to slice it.");
-            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
             tutorialState = StateSlashing;
             break;
         }
