@@ -20,6 +20,7 @@ void TutorialBegin();
 void TutorialUpdate();
 void TutorialDraw();
 void TutorialSetState(int index);
+void TutorialReset();
 
 extern int tutorialStateIndex;
 extern void (*tutorialState)();

@@ -250,3 +250,12 @@ void TutorialDraw()
     int yPos = (int)virtualScreenCenter.y - 8 + (int)(sin(GetTime() * 4) * 4);
     DrawText(tutorialText, (int)virtualScreenCenter.x - tutorialTextWidth / 2, yPos, 8, textColor);
 }
+
+void TutorialReset()
+{
+    tutorialStateIndex = 0;
+    for (int i = 0; i < TUTORIAL_LENGTH; i++)
+    {
+        statesComplete[i] = false;
+    }
+}

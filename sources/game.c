@@ -265,9 +265,15 @@ void Update()
     }
 
     // Toggle Debug Draw
-    if (IsKeyPressed(KEY_D) && IsKeyDown(KEY_LEFT_SHIFT))
+    if (IsKeyPressed(KEY_D) && (IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)))
     {
         debugDrawing = !debugDrawing;
+    }
+
+    // Reset Tutorial
+    if (IsKeyPressed(KEY_T) && (IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)))
+    {
+        if (gameState != GAME_TUTORIAL) TutorialReset();
     }
 }
 
