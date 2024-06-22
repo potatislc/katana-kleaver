@@ -92,3 +92,14 @@ int LoadStorageValue(unsigned int position)
 
     return value;
 }
+
+bool ResetAllStorageValues()
+{
+    bool success = true;
+    for (int i = 0; i < STORAGE_POSITION_LENGTH; i++)
+    {
+        if (!SaveStorageValue((StorageData)i, 0)) success = false;
+    }
+
+    return success;
+}

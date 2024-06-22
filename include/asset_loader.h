@@ -44,6 +44,8 @@ typedef struct
     Sound postBallClarity;
     Sound bonusScore;
     Sound loseCombo;
+    Sound gainCombo;
+    Sound gainMultiply;
     Sound tutorialClear;
     Sound wipes[WIPE_SOUNDS_LENGTH];
     Music mainTheme;

@@ -9,7 +9,7 @@ int score = 0;
 int hiScore = 0;
 int comboScore = 0;
 int comboScoreBuffer = 0;
-int comboMultiplier = 1;
+int comboMultiplier = MIN_MULTIPLIER;
 // A lost combo gets added to here then it slowly adds to the main score
 int bonusScorePool = 0;
 
@@ -34,7 +34,7 @@ void UpdateText()
 {
     sprintf(scoreText, "Score: %d", score);
     sprintf(comboText, "+%d", comboScore);
-    //if (comboMultiplier > 1) sprintf(comboText, "%s x%d", comboText, comboMultiplier);
+    //if (comboMultiplier > MIN_MULTIPLIER) sprintf(comboText, "%s x%d", comboText, comboMultiplier);
     sprintf(comboMultiplierText, "x%d", comboMultiplier);
     sprintf(hiScoreText, "High Score: %d", hiScore);
     sprintf(bonusScorePoolText, "<-%d", bonusScorePool);
@@ -55,7 +55,7 @@ void ScoreHandlerResetScore()
     comboScore = 0;
     bonusScorePool = 0;
     comboScoreBuffer = 0;
-    comboMultiplier = 1;
+    comboMultiplier = MIN_MULTIPLIER;
 
     UpdateText();
 }
@@ -66,7 +66,11 @@ void ScoreHandlerAddToScore(int val)
 
     score += val;
     comboScoreBuffer += val;
-    comboScore = (comboScoreBuffer > COMBO_BUFFER_SIZE) ? comboScoreBuffer - COMBO_BUFFER_SIZE : 0;
+    if (comboScoreBuffer > COMBO_BUFFER_SIZE)
+    {
+        if (comboScore == 0) PlaySound(gameAudio.gainCombo);
+        comboScore = comboScoreBuffer - COMBO_BUFFER_SIZE;
+    }
     hiScore = (int)fmax(score, hiScore);
 
     UpdateText();
@@ -76,6 +80,7 @@ void ScoreHandlerAddToMultiplier(int val)
 {
     if (!IS_GAME_STATE_PLAYABLE) return;
 
+    if (comboMultiplier == MIN_MULTIPLIER) PlaySound(gameAudio.gainMultiply);
     comboMultiplier += val;
 
     UpdateText();
@@ -91,7 +96,7 @@ void ScoreHandlerLoseCombo()
 
     comboScoreBuffer = 0;
     comboScore = 0;
-    comboMultiplier = 1;
+    comboMultiplier = MIN_MULTIPLIER;
 
     UpdateText();
 }
@@ -145,7 +150,7 @@ int ScoreHandlerGetHiScore()
     return hiScore;
 }
 
-int ScoreHandlerSetHiScore(int newHiScore)
+void ScoreHandlerSetHiScore(int newHiScore)
 {
     hiScore = newHiScore;
     UpdateText();

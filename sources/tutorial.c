@@ -17,7 +17,7 @@ int tutorialTextWidth;
 const double statesTimeDuration[TUTORIAL_LENGTH] =
         {
             1,
-            1,
+            2,
             1,
             1,
             1,
