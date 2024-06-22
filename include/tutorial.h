@@ -19,7 +19,7 @@ typedef enum
 void TutorialBegin();
 void TutorialUpdate();
 void TutorialDraw();
-void TutorialSetState(int index);
+void TutorialSetState(TutorialStates index);
 void TutorialReset();
 
 extern int tutorialStateIndex;

@@ -7,6 +7,7 @@
 #include "ball.h"
 #include "score_handler.h"
 #include "asset_loader.h"
+#include "storage.h"
 
 int tutorialStateIndex = 0;
 void (*tutorialState)();
@@ -131,9 +132,10 @@ void StateEnd()
     statesComplete[TUTORIAL_END] = true;
 }
 
-void TutorialSetState(int index)
+void TutorialSetState(TutorialStates index)
 {
     tutorialStateIndex = index;
+    SaveStorageValue(STORAGE_POSITION_TUTORIAL_STATE_INDEX, tutorialStateIndex);
 
     switch (tutorialStateIndex)
     {
@@ -253,6 +255,8 @@ void TutorialDraw()
 
 void TutorialReset()
 {
+    SaveStorageValue(STORAGE_POSITION_TUTORIAL_STATE_INDEX, 0);
+
     tutorialStateIndex = 0;
     for (int i = 0; i < TUTORIAL_LENGTH; i++)
     {
