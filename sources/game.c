@@ -15,6 +15,7 @@
 #include "global.h"
 #include "storage.h"
 #include "tutorial.h"
+#include "firefly.h"
 
 const int initFps = 60;
 int targetFps = 60;
@@ -140,6 +141,8 @@ void GameInit()
     bgmVolSlider->rectangle = sliderRect;
     bgmVolSlider->percent = DEFAULT_BGM_VOL;
     */
+
+    FirefliesInit();
 }
 
 void SpeedUpFpsEffect()

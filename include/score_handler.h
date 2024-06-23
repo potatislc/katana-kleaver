@@ -6,13 +6,13 @@
 #define COMBO_BUFFER_SIZE (4)
 #define MIN_MULTIPLIER (1)
 
-enum Medal
+typedef enum
 {
-    M_BRONZE,
-    M_SILVER,
-    M_GOLD,
-    M_PLATINUM
-};
+    M_BRONZE = 200,
+    M_SILVER = 500,
+    M_GOLD = 1000,
+    M_PLATINUM = 2000
+} MedalScores;
 
 extern char scoreText[128];
 extern char comboText[128];

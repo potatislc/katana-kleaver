@@ -10,6 +10,7 @@
 #include "game.h"
 #include "camera.h"
 #include "tutorial.h"
+#include "firefly.h"
 
 Vector2 virtualScreenCenter = {VIRTUAL_SCREEN_WIDTH / 2.0f, VIRTUAL_SCREEN_HEIGHT / 2.0f };
 
@@ -129,6 +130,7 @@ void DrawEntities()
     LIST_MAP_DATA(ballHead, BallDraw, *(Ball *));
     LIST_MAP_DATA(ballSpawnPointHead, BallSpawnPointDraw, *(BallSpawnPoint *));
     PlayerDraw(*playerRef);
+    FirefliesDraw();
 }
 
 void DrawParticles()
