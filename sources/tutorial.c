@@ -99,6 +99,11 @@ void StateCombos2()
             TutorialSetState(TUTORIAL_COMBOS_2);
         }
     }
+
+    if (combos2Timer.started)
+    {
+        SetUiProgressBarMidToEnds(&spawningProgressBar, GetTime() - combos2Timer.startTime, combos2Timer.duration);
+    }
 }
 
 void StateOranges()
@@ -178,6 +183,7 @@ void TutorialSetState(TutorialStates index)
             combos2Timer.started = false;
             SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
             tutorialState = StateCombos2;
+            SetUiProgressBarMidToEnds(&spawningProgressBar, 0, 1);
             break;
         }
 

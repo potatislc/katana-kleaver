@@ -180,7 +180,7 @@ void Update()
 
         case GAME_PLAY:
         {
-            SetUiProgressBarMidToEnds(&spawnProgressBar, GetTime() - timeSinceLastSpawn, spawnDelay);
+            SetUiProgressBarMidToEnds(&spawningProgressBar, GetTime() - timeSinceLastSpawn, spawnDelay);
             SpawnerUpdate();
             break;
         }

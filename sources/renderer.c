@@ -22,7 +22,7 @@ TextureTransformRect backgroundPaintRect;
 Vector2 screenOffset;
 Vector2 screenRatio;
 
-UiProgressBar spawnProgressBar = {VIRTUAL_SCREEN_WIDTH, 0, 0};
+UiProgressBar spawningProgressBar = {VIRTUAL_SCREEN_WIDTH, 0, 0};
 
 Texture2D *bgTexture;
 
@@ -249,8 +249,8 @@ void DrawUiScore()
 
 void DrawUiProgressBar()
 {
-    const Vector2 progLineStart = (Vector2){spawnProgressBar.start, VIRTUAL_SCREEN_HEIGHT};
-    const Vector2 progLineEnd = (Vector2){spawnProgressBar.end, VIRTUAL_SCREEN_HEIGHT};
+    const Vector2 progLineStart = (Vector2){spawningProgressBar.start, VIRTUAL_SCREEN_HEIGHT};
+    const Vector2 progLineEnd = (Vector2){spawningProgressBar.end, VIRTUAL_SCREEN_HEIGHT};
     DrawLineV(progLineStart, progLineEnd, uiColorDarkGray);
 }
 
@@ -444,6 +444,7 @@ void DrawUi()
             TutorialDraw();
             if (!IsBallClearingFinished()) DrawUiBallClearerTarget();
             if (tutorialStateIndex >= TUTORIAL_SLICING) DrawUiScore();
+            if (tutorialStateIndex == TUTORIAL_COMBOS_2) DrawUiProgressBar();
             break;
         }
     }

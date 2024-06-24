@@ -33,7 +33,7 @@ typedef struct {
     float end;
 } UiProgressBar;
 
-extern UiProgressBar spawnProgressBar;
+extern UiProgressBar spawningProgressBar;
 void SetUiProgressBarLToR(UiProgressBar *uiProgressBar, double current, double end);
 void SetUiProgressBarMidToEnds(UiProgressBar *uiProgressBar, double current, double end);
 
