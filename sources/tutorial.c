@@ -37,6 +37,8 @@ typedef struct
 
 SliceTimer combos2Timer = {false, 0, 3};
 
+int textCounter = 0;
+
 void SetTutorialText(char* text)
 {
     tutorialText = text;
@@ -136,6 +138,7 @@ void TutorialSetState(TutorialStates index)
 {
     tutorialStateIndex = index;
     SaveStorageValue(STORAGE_POSITION_TUTORIAL_STATE_INDEX, tutorialStateIndex);
+    textCounter = 0;
 
     switch (tutorialStateIndex)
     {
@@ -248,9 +251,10 @@ void TutorialUpdate()
 
 void TutorialDraw()
 {
+    textCounter++;
     Color textColor = (statesComplete[tutorialStateIndex]) ? GREEN : WHITE;
     int yPos = (int)virtualScreenCenter.y - 8 + (int)(sin(GetTime() * 4) * 4);
-    DrawText(tutorialText, (int)virtualScreenCenter.x - tutorialTextWidth / 2, yPos, 8, textColor);
+    DrawText(TextSubtext(tutorialText, 0, textCounter), (int)virtualScreenCenter.x - tutorialTextWidth / 2, yPos, 8, textColor);
 }
 
 void TutorialReset()
