@@ -373,7 +373,7 @@ void DrawUi()
     {
         case GAME_TITLE:
         {
-            ScoreHandlerDrawMedalsStationary();
+            ScoreHandlerDrawMedals();
 
             double speed = GetTime() * 2;
             titleScreenOffset = (Vector2) {(float) cos(speed) * 8, (float) sin(speed * 2) * 4};
@@ -409,6 +409,8 @@ void DrawUi()
 
         case GAME_OVER:
         {
+            ScoreHandlerDrawMedals();
+
             if (RendererIsRingTransitionActive()) break;
 
             if (targetFps != initFps)

@@ -5,15 +5,28 @@
 #include "camera.h"
 #include "raymath.h"
 
-int medalsUnlocked = MEDAL_COUNT;
+int medalsUnlocked = 0;
 int medalsDisplayed = 0;
 double medalGotTime[MEDAL_COUNT];
 Vector2 medalTexSize = {15, 32};
 Vector2 medalOffset = {4, 4};
 
-void ScoreHandlerUnlockMedals()
+const int medalScores[MEDAL_COUNT] = {M_BRONZE, M_SILVER, M_GOLD, M_PLATINUM};
+
+void ScoreHandlerUnlockMedals(int score)
 {
-    if (medalsDisplayed >= MEDAL_COUNT || frameCounter % 15 != 0) return;
+    medalsUnlocked = 0;
+    medalsDisplayed = 0;
+
+    for (int i = 1; i <= MEDAL_COUNT; i++)
+    {
+        if (score >= medalScores[i-1]) medalsUnlocked++;
+    }
+}
+
+void ScoreHandlerRevealMedals()
+{
+    if (medalsDisplayed >= medalsUnlocked || frameCounter % 20 != 0) return;
 
     medalsDisplayed++;
     medalGotTime[medalsDisplayed] = GetTime();
@@ -21,11 +34,6 @@ void ScoreHandlerUnlockMedals()
 }
 
 void ScoreHandlerDrawMedals()
-{
-
-}
-
-void ScoreHandlerDrawMedalsStationary()
 {
     for (int i = 1; i <= medalsDisplayed; i++)
     {

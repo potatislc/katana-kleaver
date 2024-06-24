@@ -45,6 +45,7 @@ void GameStart()
     if ( playerRef->stateExecute == STATE_EXEC_PLAYER_DEAD)
     {
         gameState = GAME_OVER;
+        ScoreHandlerUnlockMedals(ScoreHandlerGetScore());
         return;
     }
 
@@ -84,6 +85,7 @@ void GoBackToTitle()
 {
     gameState = GAME_TITLE;
     if (playerRef != NULL && playerRef->stateExecute != STATE_EXEC_PLAYER_DEAD) playerRef->stateExecute = STATE_EXEC_PLAYER_IDLE;
+    ScoreHandlerUnlockMedals(ScoreHandlerGetHiScore());
 }
 
 void ToggleWindowMode()
@@ -152,6 +154,8 @@ void GameInit()
     */
 
     FirefliesInit();
+
+    ScoreHandlerUnlockMedals(ScoreHandlerGetHiScore());
 }
 
 void SpeedUpFpsEffect()
@@ -185,7 +189,7 @@ void Update()
             CircularButtonMousePress(settingsButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(settingsButton, MOUSE_BUTTON_LEFT, mousePos);
 
-            ScoreHandlerUnlockMedals();
+            ScoreHandlerRevealMedals();
             break;
         }
 
@@ -200,6 +204,8 @@ void Update()
         {
             CircularButtonMousePress(backButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(backButton, MOUSE_BUTTON_LEFT, mousePos);
+
+            ScoreHandlerRevealMedals();
 
             if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsBallClearingFinished() && targetFps == initFps && !backButton->pressed)
             {
@@ -313,6 +319,7 @@ void GameEnd()
     gameState = GAME_OVER;
     ScoreHandlerLoseCombo();
     ScoreHandlerAddToScoreFromBonusPool(true);
+    ScoreHandlerUnlockMedals(ScoreHandlerGetScore());
     SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
     ListRemoveAllNodes(&ballSpawnPointHead);
     ListRemoveAllNodes(&spawnQueueHead);

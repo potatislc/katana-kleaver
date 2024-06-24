@@ -42,17 +42,18 @@ void ScoreHandlerAddToScoreFromBonusPool(bool instant);
 
 #define MEDAL_COUNT (4)
 
-typedef enum
+enum MedalScores
 {
-    M_NONE = 0,
     M_BRONZE = 200,
     M_SILVER = 500,
     M_GOLD = 1000,
     M_PLATINUM = 2000
-} MedalScores;
+};
 
-void ScoreHandlerUnlockMedals();
+extern const int medalScores[MEDAL_COUNT];
+
+void ScoreHandlerUnlockMedals(int score);
+void ScoreHandlerRevealMedals();
 void ScoreHandlerDrawMedals();
-void ScoreHandlerDrawMedalsStationary();
 
 #endif //BALL_GAME_SCORE_HANDLER_H
