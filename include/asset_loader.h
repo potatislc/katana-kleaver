@@ -47,6 +47,7 @@ typedef struct
     Sound gainCombo;
     Sound gainMultiply;
     Sound tutorialClear;
+    Sound tutorialText;
     Sound wipes[WIPE_SOUNDS_LENGTH];
     Music mainTheme;
 } GameAudio;

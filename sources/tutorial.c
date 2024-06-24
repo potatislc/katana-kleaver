@@ -1,4 +1,6 @@
 #include <math.h>
+#include <string.h>
+#include <stdio.h>
 #include "tutorial.h"
 #include "game.h"
 #include "renderer.h"
@@ -28,6 +30,8 @@ const double statesTimeDuration[TUTORIAL_LENGTH] =
         };
 bool statesComplete[TUTORIAL_LENGTH] = {false};
 
+bool stateBegun = false;
+
 typedef struct
 {
     bool started;
@@ -43,6 +47,59 @@ void SetTutorialText(char* text)
 {
     tutorialText = text;
     tutorialTextWidth = MeasureText(tutorialText, 8);
+}
+
+void BeginState(TutorialStates index)
+{
+    stateBegun = true;
+
+    switch (tutorialStateIndex)
+    {
+        case TUTORIAL_SLICING:
+        {
+            SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
+            break;
+        }
+
+        case TUTORIAL_COMBOS:
+        {
+            SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
+            break;
+        }
+
+        case TUTORIAL_COMBOS_2:
+        {
+            combos2Timer.started = false;
+            SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
+            SetUiProgressBarMidToEnds(&spawningProgressBar, 0, 1);
+            break;
+        }
+
+        case TUTORIAL_ORANGES:
+        {
+            SpawnerPlaceBallSpawnPoint(RADIUS_MEDIUM, true, TYPE_ORANGE);
+            break;
+        }
+
+        case TUTORIAL_ORANGES_2:
+        {
+            SpawnerPlaceBallSpawnPoint(RADIUS_MEDIUM, true, TYPE_ORANGE);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
+            break;
+        }
+
+        default:
+        {
+            return;
+        }
+    }
 }
 
 void StateMoving()
@@ -73,7 +130,9 @@ void StateCombos()
         }
         else
         {
-            TutorialSetState(TUTORIAL_COMBOS);
+            BeginState(TUTORIAL_COMBOS);
+            SetTutorialText("Don't lose your combo.");
+            textCounter = 0;
         }
     }
 }
@@ -144,6 +203,7 @@ void TutorialSetState(TutorialStates index)
     tutorialStateIndex = index;
     SaveStorageValue(STORAGE_POSITION_TUTORIAL_STATE_INDEX, tutorialStateIndex);
     textCounter = 0;
+    stateBegun = false;
 
     switch (tutorialStateIndex)
     {
@@ -164,7 +224,6 @@ void TutorialSetState(TutorialStates index)
         case TUTORIAL_SLICING:
         {
             SetTutorialText("Dash though a melon to slice it.");
-            SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
             tutorialState = StateSlashing;
             break;
         }
@@ -172,7 +231,6 @@ void TutorialSetState(TutorialStates index)
         case TUTORIAL_COMBOS:
         {
             SetTutorialText("Missed slice = Lose Combo.");
-            SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
             tutorialState = StateCombos;
             break;
         }
@@ -180,8 +238,6 @@ void TutorialSetState(TutorialStates index)
         case TUTORIAL_COMBOS_2:
         {
             SetTutorialText("Destroy the entire melon in 3s");
-            combos2Timer.started = false;
-            SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
             tutorialState = StateCombos2;
             SetUiProgressBarMidToEnds(&spawningProgressBar, 0, 1);
             break;
@@ -190,7 +246,6 @@ void TutorialSetState(TutorialStates index)
         case TUTORIAL_ORANGES:
         {
             SetTutorialText("Oranges multiply your combo.");
-            SpawnerPlaceBallSpawnPoint(RADIUS_MEDIUM, true, TYPE_ORANGE);
             tutorialState = StateOranges;
             break;
         }
@@ -198,15 +253,6 @@ void TutorialSetState(TutorialStates index)
         case TUTORIAL_ORANGES_2:
         {
             SetTutorialText("Oranges also clear melons.");
-            SpawnerPlaceBallSpawnPoint(RADIUS_MEDIUM, true, TYPE_ORANGE);
-            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
-            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
-            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
-            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
-            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
-            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
-            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
-            SpawnerPlaceBallSpawnPoint(RADIUS_SMALL, true, TYPE_MELON);
             tutorialState = StateOranges2;
             break;
         }
@@ -240,6 +286,22 @@ void TutorialUpdate()
 {
     if (!statesComplete[tutorialStateIndex]) stateEndTime = FRAME_COUNTER_TO_TIME + statesTimeDuration[tutorialStateIndex];
 
+    int tutorialTextLength = (int)strlen(tutorialText);
+
+    if (textCounter == tutorialTextLength)
+    {
+        if (!stateBegun) BeginState(tutorialStateIndex);
+    }
+    else if (textCounter < tutorialTextLength)
+    {
+        if (frameCounter % 3 == 0)
+        {
+            textCounter++;
+            PlaySound(gameAudio.tutorialText);
+        }
+        return;
+    }
+
     bool playedClearSound = statesComplete[tutorialStateIndex];
 
     tutorialState();
@@ -257,7 +319,6 @@ void TutorialUpdate()
 
 void TutorialDraw()
 {
-    textCounter++;
     Color textColor = (statesComplete[tutorialStateIndex]) ? GREEN : WHITE;
     int yPos = (int)virtualScreenCenter.y - 8 + (int)(sin(GetTime() * 4) * 4);
     DrawText(TextSubtext(tutorialText, 0, textCounter), (int)virtualScreenCenter.x - tutorialTextWidth / 2, yPos, 8, textColor);

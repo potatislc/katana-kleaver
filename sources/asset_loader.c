@@ -45,6 +45,7 @@ void MixGameAudio()
     SetSoundVolume(gameAudio.gainCombo, .5f);
     SetSoundVolume(gameAudio.gainMultiply, .5f);
     SetSoundVolume(gameAudio.tutorialClear, .2f);
+    SetSoundVolume(gameAudio.tutorialText, .7f);
     SetSoundVolume(gameAudio.wipes[0], .5f);
     SetSoundVolume(gameAudio.wipes[1], .5f);
 
@@ -73,6 +74,7 @@ void LoadGameAudio()
     gameAudio.gainCombo = LoadSound(ASSETS_PATH "sfx/gain_combo.wav");
     gameAudio.gainMultiply = LoadSound(ASSETS_PATH "sfx/gain_multiply.wav");
     gameAudio.tutorialClear = LoadSound(ASSETS_PATH "sfx/tutorial_clear.wav");
+    gameAudio.tutorialText = LoadSound(ASSETS_PATH "sfx/tutorial_text.wav");
     gameAudio.wipes[0] = LoadSound(ASSETS_PATH "sfx/wipe_1.wav");
     gameAudio.wipes[1] = LoadSound(ASSETS_PATH "sfx/wipe_2.wav");
 
