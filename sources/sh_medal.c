@@ -31,6 +31,7 @@ void ScoreHandlerRevealMedals()
     medalsDisplayed++;
     medalGotTime[medalsDisplayed] = GetTime();
     CameraSetShake(2, 1.f, .2f);
+    PlaySound(gameAudio.medalGot);
 }
 
 void ScoreHandlerDrawMedals()

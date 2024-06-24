@@ -6,7 +6,7 @@
 #define MELON_SOUNDS_LENGTH (3)
 #define WIPE_SOUNDS_LENGTH (2)
 
-#define DEFAULT_BGM_VOL (.4f)
+#define DEFAULT_BGM_VOL (.5f)
 
 typedef struct
 {
@@ -47,6 +47,7 @@ typedef struct
     Sound loseCombo;
     Sound gainCombo;
     Sound gainMultiply;
+    Sound medalGot;
     Sound tutorialClear;
     Sound tutorialText;
     Sound wipes[WIPE_SOUNDS_LENGTH];
