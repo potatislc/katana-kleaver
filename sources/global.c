@@ -7,7 +7,7 @@
 const Color shadowColor = {121, 65, 0, 255};
 const Color uiColorYellow = {255,243, 146, 255};
 const Color uiColorRed = { 219, 65, 97, 255};
-const Color uiColorDarkGray = {100, 100, 100, 255};
+const Color uiColorDarkGray = {50, 50, 50, 255};
 const Color guideColor = {81, 130, 255, 200};
 const Color orangeColor = {255, 180, 0, 255};
 const Color playerBloodColor = {178, 16, 48, 255};
