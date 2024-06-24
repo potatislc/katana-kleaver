@@ -184,6 +184,8 @@ void Update()
 
             CircularButtonMousePress(settingsButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(settingsButton, MOUSE_BUTTON_LEFT, mousePos);
+
+            ScoreHandlerUnlockMedals();
             break;
         }
 

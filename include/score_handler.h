@@ -2,17 +2,10 @@
 #define BALL_GAME_SCORE_HANDLER_H
 
 #include <stdbool.h>
+#include "raylib.h"
 
 #define COMBO_BUFFER_SIZE (4)
 #define MIN_MULTIPLIER (1)
-
-typedef enum
-{
-    M_BRONZE = 200,
-    M_SILVER = 500,
-    M_GOLD = 1000,
-    M_PLATINUM = 2000
-} MedalScores;
 
 extern char scoreText[128];
 extern char comboText[128];
@@ -42,5 +35,24 @@ int ScoreHandlerGetBonusScorePool();
 int ScoreHandlerGetHiScore();
 void ScoreHandlerSetHiScore(int newHiScore);
 void ScoreHandlerAddToScoreFromBonusPool(bool instant);
+
+//
+//  MEDAL
+//
+
+#define MEDAL_COUNT (4)
+
+typedef enum
+{
+    M_NONE = 0,
+    M_BRONZE = 200,
+    M_SILVER = 500,
+    M_GOLD = 1000,
+    M_PLATINUM = 2000
+} MedalScores;
+
+void ScoreHandlerUnlockMedals();
+void ScoreHandlerDrawMedals();
+void ScoreHandlerDrawMedalsStationary();
 
 #endif //BALL_GAME_SCORE_HANDLER_H

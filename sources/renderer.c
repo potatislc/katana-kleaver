@@ -373,6 +373,8 @@ void DrawUi()
     {
         case GAME_TITLE:
         {
+            ScoreHandlerDrawMedalsStationary();
+
             double speed = GetTime() * 2;
             titleScreenOffset = (Vector2) {(float) cos(speed) * 8, (float) sin(speed * 2) * 4};
             DrawTextureV(gameTextures.titleText, titleScreenOffset, WHITE);
@@ -381,7 +383,7 @@ void DrawUi()
 
             DrawTextureV(gameTextures.infoQuit, Vector2Zero(), WHITE);
 
-            if (ScoreHandlerGetHiScore() > 0) DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, VIRTUAL_SCREEN_HEIGHT - 52, 8, WHITE);
+            if (ScoreHandlerGetHiScore() > 0) DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, VIRTUAL_SCREEN_HEIGHT - 52, 8, uiColorYellow);
             break;
         }
 
