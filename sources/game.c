@@ -27,7 +27,7 @@ CircularButton *settingsButton;
 CircularButton *backButton;
 CircularButton *windowModeButton;
 CircularButton *muteBgmButton;
-CircularButton *muteSfxButton;
+CircularButton *replayTutButton;
 
 /*
 SliderButton *bgmVolSlider;
@@ -42,7 +42,7 @@ bool IsFloorCleaned()
 
 void GameStart()
 {
-    if (!IsFloorCleaned() && gameState != GAME_TUTORIAL)
+    if ( playerRef->stateExecute == STATE_EXEC_PLAYER_DEAD)
     {
         gameState = GAME_OVER;
         return;
@@ -92,6 +92,12 @@ void ToggleWindowMode()
     RendererFitVirtualRectToScreen();
 }
 
+void ReplayTutorial()
+{
+    TutorialReset();
+    GameStart();
+}
+
 void GameInit()
 {
     WindowHandlerInit();
@@ -129,11 +135,14 @@ void GameInit()
     Vector2 backBtnPos = {24, VIRTUAL_SCREEN_HEIGHT - 24};
     backButton = CircularButtonInit(backBtnPos, 16, gameTextures.arrowIcon, GoBackToTitle);
 
-    Vector2 windowModeBtnPos = {24, 16 + 24};
+    Vector2 windowModeBtnPos = {24, 24};
     windowModeButton = CircularButtonInit(windowModeBtnPos, 16, gameTextures.windowIcon, ToggleWindowMode);
 
-    Vector2 muteBgmBtnPos = {24, 24 + 24 + 32};
+    Vector2 muteBgmBtnPos = {24, 24 + 36};
     muteBgmButton = CircularButtonInit(muteBgmBtnPos, 16, gameTextures.bgmIcon, MuteUnmuteMusic);
+
+    Vector2 replayTutPos = {24, 24 + 36 + 36};
+    replayTutButton = CircularButtonInit(replayTutPos, 16, gameTextures.orange, ReplayTutorial);
 
     /*
     const Rectangle sliderRect = {24, 32, VIRTUAL_SCREEN_WIDTH - 24, 24};
@@ -203,8 +212,6 @@ void Update()
                     // GameRestart();
                 }
             }
-
-            if (IsKeyPressed(KEY_ESCAPE)) GoBackToTitle();
             break;
         }
 
@@ -219,19 +226,21 @@ void Update()
             CircularButtonMousePress(muteBgmButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(muteBgmButton, MOUSE_BUTTON_LEFT, mousePos);
 
-            // SetMusicVolume(gameAudio.mainTheme, SliderButtonInput(bgmVolSlider, IsMouseButtonDown(MOUSE_BUTTON_LEFT), mousePos));
+            CircularButtonMousePress(replayTutButton, MOUSE_BUTTON_LEFT, mousePos);
+            CircularButtonMouseRelease(replayTutButton, MOUSE_BUTTON_LEFT, mousePos);
 
-            if (IsKeyPressed(KEY_ESCAPE)) GoBackToTitle();
+            // SetMusicVolume(gameAudio.mainTheme, SliderButtonInput(bgmVolSlider, IsMouseButtonDown(MOUSE_BUTTON_LEFT), mousePos));
             break;
         }
 
         case GAME_TUTORIAL:
         {
             TutorialUpdate();
-            if (IsKeyPressed(KEY_ESCAPE)) GoBackToTitle();
             break;
         }
     }
+
+    if (IsKeyPressed(KEY_ESCAPE)) GoBackToTitle();
 
     if (!IsBallClearingFinished())
     {

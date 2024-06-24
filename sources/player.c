@@ -19,6 +19,8 @@ int deathBuffer; // Some grace frames when colliding, when the buffer exceeds ma
 const int maxDeathBuffer = 4;
 bool freezePlayer = false;
 
+#define IS_KILLABLE_STATE (player->stateExecute == STATE_EXEC_PLAYER_MOVE || player->stateExecute == STATE_EXEC_PLAYER_IDLE)
+
 Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
 {
     Player *player = (Player*) malloc(sizeof(Player));
@@ -65,7 +67,7 @@ void PlayerDie(Player *player)
 
     player->stateExecute = STATE_EXEC_PLAYER_DEAD;
     deathBuffer = 0;
-    GameEnd();
+    if (IS_GAME_STATE_PLAYABLE) GameEnd();
 }
 
 void PlayerUpdate(Player *player)
@@ -77,6 +79,16 @@ void PlayerUpdate(Player *player)
     player->radius = (player->stateExecute == STATE_EXEC_PLAYER_MOVE) ? 6.f : 8.f;
     player->position = Vector2ClampInsideScreen(player->position, player->radius);
     if (player->stateExecute != STATE_EXEC_PLAYER_SLICE) PlayerCollisionBall(player);
+
+    if (player->colliding && IsBallClearingFinished() && IS_KILLABLE_STATE)
+    {
+        deathBuffer++;
+        if (deathBuffer > maxDeathBuffer) PlayerDie(player);
+    }
+    else
+    {
+        deathBuffer = 0;
+    }
 
     SoundPanToWorld(gameAudio.footstep, player->position, DEFAULT_SOUND_PAN_INTENSITY);
 }
@@ -95,16 +107,6 @@ void PlayerStateMove(Player *player)
     {
         player->dash->bufferedDash = false;
         PlayerBeginDash(player, Vector2ToVirtualCoords(GetMousePosition()));
-    }
-
-    if (player->colliding && IsBallClearingFinished() && IS_GAME_STATE_PLAYABLE)
-    {
-        deathBuffer++;
-        if (deathBuffer > maxDeathBuffer) PlayerDie(player);
-    }
-    else
-    {
-        deathBuffer = 0;
     }
 }
 
@@ -258,7 +260,7 @@ void PlayerStateSlice(Player *player)
 
 void PlayerStateIdle(Player *player)
 {
-    // Chill out
+    player->dash->bufferedDash = false;
 }
 
 void PlayerStateDead(Player *player)

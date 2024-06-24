@@ -40,6 +40,7 @@ extern CircularButton *settingsButton;
 extern CircularButton *backButton;
 extern CircularButton *windowModeButton;
 extern CircularButton *muteBgmButton;
+extern CircularButton *replayTutButton;
 extern CircularButton *muteSfxButton;
 
 /*
