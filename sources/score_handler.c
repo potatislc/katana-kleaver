@@ -125,6 +125,11 @@ void ScoreHandlerAddToScoreFromBonusPool(bool instant)
     UpdateText();
 }
 
+int ScoreHandlerGetScore()
+{
+    return score;
+}
+
 int ScoreHandlerGetComboScore()
 {
     return comboScore;

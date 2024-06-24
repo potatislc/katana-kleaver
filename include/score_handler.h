@@ -34,6 +34,7 @@ void ScoreHandlerAddToScore(int val);
 void ScoreHandlerAddToMultiplier(int val);
 void ScoreHandlerLoseCombo();
 void ScoreHandlerResetScore();
+int ScoreHandlerGetScore();
 int ScoreHandlerGetComboScore();
 int ScoreHandlerGetComboMultiplier();
 int ScoreHandlerGetComboScoreBuffer();
