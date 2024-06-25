@@ -205,7 +205,7 @@ void Update()
             CircularButtonMousePress(backButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(backButton, MOUSE_BUTTON_LEFT, mousePos);
 
-            ScoreHandlerRevealMedals();
+            if (targetFps >= initFps) ScoreHandlerRevealMedals();
 
             if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsBallClearingFinished() && targetFps == initFps && !backButton->pressed)
             {

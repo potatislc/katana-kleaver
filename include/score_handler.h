@@ -44,7 +44,7 @@ void ScoreHandlerAddToScoreFromBonusPool(bool instant);
 
 enum MedalScores
 {
-    M_BRONZE = 200,
+    M_BRONZE = 100,
     M_SILVER = 500,
     M_GOLD = 1000,
     M_PLATINUM = 2000

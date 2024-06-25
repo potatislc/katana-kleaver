@@ -32,6 +32,7 @@ void ScoreHandlerRevealMedals()
     medalGotTime[medalsDisplayed] = GetTime();
     CameraSetShake(2, 1.f, .2f);
     PlaySound(gameAudio.medalGot);
+    if (medalsDisplayed == 4) PlaySound(gameAudio.postBallClarity);
 }
 
 void ScoreHandlerDrawMedals()
