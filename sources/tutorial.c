@@ -26,6 +26,9 @@ const double statesTimeDuration[TUTORIAL_LENGTH] =
             1,
             1,
             1,
+            1,
+            1,
+            1,
             2
         };
 bool statesComplete[TUTORIAL_LENGTH] = {false};
@@ -56,6 +59,24 @@ void BeginState(TutorialStates index)
     switch (tutorialStateIndex)
     {
         case TUTORIAL_SLICING:
+        {
+            SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
+            break;
+        }
+
+        case TUTORIAL_SLICE_CHAIN:
+        {
+            SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
+            break;
+        }
+
+        case TUTORIAL_SLICE_CHAIN_2:
+        {
+            SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
+            break;
+        }
+
+        case TUTORIAL_SLICE_CHAIN_3:
         {
             SpawnerPlaceBallSpawnPoint(RADIUS_LARGE, true, TYPE_MELON);
             break;
@@ -112,11 +133,46 @@ void StateDashing()
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) statesComplete[TUTORIAL_DASHING] = true;
 }
 
-void StateSlashing()
+void StateSlicing()
 {
     if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
     {
         statesComplete[TUTORIAL_SLICING] = true;
+    }
+}
+
+void StateSliceChain()
+{
+    if (ListLength(&ballHead) > 0 && ListLength(&ballSpawnPointHead) == 0)
+    {
+        freezeBalls = true;
+    }
+
+    if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
+    {
+        statesComplete[TUTORIAL_SLICE_CHAIN] = true;
+    }
+}
+
+void StateSliceChain2()
+{
+    if (ListLength(&ballHead) > 0 && ListLength(&ballSpawnPointHead) == 0)
+    {
+        freezeBalls = true;
+    }
+
+    if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
+    {
+        statesComplete[TUTORIAL_SLICE_CHAIN_2] = true;
+        freezeBalls = false;
+    }
+}
+
+void StateSliceChain3()
+{
+    if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
+    {
+        statesComplete[TUTORIAL_SLICE_CHAIN_3] = true;
     }
 }
 
@@ -224,7 +280,28 @@ void TutorialSetState(TutorialStates index)
         case TUTORIAL_SLICING:
         {
             SetTutorialText("Dash though a melon to slice it.");
-            tutorialState = StateSlashing;
+            tutorialState = StateSlicing;
+            break;
+        }
+
+        case TUTORIAL_SLICE_CHAIN:
+        {
+            SetTutorialText("Slice recharges dash instantly.");
+            tutorialState = StateSliceChain;
+            break;
+        }
+
+        case TUTORIAL_SLICE_CHAIN_2:
+        {
+            SetTutorialText("So you can slice super fast.");
+            tutorialState = StateSliceChain2;
+            break;
+        }
+
+        case TUTORIAL_SLICE_CHAIN_3:
+        {
+            SetTutorialText("Chain quick consecutive slices.");
+            tutorialState = StateSliceChain3;
             break;
         }
 
