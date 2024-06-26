@@ -49,4 +49,25 @@ extern SliderButton *sfxVolSlider;
 extern SliderButton *screenShakeSlider;
 */
 
+//
+//  SETUP
+//
+
+void Setup();
+
+//
+// SPLASH SCREEN
+//
+
+typedef enum
+{
+    SM_THIS_GAME_USES_MOUSE,
+    SM_STUDIO_NAME,
+    SM_LENGTH
+} SplashMessage;
+
+void SplashScreenInit();
+void SplashScreenRun();
+void SplashScreenEnd();
+
 #endif //BALL_GAME_GAME_H

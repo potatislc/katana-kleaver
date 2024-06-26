@@ -102,23 +102,7 @@ void ReplayTutorial()
 
 void GameInit()
 {
-    WindowHandlerInit();
-
-    RendererInit();
-
-    LoadGameTextures();
-    InitAudioDevice();
-    LoadGameAudio();
-
     PlayMusicStream(gameAudio.mainTheme);
-
-    // Set Seed
-    srand(time(0));
-
-    SetTargetFPS(initFps);
-
-    WindowHandlerSetWindowMode(WM_BORDERLESS_FULL_WINDOWED);
-    RendererFitVirtualRectToScreen();
 
     Vector2 playerStartPos = Vector2Add(virtualScreenCenter, (Vector2){0.f, 48.f});
     playerRef = PlayerInit(playerStartPos, &ballHead);
