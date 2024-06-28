@@ -43,7 +43,7 @@ void MixGameAudio()
     SetSoundVolume(gameAudio.postBallClarity, .3f);
     SetSoundVolume(gameAudio.bonusScore, .7f);
     SetSoundVolume(gameAudio.loseCombo, .1f);
-    SetSoundVolume(gameAudio.gainCombo, .5f);
+    SetSoundVolume(gameAudio.gainCombo, .7f);
     SetSoundVolume(gameAudio.gainMultiply, .5f);
     SetSoundVolume(gameAudio.medalGot, .3f);
     SetSoundVolume(gameAudio.tutorialClear, .2f);

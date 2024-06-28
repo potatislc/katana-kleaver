@@ -37,6 +37,25 @@ void ScoreHandlerRevealMedals()
 
 void ScoreHandlerDrawMedals()
 {
+    // Backdrop
+    for (int i = 1; i <= MEDAL_COUNT; i++)
+    {
+
+        Rectangle source = {0, 0, medalTexSize.x, medalTexSize.y};
+        float halfTexW = roundf(medalTexSize.x / 2);
+        Rectangle dest = {
+                VIRTUAL_SCREEN_WIDTH - (halfTexW + medalOffset.x + (float)(i - 1) * (medalTexSize.x + medalOffset.x)),
+                medalOffset.y,
+                medalTexSize.x,
+                medalTexSize.y};
+        Vector2 origin = {halfTexW, 0};
+
+        if (i == MEDAL_COUNT && medalsUnlocked < MEDAL_COUNT - 1) break; // Only reveal the last medal when you're one away
+
+        DrawTexturePro(gameTextures.medals, source, dest, origin, 0, GRAY);
+    }
+
+    // Medal
     for (int i = 1; i <= medalsDisplayed; i++)
     {
         Rectangle source = {(float)gameTextures.medals.width - (float)i * medalTexSize.x,

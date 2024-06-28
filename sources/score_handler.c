@@ -52,8 +52,6 @@ void UpdateText()
 
 void ScoreHandlerResetScore()
 {
-    hiScore = (int)fmax((tutorialStateIndex < TUTORIAL_LENGTH || gameState == GAME_TUTORIAL) ? 0 : score, hiScore);
-
     score = 0;
     comboScore = 0;
     bonusScorePool = 0;
@@ -123,6 +121,11 @@ void ScoreHandlerAddToScoreFromBonusPool(bool instant)
     }
 
     UpdateText();
+}
+
+void ScoreHandlerUpdateHiScore()
+{
+    hiScore = (int)fmax(score, hiScore);
 }
 
 int ScoreHandlerGetScore()

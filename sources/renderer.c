@@ -249,8 +249,8 @@ void DrawUiScore()
 
 void DrawUiProgressBar()
 {
-    const Vector2 progLineStart = (Vector2){spawningProgressBar.start, VIRTUAL_SCREEN_HEIGHT};
-    const Vector2 progLineEnd = (Vector2){spawningProgressBar.end, VIRTUAL_SCREEN_HEIGHT};
+    const Vector2 progLineStart = (Vector2){spawningProgressBar.start, VIRTUAL_SCREEN_HEIGHT+1};
+    const Vector2 progLineEnd = (Vector2){spawningProgressBar.end, VIRTUAL_SCREEN_HEIGHT+1};
     DrawLineV(progLineStart, progLineEnd, uiColorDarkGray);
 }
 
@@ -269,6 +269,8 @@ void DrawUiGameOver()
         {
             DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, uiColorYellow);
         }
+
+        ScoreHandlerDrawMedals();
     }
 
     if (frameCounter / 15 % 2 == 0) DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+66, 8, WHITE);
@@ -364,11 +366,15 @@ void DrawUiSettingsButtons()
     DrawText("Replay Tutorial", (int)replayTutButton->position.x + 24, (int)replayTutButton->position.y, 8, WHITE);
 }
 
-void DrawUi()
+void DrawUiBorders()
 {
-    // Borders
     DrawRectangle(0, VIRTUAL_SCREEN_HEIGHT, VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_OFFSET_Y, BLACK);
     DrawTexture(gameTextures.tvBorder, 0, 0, WHITE);
+}
+
+void DrawUi()
+{
+    DrawUiBorders();
 
     mousePos = Vector2ClampInsideScreen(Vector2Round(Vector2ToVirtualCoords(GetMousePosition())), 2);
 
@@ -376,7 +382,7 @@ void DrawUi()
     {
         case GAME_TITLE:
         {
-            ScoreHandlerDrawMedals();
+            if (ScoreHandlerGetHiScore() >= M_BRONZE) ScoreHandlerDrawMedals();
 
             double speed = GetTime() * 2;
             titleScreenOffset = (Vector2) {(float) cos(speed) * 8, (float) sin(speed * 2) * 4};
@@ -412,8 +418,6 @@ void DrawUi()
 
         case GAME_OVER:
         {
-            ScoreHandlerDrawMedals();
-
             if (RendererIsRingTransitionActive()) break;
 
             if (targetFps != initFps)
@@ -529,7 +533,7 @@ void RenderSplashScreenToTarget()
     {
         DrawTexture(gameTextures.bgFloorStandard, 0, 0, GRAY);
         FirefliesDraw();
-        DrawRectangle(0, VIRTUAL_SCREEN_HEIGHT, VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_OFFSET_Y, BLACK);
+        DrawUiBorders();
 
         switch (splashMessageIndex)
         {

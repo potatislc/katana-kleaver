@@ -27,7 +27,7 @@ void ScoreHandlerAddToScore(int val);
 void ScoreHandlerAddToMultiplier(int val);
 void ScoreHandlerLoseCombo();
 void ScoreHandlerResetScore();
-void ScoreHandlerResetHiScore();
+void ScoreHandlerUpdateHiScore();
 int ScoreHandlerGetScore();
 int ScoreHandlerGetComboScore();
 int ScoreHandlerGetComboMultiplier();
@@ -46,7 +46,7 @@ void ScoreHandlerAddToScoreFromBonusPool(bool instant);
 enum MedalScores
 {
     M_BRONZE = 100,
-    M_SILVER = 500,
+    M_SILVER = 400,
     M_GOLD = 1000,
     M_PLATINUM = 2000
 };

@@ -298,11 +298,12 @@ void GameRun()
 void GameEnd()
 {
     if (gameState == GAME_OVER) return;
-    gameState = GAME_OVER;
     ScoreHandlerLoseCombo();
     ScoreHandlerAddToScoreFromBonusPool(true);
     ScoreHandlerUnlockMedals(ScoreHandlerGetScore());
+    if (gameState != GAME_TUTORIAL) ScoreHandlerUpdateHiScore();
     SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
+    gameState = GAME_OVER;
     ListRemoveAllNodes(&ballSpawnPointHead);
     ListRemoveAllNodes(&spawnQueueHead);
     targetFps = 2;
