@@ -524,22 +524,23 @@ void RenderSplashScreenToTarget()
 
     BeginTextureMode(virtualRenderTarget);
     {
-        ClearBackground(BLACK);
+        DrawTexture(gameTextures.bgFloorStandard, 0, 0, GRAY);
         FirefliesDraw();
+        DrawRectangle(0, VIRTUAL_SCREEN_HEIGHT, VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_OFFSET_Y, BLACK);
 
         switch (splashMessageIndex)
         {
             case SM_THIS_GAME_USES_MOUSE:
             {
                 double speed = GetTime() * 2;
-                Vector2 spriteOffset = {virtualScreenCenter.x + (float) cos(speed) * 8,
-                                        virtualScreenCenter.y + (float) sin(speed * 2) * 4};
+                Vector2 spriteOffset = {virtualScreenCenter.x + (float)cos(speed) * 8,
+                                        virtualScreenCenter.y + (float)sin(speed * 2) * 4 - 16};
                 SpriteDraw(*splashMouseIcon, spriteOffset, Vector2One(), 0);
                 SpriteAnimate(splashMouseIcon, .02f, true);
 
                 char *text = "This game only uses the mouse.";
                 int textWidth = MeasureText(text, 8);
-                Vector2 textPos = {virtualScreenCenter.x - (float)textWidth/2, virtualScreenCenter.y + 48};
+                Vector2 textPos = {virtualScreenCenter.x - (float)textWidth/2, virtualScreenCenter.y + 32};
                 DrawText(text, (int)textPos.x+1, (int)textPos.y+1, 8, GRAY);
                 DrawText(text, (int)textPos.x, (int)textPos.y, 8, WHITE);
                 break;
