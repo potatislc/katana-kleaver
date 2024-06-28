@@ -5,7 +5,7 @@
 
 #include <stdlib.h>
 
-#define STORAGE_DATA_FILE   "storage.data"
+#define STORAGE_DATA_FILE   "save.data"
 
 typedef enum {
     STORAGE_POSITION_HISCORE,

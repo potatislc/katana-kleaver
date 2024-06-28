@@ -265,7 +265,10 @@ void DrawUiGameOver()
         scoreTextWidth = MeasureText(scoreText, 8);
         DrawText(scoreText, (int)virtualScreenCenter.x - scoreTextWidth / 2, (int)virtualScreenCenter.y+12, 8, (ScoreHandlerGetScore() == ScoreHandlerGetHiScore()) ? uiColorYellow : WHITE);
 
-        DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, uiColorYellow);
+        if (tutorialStateIndex >= TUTORIAL_LENGTH)
+        {
+            DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, (int)virtualScreenCenter.y+24, 8, uiColorYellow);
+        }
     }
 
     if (frameCounter / 15 % 2 == 0) DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+66, 8, WHITE);

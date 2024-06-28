@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "game.h"
 #include "asset_loader.h"
+#include "tutorial.h"
 
 int score = 0;
 int hiScore = 0;
@@ -51,6 +52,8 @@ void UpdateText()
 
 void ScoreHandlerResetScore()
 {
+    hiScore = (int)fmax((tutorialStateIndex < TUTORIAL_LENGTH || gameState == GAME_TUTORIAL) ? 0 : score, hiScore);
+
     score = 0;
     comboScore = 0;
     bonusScorePool = 0;
@@ -71,7 +74,6 @@ void ScoreHandlerAddToScore(int val)
         if (comboScore == 0) PlaySound(gameAudio.gainCombo);
         comboScore = comboScoreBuffer - COMBO_BUFFER_SIZE;
     }
-    hiScore = (int)fmax(score, hiScore);
 
     UpdateText();
 }
@@ -119,8 +121,6 @@ void ScoreHandlerAddToScoreFromBonusPool(bool instant)
         score++;
         PlaySound(gameAudio.bonusScore);
     }
-
-    hiScore = (int)fmax(score, hiScore);
 
     UpdateText();
 }
