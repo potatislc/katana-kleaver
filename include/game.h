@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "circular_button.h"
 #include "slider_button.h"
+#include "sprite.h"
 
 #define FRAME_COUNTER_TO_TIME ((double)frameCounter / initFps)
 #define IS_GAME_STATE_PLAYABLE (gameState == GAME_PLAY || gameState == GAME_TUTORIAL)
@@ -67,6 +68,7 @@ typedef enum
 } SplashMessage;
 
 extern SplashMessage splashMessageIndex;
+extern Sprite *splashMouseIcon;
 
 void SplashScreenInit();
 void SplashScreenRun();

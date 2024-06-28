@@ -30,6 +30,7 @@ typedef struct
     Texture2D infoQuit;
     Texture2D windowIcon;
     Texture2D bgmIcon;
+    Texture2D mouseIcon;
     Texture2D medals;
 } GameTextures;
 

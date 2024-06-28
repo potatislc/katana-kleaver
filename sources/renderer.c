@@ -526,6 +526,11 @@ void RenderSplashScreenToTarget()
         switch (splashMessageIndex) {
             case SM_THIS_GAME_USES_MOUSE: {
                 ClearBackground(RED);
+                double speed = GetTime() * 2;
+                Vector2 spriteOffset = {virtualScreenCenter.x + (float) cos(speed) * 8,
+                                        virtualScreenCenter.y + (float) sin(speed * 2) * 4};
+                SpriteDraw(*splashMouseIcon, spriteOffset, Vector2One(), 0);
+                SpriteAnimate(splashMouseIcon, .02f, true);
                 break;
             }
 
