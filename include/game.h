@@ -62,8 +62,8 @@ void Setup();
 
 typedef enum
 {
-    SM_THIS_GAME_USES_MOUSE,
     SM_STUDIO_NAME,
+    SM_THIS_GAME_USES_MOUSE,
     SM_LENGTH
 } SplashMessage;
 

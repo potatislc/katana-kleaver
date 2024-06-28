@@ -521,21 +521,37 @@ void DrawDebug()
 
 void RenderSplashScreenToTarget()
 {
+
     BeginTextureMode(virtualRenderTarget);
     {
-        switch (splashMessageIndex) {
-            case SM_THIS_GAME_USES_MOUSE: {
-                ClearBackground(RED);
+        ClearBackground(BLACK);
+        FirefliesDraw();
+
+        switch (splashMessageIndex)
+        {
+            case SM_THIS_GAME_USES_MOUSE:
+            {
                 double speed = GetTime() * 2;
                 Vector2 spriteOffset = {virtualScreenCenter.x + (float) cos(speed) * 8,
                                         virtualScreenCenter.y + (float) sin(speed * 2) * 4};
                 SpriteDraw(*splashMouseIcon, spriteOffset, Vector2One(), 0);
                 SpriteAnimate(splashMouseIcon, .02f, true);
+
+                char *text = "This game only uses the mouse.";
+                int textWidth = MeasureText(text, 8);
+                Vector2 textPos = {virtualScreenCenter.x - (float)textWidth/2, virtualScreenCenter.y + 48};
+                DrawText(text, (int)textPos.x+1, (int)textPos.y+1, 8, GRAY);
+                DrawText(text, (int)textPos.x, (int)textPos.y, 8, WHITE);
                 break;
             }
 
-            case SM_STUDIO_NAME: {
-                ClearBackground(BLUE);
+            case SM_STUDIO_NAME:
+            {
+                char *text = "A game by...";
+                int textWidth = MeasureText(text, 8);
+                Vector2 textPos = {virtualScreenCenter.x - (float)textWidth/2, virtualScreenCenter.y};
+                DrawText(text, (int)textPos.x+1, (int)textPos.y+1, 8, GRAY);
+                DrawText(text, (int)textPos.x, (int)textPos.y, 8, WHITE);
                 break;
             }
 

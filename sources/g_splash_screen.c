@@ -2,16 +2,18 @@
 #include "renderer.h"
 #include "sprite.h"
 #include "asset_loader.h"
+#include "firefly.h"
 
 SplashMessage splashMessageIndex = 0;
 
-double messageDurations[SM_LENGTH] = {4, 7};
+double messageDurations[SM_LENGTH] = {5, 10};
 
 Sprite *splashMouseIcon;
 
 void SplashScreenInit()
 {
     splashMouseIcon = SpriteInit(gameTextures.mouseIcon, (Rectangle){0, 0, 64, 64}, 0, true);
+    FirefliesInit();
 }
 
 void SplashScreenRun()

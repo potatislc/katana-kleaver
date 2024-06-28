@@ -137,8 +137,6 @@ void GameInit()
     bgmVolSlider->percent = DEFAULT_BGM_VOL;
     */
 
-    FirefliesInit();
-
     ScoreHandlerUnlockMedals(ScoreHandlerGetHiScore());
 }
 
