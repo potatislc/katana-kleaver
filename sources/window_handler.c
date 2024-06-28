@@ -8,9 +8,8 @@ bool windowIsBorderless = false;
 void WindowHandlerInit()
 {
     int display = GetCurrentMonitor();
+    SetConfigFlags(FLAG_WINDOW_UNDECORATED);
     InitWindow(DEFAULT_SCREEN_WIDTH(display), DEFAULT_SCREEN_HEIGHT(display), WINDOW_TITLE);
-    //SetWindowState(FLAG_WINDOW_UNFOCUSED);
-    //SetWindowState(FLAG_WINDOW_UNDECORATED);
     Image icon = LoadImage("../assets/textures/melon/melon_big.png");
     SetWindowIcon(icon);
     UnloadImage(icon);

@@ -9,6 +9,7 @@
 #define VIRTUAL_SCREEN_OFFSET_Y (16)
 
 void RendererInit();
+void RenderSplashScreenToTarget();
 void RendererDrawGame();
 void RendererDrawUi();
 void RendererDrawDebug();

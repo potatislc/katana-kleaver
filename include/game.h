@@ -66,6 +66,8 @@ typedef enum
     SM_LENGTH
 } SplashMessage;
 
+extern SplashMessage splashMessageIndex;
+
 void SplashScreenInit();
 void SplashScreenRun();
 void SplashScreenEnd();

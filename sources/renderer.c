@@ -519,6 +519,28 @@ void DrawDebug()
     DrawText(ballsSpawnedText, 10, 70, 21, DARKGREEN);
 }
 
+void RenderSplashScreenToTarget()
+{
+    BeginTextureMode(virtualRenderTarget);
+    {
+        switch (splashMessageIndex) {
+            case SM_THIS_GAME_USES_MOUSE: {
+                ClearBackground(RED);
+                break;
+            }
+
+            case SM_STUDIO_NAME: {
+                ClearBackground(BLUE);
+                break;
+            }
+
+            default:
+                return;
+        }
+    }
+    EndTextureMode();
+}
+
 void RenderToScreen()
 {
     BeginDrawing();
