@@ -24,7 +24,7 @@ void ParticleUpdate(ListNode **listHeadRef, Particle *particle)
     }
 
     particle->velocity = Vector2MoveTowards(particle->velocity, Vector2Zero(), particle->drag);
-    particle->velocity = (Vector2){particle->velocity.x, particle->velocity.y + particle->gravity};
+    particle->velocity.y += particle->gravity;
     particle->position = Vector2Add(particle->position, particle->velocity);
 }
 
@@ -101,6 +101,7 @@ Particle *ParticlePresetAura(Vector2 position, Color color)
     const float randDir = (float)(((double)rand() / RAND_MAX) * 2 * M_PI);
     particle->position = Vector2Add(position, LengthDirToVector2(randLength, randDir));
     particle->gravity = -.05f;
+    particle->velocity = Vector2Zero();
     particle->drag = 0.f;
     particle->texture = gameTextures.particlePixel;
     particle->textureOffset = (Vector2){(float)particle->texture.width / 2.f, (float)particle->texture.height / 2.f};
