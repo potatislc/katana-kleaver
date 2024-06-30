@@ -12,8 +12,8 @@ extern char comboText[128];
 extern char comboMultiplierText[128];
 extern char hiScoreText[128];
 extern char bonusScorePoolText[128];
-extern char gameOverText[32];
-extern char restartText[32];
+extern const char gameOverText[];
+extern const char restartText[];
 
 extern int scoreTextWidth;
 extern int comboTextWidth;

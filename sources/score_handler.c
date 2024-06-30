@@ -20,8 +20,8 @@ char comboMultiplierText[128] = "x";
 char hiScoreText[128] = "High Score: 0";
 char bonusScorePoolText[128] = "<-";
 
-char gameOverText[32] = "- Game Over -";
-char restartText[32] = "Clean up to restart!";
+const char gameOverText[] = "- Game Over -";
+const char restartText[] = "Clean up to restart!";
 
 int scoreTextWidth;
 int comboTextWidth;
