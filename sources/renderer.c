@@ -563,7 +563,7 @@ void RenderSplashScreenToTarget()
 
             case SM_STUDIO_NAME:
             {
-                char *text = "A game by...";
+                char *text = "A game by Lökallan";
                 int textWidth = MeasureText(text, 8);
                 Vector2 textPos = {virtualScreenCenter.x - (float)textWidth/2, virtualScreenCenter.y};
                 DrawText(text, (int)textPos.x+1, (int)textPos.y+1, 8, GRAY);
