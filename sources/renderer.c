@@ -410,7 +410,9 @@ void DrawUi()
 
         case GAME_PLAY:
         {
-            if (ballNbrCount_All.spawned == 0 && frameCounter / 30 % 2 == 0) {
+            if (ballNbrCount_All.spawned == 0 && frameCounter / 15 % 2 == 0) {
+                DrawText(getReadyText, (int) virtualScreenCenter.x- getReadyTextWidth / 2 + 1,
+                         (int) virtualScreenCenter.y - 32 + 1, 8, GRAY);
                 DrawText(getReadyText, (int) virtualScreenCenter.x - getReadyTextWidth / 2,
                          (int) virtualScreenCenter.y - 32, 8, WHITE);
             }
