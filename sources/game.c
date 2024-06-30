@@ -59,6 +59,7 @@ void GameStart()
     ListRemoveAllNodes(&ballSpawnPointHead);
     BallNbrCountReset(&ballNbrCount_All);
 
+    SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
     ScoreHandlerResetScore();
 
     freezeBalls = false;
@@ -299,8 +300,7 @@ void GameEnd()
 {
     if (gameState == GAME_OVER) return;
     ScoreHandlerLoseCombo();
-    ScoreHandlerAddToScoreFromBonusPool(true);
-    ScoreHandlerUnlockMedals(ScoreHandlerGetScore());
+    ScoreHandlerUnlockMedals(ScoreHandlerGetScore() + ScoreHandlerGetBonusScorePool());
     if (gameState != GAME_TUTORIAL) ScoreHandlerUpdateHiScore();
     SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
     gameState = GAME_OVER;
