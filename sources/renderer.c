@@ -237,6 +237,8 @@ void DrawUiScore()
     if (ScoreHandlerGetComboScore() > 0)
     {
         DrawText(comboText, comboScoreOffset, yOffset, defaultSize, uiColorRed);
+        Vector2 particlePos = {(float)comboScoreOffset + (float)comboTextWidth / 2, (float)yOffset+8};
+        ParticleCreate(&particleUiHead, ParticlePresetAura(particlePos, uiColorRed));
     }
 
     if (ScoreHandlerGetComboMultiplier() > 1)
@@ -244,7 +246,11 @@ void DrawUiScore()
         double pulse = sin(GetTime() * 10) * 50;
         Color pulsatingColor = {(int)fmin(orangeColor.r + pulse, 255), (int)fmin(orangeColor.g + pulse, 255), orangeColor.b, 255};
         DrawText(comboMultiplierText, comboMultiplierOffset, yOffset, defaultSize, pulsatingColor);
+        Vector2 particlePos = {(float)comboMultiplierOffset + (float)comboMultiplierTextWidth / 2, (float)yOffset+8};
+        ParticleCreate(&particleUiHead, ParticlePresetAura(particlePos, orangeColor));
     }
+
+    LIST_MAP_DATA(particleUiHead, ParticleDraw, *(Particle *));
 }
 
 void DrawUiProgressBar()

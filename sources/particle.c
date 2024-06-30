@@ -5,18 +5,21 @@
 #include "global.h"
 
 ListNode *particleHead = NULL;
-ListNode *particleRedrawHead = NULL;
+ListNode *particleUiHead = NULL;
 
-void ParticleCreate(Particle *particle)
+const Color auraMelon = {219, 65, 97, 100};
+const Color auraOrange = {255, 180, 0, 100};
+
+void ParticleCreate(ListNode **listHeadRef, Particle *particle)
 {
-    ListNodePush(&particleHead, particle);
+    ListNodePush(listHeadRef, particle);
 }
 
-void ParticleUpdate(Particle *particle)
+void ParticleUpdate(ListNode **listHeadRef, Particle *particle)
 {
     if (GetTime() >= particle->initTime + particle->lifeTime)
     {
-        ListNodeRemove(&particleHead, particle);
+        ListNodeRemove(listHeadRef, particle);
         return;
     }
 
@@ -47,7 +50,14 @@ void ParticlesUpdate()
     ListNode* currentParticleNode = particleHead;
     while (currentParticleNode != NULL)
     {
-        ParticleUpdate(currentParticleNode->data);
+        ParticleUpdate(&particleHead, currentParticleNode->data);
+        currentParticleNode = currentParticleNode->next;
+    }
+
+    currentParticleNode = particleUiHead;
+    while (currentParticleNode != NULL)
+    {
+        ParticleUpdate(&particleUiHead, currentParticleNode->data);
         currentParticleNode = currentParticleNode->next;
     }
 }
@@ -77,6 +87,25 @@ Particle *ParticlePresetPlayerBlood(Vector2 position)
 {
     Particle *particle = ParticlePresetJuice(position, playerBloodColor);
     particle->lifeTime = 1;
+
+    return particle;
+}
+
+Particle *ParticlePresetAura(Vector2 position, Color color)
+{
+    Particle* particle = (Particle*)malloc(sizeof(Particle));
+
+    particle->initTime = GetTime();
+    particle->lifeTime = .4;
+    const float randLength = 2.f + (float)((double)rand() / RAND_MAX) * 8.f;
+    const float randDir = (float)(((double)rand() / RAND_MAX) * 2 * M_PI);
+    particle->position = Vector2Add(position, LengthDirToVector2(randLength, randDir));
+    particle->gravity = -.05f;
+    particle->drag = 0.f;
+    particle->texture = gameTextures.particlePixel;
+    particle->textureOffset = (Vector2){(float)particle->texture.width / 2.f, (float)particle->texture.height / 2.f};
+    particle->colorTint = color;
+    particle->scaleAnim = 1.f;
 
     return particle;
 }

@@ -72,7 +72,7 @@ void OnSplitMelon(Ball *ball, Vector2 splitDir)
 
 void OnDestroyMelon(Ball *ball)
 {
-    CREATE_PARTICLES(ParticlePresetJuice(ball->position, uiColorRed), (int)(ball->radius / 2.f) + 1);
+    CREATE_PARTICLES(&particleHead, ParticlePresetJuice(ball->position, uiColorRed), (int)(ball->radius / 2.f) + 1);
 
     ScoreHandlerAddToScore(1);
 }
@@ -90,7 +90,7 @@ void BallClearerBegin(Ball *ball, int slowDownFps)
 
 void OnSplitOrange(Ball *ball, Vector2 splitDir)
 {
-    CREATE_PARTICLES(ParticlePresetJuice(ball->position, orangeColor), (int)(ball->radius / 2.f) + 1);
+    CREATE_PARTICLES(&particleHead, ParticlePresetJuice(ball->position, orangeColor), (int)(ball->radius / 2.f) + 1);
 
     if (ball->health > 2)
     {
@@ -118,7 +118,7 @@ void OnSplitOrange(Ball *ball, Vector2 splitDir)
 
 void OnDestroyOrange(Ball *ball)
 {
-    CREATE_PARTICLES(ParticlePresetJuice(ball->position, orangeColor), (int)(ball->radius / 2.f) + 1);
+    CREATE_PARTICLES(&particleHead, ParticlePresetJuice(ball->position, orangeColor), (int)(ball->radius / 2.f) + 1);
 
     ScoreHandlerAddToMultiplier(1);
 }

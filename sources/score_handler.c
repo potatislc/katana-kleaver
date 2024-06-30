@@ -25,6 +25,7 @@ char restartText[32] = "Clean up to restart!";
 
 int scoreTextWidth;
 int comboTextWidth;
+int comboMultiplierTextWidth;
 int hiScoreTextWidth;
 int bonusScorePoolTextWidth;
 const int gameOverTextWidth = 71;
@@ -42,6 +43,7 @@ void UpdateText()
 
     scoreTextWidth = MeasureText(scoreText, 8);
     comboTextWidth = MeasureText(comboText, 8);
+    comboMultiplierTextWidth = MeasureText(comboMultiplierText, 8);
     hiScoreTextWidth = MeasureText(hiScoreText, 8);
     bonusScorePoolTextWidth = MeasureText(bonusScorePoolText, 8);
 
@@ -119,6 +121,8 @@ void ScoreHandlerAddToScoreFromBonusPool(bool instant)
         score++;
         PlaySound(gameAudio.bonusScore);
     }
+
+    ScoreHandlerUpdateHiScore();
 
     UpdateText();
 }

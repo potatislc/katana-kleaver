@@ -63,7 +63,7 @@ void PlayerDie(Player *player)
 
     CameraSetShake(4, 1.f, 2.f);
 
-    CREATE_PARTICLES(ParticlePresetPlayerBlood(player->position), 35);
+    CREATE_PARTICLES(&particleHead, ParticlePresetPlayerBlood(player->position), 35);
 
     player->stateExecute = STATE_EXEC_PLAYER_DEAD;
     deathBuffer = 0;
@@ -91,6 +91,9 @@ void PlayerUpdate(Player *player)
     }
 
     SoundPanToWorld(gameAudio.footstep, player->position, DEFAULT_SOUND_PAN_INTENSITY);
+
+    // if (ScoreHandlerGetComboScore() > 0) CREATE_PARTICLES(&particleUiHead, ParticlePresetAura(player->position, auraMelon), 1);
+    // if (ScoreHandlerGetComboMultiplier() > 1) CREATE_PARTICLES(&particleUiHead, ParticlePresetAura(player->position, auraOrange), 1);
 }
 
 void PlayerStateMove(Player *player)
