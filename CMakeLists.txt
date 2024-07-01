@@ -27,7 +27,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
     target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/") # Set the asset path macro to the absolute path on the dev machine
 else()
-    add_executable(${PROJECT_NAME} WIN32 ${PROJECT_SOURCES})
+    add_executable(${PROJECT_NAME} WIN32 ${PROJECT_SOURCES} resources/resources.rc)
     target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="./assets/") # Set the asset path macro to a relative path in release mode
 endif()
 
