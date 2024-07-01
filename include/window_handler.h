@@ -3,8 +3,6 @@
 
 #define WINDOW_TITLE "Katana Kleaver"
 
-#define DEFAULT_SCREEN_WIDTH(display) ((GetMonitorHeight(display) <= 1408) ? 800 : 960)
-#define DEFAULT_SCREEN_HEIGHT(display) ((GetMonitorHeight(display) <= 1408) ? 880 : 1056)
 #define WINDOW_MODES_AMOUNT (2)
 
 typedef enum WindowMode
@@ -19,5 +17,10 @@ void WindowHandlerSetWindowMode(WindowMode mode);
 void WindowHandlerToggleWindowMode();
 WindowMode WindowHandlerGetWindowMode();
 char *GetWindowModeAsString();
+
+extern const double defaultWindowScale;
+extern const double windowHeightScaleFactor;
+int DefaultWindowWidth(int display);
+int DefaultWindowHeight(int display);
 
 #endif //BALL_GAME_WINDOW_HANDLER_H

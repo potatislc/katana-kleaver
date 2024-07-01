@@ -20,7 +20,4 @@ void Setup()
     srand(time(0));
 
     SetTargetFPS(initFps);
-
-    WindowHandlerSetWindowMode(WM_BORDERLESS_FULL_WINDOWED);
-    RendererFitVirtualRectToScreen();
 }

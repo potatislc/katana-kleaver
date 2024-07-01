@@ -5,14 +5,28 @@
 int windowMode = -1;
 bool windowIsBorderless = false;
 
+const double defaultWindowScale = .8;
+const double windowHeightScaleFactor = 1.1;
+
+int DefaultWindowWidth(int display)
+{
+    return (int)(GetMonitorHeight(display) * defaultWindowScale);
+}
+
+int DefaultWindowHeight(int display)
+{
+    return (int)(GetMonitorHeight(display) * defaultWindowScale * windowHeightScaleFactor);
+}
+
 void WindowHandlerInit()
 {
     int display = GetCurrentMonitor();
-    SetConfigFlags(FLAG_WINDOW_UNDECORATED);
-    InitWindow(DEFAULT_SCREEN_WIDTH(display), DEFAULT_SCREEN_HEIGHT(display), WINDOW_TITLE);
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+    InitWindow(DefaultWindowWidth(display), DefaultWindowHeight(display), WINDOW_TITLE);
     Image icon = LoadImage("../assets/textures/melon/melon_big.png");
     SetWindowIcon(icon);
     UnloadImage(icon);
+    WindowHandlerSetWindowMode(WM_WINDOWED);
 }
 
 void ToggleBorderLessWindowedOverride()
@@ -46,7 +60,9 @@ void WindowHandlerSetWindowMode(WindowMode mode)
         case WM_WINDOWED:
             if (IsWindowFullscreen()) ToggleFullscreen();
             if (windowIsBorderless) ToggleBorderLessWindowedOverride();
-            SetWindowSize(DEFAULT_SCREEN_WIDTH(display), DEFAULT_SCREEN_HEIGHT(display));
+            SetWindowSize(DefaultWindowWidth(display), DefaultWindowHeight(display));
+            SetWindowPosition((GetMonitorWidth(display) - GetScreenWidth()) / 2,
+                              (GetMonitorHeight(display) - GetScreenHeight()) / 2);
             break;
     }
 
@@ -69,7 +85,7 @@ char *GetWindowModeAsString()
         case WM_FULLSCREEN:
             return "Fullscreen";
         case WM_WINDOWED:
-            return "Window";
+            return "Windowed";
         default:
             return "w h a t?";
     }

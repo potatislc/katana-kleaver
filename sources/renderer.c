@@ -81,8 +81,7 @@ void RendererInit()
 void RendererFitVirtualRectToScreen()
 {
     int windowHeight = GetScreenHeight();
-    int display = GetCurrentMonitor();
-    float aspectRatio = (float)DEFAULT_SCREEN_WIDTH(display) / (float)DEFAULT_SCREEN_HEIGHT(display);
+    float aspectRatio = (float)VIRTUAL_SCREEN_WIDTH / (float)(VIRTUAL_SCREEN_HEIGHT+VIRTUAL_SCREEN_OFFSET_Y);
     int newWidth = (int)((float)windowHeight * aspectRatio); // Calculate the new width based on the aspect ratio
 
     screenOffset = (Vector2){(float)(GetScreenWidth() - newWidth) / 2.f, 0.f};
@@ -537,6 +536,7 @@ void DrawDebug()
 
 void RenderSplashScreenToTarget()
 {
+    if (IsWindowResized()) RendererFitVirtualRectToScreen();
 
     BeginTextureMode(virtualRenderTarget);
     {
@@ -581,6 +581,8 @@ void RenderSplashScreenToTarget()
 
 void RenderToScreen()
 {
+    if (IsWindowResized()) RendererFitVirtualRectToScreen();
+
     BeginDrawing();
     {
         ClearBackground(BLACK);
