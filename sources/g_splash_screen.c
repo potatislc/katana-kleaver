@@ -24,6 +24,8 @@ void SplashScreenRun()
         {
             RenderSplashScreenToTarget();
             RenderToScreen();
+
+            if (WindowShouldClose()) break;
         }
 
         splashMessageIndex++;

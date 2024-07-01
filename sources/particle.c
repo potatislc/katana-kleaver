@@ -100,7 +100,7 @@ Particle *ParticlePresetAura(Vector2 position, Color color)
     const float randLength = 2.f + (float)((double)rand() / RAND_MAX) * 8.f;
     const float randDir = (float)(((double)rand() / RAND_MAX) * 2 * M_PI);
     particle->position = Vector2Add(position, LengthDirToVector2(randLength, randDir));
-    particle->gravity = -.05f;
+    particle->gravity = -.06f;
     particle->velocity = Vector2Zero();
     particle->drag = 0.f;
     particle->texture = gameTextures.particlePixel;

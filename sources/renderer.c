@@ -229,6 +229,8 @@ void DrawUiScore()
 
     DrawText(scoreText, scoreOffset, yOffset, defaultSize, uiColorYellow);
 
+    LIST_MAP_DATA(particleUiHead, ParticleDraw, *(Particle *));
+
     if (ScoreHandlerGetBonusScorePool() > 0)
     {
         DrawText(bonusScorePoolText, bonusScoreOffset, yOffset, defaultSize, guideColor);
@@ -249,8 +251,6 @@ void DrawUiScore()
         Vector2 particlePos = {(float)comboMultiplierOffset + (float)comboMultiplierTextWidth / 2, (float)yOffset+8};
         ParticleCreate(&particleUiHead, ParticlePresetAura(particlePos, orangeColor));
     }
-
-    LIST_MAP_DATA(particleUiHead, ParticleDraw, *(Particle *));
 }
 
 void DrawUiProgressBar()
@@ -410,7 +410,8 @@ void DrawUi()
 
         case GAME_PLAY:
         {
-            if (ballNbrCount_All.spawned == 0 && frameCounter / 15 % 2 == 0) {
+            if (ballNbrCount_All.spawned == 0 && frameCounter / 15 % 2 == 0 && ListLength(&ballSpawnPointHead) == 0)
+            {
                 DrawText(getReadyText, (int) virtualScreenCenter.x- getReadyTextWidth / 2 + 1,
                          (int) virtualScreenCenter.y - 32 + 1, 8, GRAY);
                 DrawText(getReadyText, (int) virtualScreenCenter.x - getReadyTextWidth / 2,
