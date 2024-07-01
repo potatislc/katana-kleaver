@@ -233,7 +233,7 @@ void BallClearerUpdate()
     {
         ballClearer.nodeIndex++;
         ListNode *nextNode = ballClearer.currentNode->next;
-        if (ballClearer.currentNode->data != ballClearer.ballToAvoid) BallSplit(ballClearer.currentNode->data, RandomDirection());
+        if (ballClearer.currentNode->data != NULL && ballClearer.currentNode->data != ballClearer.ballToAvoid) BallSplit(ballClearer.currentNode->data, RandomDirection());
         ballClearer.currentNode = nextNode;
 
         return;
