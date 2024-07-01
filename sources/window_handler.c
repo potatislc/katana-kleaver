@@ -27,6 +27,7 @@ void WindowHandlerInit()
     SetWindowIcon(icon);
     UnloadImage(icon);
     WindowHandlerSetWindowMode(WM_WINDOWED);
+    MaximizeWindow();
 }
 
 void ToggleBorderLessWindowedOverride()
