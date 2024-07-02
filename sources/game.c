@@ -277,6 +277,14 @@ void Update()
     #endif
 }
 
+void GameRunWeb()
+{
+    frameCounter++;
+    Update();
+    RenderToTarget();
+    RenderToScreen();
+}
+
 void GameRun()
 {
     while (1)
@@ -288,8 +296,6 @@ void GameRun()
 
         if (WindowShouldClose() && (gameState == GAME_TITLE || !IsKeyPressed(KEY_ESCAPE))) break;
     }
-
-    GameDeInit();
 }
 
 void GameEnd()

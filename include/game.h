@@ -71,6 +71,7 @@ extern SplashMessage splashMessageIndex;
 extern Sprite *splashMouseIcon;
 
 void SplashScreenInit();
+void GameRunWeb();
 void SplashScreenRun();
 void SplashScreenEnd();
 

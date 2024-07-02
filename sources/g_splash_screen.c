@@ -16,6 +16,11 @@ void SplashScreenInit()
     FirefliesInit();
 }
 
+void SplashScreenRunWeb()
+{
+
+}
+
 void SplashScreenRun()
 {
     while (splashMessageIndex < SM_LENGTH)

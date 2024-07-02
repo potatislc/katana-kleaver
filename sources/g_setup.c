@@ -19,5 +19,7 @@ void Setup()
     // Set Seed
     srand(time(0));
 
-    SetTargetFPS(initFps);
+    #if !defined(PLATFORM_WEB)
+        SetTargetFPS(initFps);
+    #endif
 }
