@@ -277,16 +277,9 @@ void Update()
     #endif
 }
 
-void GameRunWeb()
-{
-    frameCounter++;
-    Update();
-    RenderToTarget();
-    RenderToScreen();
-}
-
 void GameRun()
 {
+    #ifdef PLATFORM_DESKTOP
     while (1)
     {
         frameCounter++;
@@ -296,6 +289,12 @@ void GameRun()
 
         if (WindowShouldClose() && (gameState == GAME_TITLE || !IsKeyPressed(KEY_ESCAPE))) break;
     }
+    #elif PLATFORM_WEB
+    frameCounter++;
+    Update();
+    RenderToTarget();
+    RenderToScreen();
+    #endif
 }
 
 void GameEnd()

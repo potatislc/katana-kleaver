@@ -26,9 +26,9 @@ void WindowHandlerInit()
     Image icon = LoadImage("../assets/textures/melon/melon_big.png");
     SetWindowIcon(icon);
     UnloadImage(icon);
-    #if !defined(PLATFORM_WEB)
-        WindowHandlerSetWindowMode(WM_WINDOWED);
-        MaximizeWindow();
+    #ifdef PLATFORM_DESKTOP
+    WindowHandlerSetWindowMode(WM_WINDOWED);
+    MaximizeWindow();
     #endif
 }
 
@@ -47,10 +47,7 @@ void WindowHandlerSetWindowMode(WindowMode mode)
 {
     windowMode = mode;
 
-    #ifdef PLATFORM_WEB
-        return;
-    #endif
-
+    #ifdef PLATFORM_DESKTOP
     int display = GetCurrentMonitor();
 
     switch (windowMode)
@@ -74,6 +71,7 @@ void WindowHandlerSetWindowMode(WindowMode mode)
     }
 
     RendererFitVirtualRectToScreen();
+    #endif
 }
 
 void WindowHandlerToggleWindowMode()
