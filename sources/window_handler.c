@@ -26,8 +26,10 @@ void WindowHandlerInit()
     Image icon = LoadImage("../assets/textures/melon/melon_big.png");
     SetWindowIcon(icon);
     UnloadImage(icon);
-    WindowHandlerSetWindowMode(WM_WINDOWED);
-    MaximizeWindow();
+    #if !defined(PLATFORM_WEB)
+        WindowHandlerSetWindowMode(WM_WINDOWED);
+        MaximizeWindow();
+    #endif
 }
 
 void ToggleBorderLessWindowedOverride()
@@ -44,6 +46,10 @@ WindowMode WindowHandlerGetWindowMode()
 void WindowHandlerSetWindowMode(WindowMode mode)
 {
     windowMode = mode;
+
+    #ifdef PLATFORM_WEB
+        return;
+    #endif
 
     int display = GetCurrentMonitor();
 

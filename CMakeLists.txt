@@ -28,14 +28,18 @@ set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/include/") # Define PROJECT_INCLU
 # In CLion /CMake Settings/CMake Options, add: -DCMAKE_INCLUDE_DIRECTORIES_PROJECT_BEFORE=TRUE, then rebuild
 
 # Check build type and set executable
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
     target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/") # Set the asset path macro to the absolute path on the dev machine
     target_compile_definitions(${PROJECT_NAME} PRIVATE PROFILE_DEBUG)
-else()
+elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
     add_executable(${PROJECT_NAME} WIN32 ${PROJECT_SOURCES} resources/resources.rc)
     target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="./assets/") # Set the asset path macro to a relative path in release mode
-endif()
+    target_compile_definitions(${PROJECT_NAME} PRIVATE PROFILE_RELEASE)
+elseif (CMAKE_BUILD_TYPE STREQUAL "Web")
+    target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="./assets/") # Set the asset path macro to a relative path in release mode
+    target_compile_definitions(${PROJECT_NAME} PRIVATE PROFILE_RELEASE)
+endif ()
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
