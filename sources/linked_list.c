@@ -25,11 +25,12 @@ void ListNodePush(ListNode** headRef, void* newData)
 
 void ListNodeRemove(ListNode** headRef, void* key)
 {
-    ListNode *temp =  *headRef, *prev;
+    ListNode *temp = *headRef, *prev;
 
     if (temp != NULL && temp->data == key)
     {
         *headRef = temp->next;
+        if (temp->data != NULL) free(temp->data);
         free(temp);
         return;
     }
@@ -43,7 +44,7 @@ void ListNodeRemove(ListNode** headRef, void* key)
     if (temp == NULL) return;
 
     prev->next = temp->next;
-    free(temp->data);
+    if (temp->data != NULL) free(temp->data);
     free(temp);
 }
 

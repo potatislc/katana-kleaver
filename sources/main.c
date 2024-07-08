@@ -12,7 +12,7 @@ int main(void)
     #endif
     GameInit();
     #ifdef PLATFORM_WEB
-    emscripten_set_main_loop(GameRun, initFps, 1);
+    emscripten_set_main_loop(GameRun, 0, 1);
     #else
     GameRun();
     #endif

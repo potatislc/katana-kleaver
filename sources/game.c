@@ -144,8 +144,9 @@ void GameInit()
 void SpeedUpFpsEffect()
 {
     targetFps++;
+#ifndef PLATFORM_WEB
     SetTargetFPS(targetFps);
-
+#endif
     if (targetFps < 20) targetFps = 20;
 
     SetMusicPitch(gameAudio.mainTheme, (1.f/(float)initFps) * (float)targetFps);
@@ -211,8 +212,10 @@ void Update()
             CircularButtonMousePress(backButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(backButton, MOUSE_BUTTON_LEFT, mousePos);
 
+            #ifdef PLATFORM_DESKTOP
             CircularButtonMousePress(windowModeButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(windowModeButton, MOUSE_BUTTON_LEFT, mousePos);
+            #endif
 
             CircularButtonMousePress(muteBgmButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(muteBgmButton, MOUSE_BUTTON_LEFT, mousePos);
