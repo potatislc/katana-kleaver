@@ -265,14 +265,14 @@ void TutorialSetState(TutorialStates index)
     {
         case TUTORIAL_MOVING:
         {
-            SetTutorialText("RMB to move.");
+            SetTutorialText("Right Mouse to move.");
             tutorialState = StateMoving;
             break;
         }
 
         case TUTORIAL_DASHING:
         {
-            SetTutorialText("LMB to dash.");
+            SetTutorialText("Left Mouse to dash.");
             tutorialState = StateDashing;
             break;
         }
@@ -314,7 +314,7 @@ void TutorialSetState(TutorialStates index)
 
         case TUTORIAL_COMBOS_2:
         {
-            SetTutorialText("Destroy the entire melon in 3s");
+            SetTutorialText("Destroy the entire melon in 3s.");
             tutorialState = StateCombos2;
             SetUiProgressBarMidToEnds(&spawningProgressBar, 0, 1);
             break;
