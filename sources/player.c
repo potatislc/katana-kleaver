@@ -279,7 +279,7 @@ void PlayerStateRevive(Player *player)
 void PlayerCollisionBall(Player *player)
 {
     ListNode *currentBallNode = *player->ballHeadRef;
-    while (currentBallNode != NULL)
+    while (currentBallNode != NULL && currentBallNode->data != NULL)
     {
         Ball currentBall = *(Ball*)currentBallNode->data;
 

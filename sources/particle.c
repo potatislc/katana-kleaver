@@ -50,14 +50,14 @@ void ParticlesUpdate()
     ListNode* currentParticleNode = particleHead;
     while (currentParticleNode != NULL)
     {
-        ParticleUpdate(&particleHead, currentParticleNode->data);
+        if (currentParticleNode->data != NULL) ParticleUpdate(&particleHead, currentParticleNode->data);
         currentParticleNode = currentParticleNode->next;
     }
 
     currentParticleNode = particleUiHead;
     while (currentParticleNode != NULL)
     {
-        ParticleUpdate(&particleUiHead, currentParticleNode->data);
+        if (currentParticleNode->data != NULL) ParticleUpdate(&particleUiHead, currentParticleNode->data);
         currentParticleNode = currentParticleNode->next;
     }
 }
@@ -94,6 +94,11 @@ Particle *ParticlePresetPlayerBlood(Vector2 position)
 Particle *ParticlePresetAura(Vector2 position, Color color)
 {
     Particle* particle = (Particle*)malloc(sizeof(Particle));
+
+    if (particle == NULL)
+    {
+        return NULL;
+    }
 
     particle->initTime = GetTime();
     particle->lifeTime = .4;
