@@ -363,10 +363,10 @@ void DrawUiTitleButtons()
 void DrawUiSettingsButtons()
 {
     CircularButtonDraw(*backButton);
-    #ifdef PLATFORM_DESKTOP
+#ifdef PLATFORM_DESKTOP
     CircularButtonDraw(*windowModeButton);
     DrawText(GetWindowModeAsString(), (int)windowModeButton->position.x + 24, (int)windowModeButton->position.y, 8, WHITE);
-    #endif
+#endif
     CircularButtonDraw(*muteBgmButton);
     DrawText((muted) ? "Off" : "On", (int)muteBgmButton->position.x + 24, (int)muteBgmButton->position.y, 8, WHITE);
     CircularButtonDraw(*replayTutButton);

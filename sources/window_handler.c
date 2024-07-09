@@ -26,10 +26,10 @@ void WindowHandlerInit()
     Image icon = LoadImage("../assets/textures/melon/melon_big.png");
     SetWindowIcon(icon);
     UnloadImage(icon);
-    #ifdef PLATFORM_DESKTOP
+#ifdef PLATFORM_DESKTOP
     WindowHandlerSetWindowMode(WM_WINDOWED);
     MaximizeWindow();
-    #endif
+#endif
 }
 
 void ToggleBorderLessWindowedOverride()
@@ -47,7 +47,7 @@ void WindowHandlerSetWindowMode(WindowMode mode)
 {
     windowMode = mode;
 
-    #ifdef PLATFORM_DESKTOP
+#ifdef PLATFORM_DESKTOP
     int display = GetCurrentMonitor();
 
     switch (windowMode)
@@ -71,7 +71,7 @@ void WindowHandlerSetWindowMode(WindowMode mode)
     }
 
     RendererFitVirtualRectToScreen();
-    #endif
+#endif
 }
 
 void WindowHandlerToggleWindowMode()

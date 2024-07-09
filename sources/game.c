@@ -220,10 +220,10 @@ void Update()
             CircularButtonMousePress(backButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(backButton, MOUSE_BUTTON_LEFT, mousePos);
 
-            #ifdef PLATFORM_DESKTOP
+#ifdef PLATFORM_DESKTOP
             CircularButtonMousePress(windowModeButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(windowModeButton, MOUSE_BUTTON_LEFT, mousePos);
-            #endif
+#endif
 
             CircularButtonMousePress(muteBgmButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(muteBgmButton, MOUSE_BUTTON_LEFT, mousePos);
@@ -280,17 +280,17 @@ void Update()
     }
 
     // Toggle Debug Draw
-    #ifdef PROFILE_DEBUG
+#ifdef PROFILE_DEBUG
     if (IsKeyPressed(KEY_D) && (IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)))
     {
         debugDrawing = !debugDrawing;
     }
-    #endif
+#endif
 }
 
 void GameRun()
 {
-    #ifdef PLATFORM_DESKTOP
+#ifdef PLATFORM_DESKTOP
     while (1)
     {
         frameCounter++;
@@ -300,7 +300,7 @@ void GameRun()
 
         if (WindowShouldClose() && (gameState == GAME_TITLE || !IsKeyPressed(KEY_ESCAPE))) break;
     }
-    #elif PLATFORM_WEB
+#elif PLATFORM_WEB
     frameCounter++;
     Update();
     RenderToTarget();
@@ -308,7 +308,7 @@ void GameRun()
     // Is this cheating?
     emscripten_cancel_main_loop();
     emscripten_set_main_loop(GameRun, targetFps, 1);
-    #endif
+#endif
 }
 
 void GameEnd()
