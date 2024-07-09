@@ -6,16 +6,14 @@
 int main(void)
 {
     Setup();
-    #ifndef PLATFORM_WEB
     SplashScreenInit();
+#ifdef PLATFORM_WEB
+    emscripten_set_main_loop(SplashScreenRun, 0, 1); // Handles game init and running as well
+#else
     SplashScreenRun();
-    #endif
+#endif
     GameInit();
-    #ifdef PLATFORM_WEB
-    emscripten_set_main_loop(GameRun, 0, 1);
-    #else
     GameRun();
-    #endif
     GameDeInit();
 
     return 0;

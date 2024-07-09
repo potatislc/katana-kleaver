@@ -4,6 +4,10 @@
 #include "asset_loader.h"
 #include "firefly.h"
 
+#ifdef PLATFORM_WEB
+#include <emscripten.h>
+#endif
+
 SplashMessage splashMessageIndex = 0;
 
 double messageDurations[SM_LENGTH] = {4, 7};
@@ -14,11 +18,6 @@ void SplashScreenInit()
 {
     splashMouseIcon = SpriteInit(gameTextures.mouseIcon, (Rectangle){0, 0, 64, 64}, 0, true);
     FirefliesInit();
-}
-
-void SplashScreenRunWeb()
-{
-
 }
 
 void SplashScreenRun()
@@ -41,5 +40,9 @@ void SplashScreenRun()
 
 void SplashScreenEnd()
 {
-
+#ifdef PLATFORM_WEB
+    emscripten_cancel_main_loop();
+    GameInit();
+    emscripten_set_main_loop(GameRun, 0, 1);
+#endif
 }
