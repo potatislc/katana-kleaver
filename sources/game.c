@@ -17,6 +17,10 @@
 #include "tutorial.h"
 #include "firefly.h"
 
+#ifdef PLATFORM_WEB
+#include <emscripten.h>
+#endif
+
 const int initFps = 60;
 int targetFps = 60;
 int gameState = GAME_TITLE;
@@ -161,6 +165,10 @@ void Update()
         SpeedUpFpsEffect();
     }
 
+#ifdef PLATFORM_WEB
+    //emscripten_set_main_loop_timing(EM_TIMING_SETTIMEOUT, targetFps / 1000);
+#endif
+
     Vector2 mousePos = Vector2ToVirtualCoords(GetMousePosition());
 
     switch(gameState)
@@ -297,6 +305,9 @@ void GameRun()
     Update();
     RenderToTarget();
     RenderToScreen();
+    // Is this cheating?
+    emscripten_cancel_main_loop();
+    emscripten_set_main_loop(GameRun, targetFps, 1);
     #endif
 }
 

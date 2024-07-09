@@ -6,6 +6,8 @@
 
 #ifdef PLATFORM_WEB
 #include <emscripten.h>
+#include <stdio.h>
+
 #endif
 
 SplashMessage splashMessageIndex = 0;
@@ -43,6 +45,7 @@ void SplashScreenEnd()
 #ifdef PLATFORM_WEB
     emscripten_cancel_main_loop();
     GameInit();
-    emscripten_set_main_loop(GameRun, 0, 1);
+    emscripten_set_main_loop(GameRun, initFps, 1);
+    printf("Do we still go here?\n");
 #endif
 }

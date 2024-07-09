@@ -8,7 +8,7 @@ int main(void)
     Setup();
     SplashScreenInit();
 #ifdef PLATFORM_WEB
-    emscripten_set_main_loop(SplashScreenRun, 0, 1); // Handles game init and running as well
+    emscripten_set_main_loop(SplashScreenRun, initFps, 1); // Handles game init and running as well
 #else
     SplashScreenRun();
 #endif
