@@ -165,10 +165,6 @@ void Update()
         SpeedUpFpsEffect();
     }
 
-#ifdef PLATFORM_WEB
-    //emscripten_set_main_loop_timing(EM_TIMING_SETTIMEOUT, targetFps / 1000);
-#endif
-
     Vector2 mousePos = Vector2ToVirtualCoords(GetMousePosition());
 
     switch(gameState)
@@ -332,6 +328,9 @@ void GameRestart()
     targetFps = 20;
     return;
     */
+
+    ListRemoveAllNodes(&particleHead);
+    ListRemoveAllNodes(&particleUiHead);
 
     Player *newPlayer = PlayerReset(playerRef, virtualScreenCenter, &ballHead);
     playerRef = newPlayer;
