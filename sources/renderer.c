@@ -135,6 +135,7 @@ void DrawEntities()
 void DrawParticles()
 {
     LIST_MAP_DATA(particleHead, ParticleDraw, *(Particle *));
+    LIST_MAP_DATA(particleFadeHead, ParticleDrawFade, *(Particle *));
 }
 
 void DrawParticlesToBackgroundPaint()

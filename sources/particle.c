@@ -6,6 +6,7 @@
 
 ListNode *particleHead = NULL;
 ListNode *particleUiHead = NULL;
+ListNode *particleFadeHead = NULL;
 
 const Color auraMelon = {219, 65, 97, 100};
 const Color auraOrange = {255, 180, 0, 100};
@@ -36,13 +37,13 @@ void ParticleDraw(Particle particle)
     DrawTextureEx(particle.texture, texturePos, 0.f, scale, particle.colorTint);
 }
 
-void ParticleDrawAlpha(Particle particle, int alpha)
+void ParticleDrawFade(Particle particle)
 {
-    float scale = (float)(1 - (GetTime() - particle.initTime) / particle.lifeTime);
-    Vector2 scaledOffset = (Vector2){particle.textureOffset.x * scale, particle.textureOffset.y * scale};
+    float alpha = (float)(1 - (GetTime() - particle.initTime) / particle.lifeTime);
+    Vector2 scaledOffset = (Vector2){particle.textureOffset.x * alpha, particle.textureOffset.y * alpha};
     Vector2 texturePos = Vector2Round(Vector2Subtract(particle.position, scaledOffset));
-    Color alphaColor = {particle.colorTint.r, particle.colorTint.g, particle.colorTint.b, alpha};
-    DrawTextureEx(particle.texture, texturePos, 0.f, scale, alphaColor);
+    Color alphaColor = {particle.colorTint.r, particle.colorTint.g, particle.colorTint.b, fmin(fabsf(alpha) * 255, 255)};
+    DrawTextureEx(particle.texture, texturePos, 0.f, 1.f, alphaColor);
 }
 
 void ParticlesUpdate()
@@ -58,6 +59,13 @@ void ParticlesUpdate()
     while (currentParticleNode != NULL)
     {
         if (currentParticleNode->data != NULL) ParticleUpdate(&particleUiHead, currentParticleNode->data);
+        currentParticleNode = currentParticleNode->next;
+    }
+
+    currentParticleNode = particleFadeHead;
+    while (currentParticleNode != NULL)
+    {
+        if (currentParticleNode->data != NULL) ParticleUpdate(&particleFadeHead, currentParticleNode->data);
         currentParticleNode = currentParticleNode->next;
     }
 }
@@ -112,6 +120,28 @@ Particle *ParticlePresetAura(Vector2 position, Color color)
     particle->textureOffset = (Vector2){(float)particle->texture.width / 2.f, (float)particle->texture.height / 2.f};
     particle->colorTint = color;
     particle->scaleAnim = 1.f;
+
+    return particle;
+}
+
+Particle *ParticlePresetMiss(Vector2 position)
+{
+    Particle* particle = (Particle*)malloc(sizeof(Particle));
+
+    if (particle == NULL)
+    {
+        return NULL;
+    }
+    particle->initTime = GetTime();
+    particle->lifeTime = .8f;
+    particle->position = (Vector2){position.x - 8.f, position.y - 2.f};
+    particle->texture = gameTextures.infoMiss;
+    particle->textureOffset = Vector2Zero();
+    particle->colorTint = WHITE;
+    particle->gravity = .02f;
+    particle->velocity = Vector2Zero();
+    particle->scaleAnim = 1.f;
+    particle->drag = 0.f;
 
     return particle;
 }

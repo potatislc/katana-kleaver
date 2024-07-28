@@ -188,6 +188,7 @@ void PlayerStateDash(Player *player)
         if (IsBallClearingFinished())
         {
             ScoreHandlerLoseCombo(); // Dash without successful slice means loss of combo
+            ParticleCreate(&particleFadeHead, ParticlePresetMiss(player->position));
         }
         else
         {
@@ -390,6 +391,13 @@ void PlayerDraw(Player player) {
         spriteFacing = (Vector2){sign(Vector2ToVirtualCoords(GetMousePosition()).x - player.position.x), 1};
         SpriteDraw(*player.spriteIdle, player.position, spriteFacing, 0);
     }
+    /*
+    else if (player.stateExecute == STATE_EXEC_PLAYER_DASH)
+    {
+        DrawTextureV(gameTextures.samuraiTarget, Vector2Subtract(player.dash->targetPos, player.spriteIdle->drawingOffset), guideColor);
+        SpriteDraw(*player.spriteIdle, player.position, spriteFacing, 0);
+    }
+    */
     else
     {
         SpriteDraw(*player.spriteIdle, player.position, spriteFacing, 0);

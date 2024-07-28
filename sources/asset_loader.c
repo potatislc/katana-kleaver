@@ -18,6 +18,7 @@ void LoadGameTextures()
     gameTextures.samuraiRunSheet = LoadTexture(ASSETS_PATH "textures/samurai/samurai_run.png");
     gameTextures.samuraiShadow = LoadTexture(ASSETS_PATH "textures/samurai/samurai_shadow.png");
     gameTextures.samuraiDieSheet = LoadTexture(ASSETS_PATH "textures/samurai/samurai_die.png");
+    gameTextures.samuraiTarget = LoadTexture(ASSETS_PATH "textures/samurai/samurai_target.png");
     gameTextures.particleRound = LoadTexture(ASSETS_PATH "textures/particle/particle_round.png");
     gameTextures.particlePixel = LoadTexture(ASSETS_PATH "textures/particle/particle_pixel.png");
     gameTextures.settingsIcon = LoadTexture(ASSETS_PATH "textures/icons/settings_icon.png");
@@ -26,6 +27,7 @@ void LoadGameTextures()
     gameTextures.windowIcon = LoadTexture(ASSETS_PATH "textures/icons/window_icon.png");
     gameTextures.bgmIcon = LoadTexture(ASSETS_PATH "textures/icons/bgm_icon.png");
     gameTextures.infoQuit = LoadTexture(ASSETS_PATH "textures/info_quit.png");
+    gameTextures.infoMiss = LoadTexture(ASSETS_PATH "textures/info_miss.png");
     gameTextures.mouseIcon = LoadTexture(ASSETS_PATH "textures/icons/mouse_icon.png");
     gameTextures.medals = LoadTexture(ASSETS_PATH "textures/medals.png");
 }

@@ -15,6 +15,7 @@ do                                     \
 
 extern ListNode *particleHead;
 extern ListNode *particleUiHead;
+extern ListNode *particleFadeHead;
 
 typedef struct Particle
 {
@@ -33,13 +34,14 @@ typedef struct Particle
 void ParticleCreate(ListNode **listHeadRef, Particle *particle);
 void ParticleUpdate(ListNode **listHeadRef, Particle *particle);
 void ParticleDraw(Particle particle);
-void ParticleDrawAlpha(Particle particle, int alpha);
+void ParticleDrawFade(Particle particle);
 void ParticlesUpdate();
 
 // Particle Presets
 Particle *ParticlePresetJuice(Vector2 position, Color juiceColor);
 Particle *ParticlePresetPlayerBlood(Vector2 position);
 Particle *ParticlePresetAura(Vector2 position, Color color);
+Particle *ParticlePresetMiss(Vector2 position);
 
 // Preset colors
 extern const Color auraMelon;

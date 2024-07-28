@@ -23,12 +23,14 @@ typedef struct
     Texture2D samuraiRunSheet;
     Texture2D samuraiDieSheet;
     Texture2D samuraiShadow;
+    Texture2D samuraiTarget;
     Texture2D particleRound;
     Texture2D particlePixel;
     Texture2D settingsIcon;
     Texture2D arrowIcon;
     Texture2D playIcon;
     Texture2D infoQuit;
+    Texture2D infoMiss;
     Texture2D windowIcon;
     Texture2D bgmIcon;
     Texture2D mouseIcon;

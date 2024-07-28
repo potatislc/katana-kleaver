@@ -135,6 +135,11 @@ void StateDashing()
 
 void StateSlicing()
 {
+    if (ListLength(&ballHead) > 0 && ListLength(&ballSpawnPointHead) == 0)
+    {
+        freezeBalls = true;
+    }
+
     if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
     {
         statesComplete[TUTORIAL_SLICING] = true;
@@ -180,7 +185,7 @@ void StateCombos()
 {
     if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
     {
-        if (ScoreHandlerGetComboScore() > 5)
+        if (ScoreHandlerGetComboScore() > 4)
         {
             statesComplete[TUTORIAL_COMBOS] = true;
         }
