@@ -33,9 +33,7 @@ void ListNodeRemove(ListNode** headRef, void* key)
     {
         *headRef = temp->next;
         if (temp->data != NULL) free(temp->data);
-#ifndef PLATFORM_WEB
-        free(temp);
-#endif
+        // free(temp);
         return;
     }
 
@@ -49,9 +47,7 @@ void ListNodeRemove(ListNode** headRef, void* key)
 
     prev->next = temp->next;
     if (temp->data != NULL) free(temp->data);
-#ifndef PLATFORM_WEB
-    free(temp);
-#endif
+    // free(temp);
 }
 
 void ListRemoveAllNodes(ListNode** headRef)

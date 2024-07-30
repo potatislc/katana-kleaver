@@ -21,7 +21,7 @@ typedef struct Player
     bool colliding;
     ListNode **ballHeadRef;
     Ball *collidingBall; // Pointer to the ball that you want to slice
-    Ball *collidingBallCopy;
+    Ball collidingBallCopy;
     struct Dash *dash;
 } Player;
 // typedef renames 'struct Player' to simply 'Player'.

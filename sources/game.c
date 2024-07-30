@@ -62,6 +62,9 @@ void GameStart()
     BallDeSpawnAll();
     ListRemoveAllNodes(&ballSpawnPointHead);
     BallNbrCountReset(&ballNbrCount_All);
+    ListRemoveAllNodes(&spawnQueueHead);
+    ListRemoveAllNodes(&particleHead);
+    ListRemoveAllNodes(&particleUiHead);
 
     SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
     ScoreHandlerResetScore();
@@ -328,9 +331,6 @@ void GameRestart()
     targetFps = 20;
     return;
     */
-
-    ListRemoveAllNodes(&particleHead);
-    ListRemoveAllNodes(&particleUiHead);
 
     Player *newPlayer = PlayerReset(playerRef, virtualScreenCenter, &ballHead);
     playerRef = newPlayer;

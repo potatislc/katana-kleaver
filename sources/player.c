@@ -40,7 +40,7 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
     *player->dash = (Dash){false, 0.0f, 0.0f, 0.0f, 0.0f, 0.3f, 48.0f, 10, 30, 30, 0};
 
     player->collidingBall = (Ball *)malloc(sizeof(Ball));
-    player->collidingBallCopy = (Ball *)malloc(sizeof(Ball));
+    // player->collidingBallCopy = (Ball *)malloc(sizeof(Ball));
 
     return player;
 }
@@ -50,7 +50,7 @@ Player *PlayerReset(Player *player, Vector2 initPos, ListNode **ballHeadRef)
     free(player->dash);
     free(player->spriteIdle);
     free(player->spriteRun);
-    free(player->collidingBallCopy);
+    // free(player->collidingBallCopy);
     free(player);
     return PlayerInit(initPos, ballHeadRef);
 }
@@ -291,7 +291,7 @@ void PlayerCollisionBall(Player *player)
         {
             player->colliding = true;
             player->collidingBall = currentBallNode->data;
-            *player->collidingBallCopy = currentBall;
+            player->collidingBallCopy = currentBall;
             return;
         }
 
@@ -429,7 +429,7 @@ void PlayerDrawSlice(Player player)
 
     // Melon exploding
     Color circleColor = {255, 255, 255, sliceRatio * 255};
-    DrawCircleV(player.collidingBallCopy->position, player.collidingBallCopy->radius, circleColor);
+    DrawCircleV(player.collidingBallCopy.position, player.collidingBallCopy.radius, circleColor);
 }
 
 void PlayerDrawShadow(Player player)
