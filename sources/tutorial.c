@@ -185,7 +185,7 @@ void StateCombos()
 {
     if (ListLength(&ballHead) == 0 && ListLength(&ballSpawnPointHead) == 0)
     {
-        if (ScoreHandlerGetComboScore() > 4)
+        if (ScoreHandlerGetComboScore() > 2)
         {
             statesComplete[TUTORIAL_COMBOS] = true;
         }
