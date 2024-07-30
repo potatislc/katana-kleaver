@@ -7,6 +7,7 @@
 #include "global.h"
 #include "asset_loader.h"
 #include "game.h"
+#include "score_handler.h"
 
 double spawnDelay = BALL_SPAWN_DELAY_FIRST;
 double timeSinceLastSpawn;
@@ -88,6 +89,13 @@ void AddBallsToQueue()
 
     if (GetTime() < timeSinceLastSpawn+spawnDelay) return;
 
+    if (ScoreHandlerGetScore() > 3500)
+    {
+        secondBallLimit = 1000;
+        thirdBallLimit = 1000;
+        fourthBallLimit = 1000;
+    }
+
     // Spawn Wave -----------------
 
     wavesSinceLastOrange++;
@@ -114,7 +122,7 @@ void AddBallsToQueue()
                 AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
             }
 
-            if (NbrOfBallsOnScreen(ballNbrCount_All) <= fourthBallLimit && ballNbrCount_All.destroyed > 100)
+            if (NbrOfBallsOnScreen(ballNbrCount_All) <= fourthBallLimit && ballNbrCount_All.destroyed > 0/*100*/)
             {
                 AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
             }
