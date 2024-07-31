@@ -42,6 +42,7 @@ Particle *ParticlePresetJuice(Vector2 position, Color juiceColor);
 Particle *ParticlePresetPlayerBlood(Vector2 position);
 Particle *ParticlePresetAura(Vector2 position, Color color);
 Particle *ParticlePresetMiss(Vector2 position);
+Particle *ParticlePresetDashRecharge(Vector2 position);
 
 // Preset colors
 extern const Color auraMelon;

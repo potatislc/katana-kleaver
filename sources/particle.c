@@ -132,6 +132,7 @@ Particle *ParticlePresetMiss(Vector2 position)
     {
         return NULL;
     }
+
     particle->initTime = GetTime();
     particle->lifeTime = .8f;
     particle->position = (Vector2){position.x - 8.f, position.y - 2.f};
@@ -139,6 +140,29 @@ Particle *ParticlePresetMiss(Vector2 position)
     particle->textureOffset = Vector2Zero();
     particle->colorTint = WHITE;
     particle->gravity = .02f;
+    particle->velocity = Vector2Zero();
+    particle->scaleAnim = 1.f;
+    particle->drag = 0.f;
+
+    return particle;
+}
+
+Particle *ParticlePresetDashRecharge(Vector2 position)
+{
+    Particle* particle = (Particle*)malloc(sizeof(Particle));
+
+    if (particle == NULL)
+    {
+        return NULL;
+    }
+
+    particle->initTime = GetTime();
+    particle->lifeTime = .05f;
+    particle->position = Vector2Round((Vector2){position.x - 8.f, position.y - 8.f});
+    particle->texture = gameTextures.particleRound;
+    particle->textureOffset = Vector2Zero();
+    particle->colorTint = WHITE;
+    particle->gravity = 0.f;
     particle->velocity = Vector2Zero();
     particle->scaleAnim = 1.f;
     particle->drag = 0.f;

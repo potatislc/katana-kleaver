@@ -98,7 +98,9 @@ void PlayerUpdate(Player *player)
 
 void PlayerStateMove(Player *player)
 {
+    int lastReloadTime = player->dash->reloadTime;
     if (player->dash->reloadTime > 0) player->dash->reloadTime--;
+    if (player->dash->reloadTime <= 0 && lastReloadTime > 0) ParticleCreate(&particleFadeHead, ParticlePresetDashRecharge(player->position));
 
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
     {
@@ -193,6 +195,7 @@ void PlayerStateDash(Player *player)
         else
         {
             player->dash->reloadTime = 0;
+            ParticleCreate(&particleFadeHead, ParticlePresetDashRecharge(player->position));
         }
     }
 }
@@ -259,6 +262,7 @@ void PlayerStateSlice(Player *player)
         player->stateExecute = STATE_EXEC_PLAYER_MOVE;
         freezeBalls = false;
         player->dash->reloadTime = 0;
+        ParticleCreate(&particleFadeHead, ParticlePresetDashRecharge(player->position));
     }
 }
 
