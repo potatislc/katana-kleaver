@@ -37,6 +37,7 @@ typedef struct Dash
     int endLag;
     int initReloadTime;
     int reloadTime;
+    bool justReloaded;
 } Dash;
 
 extern Player *playerRef;

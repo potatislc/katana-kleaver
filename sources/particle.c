@@ -157,7 +157,7 @@ Particle *ParticlePresetDashRecharge(Vector2 position)
     }
 
     particle->initTime = GetTime();
-    particle->lifeTime = .05f;
+    particle->lifeTime = .1f;
     particle->position = Vector2Round((Vector2){position.x - 8.f, position.y - 8.f});
     particle->texture = gameTextures.particleRound;
     particle->textureOffset = Vector2Zero();

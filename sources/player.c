@@ -74,6 +74,7 @@ void PlayerUpdate(Player *player)
 {
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) player->dash->bufferedDash = true;
 
+    player->dash->justReloaded = false;
     player->stateExecute(player);
 
     player->radius = (player->stateExecute == STATE_EXEC_PLAYER_MOVE) ? 6.f : 8.f;
@@ -100,7 +101,7 @@ void PlayerStateMove(Player *player)
 {
     int lastReloadTime = player->dash->reloadTime;
     if (player->dash->reloadTime > 0) player->dash->reloadTime--;
-    if (player->dash->reloadTime <= 0 && lastReloadTime > 0) ParticleCreate(&particleFadeHead, ParticlePresetDashRecharge(player->position));
+    if (player->dash->reloadTime <= 0 && lastReloadTime > 0) player->dash->justReloaded = true;
 
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
     {
@@ -195,7 +196,7 @@ void PlayerStateDash(Player *player)
         else
         {
             player->dash->reloadTime = 0;
-            ParticleCreate(&particleFadeHead, ParticlePresetDashRecharge(player->position));
+            // ParticleCreate(&particleFadeHead, ParticlePresetDashRecharge(player->position));
         }
     }
 }
@@ -262,7 +263,6 @@ void PlayerStateSlice(Player *player)
         player->stateExecute = STATE_EXEC_PLAYER_MOVE;
         freezeBalls = false;
         player->dash->reloadTime = 0;
-        ParticleCreate(&particleFadeHead, ParticlePresetDashRecharge(player->position));
     }
 }
 

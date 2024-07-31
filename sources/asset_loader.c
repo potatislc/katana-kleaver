@@ -26,6 +26,7 @@ void LoadGameTextures()
     gameTextures.playIcon = LoadTexture(ASSETS_PATH "textures/icons/play_icon.png");
     gameTextures.windowIcon = LoadTexture(ASSETS_PATH "textures/icons/window_icon.png");
     gameTextures.bgmIcon = LoadTexture(ASSETS_PATH "textures/icons/bgm_icon.png");
+    gameTextures.katanaIcon = LoadTexture(ASSETS_PATH "textures/icons/katana_icon.png");
     gameTextures.infoQuit = LoadTexture(ASSETS_PATH "textures/info_quit.png");
     gameTextures.infoMiss = LoadTexture(ASSETS_PATH "textures/info_miss.png");
     gameTextures.mouseIcon = LoadTexture(ASSETS_PATH "textures/icons/mouse_icon.png");

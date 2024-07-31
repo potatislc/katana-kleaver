@@ -29,6 +29,7 @@ typedef struct
     Texture2D settingsIcon;
     Texture2D arrowIcon;
     Texture2D playIcon;
+    Texture2D katanaIcon;
     Texture2D infoQuit;
     Texture2D infoMiss;
     Texture2D windowIcon;

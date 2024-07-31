@@ -135,7 +135,6 @@ void DrawEntities()
 void DrawParticles()
 {
     LIST_MAP_DATA(particleHead, ParticleDraw, *(Particle *));
-    LIST_MAP_DATA(particleFadeHead, ParticleDrawFade, *(Particle *));
 }
 
 void DrawParticlesToBackgroundPaint()
@@ -380,6 +379,31 @@ void DrawUiBorders()
     DrawTexture(gameTextures.tvBorder, 0, 0, WHITE);
 }
 
+void DrawUiWeapon()
+{
+    Rectangle dest = {VIRTUAL_SCREEN_WIDTH - 16, VIRTUAL_SCREEN_HEIGHT, 16, 16};
+
+    if (!(playerRef->dash->reloadTime > 0 && playerRef->stateExecute == STATE_EXEC_PLAYER_MOVE))
+    {
+         DrawTexture(gameTextures.katanaIcon, (int)dest.x, (int)dest.y, WHITE);
+    }
+    else
+    {
+        Color color = WHITE;
+        color.a = 50;
+        float ratio = ((float)playerRef->dash->initReloadTime - (float)playerRef->dash->reloadTime) / (float)playerRef->dash->initReloadTime;
+        Rectangle source = {0, 16.f - 16.f * ratio, 16, 16};
+        Vector2 origin = {0, 0};
+        DrawTexturePro(gameTextures.katanaIcon, source, dest, origin, 0.f, color);
+    }
+
+    if (playerRef->dash->justReloaded)
+    {
+        Vector2 pos = {dest.x + 8.f, dest.y + 8.f};
+        ParticleCreate(&particleFadeHead, ParticlePresetDashRecharge(pos));
+    }
+}
+
 void DrawUi()
 {
     DrawUiBorders();
@@ -424,6 +448,8 @@ void DrawUi()
             DrawUiProgressBar();
 
             if (!IsBallClearingFinished()) DrawUiBallClearerTarget();
+
+            DrawUiWeapon();
             break;
         }
 
@@ -469,9 +495,13 @@ void DrawUi()
             if (!IsBallClearingFinished()) DrawUiBallClearerTarget();
             if (tutorialStateIndex >= TUTORIAL_SLICING) DrawUiScore();
             if (tutorialStateIndex == TUTORIAL_COMBOS_2) DrawUiProgressBar();
+
+            DrawUiWeapon();
             break;
         }
     }
+
+    LIST_MAP_DATA(particleFadeHead, ParticleDrawFade, *(Particle *));
 
     DrawUiRingTransition();
 
@@ -567,7 +597,7 @@ void RenderSplashScreenToTarget()
 
             case SM_STUDIO_NAME:
             {
-                char *text = "A game by Lökallan";
+                char *text = "A game by CosmicQuad";
                 int textWidth = MeasureText(text, 8);
                 Vector2 textPos = {virtualScreenCenter.x - (float)textWidth/2, virtualScreenCenter.y};
                 DrawText(text, (int)textPos.x+1, (int)textPos.y+1, 8, GRAY);
