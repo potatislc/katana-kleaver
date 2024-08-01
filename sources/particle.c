@@ -20,7 +20,7 @@ void ParticleUpdate(ListNode **listHeadRef, Particle *particle)
 {
     if (GetTime() >= particle->initTime + particle->lifeTime)
     {
-        ListNodeRemove(listHeadRef, particle);
+        ListNodeRemoveActual(listHeadRef, particle);
         return;
     }
 

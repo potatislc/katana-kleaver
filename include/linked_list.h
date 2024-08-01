@@ -25,6 +25,7 @@ extern ListNode *head;
 ListNode* ListNodeCreate(void* data);
 void ListNodePush(ListNode** headRef, void* newData); // Pushes that node to the head of the list
 void ListNodeRemove(ListNode** headRef, void* key);
+void ListNodeRemoveActual(ListNode** headRef, void* key);
 void ListRemoveAllNodes(ListNode** headRef);
 int ListLength(ListNode** headRef);
 void ListNodePrint(ListNode* node);
