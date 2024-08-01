@@ -24,6 +24,7 @@ bool RendererIsRingTransitionActive();
 extern Vector2 screenRatio;
 extern Vector2 screenOffset;
 extern Vector2 virtualScreenCenter;
+extern const float defaultEraserRadius;
 extern float eraserRadius;
 
 extern bool debugDrawing;

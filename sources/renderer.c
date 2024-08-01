@@ -31,7 +31,8 @@ int getReadyTextWidth = 0;
 
 Vector2 titleScreenOffset;
 
-float eraserRadius = 31.f;
+const float defaultEraserRadius = 31.f;
+float eraserRadius = defaultEraserRadius;
 
 bool debugDrawing = false;
 
@@ -484,6 +485,21 @@ void DrawUi()
                 }
 
                 if (IsKeyPressed(KEY_S)) sprayCanFoam.timeSinceLastSpray = GetTime();
+
+                // Funny thing
+                if (IsKeyPressed(KEY_DOWN))
+                {
+                    eraserRadius = fmaxf(eraserRadius-1, 1);
+                }
+                else if (IsKeyPressed(KEY_UP))
+                {
+                    eraserRadius = fminf(eraserRadius+1, 256);
+                }
+            }
+            else
+            {
+                // Funny thing
+                eraserRadius = defaultEraserRadius;
             }
 
             break;
