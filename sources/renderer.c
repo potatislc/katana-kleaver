@@ -278,6 +278,10 @@ void DrawUiGameOver()
 
         ScoreHandlerDrawMedals();
     }
+    else
+    {
+        if (!ScoreHandlerMedalRevealFinished()) ScoreHandlerDrawMedals();
+    }
 
     if (frameCounter / 15 % 2 == 0) DrawText(restartText, (int)virtualScreenCenter.x - restartTextWidth / 2, (int)virtualScreenCenter.y+66, 8, WHITE);
 

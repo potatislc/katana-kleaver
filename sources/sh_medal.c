@@ -87,3 +87,14 @@ void ScoreHandlerDrawMedals()
         DrawTexturePro(gameTextures.medals, source, dest, origin, rotation, WHITE);
     }
 }
+
+bool ScoreHandlerMedalRevealFinished()
+{
+    if (medalsUnlocked == 0) return true;
+    if (medalsDisplayed >= medalsUnlocked)
+    {
+        if (GetTime() > medalGotTime[medalsDisplayed] + 2) return true;
+    }
+
+    return false;
+}

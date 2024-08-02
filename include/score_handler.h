@@ -56,5 +56,6 @@ extern const int medalScores[MEDAL_COUNT];
 void ScoreHandlerUnlockMedals(int score);
 void ScoreHandlerRevealMedals();
 void ScoreHandlerDrawMedals();
+bool ScoreHandlerMedalRevealFinished();
 
 #endif //BALL_GAME_SCORE_HANDLER_H

@@ -5,7 +5,6 @@
 
 #define VIRTUAL_SCREEN_WIDTH (160)
 #define VIRTUAL_SCREEN_HEIGHT (160)
-#define VIRTUAL_SCREEN_OFFSET_X (0)
 #define VIRTUAL_SCREEN_OFFSET_Y (16)
 
 void RendererInit();

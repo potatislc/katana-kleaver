@@ -46,7 +46,7 @@ bool IsFloorCleaned()
 
 void GameStart()
 {
-    if ( playerRef->stateExecute == STATE_EXEC_PLAYER_DEAD)
+    if (playerRef->stateExecute == STATE_EXEC_PLAYER_DEAD)
     {
         gameState = GAME_OVER;
         ScoreHandlerUnlockMedals(ScoreHandlerGetScore());
@@ -196,11 +196,14 @@ void Update()
             CircularButtonMousePress(backButton, MOUSE_BUTTON_LEFT, mousePos);
             CircularButtonMouseRelease(backButton, MOUSE_BUTTON_LEFT, mousePos);
 
-            if (targetFps >= initFps && !IsMouseButtonDown(MOUSE_BUTTON_LEFT)) ScoreHandlerRevealMedals();
-
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsBallClearingFinished() && targetFps == initFps && !backButton->pressed)
+            if (targetFps == initFps)
             {
-                BallClearerBegin(NULL, initFps);
+                if (!ScoreHandlerMedalRevealFinished()) ScoreHandlerRevealMedals();
+
+                if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsBallClearingFinished() && !backButton->pressed)
+                {
+                    BallClearerBegin(NULL, initFps);
+                }
             }
 
             if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
