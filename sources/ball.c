@@ -266,13 +266,14 @@ void BallCollisionScreen(Ball *ball)
 void BallCollisionBall(Ball *ball)
 {
     ListNode *currentBallNode = ballHead;
+    if (currentBallNode == NULL) return;
 
     while(currentBallNode->next != NULL)
     {
         Ball *currentBall = (Ball*)currentBallNode->data;
         currentBallNode = currentBallNode->next;
 
-        if (ball == (Ball*)currentBall)
+        if (currentBall != NULL && ball == (Ball*)currentBall)
         {
             continue;
         }
@@ -379,6 +380,22 @@ void BallNbrCountReset(BallNbrCount *ballNbrCount)
 int NbrOfBallsOnScreen(BallNbrCount ballNbrCount)
 {
     return ballNbrCount.spawned - ballNbrCount.destroyed;
+}
+
+int NbrOfRadiusBallsOnScreen(float radius)
+{
+    ListNode *currentBallNode = ballHead;
+
+    int count = 0;
+    while(currentBallNode != NULL)
+    {
+        Ball* currentBall = (Ball*)currentBallNode->data;
+        if (currentBall->radius == radius) count++;
+
+        currentBallNode = currentBallNode->next;
+    }
+
+    return count;
 }
 
 BallSpawnPoint *BallSpawnPointInit(Ball *mockBall, double spawnTime)

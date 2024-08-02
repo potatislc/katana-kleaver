@@ -83,6 +83,25 @@ void UpdateBallLimits()
     }
 }
 
+void AddBallPreset(unsigned int choice)
+{
+    switch (choice) {
+        default:
+            AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
+            break;
+        case 1:
+            AddBallToQueue(RADIUS_MEDIUM, false, TYPE_MELON);
+            AddBallToQueue(RADIUS_MEDIUM, false, TYPE_MELON);
+            break;
+        case 2:
+            AddBallToQueue(RADIUS_SMALL, false, TYPE_MELON);
+            AddBallToQueue(RADIUS_SMALL, false, TYPE_MELON);
+            AddBallToQueue(RADIUS_SMALL, false, TYPE_MELON);
+            AddBallToQueue(RADIUS_SMALL, false, TYPE_MELON);
+            break;
+    }
+}
+
 void AddBallsToQueue()
 {
     UpdateBallLimits();
@@ -108,23 +127,23 @@ void AddBallsToQueue()
 
     if (ballNbrCount_All.destroyed > 6)
     {
-        AddBallToQueue(RADIUS_LARGE, true, TYPE_MELON);
+        AddBallPreset((NbrOfRadiusBallsOnScreen(RADIUS_LARGE) < 4) ? 0 : 1);
     }
 
     if (ballNbrCount_All.destroyed > 20 && spawnDelay == BALL_SPAWN_DELAY_LONG)
     {
         if (NbrOfBallsOnScreen(ballNbrCount_All) <= secondBallLimit)
         {
-            AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
+            AddBallPreset((NbrOfRadiusBallsOnScreen(RADIUS_LARGE) < 4) ? 0 : rand() % 2);
 
             if (NbrOfBallsOnScreen(ballNbrCount_All) <= thirdBallLimit && ballNbrCount_All.destroyed > 50)
             {
                 AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
             }
 
-            if (NbrOfBallsOnScreen(ballNbrCount_All) <= fourthBallLimit && ballNbrCount_All.destroyed > 0/*100*/)
+            if (NbrOfBallsOnScreen(ballNbrCount_All) <= fourthBallLimit && ballNbrCount_All.destroyed > 70)
             {
-                AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
+                AddBallPreset(rand() % 3);
             }
         }
 

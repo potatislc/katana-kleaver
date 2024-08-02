@@ -33,7 +33,7 @@ void ListNodeRemove(ListNode** headRef, void* key)
     {
         *headRef = temp->next;
         if (temp->data != NULL) free(temp->data);
-        // free(temp);
+        free(temp);
         return;
     }
 
@@ -47,7 +47,7 @@ void ListNodeRemove(ListNode** headRef, void* key)
 
     prev->next = temp->next;
     if (temp->data != NULL) free(temp->data);
-    // free(temp);
+    free(temp);
 }
 
 void ListNodeRemoveActual(ListNode** headRef, void* key)

@@ -90,6 +90,7 @@ typedef struct
 } BallNbrCount;
 
 int NbrOfBallsOnScreen(BallNbrCount ballNbrCount);
+int NbrOfRadiusBallsOnScreen(float radius);
 void BallNbrCountReset(BallNbrCount *ballNbrCount);
 
 extern BallNbrCount ballNbrCount_All;
