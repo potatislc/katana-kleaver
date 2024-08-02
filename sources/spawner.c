@@ -108,7 +108,7 @@ void AddBallsToQueue()
 
     if (GetTime() < timeSinceLastSpawn+spawnDelay) return;
 
-    if (ScoreHandlerGetScore() > 3500)
+    if (ScoreHandlerGetScore() + ScoreHandlerGetComboScore() * ScoreHandlerGetComboMultiplier() > 3000)
     {
         secondBallLimit = 1000;
         thirdBallLimit = 1000;
@@ -127,7 +127,7 @@ void AddBallsToQueue()
 
     if (ballNbrCount_All.destroyed > 6)
     {
-        AddBallPreset((NbrOfRadiusBallsOnScreen(RADIUS_LARGE) < 4) ? 0 : 1);
+        AddBallPreset((NbrOfRadiusBallsOnScreen(RADIUS_LARGE) < 4) ? 0 : 1 + (rand() % 2));
     }
 
     if (ballNbrCount_All.destroyed > 20 && spawnDelay == BALL_SPAWN_DELAY_LONG)
@@ -138,12 +138,12 @@ void AddBallsToQueue()
 
             if (NbrOfBallsOnScreen(ballNbrCount_All) <= thirdBallLimit && ballNbrCount_All.destroyed > 50)
             {
-                AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
+                AddBallPreset(rand() % 3);
             }
 
             if (NbrOfBallsOnScreen(ballNbrCount_All) <= fourthBallLimit && ballNbrCount_All.destroyed > 70)
             {
-                AddBallPreset(rand() % 3);
+                AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
             }
         }
 
