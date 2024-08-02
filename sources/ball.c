@@ -327,6 +327,7 @@ float RadiusToSplatPitch(float radius)
 
 void BallSplit(Ball *ball, Vector2 splitDir)
 {
+    if (ball == NULL) return;
     CameraSetShake(fminf(1.5f, ball->radius / 8), 1.f, .2f);
 
     ball->onSplitFunction(ball, splitDir);
