@@ -29,7 +29,7 @@ void SplashScreenRun()
             RenderSplashScreenToTarget();
             RenderToScreen();
 
-            if (WindowShouldClose()) break;
+            if (WindowShouldClose() || IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) break;
         }
 
         splashMessageIndex++;
