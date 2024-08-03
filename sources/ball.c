@@ -356,6 +356,7 @@ void BallSpawn(Ball *ballToSpawn)
 
 void BallDestroy(Ball *ball)
 {
+    if (ball == NULL) return;
     Sound splatSound = SoundPickRandom(gameAudio.melonSplats, MELON_SOUNDS_LENGTH);
     SoundPanToWorld(splatSound, ball->position, DEFAULT_SOUND_PAN_INTENSITY);
     SetSoundPitch(splatSound, RadiusToSplatPitch(ball->radius));

@@ -9,7 +9,7 @@ do                                              \
     ListNode* currentNode = headNode;           \
     while (currentNode != NULL)                 \
     {                                           \
-        function( type currentNode->data);      \
+        if (currentNode->data != NULL) function( type currentNode->data);      \
         currentNode = currentNode->next;        \
     }                                           \
 } while (0)                                     \
