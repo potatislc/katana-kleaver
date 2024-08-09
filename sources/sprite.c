@@ -6,6 +6,7 @@
 Sprite *SpriteInit(Texture2D spriteSheet, Rectangle frameRect, int startingFrame, bool centered)
 {
     Sprite *sprite = (Sprite*)malloc(sizeof(Sprite));
+    if (sprite == NULL) return NULL;
 
     sprite->sheet = spriteSheet;
     sprite->frameRect = frameRect;

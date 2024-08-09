@@ -74,6 +74,10 @@ void ParticlesUpdate()
 Particle *ParticlePresetJuice(Vector2 position, Color juiceColor)
 {
     Particle* particle = (Particle*)malloc(sizeof(Particle));
+    if (particle == NULL)
+    {
+        return NULL;
+    }
 
     particle->initTime = GetTime();
     particle->lifeTime = .4;

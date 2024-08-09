@@ -145,6 +145,7 @@ void DrawOrange(Ball ball, Vector2 drawPos)
 Ball *BallInit(Vector2 position, float radius, BallType type)
 {
     Ball *ball = (Ball *)malloc(sizeof(Ball));
+    if (ball == NULL) return NULL;
 
     ball->type = type;
 
