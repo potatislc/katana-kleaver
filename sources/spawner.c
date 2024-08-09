@@ -146,12 +146,12 @@ void AddBallsToQueue()
                 AddBallToQueue(RADIUS_LARGE, false, TYPE_MELON);
             }
         }
+    }
 
-        if (NbrOfBallsOnScreen(ballNbrCount_All) > 5 && wavesSinceLastOrange > 1)
-        {
-            AddBallToQueue(RADIUS_MEDIUM, false, TYPE_ORANGE);
-            wavesSinceLastOrange = 0;
-        }
+    if (NbrOfBallsOnScreen(ballNbrCount_All) > 5 && wavesSinceLastOrange > 1)
+    {
+        AddBallToQueue(RADIUS_MEDIUM, false, TYPE_ORANGE);
+        wavesSinceLastOrange = 0;
     }
 }
 
