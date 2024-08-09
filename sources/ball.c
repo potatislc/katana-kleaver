@@ -231,7 +231,7 @@ void BallClearerUpdate()
     */
 
     // Slice all balls only once
-    if (ballClearer.nodeIndex < ListLength(&ballHead) && ballClearer.currentNode != NULL)
+    if (ballClearer.nodeIndex < ballClearer.listLength && ballClearer.currentNode != NULL)
     {
         ballClearer.nodeIndex++;
         ListNode *nextNode = ballClearer.currentNode->next;
