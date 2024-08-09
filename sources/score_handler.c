@@ -122,8 +122,6 @@ void ScoreHandlerAddToScoreFromBonusPool(bool instant)
         PlaySound(gameAudio.bonusScore);
     }
 
-    ScoreHandlerUpdateHiScore();
-
     UpdateText();
 }
 

@@ -42,7 +42,7 @@ typedef struct
     double duration;
 } SliceTimer;
 
-SliceTimer combos2Timer = {false, 0, 3};
+SliceTimer combos2Timer = {false, 0, 4};
 
 int textCounter = 0;
 
@@ -305,7 +305,7 @@ void TutorialSetState(TutorialStates index)
 
         case TUTORIAL_SLICE_CHAIN_3:
         {
-            SetTutorialText("Chain quick consecutive slices.");
+            SetTutorialText("Chain quick, consecutive slices.");
             tutorialState = StateSliceChain3;
             break;
         }
@@ -319,7 +319,7 @@ void TutorialSetState(TutorialStates index)
 
         case TUTORIAL_COMBOS_2:
         {
-            SetTutorialText("Destroy the entire melon in 3s.");
+            SetTutorialText("Destroy the entire melon in 4s.");
             tutorialState = StateCombos2;
             SetUiProgressBarMidToEnds(&spawningProgressBar, 0, 1);
             break;
@@ -348,6 +348,7 @@ void TutorialSetState(TutorialStates index)
 
         default:
         {
+            ScoreHandlerResetScore();
             SetTutorialText("");
             RendererPlayRingTransition(GameStart);
             return;
@@ -386,7 +387,7 @@ void TutorialUpdate()
 
     bool playedClearSound = statesComplete[tutorialStateIndex];
 
-    tutorialState();
+    if (!TutorialIsFinished()) tutorialState();
 
     if (playedClearSound != statesComplete[tutorialStateIndex])
     {
@@ -415,4 +416,9 @@ void TutorialReset()
     {
         statesComplete[i] = false;
     }
+}
+
+bool TutorialIsFinished()
+{
+    return tutorialStateIndex >= TUTORIAL_LENGTH;
 }

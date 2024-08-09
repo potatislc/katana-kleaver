@@ -24,6 +24,7 @@ void TutorialUpdate();
 void TutorialDraw();
 void TutorialSetState(TutorialStates index);
 void TutorialReset();
+bool TutorialIsFinished();
 
 extern int tutorialStateIndex;
 extern void (*tutorialState)();

@@ -66,18 +66,20 @@ void GameStart()
     ListRemoveAllNodes(&particleHead);
     ListRemoveAllNodes(&particleUiHead);
 
-    SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
-    ScoreHandlerResetScore();
-
     freezeBalls = false;
 
     RendererClearBackgroundPaint();
 
-    if (tutorialStateIndex < TUTORIAL_LENGTH)
+    if (!TutorialIsFinished())
     {
+        ScoreHandlerResetScore();
         TutorialBegin();
         return;
     }
+
+    ScoreHandlerUpdateHiScore();
+    SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
+    ScoreHandlerResetScore();
 
     gameState = GAME_PLAY;
     SpawnerInit();
@@ -214,6 +216,8 @@ void Update()
                     // GameRestart();
                 }
             }
+
+            if (TutorialIsFinished()) ScoreHandlerUpdateHiScore();
             break;
         }
 
@@ -239,7 +243,7 @@ void Update()
 
         case GAME_TUTORIAL:
         {
-            TutorialUpdate();
+            if (!TutorialIsFinished()) TutorialUpdate();
             break;
         }
     }
@@ -317,9 +321,12 @@ void GameEnd()
 {
     if (gameState == GAME_OVER) return;
     ScoreHandlerLoseCombo();
-    ScoreHandlerUnlockMedals(ScoreHandlerGetScore() + ScoreHandlerGetBonusScorePool());
-    if (gameState != GAME_TUTORIAL) ScoreHandlerUpdateHiScore();
-    SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
+    if (TutorialIsFinished())
+    {
+        ScoreHandlerUpdateHiScore();
+        ScoreHandlerUnlockMedals(ScoreHandlerGetScore() + ScoreHandlerGetBonusScorePool());
+        SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
+    }
     gameState = GAME_OVER;
     ListRemoveAllNodes(&ballSpawnPointHead);
     ListRemoveAllNodes(&spawnQueueHead);
@@ -347,7 +354,7 @@ void GameDeInit()
 {
     ScoreHandlerLoseCombo();
     ScoreHandlerAddToScoreFromBonusPool(true);
-    SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
+    if (TutorialIsFinished()) SaveStorageValue(STORAGE_POSITION_HISCORE, ScoreHandlerGetHiScore());
     CloseWindow();
 }
 
