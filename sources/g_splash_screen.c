@@ -10,7 +10,7 @@
 
 SplashMessage splashMessageIndex = 0;
 
-double messageDurations[SM_LENGTH] = {4, 7};
+double messageDurations[SM_LENGTH] = {6, 9};
 
 Sprite *splashMouseIcon;
 

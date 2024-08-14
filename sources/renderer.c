@@ -36,6 +36,9 @@ float eraserRadius = defaultEraserRadius;
 
 bool debugDrawing = false;
 
+#define STUDIO_NAME "Lucalbin"
+char* gameBy = "- "STUDIO_NAME", 2024 -";
+
 typedef struct
 {
     float startAngle;
@@ -77,6 +80,10 @@ void RendererInit()
     bgTexture = &gameTextures.bgFloorStandard;
 
     getReadyTextWidth = MeasureText(getReadyText, 8);
+
+    BeginDrawing();
+    ClearBackground(BLACK);
+    EndDrawing();
 }
 
 void RendererFitVirtualRectToScreen()
@@ -430,6 +437,8 @@ void DrawUi()
             DrawTextureV(gameTextures.infoQuit, Vector2Zero(), WHITE);
 
             if (ScoreHandlerGetHiScore() > 0) DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, VIRTUAL_SCREEN_HEIGHT - 52, 8, uiColorYellow);
+
+            DrawText(gameBy, (int)virtualScreenCenter.x - MeasureText(gameBy, 8) / 2, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorDarkGray);
             break;
         }
 
@@ -617,7 +626,7 @@ void RenderSplashScreenToTarget()
 
             case SM_STUDIO_NAME:
             {
-                char *text = "A game by CosmicQuad";
+                char *text = "A game by "STUDIO_NAME;
                 int textWidth = MeasureText(text, 8);
                 Vector2 textPos = {virtualScreenCenter.x - (float)textWidth/2, virtualScreenCenter.y};
                 DrawText(text, (int)textPos.x+1, (int)textPos.y+1, 8, GRAY);
