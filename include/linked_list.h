@@ -30,4 +30,10 @@ void ListRemoveAllNodes(ListNode** headRef);
 int ListLength(ListNode** headRef);
 void ListNodePrint(ListNode* node);
 
+//
+// Freeing Queue
+//
+void FreeingQueuePush(ListNode* node);
+void FreeingQueueFreeAll();
+
 #endif //BALL_GAME_LINKED_LIST_H

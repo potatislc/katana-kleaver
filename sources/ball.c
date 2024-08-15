@@ -21,7 +21,7 @@ const double tutorialSpawnTime = 1.6f;
 
 BallNbrCount ballNbrCount_All;
 
-BallClearer ballClearer = {NULL, 0, 0, true};
+BallClearer ballClearer = {NULL, true};
 
 static Vector2 RandomDirection()
 {
@@ -82,9 +82,6 @@ void BallClearerBegin(Ball *ball, int slowDownFps)
     if (!ballClearer.clearingFinished) return;
 
     ballClearer.currentNode = ballHead;
-    ballClearer.nodeIndex = 0;
-    ballClearer.listLength = ListLength(&ballHead);
-    ballClearer.ballToAvoid = ball;
     ballClearer.clearingFinished = false;
     targetFps = slowDownFps;
     // GameFreezeAllEntities(true);
@@ -105,17 +102,6 @@ void OnSplitOrange(Ball *ball, Vector2 splitDir)
 
     // Screen wipe
     if (ball->health <= 1 && IS_GAME_STATE_PLAYABLE) BallClearerBegin(ball, 20);
-    /*
-    ListNode *currentNode = ballHead;
-    int listLength = ListLength(&ballHead);
-    for (int i = 0; i < listLength; i++)
-    {
-        if (currentNode == NULL) return;
-        ListNode *nextNode = currentNode->next;
-        if (currentNode->data != ball) BallSplit(currentNode->data, RandomDirection());
-        currentNode = nextNode;
-    }
-    */
 }
 
 void OnDestroyOrange(Ball *ball)
@@ -218,31 +204,17 @@ bool IsBallClearingFinished()
 
 void BallClearerUpdate()
 {
-    // Slice all balls
-    /*
-    if (ListLength(&ballHead) > 1)
-    {
-        ballClearer.nodeIndex++;
-        ListNode *nextNode = ballClearer.currentNode->next;
-        if (ballClearer.currentNode->data != ballClearer.ballToAvoid) BallSplit(ballClearer.currentNode->data, RandomDirection());
-        ballClearer.currentNode = (nextNode != NULL) ? nextNode : ballHead;
-
-        return;
-    }
-    */
-
     // Slice all balls only once
-    if (ballClearer.nodeIndex < ballClearer.listLength && ballClearer.currentNode != NULL)
+    if (ballClearer.currentNode != NULL)
     {
-        ballClearer.nodeIndex++;
         ListNode *nextNode = ballClearer.currentNode->next;
-        if (ballClearer.currentNode->data != NULL && ballClearer.currentNode->data != ballClearer.ballToAvoid) BallSplit(ballClearer.currentNode->data, RandomDirection());
+        if (ballClearer.currentNode->data != NULL) BallSplit(ballClearer.currentNode->data, RandomDirection());
         ballClearer.currentNode = nextNode;
 
         return;
     }
 
-    if (ballClearer.ballToAvoid != NULL && ballClearer.ballToAvoid->type == TYPE_ORANGE) targetFps = 20;
+    if (IS_GAME_STATE_PLAYABLE) targetFps = 20;
     ballClearer.clearingFinished = true;
     if (IS_GAME_STATE_PLAYABLE) PlaySound(gameAudio.postBallClarity);
 }

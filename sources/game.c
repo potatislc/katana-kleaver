@@ -303,6 +303,7 @@ void GameRun()
         Update();
         RenderToTarget();
         RenderToScreen();
+        FreeingQueueFreeAll();
 
         if (WindowShouldClose() && (gameState == GAME_TITLE || !IsKeyPressed(KEY_ESCAPE))) break;
     }

@@ -40,6 +40,7 @@ Player *PlayerInit(Vector2 initPos, ListNode **ballHeadRef)
     *player->dash = (Dash){false, 0.0f, 0.0f, 0.0f, 0.0f, 0.3f, 48.0f, 10, 30, 30, 0};
 
     player->collidingBall = (Ball *)malloc(sizeof(Ball));
+    player->collidingBallCopy = *BallInit(Vector2Zero(), 32, TYPE_MELON);
     // player->collidingBallCopy = (Ball *)malloc(sizeof(Ball));
 
     return player;

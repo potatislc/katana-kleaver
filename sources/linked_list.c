@@ -32,8 +32,7 @@ void ListNodeRemove(ListNode** headRef, void* key)
     if (temp != NULL && temp->data == key)
     {
         *headRef = temp->next;
-        if (temp->data != NULL) free(temp->data);
-        free(temp);
+        FreeingQueuePush(temp);
         return;
     }
 
@@ -46,8 +45,7 @@ void ListNodeRemove(ListNode** headRef, void* key)
     if (temp == NULL) return;
 
     prev->next = temp->next;
-    if (temp->data != NULL) free(temp->data);
-    free(temp);
+    FreeingQueuePush(temp);
 }
 
 void ListNodeRemoveActual(ListNode** headRef, void* key)
@@ -59,8 +57,7 @@ void ListNodeRemoveActual(ListNode** headRef, void* key)
     if (temp != NULL && temp->data == key)
     {
         *headRef = temp->next;
-        if (temp->data != NULL) free(temp->data);
-        free(temp);
+        FreeingQueuePush(temp);
         return;
     }
 
@@ -73,8 +70,7 @@ void ListNodeRemoveActual(ListNode** headRef, void* key)
     if (temp == NULL) return;
 
     prev->next = temp->next;
-    if (temp->data != NULL) free(temp->data);
-    free(temp);
+    FreeingQueuePush(temp);
 }
 
 void ListRemoveAllNodes(ListNode** headRef)
@@ -85,8 +81,7 @@ void ListRemoveAllNodes(ListNode** headRef)
     while (current != NULL)
     {
         next = current->next;
-        if (current->data != NULL) free(current->data);
-        free(current);
+        FreeingQueuePush(current);
         current = next;
     }
 

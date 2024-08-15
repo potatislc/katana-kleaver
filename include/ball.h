@@ -62,10 +62,7 @@ Ball *BallClearerTarget();
 typedef struct
 {
     ListNode *currentNode;
-    int nodeIndex;
-    int listLength;
     bool clearingFinished;
-    Ball *ballToAvoid;
 } BallClearer;
 
 void BallDraw(Ball ball);

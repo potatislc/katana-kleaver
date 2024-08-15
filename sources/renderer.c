@@ -36,8 +36,8 @@ float eraserRadius = defaultEraserRadius;
 
 bool debugDrawing = false;
 
-#define STUDIO_NAME "Lucalbin"
-char* gameBy = "- "STUDIO_NAME", 2024 -";
+#define STUDIO_NAME "Luc Sommerland"
+char* studioName = "- "STUDIO_NAME", 2024 -";
 
 typedef struct
 {
@@ -416,6 +416,11 @@ void DrawUiWeapon()
     }
 }
 
+void DrawUiStudioName()
+{
+    DrawText(studioName, (int)virtualScreenCenter.x - MeasureText(studioName, 8) / 2, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorDarkGray);
+}
+
 void DrawUi()
 {
     DrawUiBorders();
@@ -438,13 +443,14 @@ void DrawUi()
 
             if (ScoreHandlerGetHiScore() > 0) DrawText(hiScoreText, (int)virtualScreenCenter.x - hiScoreTextWidth / 2, VIRTUAL_SCREEN_HEIGHT - 52, 8, uiColorYellow);
 
-            DrawText(gameBy, (int)virtualScreenCenter.x - MeasureText(gameBy, 8) / 2, VIRTUAL_SCREEN_HEIGHT + 3, 8, uiColorDarkGray);
+            DrawUiStudioName();
             break;
         }
 
         case GAME_SETTINGS:
         {
             DrawUiSettingsButtons();
+            DrawUiStudioName();
             break;
         }
 
