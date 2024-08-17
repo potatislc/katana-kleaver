@@ -214,9 +214,12 @@ void BallClearerUpdate()
         return;
     }
 
-    if (IS_GAME_STATE_PLAYABLE) targetFps = 20;
     ballClearer.clearingFinished = true;
-    if (IS_GAME_STATE_PLAYABLE) PlaySound(gameAudio.postBallClarity);
+    if (IS_GAME_STATE_PLAYABLE)
+    {
+        targetFps = 20;
+        PlaySound(gameAudio.postBallClarity);
+    }
 }
 
 void BallClearerForceFinish()
@@ -305,7 +308,7 @@ void BallSplit(Ball *ball, Vector2 splitDir)
     if (ball == NULL) return;
     CameraSetShake(fminf(1.5f, ball->radius / 8), 1.f, .2f);
 
-    ball->onSplitFunction(ball, splitDir);
+    ball->onSplitFunction(ball, splitDir); // This is where it goes wrong for the orange
     ball->health--;
     if (ball->health <= 0) BallDestroy(ball);
 }
