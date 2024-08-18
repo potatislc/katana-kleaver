@@ -77,7 +77,7 @@ void OnDestroyMelon(Ball *ball)
     ScoreHandlerAddToScore(1);
 }
 
-void BallClearerBegin(Ball *ball, int slowDownFps)
+void BallClearerBegin(int slowDownFps)
 {
     if (!ballClearer.clearingFinished) return;
 
@@ -99,9 +99,6 @@ void OnSplitOrange(Ball *ball, Vector2 splitDir)
         PlaySound(hitSound);
         return;
     }
-
-    // Screen wipe
-    if (ball->health <= 1 && IS_GAME_STATE_PLAYABLE) BallClearerBegin(ball, 20);
 }
 
 void OnDestroyOrange(Ball *ball)
@@ -109,6 +106,9 @@ void OnDestroyOrange(Ball *ball)
     CREATE_PARTICLES(&particleHead, ParticlePresetJuice(ball->position, orangeColor), (int)(ball->radius / 2.f) + 1);
 
     ScoreHandlerAddToMultiplier(1);
+
+    // Screen wipe
+    if (IS_GAME_STATE_PLAYABLE) BallClearerBegin(20);
 }
 
 void DrawDefault(Ball ball, Vector2 drawPos)

@@ -204,7 +204,7 @@ void Update()
 
                 if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsBallClearingFinished() && !backButton->pressed)
                 {
-                    BallClearerBegin(NULL, initFps);
+                    BallClearerBegin(initFps);
                 }
             }
 

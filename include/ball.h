@@ -53,7 +53,7 @@ void BallStateMove(Ball *ball);
 
 #define STATE_EXEC_BALL_MOVE (BallStateMove)
 
-void BallClearerBegin(Ball *ball, int slowDownFps);
+void BallClearerBegin(int slowDownFps);
 void BallClearerUpdate();
 bool IsBallClearingFinished();
 void BallClearerForceFinish();
