@@ -14,11 +14,11 @@ int comboMultiplier = MIN_MULTIPLIER;
 // A lost combo gets added to here then it slowly adds to the main score
 int bonusScorePool = 0;
 
-char scoreText[128] = "Score: 0";
-char comboText[128] = "+";
-char comboMultiplierText[128] = "x";
-char hiScoreText[128] = "High Score: 0";
-char bonusScorePoolText[128] = "<-";
+char scoreText[STR_MAX] = "Score: 0";
+char comboText[STR_MAX] = "+";
+char comboMultiplierText[STR_MAX] = "x";
+char hiScoreText[STR_MAX] = "High Score: 0";
+char bonusScorePoolText[STR_MAX] = "<-";
 
 const char gameOverText[] = "- Game Over -";
 const char restartText[] = "Clean up to restart!";

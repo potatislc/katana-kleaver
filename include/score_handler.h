@@ -2,16 +2,18 @@
 #define BALL_GAME_SCORE_HANDLER_H
 
 #include <stdbool.h>
+#include <stdint.h>
 #include "raylib.h"
 
 #define COMBO_BUFFER_SIZE (4)
 #define MIN_MULTIPLIER (1)
+#define STR_MAX UINT16_MAX
 
-extern char scoreText[128];
-extern char comboText[128];
-extern char comboMultiplierText[128];
-extern char hiScoreText[128];
-extern char bonusScorePoolText[128];
+extern char scoreText[STR_MAX];
+extern char comboText[STR_MAX];
+extern char comboMultiplierText[STR_MAX];
+extern char hiScoreText[STR_MAX];
+extern char bonusScorePoolText[STR_MAX];
 extern const char gameOverText[];
 extern const char restartText[];
 
