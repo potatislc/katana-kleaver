@@ -7,7 +7,7 @@
 
 #define COMBO_BUFFER_SIZE (4)
 #define MIN_MULTIPLIER (1)
-#define STR_MAX UINT16_MAX
+#define STR_MAX UINT8_MAX
 
 extern char scoreText[STR_MAX];
 extern char comboText[STR_MAX];

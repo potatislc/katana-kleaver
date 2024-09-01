@@ -23,7 +23,7 @@ void WindowHandlerInit()
     int display = GetCurrentMonitor();
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(DefaultWindowWidth(display), DefaultWindowHeight(display), WINDOW_TITLE);
-    Image icon = LoadImage("../assets/textures/melon/melon_big.png");
+    Image icon = LoadImage(ASSETS_PATH"textures/melon/melon_big.png");
     SetWindowIcon(icon);
     UnloadImage(icon);
 #ifdef PLATFORM_DESKTOP

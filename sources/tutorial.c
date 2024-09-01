@@ -270,21 +270,21 @@ void TutorialSetState(TutorialStates index)
     {
         case TUTORIAL_MOVING:
         {
-            SetTutorialText("Right Mouse to move.");
+            SetTutorialText("Right Mouse Button to move.");
             tutorialState = StateMoving;
             break;
         }
 
         case TUTORIAL_DASHING:
         {
-            SetTutorialText("Left Mouse to dash.");
+            SetTutorialText("Left Mouse Button to dash.");
             tutorialState = StateDashing;
             break;
         }
 
         case TUTORIAL_SLICING:
         {
-            SetTutorialText("Dash though a melon to slice it.");
+            SetTutorialText("Dash into a melon to slice it.");
             tutorialState = StateSlicing;
             break;
         }

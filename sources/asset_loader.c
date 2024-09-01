@@ -30,6 +30,8 @@ void LoadGameTextures()
     gameTextures.infoQuit = LoadTexture(ASSETS_PATH "textures/info_quit.png");
     gameTextures.infoMiss = LoadTexture(ASSETS_PATH "textures/info_miss.png");
     gameTextures.mouseIcon = LoadTexture(ASSETS_PATH "textures/icons/mouse_icon.png");
+    gameTextures.yesIcon = LoadTexture(ASSETS_PATH "textures/icons/yes_icon.png");
+    gameTextures.noIcon = LoadTexture(ASSETS_PATH "textures/icons/no_icon.png");
     gameTextures.medals = LoadTexture(ASSETS_PATH "textures/medals.png");
 }
 

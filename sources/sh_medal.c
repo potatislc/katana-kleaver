@@ -29,7 +29,7 @@ void ScoreHandlerRevealMedals()
     if (medalsDisplayed >= medalsUnlocked || frameCounter % 20 != 0) return;
 
     medalsDisplayed++;
-    medalGotTime[medalsDisplayed] = GetTime();
+    medalGotTime[(int)fmax(0, medalsDisplayed-1)] = GetTime();
     CameraSetShake(2, 1.f, .2f);
     PlaySound(gameAudio.medalGot);
     if (medalsDisplayed == 4) PlaySound(gameAudio.postBallClarity);
@@ -76,7 +76,7 @@ void ScoreHandlerDrawMedals()
         // float rotation = (float)sin((medalGotTime[i] / GetTime()) * 20) * (float)((medalGotTime[i] / (GetTime() * 10)) * 100);
 
         // Nerd version
-        float elapsedTime = GetTime() - medalGotTime[i];
+        float elapsedTime = GetTime() - medalGotTime[i-1];
         float decayRate = 0.2f;
         float initialAmplitude = 40.0f;
         float frequency = 4.0f;
@@ -93,7 +93,7 @@ bool ScoreHandlerMedalRevealFinished()
     if (medalsUnlocked == 0) return true;
     if (medalsDisplayed >= medalsUnlocked)
     {
-        if (GetTime() > medalGotTime[medalsDisplayed] + 2) return true;
+        if (GetTime() > medalGotTime[(int)fmax(0, medalsDisplayed-1)] + 2) return true;
     }
 
     return false;
