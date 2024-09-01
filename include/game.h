@@ -32,6 +32,7 @@ enum GameStates
     GAME_OVER,
     GAME_TUTORIAL,
     GAME_SETTINGS,
+    GAME_PLAY_TUTORIAL_POPUP,
     GAME_RESTARTING
 };
 
@@ -43,6 +44,8 @@ extern CircularButton *windowModeButton;
 extern CircularButton *muteBgmButton;
 extern CircularButton *replayTutButton;
 extern CircularButton *muteSfxButton;
+extern CircularButton *playTutButton;
+extern CircularButton *skipTutButton;
 
 /*
 extern SliderButton *bgmVolSlider;

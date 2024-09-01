@@ -32,6 +32,8 @@ CircularButton *backButton;
 CircularButton *windowModeButton;
 CircularButton *muteBgmButton;
 CircularButton *replayTutButton;
+CircularButton *playTutButton;
+CircularButton *skipTutButton;
 
 /*
 SliderButton *bgmVolSlider;
@@ -110,6 +112,23 @@ void ReplayTutorial()
     GameStart();
 }
 
+void AskAboutTutorial()
+{
+    if (TutorialIsFinished())
+    {
+        GameStart();
+        return;
+    }
+
+    gameState = GAME_PLAY_TUTORIAL_POPUP;
+}
+
+void SkipTutorial()
+{
+    TutorialSetState(TUTORIAL_LENGTH);
+    GameStart();
+}
+
 void GameInit()
 {
     PlayMusicStream(gameAudio.mainTheme);
@@ -123,7 +142,7 @@ void GameInit()
     tutorialStateIndex = LoadStorageValue(STORAGE_POSITION_TUTORIAL_STATE_INDEX);
 
     Vector2 startBtnPos = {24, VIRTUAL_SCREEN_HEIGHT - 24};
-    startButton = CircularButtonInit(startBtnPos, 16, gameTextures.playIcon, GameStart);
+    startButton = CircularButtonInit(startBtnPos, 16, gameTextures.playIcon, AskAboutTutorial);
 
     Vector2 settingBtnPos = {VIRTUAL_SCREEN_WIDTH - 24, startBtnPos.y};
     settingsButton = CircularButtonInit(settingBtnPos, 16, gameTextures.settingsIcon, OpenSettings);
@@ -139,6 +158,12 @@ void GameInit()
 
     Vector2 replayTutPos = {24, 24 + 36 + 36};
     replayTutButton = CircularButtonInit(replayTutPos, 16, gameTextures.orange, ReplayTutorial);
+
+    Vector2 playTutBtnPos = {virtualScreenCenter.x - 48, virtualScreenCenter.y};
+    playTutButton = CircularButtonInit(playTutBtnPos, 16, gameTextures.yesIcon, GameStart);
+
+    Vector2 skipTutBtnPos = {virtualScreenCenter.x + 48, playTutBtnPos.y};
+    skipTutButton = CircularButtonInit(skipTutBtnPos, 16, gameTextures.noIcon, SkipTutorial);
 
     /*
     const Rectangle sliderRect = {24, 32, VIRTUAL_SCREEN_WIDTH - 24, 24};
@@ -244,6 +269,17 @@ void Update()
         case GAME_TUTORIAL:
         {
             if (!TutorialIsFinished()) TutorialUpdate();
+            break;
+        }
+
+        case GAME_PLAY_TUTORIAL_POPUP:
+        {
+            CircularButtonMousePress(playTutButton, MOUSE_BUTTON_LEFT, mousePos);
+            CircularButtonMouseRelease(playTutButton, MOUSE_BUTTON_LEFT, mousePos);
+            CircularButtonMousePress(skipTutButton, MOUSE_BUTTON_LEFT, mousePos);
+            CircularButtonMouseRelease(skipTutButton, MOUSE_BUTTON_LEFT, mousePos);
+            CircularButtonMousePress(backButton, MOUSE_BUTTON_LEFT, mousePos);
+            CircularButtonMouseRelease(backButton, MOUSE_BUTTON_LEFT, mousePos);
             break;
         }
     }

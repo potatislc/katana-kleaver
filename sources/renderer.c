@@ -38,6 +38,14 @@ bool debugDrawing = false;
 
 #define STUDIO_NAME "Luc Sommerland"
 char* studioName = "- "STUDIO_NAME", 2024 -";
+char* questionPlayTut = "Play tutorial?";
+int questionPlayTutWidth = 0;
+char* questionResumeTut = "Resume tutorial?";
+int questionResumeTutWidth = 0;
+char* yesPlayTut = "Yes";
+int yesPlayTutWidth = 0;
+char* noPlayTut = "No";
+int noPlayTutWidth = 0;
 
 typedef struct
 {
@@ -80,6 +88,10 @@ void RendererInit()
     bgTexture = &gameTextures.bgFloorStandard;
 
     getReadyTextWidth = MeasureText(getReadyText, 8);
+    questionPlayTutWidth = MeasureText(questionPlayTut, 8);
+    questionResumeTutWidth = MeasureText(questionResumeTut, 8);
+    yesPlayTutWidth = MeasureText(yesPlayTut, 8);
+    noPlayTutWidth = MeasureText(noPlayTut, 8);
 
     BeginDrawing();
     ClearBackground(BLACK);
@@ -531,6 +543,25 @@ void DrawUi()
             if (tutorialStateIndex == TUTORIAL_COMBOS_2) DrawUiProgressBar();
 
             DrawUiWeapon();
+            break;
+        }
+
+        case GAME_PLAY_TUTORIAL_POPUP:
+        {
+            DrawRectangle(0, 0, VIRTUAL_SCREEN_WIDTH, VIRTUAL_SCREEN_HEIGHT, (Color){0, 0, 0, 20});
+            DrawTextureV(gameTextures.infoQuit, Vector2Zero(), WHITE);
+
+            Vector2 textPos = {
+                    virtualScreenCenter.x - ((tutorialStateIndex == 0) ? (float)questionPlayTutWidth : (float)questionResumeTutWidth) / 2,
+                    virtualScreenCenter.y - 32.f};
+            DrawText((tutorialStateIndex == 0) ? questionPlayTut : questionResumeTut, (int)textPos.x + 1, (int)textPos.y + 1, 8, GRAY);
+            DrawText((tutorialStateIndex == 0) ? questionPlayTut : questionResumeTut, (int)textPos.x, (int)textPos.y, 8, WHITE);
+
+            CircularButtonDraw(*playTutButton);
+            CircularButtonDraw(*skipTutButton);
+            CircularButtonDraw(*backButton);
+            DrawText(yesPlayTut, (int)playTutButton->position.x - yesPlayTutWidth / 2, (int)playTutButton->position.y + 16, 8, WHITE);
+            DrawText(noPlayTut, (int)skipTutButton->position.x - noPlayTutWidth / 2, (int)skipTutButton->position.y + 16, 8, WHITE);
             break;
         }
     }
