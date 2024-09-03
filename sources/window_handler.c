@@ -1,11 +1,19 @@
 #include "window_handler.h"
 #include "raylib.h"
 #include "renderer.h"
+#ifdef PLATFORM_WEB
+#include <emscripten/emscripten.h>
+#include <emscripten/html5.h>
+#endif
 
 int windowMode = -1;
 bool windowIsBorderless = false;
 
+#ifdef PLATFORM_WEB
+const double defaultWindowScale = .6;
+#else
 const double defaultWindowScale = .8;
+#endif
 const double windowHeightScaleFactor = 1.1;
 
 int DefaultWindowWidth(int display)
@@ -22,6 +30,19 @@ void WindowHandlerInit()
 {
     int display = GetCurrentMonitor();
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
+#ifdef PLATFORM_WEB
+    EmscriptenWebGLContextAttributes attr;
+    emscripten_webgl_init_context_attributes(&attr);
+    attr.antialias = EM_FALSE;  // Disable anti-aliasing
+    attr.alpha = EM_TRUE;       // Example: Enable alpha channel
+
+    // Create WebGL context with the specified attributes
+    EMSCRIPTEN_WEBGL_CONTEXT_HANDLE context = emscripten_webgl_create_context("#canvas", &attr);
+
+    // Make the context current
+    emscripten_webgl_make_context_current(context);
+#endif
     InitWindow(DefaultWindowWidth(display), DefaultWindowHeight(display), WINDOW_TITLE);
     Image icon = LoadImage(ASSETS_PATH"textures/melon/melon_big.png");
     SetWindowIcon(icon);
