@@ -54,8 +54,8 @@ void MixGameAudio()
     SetSoundVolume(gameAudio.medalGot, .3f);
     SetSoundVolume(gameAudio.tutorialClear, .2f);
     SetSoundVolume(gameAudio.tutorialText, .7f);
-    SetSoundVolume(gameAudio.wipes[0], .5f);
-    SetSoundVolume(gameAudio.wipes[1], .5f);
+    SetSoundVolume(gameAudio.wipes[0], .6f);
+    SetSoundVolume(gameAudio.wipes[1], .6f);
 
 
     SetSoundPitch(gameAudio.ballSpawn, 1.2f);
