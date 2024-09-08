@@ -14,8 +14,10 @@ typedef enum {
 } StorageData;
 
 bool SaveStorageValue(unsigned int position, int value);
-int LoadStorageValue(unsigned int position);
+int LoadStorageValueOrDefault(unsigned int position, int defaultVal);
 bool ResetAllStorageValues();
+
+
 
 
 #endif //KATANA_KLEAVER_STORAGE_H

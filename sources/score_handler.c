@@ -75,6 +75,7 @@ void ScoreHandlerAddToScore(int val)
         comboScore = comboScoreBuffer - COMBO_BUFFER_SIZE;
     }
 
+    ScoreHandlerUpdateHiScore();
     UpdateText();
 }
 
@@ -122,6 +123,7 @@ void ScoreHandlerAddToScoreFromBonusPool(bool instant)
         PlaySound(gameAudio.bonusScore);
     }
 
+    ScoreHandlerUpdateHiScore();
     UpdateText();
 }
 

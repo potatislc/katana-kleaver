@@ -4,6 +4,9 @@
 // NOTE: Storage positions is directly related to file memory layout (4 bytes each integer)
 bool SaveStorageValue(unsigned int position, int value)
 {
+#ifdef PLATFORM_WEB
+    return false;
+#else
     bool success = false;
     int dataSize = 0;
     unsigned int newDataSize = 0;
@@ -66,19 +69,27 @@ bool SaveStorageValue(unsigned int position, int value)
     }
 
     return success;
+#endif
 }
 
 // Load integer value from storage file (from defined position)
-// NOTE: If requested position could not be found, value 0 is returned
-int LoadStorageValue(unsigned int position)
+// NOTE: If requested position could not be found, value default is returned
+int LoadStorageValueOrDefault(unsigned int position, int defaultVal)
 {
+#ifdef PLATFORM_WEB
+    return defaultVal;
+#else
     int value = 0;
     int dataSize = 0;
     unsigned char *fileData = LoadFileData(STORAGE_DATA_FILE, &dataSize);
 
     if (fileData != NULL)
     {
-        if (dataSize < (position*4)) TraceLog(LOG_WARNING, "FILEIO: [%s] Failed to find storage position: %i", STORAGE_DATA_FILE, position);
+        if (dataSize < (position*4))
+        {
+            TraceLog(LOG_WARNING, "FILEIO: [%s] Failed to find storage position: %i", STORAGE_DATA_FILE, position);
+            return defaultVal;
+        }
         else
         {
             int *dataPtr = (int *)fileData;
@@ -91,6 +102,7 @@ int LoadStorageValue(unsigned int position)
     }
 
     return value;
+#endif
 }
 
 bool ResetAllStorageValues()

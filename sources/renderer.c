@@ -233,7 +233,7 @@ void DrawUiDeathRing()
 {
     Vector2 center = playerRef->position;
 
-    DrawRing(center, (float)(targetFps) * ((float)targetFps / 12.f), 240, 0, 360, 32, BLACK);
+    DrawRing(center, fmaxf(32.f, (float)(targetFps) * ((float)targetFps / 12.f)), 240, 0, 360, 32, BLACK);
 }
 
 void DrawUiScore()
