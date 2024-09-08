@@ -138,7 +138,7 @@ void GameInit()
 
     freezePlayer = true;
 
-    // ScoreHandlerSetHiScore(LoadStorageValueOrDefault(STORAGE_POSITION_HISCORE , ScoreHandlerGetHiScore()));
+    ScoreHandlerSetHiScore(LoadStorageValueOrDefault(STORAGE_POSITION_HISCORE , ScoreHandlerGetHiScore()));
     tutorialStateIndex = LoadStorageValueOrDefault(STORAGE_POSITION_TUTORIAL_STATE_INDEX, tutorialStateIndex);
 
     Vector2 startBtnPos = {24, VIRTUAL_SCREEN_HEIGHT - 24};
