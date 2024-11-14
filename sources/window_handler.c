@@ -51,6 +51,8 @@ void WindowHandlerInit()
     WindowHandlerSetWindowMode(WM_WINDOWED);
     MaximizeWindow();
 #endif
+    // For trailer
+    // DisableCursor();
 }
 
 void ToggleBorderLessWindowedOverride()

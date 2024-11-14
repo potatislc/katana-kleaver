@@ -36,7 +36,7 @@ float eraserRadius = defaultEraserRadius;
 
 bool debugDrawing = false;
 
-#define STUDIO_NAME "Luc Sommerland"
+#define STUDIO_NAME "lusommr"
 char* studioName = "- "STUDIO_NAME", 2024 -";
 char* questionPlayTut = "Play tutorial?";
 int questionPlayTutWidth = 0;
