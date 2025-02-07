@@ -7,3 +7,6 @@
 *.raw binary
 *.obj binary
 *.gltf binary
+*.ase binary
+*.aseprite binary
+*.ico binary
